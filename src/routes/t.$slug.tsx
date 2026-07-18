@@ -7,17 +7,22 @@ import { TOOL_COMPONENTS } from "@/tools/registry";
 export const Route = createFileRoute("/t/$slug")({
   head: ({ params }) => {
     const t = TOOLS_BY_SLUG[params.slug];
+    const base = "https://huggable-heart-helper-93.lovable.app";
     const path = `/t/${params.slug}`;
+    const url = `${base}${path}`;
     if (!t) {
       return {
         meta: [
           { title: "Tool not found — DevHub Toolkit" },
+          { name: "description", content: "The developer tool you're looking for doesn't exist on DevHub Toolkit. Browse the full catalog of formatters, encoders, generators, and references." },
+          { property: "og:title", content: "Tool not found — DevHub Toolkit" },
+          { property: "og:description", content: "The developer tool you're looking for doesn't exist on DevHub Toolkit. Browse the full catalog of formatters, encoders, generators, and references." },
           { name: "robots", content: "noindex" },
         ],
       };
     }
     const title = `${t.name} — DevHub Toolkit`;
-    const desc = t.description;
+    const desc = `${t.description} Free, fast, browser-based ${t.category} tool on DevHub Toolkit — no signup, no tracking, works offline.`;
     return {
       meta: [
         { title },
@@ -26,12 +31,12 @@ export const Route = createFileRoute("/t/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "website" },
-        { property: "og:url", content: path },
+        { property: "og:url", content: url },
         { name: "twitter:card", content: "summary" },
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: desc },
       ],
-      links: [{ rel: "canonical", href: path }],
+      links: [{ rel: "canonical", href: url }],
       scripts: [
         {
           type: "application/ld+json",
