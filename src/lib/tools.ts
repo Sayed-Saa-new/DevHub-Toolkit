@@ -3,7 +3,9 @@ import {
   Braces, Binary, Link2, KeyRound, Fingerprint, Hash, Clock, Regex,
   QrCode, Palette, Blend, BoxSelect, Squircle, FileCode2, FileText,
   PlayCircle, Globe, GitBranch, Terminal, Keyboard, Sparkles, Zap,
-  MessageSquareCode,
+  MessageSquareCode, Lock, Type, CaseSensitive, FileJson, Table2,
+  Calculator, GitCompare, AlignLeft, Code2, CalendarClock, Image,
+  Link, Smile, Globe2,
 } from "lucide-react";
 
 export type Category =
@@ -57,6 +59,24 @@ export const TOOLS: Tool[] = [
   { slug: "ai-explainer", name: "AI Code Explainer", description: "Explain any code snippet.", category: "ai", icon: Sparkles, keywords: ["ai", "explain", "code"], status: "soon" },
   { slug: "ai-optimizer", name: "AI Code Optimizer", description: "Suggest performance improvements.", category: "ai", icon: Zap, keywords: ["ai", "optimize", "refactor"], status: "soon" },
   { slug: "ai-commit", name: "AI Commit Messages", description: "Generate conventional commit messages.", category: "ai", icon: MessageSquareCode, keywords: ["ai", "git", "commit", "conventional"], status: "soon" },
+
+  // ---- Upgraded extras ----
+  { slug: "password", name: "Password Generator", description: "Cryptographically strong passwords with entropy meter.", category: "generators", icon: Lock, keywords: ["password", "secure", "random", "entropy"] },
+  { slug: "lorem", name: "Lorem Ipsum", description: "Generate placeholder paragraphs on demand.", category: "generators", icon: Type, keywords: ["lorem", "ipsum", "placeholder", "dummy"] },
+  { slug: "case-converter", name: "Case Converter", description: "camelCase, snake_case, kebab-case & more.", category: "converters", icon: CaseSensitive, keywords: ["case", "camel", "snake", "kebab", "pascal"] },
+  { slug: "yaml-json", name: "YAML ↔ JSON", description: "Convert between YAML and JSON structures.", category: "converters", icon: FileJson, keywords: ["yaml", "json", "yml", "convert"] },
+  { slug: "csv-json", name: "CSV ↔ JSON", description: "Convert tabular CSV to JSON and back.", category: "converters", icon: Table2, keywords: ["csv", "json", "table", "convert"] },
+  { slug: "number-base", name: "Number Base", description: "Binary, octal, decimal, hex, base32/36.", category: "converters", icon: Calculator, keywords: ["binary", "hex", "octal", "base", "number"] },
+  { slug: "text-diff", name: "Text Diff", description: "Word- and line-level diff viewer.", category: "editors", icon: GitCompare, keywords: ["diff", "compare", "text"] },
+  { slug: "text-stats", name: "Text Statistics", description: "Word, character, reading-time analyzer.", category: "editors", icon: AlignLeft, keywords: ["word count", "characters", "reading", "stats"] },
+  { slug: "html-entities", name: "HTML Entities", description: "Encode / decode HTML entity references.", category: "converters", icon: Code2, keywords: ["html", "entities", "escape", "encode"] },
+  { slug: "cron", name: "Cron Explainer", description: "Explain and preset cron expressions.", category: "reference", icon: CalendarClock, keywords: ["cron", "schedule", "job", "linux"] },
+  { slug: "meta-tags", name: "Meta Tag Generator", description: "SEO + Open Graph + Twitter card tags.", category: "generators", icon: Globe2, keywords: ["seo", "meta", "og", "twitter", "opengraph"] },
+  { slug: "slugify", name: "Slugify", description: "URL-safe slugs with custom separators.", category: "converters", icon: Link, keywords: ["slug", "url", "seo"] },
+  { slug: "favicon", name: "Emoji Favicon", description: "Turn any emoji into a favicon SVG.", category: "generators", icon: Smile, keywords: ["favicon", "emoji", "icon"] },
+  { slug: "image-base64", name: "Image → Base64", description: "Convert images to inline Data URLs.", category: "converters", icon: Image, keywords: ["image", "base64", "data url", "inline"] },
+  { slug: "timezone", name: "Timezone Converter", description: "Convert a moment across world timezones.", category: "converters", icon: Globe, keywords: ["timezone", "tz", "utc", "world clock"] },
+  { slug: "string-escape", name: "String Escape", description: "Escape and unescape JSON / JS strings.", category: "converters", icon: Binary, keywords: ["escape", "unescape", "json string", "js string"] },
 ];
 
 export const TOOLS_BY_SLUG: Record<string, Tool> = Object.fromEntries(

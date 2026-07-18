@@ -5,6 +5,11 @@ import { UuidGenerator, HashGenerator, QrCodeTool } from "./generators";
 import { ColorTool, GradientTool, BoxShadowTool, BorderRadiusTool } from "./design";
 import { RegexTester, MarkdownEditor, Playground, SvgOptimizer } from "./editors";
 import { HttpStatus, GitCheatsheet, LinuxCheatsheet, VscodeShortcuts } from "./reference";
+import {
+  PasswordGenerator, LoremIpsum, CaseConverter, YamlJsonConverter, CsvJsonConverter,
+  NumberBase, TextDiff, TextStats, HtmlEntities, CronExplainer, MetaTagGenerator,
+  Slugify, FaviconGenerator, ImageBase64, TimezoneConverter, StringEscape,
+} from "./extras";
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-formatter": JsonFormatter,
@@ -27,4 +32,20 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "git-cheatsheet": GitCheatsheet,
   "linux-cheatsheet": LinuxCheatsheet,
   "vscode-shortcuts": VscodeShortcuts,
+  "password": PasswordGenerator,
+  "lorem": LoremIpsum,
+  "case-converter": CaseConverter,
+  "yaml-json": YamlJsonConverter,
+  "csv-json": CsvJsonConverter,
+  "number-base": NumberBase,
+  "text-diff": TextDiff,
+  "text-stats": TextStats,
+  "html-entities": HtmlEntities,
+  "cron": CronExplainer,
+  "meta-tags": MetaTagGenerator,
+  "slugify": Slugify,
+  "favicon": FaviconGenerator,
+  "image-base64": ImageBase64,
+  "timezone": TimezoneConverter,
+  "string-escape": StringEscape,
 };
