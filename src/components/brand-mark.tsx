@@ -28,10 +28,10 @@ export function BrandMark({ className, size = 24 }: { className?: string; size?:
       {/* inner chisel "D" cut-out */}
       <path
         d="M10 9h7.2c4.3 0 7.3 2.9 7.3 7s-3 7-7.3 7H10V9zm3.6 3.4v7.2h3.4c2.3 0 3.9-1.5 3.9-3.6s-1.6-3.6-3.9-3.6h-3.4z"
-        fill="hsl(var(--sidebar-background, var(--background)))"
+        fill="var(--sidebar)"
       />
       {/* accent dot */}
-      <circle cx="25.5" cy="24" r="1.6" fill="hsl(var(--sidebar-background, var(--background)))" />
+      <circle cx="25.5" cy="24" r="1.6" fill="var(--sidebar)" />
     </svg>
   );
 }
