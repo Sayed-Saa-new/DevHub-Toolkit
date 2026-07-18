@@ -10,6 +10,7 @@ import {
   NumberBase, TextDiff, TextStats, HtmlEntities, CronExplainer, MetaTagGenerator,
   Slugify, FaviconGenerator, ImageBase64, TimezoneConverter, StringEscape,
 } from "./extras";
+import { AiExplainer, AiOptimizer, AiCommit } from "./ai";
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-formatter": JsonFormatter,
@@ -48,4 +49,7 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "image-base64": ImageBase64,
   "timezone": TimezoneConverter,
   "string-escape": StringEscape,
+  "ai-explainer": AiExplainer,
+  "ai-optimizer": AiOptimizer,
+  "ai-commit": AiCommit,
 };

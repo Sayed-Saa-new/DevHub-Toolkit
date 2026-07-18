@@ -13,6 +13,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TSlugRouteImport } from './routes/t.$slug'
+import { Route as ApiAiRouteImport } from './routes/api/ai'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -34,17 +35,24 @@ const TSlugRoute = TSlugRouteImport.update({
   path: '/t/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAiRoute = ApiAiRouteImport.update({
+  id: '/api/ai',
+  path: '/api/ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/favorites': typeof FavoritesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/ai': typeof ApiAiRoute
   '/t/$slug': typeof TSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/favorites': typeof FavoritesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/ai': typeof ApiAiRoute
   '/t/$slug': typeof TSlugRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/favorites': typeof FavoritesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/ai': typeof ApiAiRoute
   '/t/$slug': typeof TSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/favorites' | '/sitemap.xml' | '/t/$slug'
+  fullPaths: '/' | '/favorites' | '/sitemap.xml' | '/api/ai' | '/t/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/favorites' | '/sitemap.xml' | '/t/$slug'
-  id: '__root__' | '/' | '/favorites' | '/sitemap.xml' | '/t/$slug'
+  to: '/' | '/favorites' | '/sitemap.xml' | '/api/ai' | '/t/$slug'
+  id: '__root__' | '/' | '/favorites' | '/sitemap.xml' | '/api/ai' | '/t/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FavoritesRoute: typeof FavoritesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiAiRoute: typeof ApiAiRoute
   TSlugRoute: typeof TSlugRoute
 }
 
@@ -99,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/ai': {
+      id: '/api/ai'
+      path: '/api/ai'
+      fullPath: '/api/ai'
+      preLoaderRoute: typeof ApiAiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -106,6 +123,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FavoritesRoute: FavoritesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiAiRoute: ApiAiRoute,
   TSlugRoute: TSlugRoute,
 }
 export const routeTree = rootRouteImport
