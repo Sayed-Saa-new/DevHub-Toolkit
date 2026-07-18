@@ -3,7 +3,7 @@ import type {} from "@tanstack/react-start";
 
 import { TOOLS } from "@/lib/tools";
 
-const BASE_URL = "https://devhub.flinkeo.online";
+const BASE_URL = "https://huggable-heart-helper-93.lovable.app";
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
