@@ -74,7 +74,7 @@ function Home() {
         <div className="relative mx-auto max-w-5xl px-4 md:px-8 py-14 md:py-20">
           <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-border bg-card/50 text-xs text-muted-foreground mb-6">
             <Sparkles className="size-3" />
-            <span>23 utilities · local-first · zero tracking</span>
+            <span>44 utilities · local-first · zero tracking</span>
           </div>
           <h1 className="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
             Every developer tool
