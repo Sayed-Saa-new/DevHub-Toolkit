@@ -47,7 +47,15 @@ export const Route = createFileRoute("/t/$slug")({
       keywords: Array.from(new Set(keywords)).join(", "),
       featureList: t.keywords,
       image: ogImage,
-      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      softwareVersion: "1.0",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url,
+      },
+      author: { "@id": `${base}/#org` },
       publisher: {
         "@type": "Organization",
         "@id": `${base}/#org`,
@@ -65,6 +73,7 @@ export const Route = createFileRoute("/t/$slug")({
         { "@type": "ListItem", position: 3, name: t.name, item: url },
       ],
     };
+    const nowIso = new Date().toISOString();
     const webPage = {
       "@context": "https://schema.org",
       "@type": "WebPage",
@@ -73,10 +82,12 @@ export const Route = createFileRoute("/t/$slug")({
       name: title,
       description: desc,
       inLanguage: "en",
-      isPartOf: { "@type": "WebSite", "@id": `${base}/#website`, name: "DevHub Toolkit", url: base },
+      isPartOf: { "@id": `${base}/#website` },
       primaryImageOfPage: { "@type": "ImageObject", url: ogImage },
       about: { "@id": `${url}#software` },
       breadcrumb: { "@id": `${url}#breadcrumbs` },
+      datePublished: "2026-07-01T00:00:00.000Z",
+      dateModified: nowIso,
     };
     return {
       meta: [
