@@ -1,5 +1,17 @@
-import { Link, useRouterState } from "@tanstack/react-router";
-import { Command, Search, Star, Github, Menu, Keyboard } from "lucide-react";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import {
+  Command,
+  Search,
+  Star,
+  Github,
+  Menu,
+  Keyboard,
+  ArrowRight,
+  Clock,
+  Home,
+  CornerDownLeft,
+  StarOff,
+} from "lucide-react";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -10,6 +22,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "@/components/ui/command";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
@@ -169,7 +182,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </footer>
       </div>
 
-      <GlobalCommand open={open} onOpenChange={setOpen} />
+      <GlobalCommand open={open} onOpenChange={setOpen} onShowShortcuts={() => setShortcutsOpen(true)} />
       <ShortcutsDialog open={shortcutsOpen} onOpenChange={setShortcutsOpen} />
     </div>
   );
@@ -344,32 +357,240 @@ function SidebarLink({
   );
 }
 
-function GlobalCommand({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
+function GlobalCommand({
+  open,
+  onOpenChange,
+  onShowShortcuts,
+}: {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+  onShowShortcuts: () => void;
+}) {
   const [q, setQ] = useState("");
-  const results = useMemo(() => searchTools(q), [q]);
+  const navigate = useNavigate();
+  const hydrated = useHydrated();
+  const { favorites, toggle: toggleFav, isFav } = useFavorites();
+  const { recents, push: pushRecent } = useRecents();
+
+  // Reset query each time the palette opens
+  useEffect(() => {
+    if (open) setQ("");
+  }, [open]);
+
+  const go = (slug: string) => {
+    pushRecent(slug);
+    onOpenChange(false);
+    navigate({ to: "/t/$slug", params: { slug } });
+  };
+
+  const favTools = useMemo(
+    () => favorites.map((s) => TOOLS_BY_SLUG[s]).filter(Boolean),
+    [favorites],
+  );
+  const recentTools = useMemo(
+    () => recents.map((s) => TOOLS_BY_SLUG[s]).filter(Boolean).slice(0, 5),
+    [recents],
+  );
+  const byCategory = useMemo(() => {
+    const map = new Map<Category, typeof TOOLS>();
+    for (const t of TOOLS) {
+      const arr = map.get(t.category) ?? [];
+      arr.push(t);
+      map.set(t.category, arr);
+    }
+    return map;
+  }, []);
+
+  const showQuick = q.trim().length === 0;
+
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
-      <CommandInput placeholder="Search tools, tags, categories…" value={q} onValueChange={setQ} />
-      <CommandList>
-        <CommandEmpty>No tools match your search.</CommandEmpty>
-        <CommandGroup heading="Tools">
-          {results.map((t) => (
-            <CommandItem
-              key={t.slug}
-              value={`${t.name} ${t.keywords.join(" ")}`}
-              onSelect={() => {
-                onOpenChange(false);
-                window.location.assign(`/t/${t.slug}`);
-              }}
-              className="gap-2"
-            >
-              <t.icon className="size-4 opacity-70" />
-              <span>{t.name}</span>
-              <span className="ml-auto text-xs text-muted-foreground">{t.category}</span>
-            </CommandItem>
-          ))}
+      <CommandInput
+        placeholder="Search tools, categories, or actions…"
+        value={q}
+        onValueChange={setQ}
+      />
+      <CommandList className="max-h-[420px]">
+        <CommandEmpty>
+          <div className="py-6 text-center">
+            <div className="text-sm text-foreground">No matches</div>
+            <div className="text-xs text-muted-foreground mt-1">
+              Try a different keyword — {TOOLS.length} tools indexed.
+            </div>
+          </div>
+        </CommandEmpty>
+
+        {showQuick && hydrated && recentTools.length > 0 && (
+          <>
+            <CommandGroup heading="Recent">
+              {recentTools.map((t) => (
+                <ToolCommandItem
+                  key={`r-${t.slug}`}
+                  tool={t}
+                  onSelect={() => go(t.slug)}
+                  onFav={() => toggleFav(t.slug)}
+                  favored={isFav(t.slug)}
+                  hint={<Clock className="size-3.5" />}
+                />
+              ))}
+            </CommandGroup>
+            <CommandSeparator />
+          </>
+        )}
+
+        {showQuick && hydrated && favTools.length > 0 && (
+          <>
+            <CommandGroup heading="Favorites">
+              {favTools.map((t) => (
+                <ToolCommandItem
+                  key={`f-${t.slug}`}
+                  tool={t}
+                  onSelect={() => go(t.slug)}
+                  onFav={() => toggleFav(t.slug)}
+                  favored
+                  hint={<Star className="size-3.5 fill-current" />}
+                />
+              ))}
+            </CommandGroup>
+            <CommandSeparator />
+          </>
+        )}
+
+        {CATEGORIES.map((cat) => {
+          const tools = byCategory.get(cat.id) ?? [];
+          if (tools.length === 0) return null;
+          return (
+            <CommandGroup key={cat.id} heading={cat.label}>
+              {tools.map((t) => (
+                <ToolCommandItem
+                  key={t.slug}
+                  tool={t}
+                  onSelect={() => go(t.slug)}
+                  onFav={() => toggleFav(t.slug)}
+                  favored={hydrated && isFav(t.slug)}
+                />
+              ))}
+            </CommandGroup>
+          );
+        })}
+
+        <CommandSeparator />
+        <CommandGroup heading="Actions">
+          <CommandItem
+            value="go home dashboard"
+            onSelect={() => {
+              onOpenChange(false);
+              navigate({ to: "/" });
+            }}
+            className="gap-2"
+          >
+            <Home className="size-4 opacity-70" />
+            <span>Go to Home</span>
+            <span className="ml-auto text-[10px] text-muted-foreground font-mono">/</span>
+          </CommandItem>
+          <CommandItem
+            value="favorites bookmarks saved"
+            onSelect={() => {
+              onOpenChange(false);
+              navigate({ to: "/favorites" });
+            }}
+            className="gap-2"
+          >
+            <Star className="size-4 opacity-70" />
+            <span>Open Favorites</span>
+            <span className="ml-auto text-[10px] text-muted-foreground font-mono">/favorites</span>
+          </CommandItem>
+          <CommandItem
+            value="keyboard shortcuts help"
+            onSelect={() => {
+              onOpenChange(false);
+              onShowShortcuts();
+            }}
+            className="gap-2"
+          >
+            <Keyboard className="size-4 opacity-70" />
+            <span>Keyboard shortcuts</span>
+            <span className="ml-auto text-[10px] text-muted-foreground font-mono">?</span>
+          </CommandItem>
+          <CommandItem
+            value="github source repository"
+            onSelect={() => {
+              onOpenChange(false);
+              window.open("https://github.com", "_blank", "noreferrer");
+            }}
+            className="gap-2"
+          >
+            <Github className="size-4 opacity-70" />
+            <span>View on GitHub</span>
+            <ArrowRight className="ml-auto size-3.5 opacity-50" />
+          </CommandItem>
         </CommandGroup>
       </CommandList>
+
+      <div className="flex items-center justify-between gap-4 border-t border-border px-3 py-2 text-[11px] text-muted-foreground">
+        <div className="flex items-center gap-1.5">
+          <BrandMark size={14} />
+          <span className="font-medium">DevHub</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="flex items-center gap-1">
+            <CornerDownLeft className="size-3" /> open
+          </span>
+          <span className="flex items-center gap-1">
+            <kbd className="font-mono border border-border rounded px-1 py-px">↑↓</kbd>
+            navigate
+          </span>
+          <span className="flex items-center gap-1">
+            <kbd className="font-mono border border-border rounded px-1 py-px">esc</kbd>
+            close
+          </span>
+        </div>
+      </div>
     </CommandDialog>
+  );
+}
+
+function ToolCommandItem({
+  tool,
+  onSelect,
+  onFav,
+  favored,
+  hint,
+}: {
+  tool: (typeof TOOLS)[number];
+  onSelect: () => void;
+  onFav: () => void;
+  favored: boolean;
+  hint?: ReactNode;
+}) {
+  return (
+    <CommandItem
+      value={`${tool.name} ${tool.category} ${tool.keywords.join(" ")}`}
+      onSelect={onSelect}
+      className="gap-2.5 group"
+    >
+      <tool.icon className="size-4 opacity-70 shrink-0" />
+      <span className="truncate">{tool.name}</span>
+      <span className="hidden sm:inline text-[11px] text-muted-foreground truncate">
+        — {tool.description}
+      </span>
+      <span className="ml-auto flex items-center gap-2 shrink-0">
+        {hint}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            onFav();
+          }}
+          className="opacity-0 group-hover:opacity-100 data-[on=true]:opacity-100 grid place-items-center size-6 rounded hover:bg-accent text-muted-foreground hover:text-foreground transition"
+          data-on={favored}
+          aria-label={favored ? "Remove from favorites" : "Add to favorites"}
+          title={favored ? "Remove from favorites" : "Add to favorites"}
+        >
+          {favored ? <Star className="size-3.5 fill-current" /> : <StarOff className="size-3.5" />}
+        </button>
+      </span>
+    </CommandItem>
   );
 }
