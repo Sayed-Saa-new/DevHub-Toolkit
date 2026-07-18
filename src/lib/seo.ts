@@ -290,4 +290,10 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Convert JSON to TypeScript interfaces, type aliases or Zod schemas instantly. Handles nested objects, arrays, unions and nullables — free, in-browser.",
     keywords: ["json to typescript", "json to ts", "json to interface", "json to type", "json to zod", "typescript type generator", "quicktype alternative", "json schema to typescript"],
   },
+  "mock-data": {
+    title: "Mock Data Generator — Fake JSON, CSV & SQL Test Data",
+    description:
+      "Design a schema and generate realistic mock data as JSON, CSV, SQL INSERT, TypeScript or XML. Seedable, deterministic, and free — no signup.",
+    keywords: ["mock data generator", "fake data generator", "test data generator", "json generator", "csv generator", "sql insert generator", "seed data", "dummy data online", "faker alternative"],
+  },
 };

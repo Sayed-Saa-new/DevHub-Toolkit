@@ -16,6 +16,7 @@ import {
 } from "./ai";
 import { SchemaValidator } from "./schema-validator";
 import { JsonToTs } from "./json-to-ts";
+import { MockData } from "./mock-data";
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-formatter": JsonFormatter,
@@ -56,6 +57,7 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "string-escape": StringEscape,
   "schema-validator": SchemaValidator,
   "json-to-ts": JsonToTs,
+  "mock-data": MockData,
   "ai-explainer": AiExplainer,
   "ai-optimizer": AiOptimizer,
   "ai-commit": AiCommit,

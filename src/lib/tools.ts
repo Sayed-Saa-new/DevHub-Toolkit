@@ -6,7 +6,7 @@ import {
   MessageSquareCode, Lock, Type, CaseSensitive, FileJson, Table2,
   Calculator, GitCompare, AlignLeft, Code2, CalendarClock, Image,
   Link, Smile, Globe2, Database, Languages, Bug, ScanSearch, FlaskConical,
-  ShieldCheck,
+  ShieldCheck, Boxes,
 } from "lucide-react";
 
 export type Category =
@@ -85,6 +85,7 @@ export const TOOLS: Tool[] = [
   { slug: "string-escape", name: "String Escape", description: "Escape and unescape JSON / JS strings.", category: "converters", icon: Binary, keywords: ["escape", "unescape", "json string", "js string"] },
   { slug: "schema-validator", name: "Schema.org Validator", description: "Test JSON-LD structured data like Google Rich Results.", category: "editors", icon: ShieldCheck, keywords: ["schema", "json-ld", "structured data", "rich results", "seo", "google", "validator"] },
   { slug: "json-to-ts", name: "JSON → TypeScript", description: "Generate TypeScript interfaces, types, or Zod schemas from JSON.", category: "converters", icon: FileJson, keywords: ["json to typescript", "json to ts", "json to interface", "json to zod", "type generator", "quicktype"] },
+  { slug: "mock-data", name: "Mock Data Generator", description: "Design a schema and generate JSON, CSV, SQL, TS or XML mock data.", category: "generators", icon: Boxes, keywords: ["mock data", "fake data", "faker", "test data", "seed data", "dummy json", "json generator", "sql insert generator"] },
 ];
 
 export const TOOLS_BY_SLUG: Record<string, Tool> = Object.fromEntries(
