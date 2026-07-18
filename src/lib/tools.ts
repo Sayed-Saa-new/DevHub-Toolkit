@@ -6,6 +6,7 @@ import {
   MessageSquareCode, Lock, Type, CaseSensitive, FileJson, Table2,
   Calculator, GitCompare, AlignLeft, Code2, CalendarClock, Image,
   Link, Smile, Globe2, Database, Languages, Bug, ScanSearch, FlaskConical,
+  ShieldCheck,
 } from "lucide-react";
 
 export type Category =
