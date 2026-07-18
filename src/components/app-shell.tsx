@@ -49,7 +49,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-svh flex bg-background text-foreground">
       {/* Sidebar */}
-      <aside className="hidden md:flex w-64 shrink-0 flex-col border-r border-border bg-sidebar">
+      <aside className="hidden md:flex w-64 shrink-0 flex-col border-r border-border bg-sidebar sticky top-0 h-svh">
         <Link to="/" className="flex items-center gap-2 px-5 h-14 border-b border-sidebar-border">
           <div className="size-6 rounded-md bg-foreground text-background grid place-items-center text-[10px] font-bold">
             {"</>"}
