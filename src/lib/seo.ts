@@ -296,4 +296,10 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Design a schema and generate realistic mock data as JSON, CSV, SQL INSERT, TypeScript or XML. Seedable, deterministic, and free — no signup.",
     keywords: ["mock data generator", "fake data generator", "test data generator", "json generator", "csv generator", "sql insert generator", "seed data", "dummy data online", "faker alternative"],
   },
+  "curl-converter": {
+    title: "cURL to Code — fetch, axios, Python, Go, Rust & more",
+    description:
+      "Convert any curl command to fetch, axios, Node, Python requests, Go, PHP, Ruby, Rust, Java, C# or PowerShell. Paste, pick a language, copy — free.",
+    keywords: ["curl to code", "curl to fetch", "curl to axios", "curl to python", "curl to requests", "curl to go", "curl to php", "curl to c#", "curl converter online", "curl builder"],
+  },
 };
