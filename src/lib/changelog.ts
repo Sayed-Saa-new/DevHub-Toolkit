@@ -6,7 +6,6 @@ export interface ChangelogEntry {
   publishedAt: string; // ISO date
   summary?: string;
   tag?: string;
-  image?: string;
   html: string;
 }
 
@@ -56,7 +55,6 @@ export function getChangelogEntries(): ChangelogEntry[] {
       publishedAt: new Date(data.publishedAt).toISOString(),
       summary: data.summary,
       tag: data.tag,
-      image: data.image,
       html: marked.parse(body, { async: false }) as string,
     });
   }

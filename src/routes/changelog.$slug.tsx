@@ -61,7 +61,7 @@ function ChangelogEntryPage() {
   const next = idx > 0 ? all[idx - 1] : undefined;
 
   return (
-    <article className="mx-auto max-w-3xl px-4 md:px-6 py-14 md:py-20">
+    <article className="mx-auto max-w-3xl px-4 md:px-8 py-10 md:py-14">
       <Link
         to="/changelog"
         className="inline-flex items-center gap-1 text-xs font-mono uppercase tracking-wider text-muted-foreground hover:text-foreground"
@@ -69,7 +69,7 @@ function ChangelogEntryPage() {
         <ArrowLeft className="size-3" /> Changelog
       </Link>
 
-      <div className="mt-6 flex items-center gap-2 text-xs font-mono text-muted-foreground">
+      <div className="mt-5 flex items-center gap-2 text-xs font-mono text-muted-foreground">
         <time dateTime={entry.publishedAt}>
           {new Date(entry.publishedAt).toLocaleDateString("en-US", {
             month: "long",
@@ -84,31 +84,23 @@ function ChangelogEntryPage() {
         )}
       </div>
 
-      <h1 className="mt-3 text-balance text-3xl md:text-5xl font-medium leading-tight tracking-tight">
+      <h1 className="mt-3 text-balance text-2xl md:text-3xl font-semibold leading-tight tracking-tight">
         {entry.title}
       </h1>
 
-      {entry.image && (
-        <img
-          src={entry.image}
-          alt=""
-          className="mt-8 aspect-video w-full rounded-xl border border-border object-cover"
-        />
-      )}
-
       <div
-        className="prose prose-invert max-w-none mt-10"
+        className="prose prose-invert prose-sm max-w-none mt-8"
         dangerouslySetInnerHTML={{ __html: entry.html }}
       />
 
       {(prev || next) && (
-        <nav className="mt-16 grid grid-cols-2 gap-4 border-t border-dashed border-border pt-8 text-sm">
+        <nav className="mt-12 grid grid-cols-2 gap-3 border-t border-dashed border-border pt-6 text-sm">
           <div>
             {prev && (
               <Link
                 to="/changelog/$slug"
                 params={{ slug: prev.slug }}
-                className="block rounded-lg border border-border p-4 hover:bg-accent/40 transition"
+                className="block rounded-lg border border-border p-3 hover:bg-accent/40 transition"
               >
                 <div className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
                   ← Older
@@ -122,7 +114,7 @@ function ChangelogEntryPage() {
               <Link
                 to="/changelog/$slug"
                 params={{ slug: next.slug }}
-                className="block rounded-lg border border-border p-4 text-right hover:bg-accent/40 transition"
+                className="block rounded-lg border border-border p-3 text-right hover:bg-accent/40 transition"
               >
                 <div className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
                   Newer →
