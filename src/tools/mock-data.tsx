@@ -3,7 +3,6 @@ import { Plus, Trash2, RefreshCw, Shuffle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
@@ -356,5 +355,3 @@ function FieldRow({ field, onChange, onRemove }: { field: Field; onChange: (p: P
   );
 }
 
-// unused imports guard
-void Label;
