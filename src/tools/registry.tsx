@@ -14,6 +14,7 @@ import {
   AiExplainer, AiOptimizer, AiCommit,
   AiSql, AiConvert, AiErrorExplainer, AiRegex, AiTests,
 } from "./ai";
+import { SchemaValidator } from "./schema-validator";
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-formatter": JsonFormatter,
@@ -52,6 +53,7 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "image-base64": ImageBase64,
   "timezone": TimezoneConverter,
   "string-escape": StringEscape,
+  "schema-validator": SchemaValidator,
   "ai-explainer": AiExplainer,
   "ai-optimizer": AiOptimizer,
   "ai-commit": AiCommit,

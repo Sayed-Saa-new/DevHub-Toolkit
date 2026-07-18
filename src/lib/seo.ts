@@ -278,4 +278,10 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Escape and unescape JSON and JavaScript strings — quotes, newlines, unicode. Free online string escape tool.",
     keywords: ["json string escape", "javascript string escape", "unescape json", "escape string online", "js string escape"],
   },
+  "schema-validator": {
+    title: "Schema.org Validator — JSON-LD Structured Data Test",
+    description:
+      "Test JSON-LD structured data like Google Rich Results Test. Fetch a URL or paste HTML — see detected types, required-field errors and warnings.",
+    keywords: ["schema validator", "json-ld tester", "structured data test", "rich results test", "schema.org validator", "google rich results", "seo structured data"],
+  },
 };
