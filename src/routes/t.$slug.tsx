@@ -8,7 +8,7 @@ import { TOOL_COMPONENTS } from "@/tools/registry";
 export const Route = createFileRoute("/t/$slug")({
   head: ({ params }) => {
     const t = TOOLS_BY_SLUG[params.slug];
-    const base = "https://huggable-heart-helper-93.lovable.app";
+    const base = "https://devhub.flinkeo.online";
     const path = `/t/${params.slug}`;
     const url = `${base}${path}`;
     if (!t) {
@@ -28,6 +28,67 @@ export const Route = createFileRoute("/t/$slug")({
       ? seo.description
       : `${t.description} Free, fast, browser-based ${t.category} tool — no signup, no tracking, works in your browser.`;
     const keywords = (seo?.keywords ?? t.keywords).concat([t.name.toLowerCase(), `${t.name.toLowerCase()} online`, `free ${t.name.toLowerCase()}`]);
+    const ogImage = "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d73bcc09-2f60-409d-b833-91c82c156e5e/id-preview-aa9e0d77--6b271a1b-d2e8-44e0-909f-190eae9de463.lovable.app-1784378017742.png";
+    const categoryLabel = t.category.charAt(0).toUpperCase() + t.category.slice(1);
+    const softwareApp = {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "@id": `${url}#software`,
+      name: t.name,
+      alternateName: `${t.name} Online`,
+      description: desc,
+      url,
+      applicationCategory: "DeveloperApplication",
+      applicationSubCategory: categoryLabel,
+      operatingSystem: "Any (Web Browser)",
+      browserRequirements: "Requires JavaScript. Requires HTML5.",
+      inLanguage: "en",
+      isAccessibleForFree: true,
+      keywords: Array.from(new Set(keywords)).join(", "),
+      featureList: t.keywords,
+      image: ogImage,
+      softwareVersion: "1.0",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url,
+      },
+      author: { "@id": `${base}/#org` },
+      publisher: {
+        "@type": "Organization",
+        "@id": `${base}/#org`,
+        name: "DevHub Toolkit",
+        url: base,
+        logo: { "@type": "ImageObject", url: `${base}/favicon.svg` },
+      },
+    };
+    const breadcrumbs = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${base}/` },
+        { "@type": "ListItem", position: 2, name: categoryLabel, item: `${base}/?category=${t.category}` },
+        { "@type": "ListItem", position: 3, name: t.name, item: url },
+      ],
+    };
+    const nowIso = new Date().toISOString();
+    const webPage = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": url,
+      url,
+      name: title,
+      description: desc,
+      inLanguage: "en",
+      isPartOf: { "@id": `${base}/#website` },
+      primaryImageOfPage: { "@type": "ImageObject", url: ogImage },
+      about: { "@id": `${url}#software` },
+      breadcrumb: { "@id": `${url}#breadcrumbs` },
+      datePublished: "2026-07-01T00:00:00.000Z",
+      dateModified: nowIso,
+    };
     return {
       meta: [
         { title },
@@ -37,24 +98,21 @@ export const Route = createFileRoute("/t/$slug")({
         { property: "og:description", content: desc },
         { property: "og:type", content: "website" },
         { property: "og:url", content: url },
-        { name: "twitter:card", content: "summary" },
+        { property: "og:site_name", content: "DevHub Toolkit" },
+        { property: "og:image", content: ogImage },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        { property: "og:image:alt", content: `${t.name} — DevHub Toolkit` },
+        { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: desc },
+        { name: "twitter:image", content: ogImage },
       ],
       links: [{ rel: "canonical", href: url }],
       scripts: [
-        {
-          type: "application/ld+json",
-          children: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            name: t.name,
-            description: desc,
-            applicationCategory: "DeveloperApplication",
-            operatingSystem: "Any",
-            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-          }),
-        },
+        { type: "application/ld+json", children: JSON.stringify(softwareApp) },
+        { type: "application/ld+json", children: JSON.stringify({ ...breadcrumbs, "@id": `${url}#breadcrumbs` }) },
+        { type: "application/ld+json", children: JSON.stringify(webPage) },
       ],
     };
   },

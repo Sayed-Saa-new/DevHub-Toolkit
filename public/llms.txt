@@ -1,45 +1,72 @@
 # DevHub Toolkit
 
-> A fast, minimal, keyboard-first collection of 23 everyday developer utilities — formatters, encoders, generators, and references — in one clean interface.
+> 44 fast, keyboard-first developer utilities — formatters, encoders, generators, AI helpers, and references — in one clean interface.
 
-DevHub Toolkit is a browser-based developer productivity platform inspired by Vercel, Linear, and Raycast. All tools run client-side with no tracking.
+DevHub Toolkit is a browser-based developer productivity platform. All non-AI tools run client-side with no tracking. AI tools call Google Gemini via a server endpoint.
 
 ## Pages
 
-- [Home](/): Browse and search all tools by category.
-- [Favorites](/favorites): Your saved tools for quick access.
+- [Home](https://devhub.flinkeo.online/): Browse and search all tools.
+- [Favorites](https://devhub.flinkeo.online/favorites): Your saved tools.
 
 ## Converters
 
-- [Base64](/t/base64): Encode and decode Base64 strings.
-- [URL Encoder](/t/url-codec): Encode and decode URL components.
-- [JWT Decoder](/t/jwt-decoder): Decode and inspect JSON Web Tokens.
-- [Timestamp Converter](/t/timestamp): Convert Unix timestamps to dates.
+- [Base64](https://devhub.flinkeo.online/t/base64)
+- [URL Encoder](https://devhub.flinkeo.online/t/url-codec)
+- [JWT Decoder](https://devhub.flinkeo.online/t/jwt-decoder)
+- [Timestamp Converter](https://devhub.flinkeo.online/t/timestamp)
+- [Case Converter](https://devhub.flinkeo.online/t/case-converter)
+- [YAML ↔ JSON](https://devhub.flinkeo.online/t/yaml-json)
+- [CSV ↔ JSON](https://devhub.flinkeo.online/t/csv-json)
+- [Number Base](https://devhub.flinkeo.online/t/number-base)
+- [HTML Entities](https://devhub.flinkeo.online/t/html-entities)
+- [Slugify](https://devhub.flinkeo.online/t/slugify)
+- [Image → Base64](https://devhub.flinkeo.online/t/image-base64)
+- [Timezone Converter](https://devhub.flinkeo.online/t/timezone)
+- [String Escape](https://devhub.flinkeo.online/t/string-escape)
 
 ## Generators
 
-- [UUID Generator](/t/uuid): Generate v4 UUIDs in bulk.
-- [Hash Generator](/t/hash): MD5, SHA-1, SHA-256, SHA-512 hashes.
-- [QR Code Generator](/t/qrcode): Generate downloadable QR codes.
+- [UUID Generator](https://devhub.flinkeo.online/t/uuid)
+- [Hash Generator](https://devhub.flinkeo.online/t/hash)
+- [QR Code Generator](https://devhub.flinkeo.online/t/qrcode)
+- [Password Generator](https://devhub.flinkeo.online/t/password)
+- [Lorem Ipsum](https://devhub.flinkeo.online/t/lorem)
+- [Meta Tag Generator](https://devhub.flinkeo.online/t/meta-tags)
+- [Emoji Favicon](https://devhub.flinkeo.online/t/favicon)
 
 ## Design
 
-- [Color Converter](/t/color): Pick colors and convert HEX/RGB/HSL.
-- [Gradient Generator](/t/gradient): Design smooth CSS gradients.
-- [Box Shadow](/t/box-shadow): Craft layered CSS box-shadows.
-- [Border Radius](/t/border-radius): Visualize corner radius values.
+- [Color Converter](https://devhub.flinkeo.online/t/color)
+- [Gradient Generator](https://devhub.flinkeo.online/t/gradient)
+- [Box Shadow](https://devhub.flinkeo.online/t/box-shadow)
+- [Border Radius](https://devhub.flinkeo.online/t/border-radius)
 
 ## Editors
 
-- [JSON Formatter](/t/json-formatter): Format, validate, and minify JSON.
-- [Regex Tester](/t/regex): Test regular expressions with live matches.
-- [SVG Optimizer](/t/svg-optimizer): Minify SVG source code.
-- [Markdown Editor](/t/markdown): Write markdown with live preview.
-- [Playground](/t/playground): Live HTML/CSS/JS sandbox.
+- [JSON Formatter](https://devhub.flinkeo.online/t/json-formatter)
+- [Regex Tester](https://devhub.flinkeo.online/t/regex)
+- [SVG Optimizer](https://devhub.flinkeo.online/t/svg-optimizer)
+- [Markdown Editor](https://devhub.flinkeo.online/t/markdown)
+- [HTML/CSS/JS Playground](https://devhub.flinkeo.online/t/playground)
+- [Text Diff](https://devhub.flinkeo.online/t/text-diff)
+- [Text Statistics](https://devhub.flinkeo.online/t/text-stats)
 
 ## Reference
 
-- [HTTP Status Codes](/t/http-status): Every status code, explained.
-- [Git Cheat Sheet](/t/git-cheatsheet): Essential Git commands.
-- [Linux Commands](/t/linux-cheatsheet): Common Linux/Unix commands.
-- [VS Code Shortcuts](/t/vscode-shortcuts): Keyboard shortcuts reference.
+- [HTTP Status Codes](https://devhub.flinkeo.online/t/http-status)
+- [Git Cheat Sheet](https://devhub.flinkeo.online/t/git-cheatsheet)
+- [Linux Commands](https://devhub.flinkeo.online/t/linux-cheatsheet)
+- [VS Code Shortcuts](https://devhub.flinkeo.online/t/vscode-shortcuts)
+- [Cron Explainer](https://devhub.flinkeo.online/t/cron)
+
+## AI
+
+- [AI Code Explainer](https://devhub.flinkeo.online/t/ai-explainer)
+- [AI Code Optimizer](https://devhub.flinkeo.online/t/ai-optimizer)
+- [AI Commit Messages](https://devhub.flinkeo.online/t/ai-commit)
+- [AI SQL Generator](https://devhub.flinkeo.online/t/ai-sql)
+- [AI Code Converter](https://devhub.flinkeo.online/t/ai-convert)
+- [AI Error Explainer](https://devhub.flinkeo.online/t/ai-error)
+- [AI Regex Generator](https://devhub.flinkeo.online/t/ai-regex)
+- [AI Unit Test Generator](https://devhub.flinkeo.online/t/ai-tests)
