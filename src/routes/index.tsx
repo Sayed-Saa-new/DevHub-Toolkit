@@ -12,11 +12,8 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "DevHub Toolkit — 44 Free Online Developer Tools" },
-      { name: "description", content: "Free online JSON formatter, Base64 decoder, JWT decoder, UUID & hash generators, regex tester, QR codes, AI SQL & regex generators — 44 developer tools in one keystroke." },
       { name: "keywords", content: "developer tools online, free developer tools, all in one developer tools, json formatter online, base64 decoder online, jwt decoder, uuid generator, hash generator, regex tester online, qr code generator, ai sql generator, ai regex generator, ai code explainer, css gradient generator, box shadow generator, yaml to json, csv to json" },
       { property: "og:url", content: "https://huggable-heart-helper-93.lovable.app/" },
-      { property: "og:title", content: "DevHub Toolkit — 44 Free Online Developer Tools" },
       { property: "og:description", content: "Every developer utility you actually use — JSON, Base64, JWT, UUID, hashes, regex, QR, AI SQL and 35+ more. Fast, minimal, no signup." },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "DevHub Toolkit" },

@@ -9,7 +9,7 @@ export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: () => {
-        const paths = ["/", ...TOOLS.map((t) => `/t/${t.slug}`)];
+        const paths = ["/", "/favorites", ...TOOLS.map((t) => `/t/${t.slug}`)];
         const urls = paths.map(
           (p) =>
             `  <url>\n    <loc>${BASE_URL}${p}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>${p === "/" ? "1.0" : "0.7"}</priority>\n  </url>`,
