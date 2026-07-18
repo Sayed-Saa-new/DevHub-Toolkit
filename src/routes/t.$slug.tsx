@@ -2,6 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 
 import { ToolShell } from "@/components/tool-shell";
 import { TOOLS_BY_SLUG } from "@/lib/tools";
+import { TOOL_SEO } from "@/lib/seo";
 import { TOOL_COMPONENTS } from "@/tools/registry";
 
 export const Route = createFileRoute("/t/$slug")({
@@ -21,13 +22,17 @@ export const Route = createFileRoute("/t/$slug")({
         ],
       };
     }
-    const title = `${t.name} — DevHub Toolkit`;
-    const desc = `${t.description} Free, fast, browser-based ${t.category} tool on DevHub Toolkit — no signup, no tracking, works offline.`;
+    const seo = TOOL_SEO[params.slug];
+    const title = seo ? `${seo.title} · DevHub Toolkit` : `${t.name} — Free Online ${t.category} Tool · DevHub Toolkit`;
+    const desc = seo
+      ? seo.description
+      : `${t.description} Free, fast, browser-based ${t.category} tool — no signup, no tracking, works in your browser.`;
+    const keywords = (seo?.keywords ?? t.keywords).concat([t.name.toLowerCase(), `${t.name.toLowerCase()} online`, `free ${t.name.toLowerCase()}`]);
     return {
       meta: [
         { title },
         { name: "description", content: desc },
-        { name: "keywords", content: [t.name, t.category, ...(t.keywords ?? [])].join(", ") },
+        { name: "keywords", content: Array.from(new Set(keywords)).join(", ") },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "website" },
