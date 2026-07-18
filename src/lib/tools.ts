@@ -56,9 +56,9 @@ export const TOOLS: Tool[] = [
   { slug: "git-cheatsheet", name: "Git Cheat Sheet", description: "Essential Git commands.", category: "reference", icon: GitBranch, keywords: ["git", "cheat", "commands", "vcs"] },
   { slug: "linux-cheatsheet", name: "Linux Commands", description: "Common Linux/Unix commands.", category: "reference", icon: Terminal, keywords: ["linux", "bash", "shell", "unix"] },
   { slug: "vscode-shortcuts", name: "VS Code Shortcuts", description: "Keyboard shortcuts reference.", category: "reference", icon: Keyboard, keywords: ["vscode", "shortcuts", "editor"] },
-  { slug: "ai-explainer", name: "AI Code Explainer", description: "Explain any code snippet.", category: "ai", icon: Sparkles, keywords: ["ai", "explain", "code"], status: "soon" },
-  { slug: "ai-optimizer", name: "AI Code Optimizer", description: "Suggest performance improvements.", category: "ai", icon: Zap, keywords: ["ai", "optimize", "refactor"], status: "soon" },
-  { slug: "ai-commit", name: "AI Commit Messages", description: "Generate conventional commit messages.", category: "ai", icon: MessageSquareCode, keywords: ["ai", "git", "commit", "conventional"], status: "soon" },
+  { slug: "ai-explainer", name: "AI Code Explainer", description: "Explain any code snippet.", category: "ai", icon: Sparkles, keywords: ["ai", "explain", "code"] },
+  { slug: "ai-optimizer", name: "AI Code Optimizer", description: "Suggest performance improvements.", category: "ai", icon: Zap, keywords: ["ai", "optimize", "refactor"] },
+  { slug: "ai-commit", name: "AI Commit Messages", description: "Generate conventional commit messages.", category: "ai", icon: MessageSquareCode, keywords: ["ai", "git", "commit", "conventional"] },
 
   // ---- Upgraded extras ----
   { slug: "password", name: "Password Generator", description: "Cryptographically strong passwords with entropy meter.", category: "generators", icon: Lock, keywords: ["password", "secure", "random", "entropy"] },
