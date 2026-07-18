@@ -127,11 +127,8 @@ export function AppShell({ children }: { children: ReactNode }) {
           >
             <Menu className="size-5" />
           </button>
-          <Link to="/" className="md:hidden flex items-center gap-2">
-            <div className="size-6 rounded-md bg-foreground text-background grid place-items-center text-[10px] font-bold">
-              {"</>"}
-            </div>
-            <span className="font-semibold">DevHub</span>
+          <Link to="/" className="md:hidden" aria-label="DevHub Toolkit — Home">
+            <BrandLockup />
           </Link>
           <button
             onClick={() => setOpen(true)}
@@ -194,11 +191,15 @@ function SidebarNav({
 }) {
   return (
     <>
-      <Link to="/" className="flex items-center gap-2 px-5 h-14 border-b border-sidebar-border">
-        <div className="size-6 rounded-md bg-foreground text-background grid place-items-center text-[10px] font-bold">
-          {"</>"}
-        </div>
-        <span className="font-semibold tracking-tight">DevHub</span>
+      <Link
+        to="/"
+        aria-label="DevHub Toolkit — Home"
+        className="group flex items-center gap-2.5 px-5 h-14 border-b border-sidebar-border transition-colors hover:bg-accent/40"
+      >
+        <BrandMark size={28} className="text-foreground transition-transform group-hover:scale-105" />
+        <span className="font-semibold tracking-tight text-[15px]">
+          Dev<span className="text-muted-foreground">Hub</span>
+        </span>
         <Badge variant="secondary" className="ml-auto text-[10px] font-mono">v1</Badge>
       </Link>
 
