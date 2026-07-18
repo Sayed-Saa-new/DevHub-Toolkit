@@ -49,7 +49,7 @@ export const Route = createFileRoute("/api/ai")({
         const system = SYSTEM[mode] ?? SYSTEM.explain;
 
         const google = createGeminiProvider(key);
-        const model = google("gemini-2.0-flash-exp");
+        const model = google("gemini-flash-latest");
 
         const messages: UIMessage[] = body.messages ?? [
           {
