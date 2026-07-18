@@ -270,12 +270,10 @@ export function CsvJsonConverter() {
 // ---------- Number Base Converter ----------
 export function NumberBase() {
   const [dec, setDec] = useState("255");
-  const [err, setErr] = useState<string | null>(null);
-  const n = useMemo(() => {
+  const { n, err } = useMemo(() => {
     const v = Number(dec);
-    if (!Number.isFinite(v) || !Number.isInteger(v) || v < 0) { setErr("Enter a non-negative integer"); return null; }
-    setErr(null);
-    return v;
+    if (!Number.isFinite(v) || !Number.isInteger(v) || v < 0) return { n: null as number | null, err: "Enter a non-negative integer" };
+    return { n: v, err: null as string | null };
   }, [dec]);
 
   const rows: [string, string][] = n == null ? [] : [
