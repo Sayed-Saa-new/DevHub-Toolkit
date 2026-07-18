@@ -11,8 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as FavoritesRouteImport } from './routes/favorites'
+import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TSlugRouteImport } from './routes/t.$slug'
+import { Route as ChangelogSlugRouteImport } from './routes/changelog.$slug'
 import { Route as ApiAiRouteImport } from './routes/api/ai'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -25,6 +27,11 @@ const FavoritesRoute = FavoritesRouteImport.update({
   path: '/favorites',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChangelogRoute = ChangelogRouteImport.update({
+  id: '/changelog',
+  path: '/changelog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -35,6 +42,11 @@ const TSlugRoute = TSlugRouteImport.update({
   path: '/t/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChangelogSlugRoute = ChangelogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ChangelogRoute,
+} as any)
 const ApiAiRoute = ApiAiRouteImport.update({
   id: '/api/ai',
   path: '/api/ai',
@@ -43,36 +55,65 @@ const ApiAiRoute = ApiAiRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/changelog': typeof ChangelogRouteWithChildren
   '/favorites': typeof FavoritesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/ai': typeof ApiAiRoute
+  '/changelog/$slug': typeof ChangelogSlugRoute
   '/t/$slug': typeof TSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/changelog': typeof ChangelogRouteWithChildren
   '/favorites': typeof FavoritesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/ai': typeof ApiAiRoute
+  '/changelog/$slug': typeof ChangelogSlugRoute
   '/t/$slug': typeof TSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/changelog': typeof ChangelogRouteWithChildren
   '/favorites': typeof FavoritesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/ai': typeof ApiAiRoute
+  '/changelog/$slug': typeof ChangelogSlugRoute
   '/t/$slug': typeof TSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/favorites' | '/sitemap.xml' | '/api/ai' | '/t/$slug'
+  fullPaths:
+    | '/'
+    | '/changelog'
+    | '/favorites'
+    | '/sitemap.xml'
+    | '/api/ai'
+    | '/changelog/$slug'
+    | '/t/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/favorites' | '/sitemap.xml' | '/api/ai' | '/t/$slug'
-  id: '__root__' | '/' | '/favorites' | '/sitemap.xml' | '/api/ai' | '/t/$slug'
+  to:
+    | '/'
+    | '/changelog'
+    | '/favorites'
+    | '/sitemap.xml'
+    | '/api/ai'
+    | '/changelog/$slug'
+    | '/t/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/changelog'
+    | '/favorites'
+    | '/sitemap.xml'
+    | '/api/ai'
+    | '/changelog/$slug'
+    | '/t/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChangelogRoute: typeof ChangelogRouteWithChildren
   FavoritesRoute: typeof FavoritesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiAiRoute: typeof ApiAiRoute
@@ -95,6 +136,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FavoritesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/changelog': {
+      id: '/changelog'
+      path: '/changelog'
+      fullPath: '/changelog'
+      preLoaderRoute: typeof ChangelogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -109,6 +157,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/changelog/$slug': {
+      id: '/changelog/$slug'
+      path: '/$slug'
+      fullPath: '/changelog/$slug'
+      preLoaderRoute: typeof ChangelogSlugRouteImport
+      parentRoute: typeof ChangelogRoute
+    }
     '/api/ai': {
       id: '/api/ai'
       path: '/api/ai'
@@ -119,8 +174,21 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ChangelogRouteChildren {
+  ChangelogSlugRoute: typeof ChangelogSlugRoute
+}
+
+const ChangelogRouteChildren: ChangelogRouteChildren = {
+  ChangelogSlugRoute: ChangelogSlugRoute,
+}
+
+const ChangelogRouteWithChildren = ChangelogRoute._addFileChildren(
+  ChangelogRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChangelogRoute: ChangelogRouteWithChildren,
   FavoritesRoute: FavoritesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiAiRoute: ApiAiRoute,

@@ -11,6 +11,7 @@ import {
   Home,
   CornerDownLeft,
   StarOff,
+  Rss,
 } from "lucide-react";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 
@@ -156,6 +157,11 @@ export function AppShell({ children }: { children: ReactNode }) {
           <Link to="/favorites" className="hidden sm:block">
             <Button variant="ghost" size="sm" className="gap-2">
               <Star className="size-3.5" /> Favorites
+            </Button>
+          </Link>
+          <Link to="/changelog" className="hidden sm:block">
+            <Button variant="ghost" size="sm" className="gap-2">
+              <Rss className="size-3.5" /> Changelog
             </Button>
           </Link>
           <Button
