@@ -5,7 +5,7 @@ import {
   PlayCircle, Globe, GitBranch, Terminal, Keyboard, Sparkles, Zap,
   MessageSquareCode, Lock, Type, CaseSensitive, FileJson, Table2,
   Calculator, GitCompare, AlignLeft, Code2, CalendarClock, Image,
-  Link, Smile, Globe2,
+  Link, Smile, Globe2, Database, Languages, Bug, ScanSearch, FlaskConical,
 } from "lucide-react";
 
 export type Category =
@@ -59,6 +59,11 @@ export const TOOLS: Tool[] = [
   { slug: "ai-explainer", name: "AI Code Explainer", description: "Explain any code snippet.", category: "ai", icon: Sparkles, keywords: ["ai", "explain", "code"] },
   { slug: "ai-optimizer", name: "AI Code Optimizer", description: "Suggest performance improvements.", category: "ai", icon: Zap, keywords: ["ai", "optimize", "refactor"] },
   { slug: "ai-commit", name: "AI Commit Messages", description: "Generate conventional commit messages.", category: "ai", icon: MessageSquareCode, keywords: ["ai", "git", "commit", "conventional"] },
+  { slug: "ai-sql", name: "AI SQL Generator", description: "Natural language → SQL queries.", category: "ai", icon: Database, keywords: ["ai", "sql", "query", "database", "postgres", "text2sql"] },
+  { slug: "ai-convert", name: "AI Code Converter", description: "Translate code between languages.", category: "ai", icon: Languages, keywords: ["ai", "convert", "translate", "python", "typescript", "language"] },
+  { slug: "ai-error", name: "AI Error Explainer", description: "Paste a stack trace, get a plain-English fix.", category: "ai", icon: Bug, keywords: ["ai", "error", "debug", "stack trace", "fix"] },
+  { slug: "ai-regex", name: "AI Regex Generator", description: "Describe a pattern, get a regex.", category: "ai", icon: ScanSearch, keywords: ["ai", "regex", "pattern", "generate"] },
+  { slug: "ai-tests", name: "AI Unit Test Generator", description: "Generate Vitest test suites from a function.", category: "ai", icon: FlaskConical, keywords: ["ai", "tests", "unit", "vitest", "jest", "tdd"] },
 
   // ---- Upgraded extras ----
   { slug: "password", name: "Password Generator", description: "Cryptographically strong passwords with entropy meter.", category: "generators", icon: Lock, keywords: ["password", "secure", "random", "entropy"] },
