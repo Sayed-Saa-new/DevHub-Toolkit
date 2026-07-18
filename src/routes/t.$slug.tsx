@@ -28,6 +28,7 @@ export const Route = createFileRoute("/t/$slug")({
       ? seo.description
       : `${t.description} Free, fast, browser-based ${t.category} tool — no signup, no tracking, works in your browser.`;
     const keywords = (seo?.keywords ?? t.keywords).concat([t.name.toLowerCase(), `${t.name.toLowerCase()} online`, `free ${t.name.toLowerCase()}`]);
+    const ogImage = "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d73bcc09-2f60-409d-b833-91c82c156e5e/id-preview-aa9e0d77--6b271a1b-d2e8-44e0-909f-190eae9de463.lovable.app-1784378017742.png";
     return {
       meta: [
         { title },
@@ -37,9 +38,15 @@ export const Route = createFileRoute("/t/$slug")({
         { property: "og:description", content: desc },
         { property: "og:type", content: "website" },
         { property: "og:url", content: url },
-        { name: "twitter:card", content: "summary" },
+        { property: "og:site_name", content: "DevHub Toolkit" },
+        { property: "og:image", content: ogImage },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        { property: "og:image:alt", content: `${t.name} — DevHub Toolkit` },
+        { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: desc },
+        { name: "twitter:image", content: ogImage },
       ],
       links: [{ rel: "canonical", href: url }],
       scripts: [
