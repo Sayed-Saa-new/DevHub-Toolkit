@@ -553,7 +553,7 @@ export function ImageBase64() {
       {data && (
         <div className="grid md:grid-cols-[240px_1fr] gap-4">
           <div className="rounded-xl border border-border p-3 bg-card grid place-items-center">
-            <img src={data} alt={`Uploaded image preview${name ? `: ${name.replace(/\.[^.]+$/, "")}` : ""}`} className="max-h-[220px] rounded" />
+            <img src={data} alt={name} className="max-h-[220px] rounded" />
           </div>
           <div className="space-y-3">
             <Panel title={`Data URL — ${(data.length / 1024).toFixed(1)} KB`} actions={<CopyButton text={data} />}>

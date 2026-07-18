@@ -1,6 +1,6 @@
 /* TEAM */
   Site: DevHub Toolkit
-  URL: https://huggable-heart-helper-93.lovable.app
+  URL: https://devhub.flinkeo.online
   Contact: hello [at] flinkeo.online
 
 /* SITE */

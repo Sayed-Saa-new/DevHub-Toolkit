@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /favorites
 
-Sitemap: https://huggable-heart-helper-93.lovable.app/sitemap.xml
+Sitemap: https://devhub.flinkeo.online/sitemap.xml

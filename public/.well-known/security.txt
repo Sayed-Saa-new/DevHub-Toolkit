@@ -1,4 +1,4 @@
 Contact: mailto:security@flinkeo.online
 Expires: 2027-12-31T23:59:59.000Z
 Preferred-Languages: en, bn
-Canonical: https://huggable-heart-helper-93.lovable.app/.well-known/security.txt
+Canonical: https://devhub.flinkeo.online/.well-known/security.txt

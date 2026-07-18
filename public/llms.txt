@@ -6,67 +6,67 @@ DevHub Toolkit is a browser-based developer productivity platform. All non-AI to
 
 ## Pages
 
-- [Home](https://huggable-heart-helper-93.lovable.app/): Browse and search all tools.
-- [Favorites](https://huggable-heart-helper-93.lovable.app/favorites): Your saved tools.
+- [Home](https://devhub.flinkeo.online/): Browse and search all tools.
+- [Favorites](https://devhub.flinkeo.online/favorites): Your saved tools.
 
 ## Converters
 
-- [Base64](https://huggable-heart-helper-93.lovable.app/t/base64)
-- [URL Encoder](https://huggable-heart-helper-93.lovable.app/t/url-codec)
-- [JWT Decoder](https://huggable-heart-helper-93.lovable.app/t/jwt-decoder)
-- [Timestamp Converter](https://huggable-heart-helper-93.lovable.app/t/timestamp)
-- [Case Converter](https://huggable-heart-helper-93.lovable.app/t/case-converter)
-- [YAML ↔ JSON](https://huggable-heart-helper-93.lovable.app/t/yaml-json)
-- [CSV ↔ JSON](https://huggable-heart-helper-93.lovable.app/t/csv-json)
-- [Number Base](https://huggable-heart-helper-93.lovable.app/t/number-base)
-- [HTML Entities](https://huggable-heart-helper-93.lovable.app/t/html-entities)
-- [Slugify](https://huggable-heart-helper-93.lovable.app/t/slugify)
-- [Image → Base64](https://huggable-heart-helper-93.lovable.app/t/image-base64)
-- [Timezone Converter](https://huggable-heart-helper-93.lovable.app/t/timezone)
-- [String Escape](https://huggable-heart-helper-93.lovable.app/t/string-escape)
+- [Base64](https://devhub.flinkeo.online/t/base64)
+- [URL Encoder](https://devhub.flinkeo.online/t/url-codec)
+- [JWT Decoder](https://devhub.flinkeo.online/t/jwt-decoder)
+- [Timestamp Converter](https://devhub.flinkeo.online/t/timestamp)
+- [Case Converter](https://devhub.flinkeo.online/t/case-converter)
+- [YAML ↔ JSON](https://devhub.flinkeo.online/t/yaml-json)
+- [CSV ↔ JSON](https://devhub.flinkeo.online/t/csv-json)
+- [Number Base](https://devhub.flinkeo.online/t/number-base)
+- [HTML Entities](https://devhub.flinkeo.online/t/html-entities)
+- [Slugify](https://devhub.flinkeo.online/t/slugify)
+- [Image → Base64](https://devhub.flinkeo.online/t/image-base64)
+- [Timezone Converter](https://devhub.flinkeo.online/t/timezone)
+- [String Escape](https://devhub.flinkeo.online/t/string-escape)
 
 ## Generators
 
-- [UUID Generator](https://huggable-heart-helper-93.lovable.app/t/uuid)
-- [Hash Generator](https://huggable-heart-helper-93.lovable.app/t/hash)
-- [QR Code Generator](https://huggable-heart-helper-93.lovable.app/t/qrcode)
-- [Password Generator](https://huggable-heart-helper-93.lovable.app/t/password)
-- [Lorem Ipsum](https://huggable-heart-helper-93.lovable.app/t/lorem)
-- [Meta Tag Generator](https://huggable-heart-helper-93.lovable.app/t/meta-tags)
-- [Emoji Favicon](https://huggable-heart-helper-93.lovable.app/t/favicon)
+- [UUID Generator](https://devhub.flinkeo.online/t/uuid)
+- [Hash Generator](https://devhub.flinkeo.online/t/hash)
+- [QR Code Generator](https://devhub.flinkeo.online/t/qrcode)
+- [Password Generator](https://devhub.flinkeo.online/t/password)
+- [Lorem Ipsum](https://devhub.flinkeo.online/t/lorem)
+- [Meta Tag Generator](https://devhub.flinkeo.online/t/meta-tags)
+- [Emoji Favicon](https://devhub.flinkeo.online/t/favicon)
 
 ## Design
 
-- [Color Converter](https://huggable-heart-helper-93.lovable.app/t/color)
-- [Gradient Generator](https://huggable-heart-helper-93.lovable.app/t/gradient)
-- [Box Shadow](https://huggable-heart-helper-93.lovable.app/t/box-shadow)
-- [Border Radius](https://huggable-heart-helper-93.lovable.app/t/border-radius)
+- [Color Converter](https://devhub.flinkeo.online/t/color)
+- [Gradient Generator](https://devhub.flinkeo.online/t/gradient)
+- [Box Shadow](https://devhub.flinkeo.online/t/box-shadow)
+- [Border Radius](https://devhub.flinkeo.online/t/border-radius)
 
 ## Editors
 
-- [JSON Formatter](https://huggable-heart-helper-93.lovable.app/t/json-formatter)
-- [Regex Tester](https://huggable-heart-helper-93.lovable.app/t/regex)
-- [SVG Optimizer](https://huggable-heart-helper-93.lovable.app/t/svg-optimizer)
-- [Markdown Editor](https://huggable-heart-helper-93.lovable.app/t/markdown)
-- [HTML/CSS/JS Playground](https://huggable-heart-helper-93.lovable.app/t/playground)
-- [Text Diff](https://huggable-heart-helper-93.lovable.app/t/text-diff)
-- [Text Statistics](https://huggable-heart-helper-93.lovable.app/t/text-stats)
+- [JSON Formatter](https://devhub.flinkeo.online/t/json-formatter)
+- [Regex Tester](https://devhub.flinkeo.online/t/regex)
+- [SVG Optimizer](https://devhub.flinkeo.online/t/svg-optimizer)
+- [Markdown Editor](https://devhub.flinkeo.online/t/markdown)
+- [HTML/CSS/JS Playground](https://devhub.flinkeo.online/t/playground)
+- [Text Diff](https://devhub.flinkeo.online/t/text-diff)
+- [Text Statistics](https://devhub.flinkeo.online/t/text-stats)
 
 ## Reference
 
-- [HTTP Status Codes](https://huggable-heart-helper-93.lovable.app/t/http-status)
-- [Git Cheat Sheet](https://huggable-heart-helper-93.lovable.app/t/git-cheatsheet)
-- [Linux Commands](https://huggable-heart-helper-93.lovable.app/t/linux-cheatsheet)
-- [VS Code Shortcuts](https://huggable-heart-helper-93.lovable.app/t/vscode-shortcuts)
-- [Cron Explainer](https://huggable-heart-helper-93.lovable.app/t/cron)
+- [HTTP Status Codes](https://devhub.flinkeo.online/t/http-status)
+- [Git Cheat Sheet](https://devhub.flinkeo.online/t/git-cheatsheet)
+- [Linux Commands](https://devhub.flinkeo.online/t/linux-cheatsheet)
+- [VS Code Shortcuts](https://devhub.flinkeo.online/t/vscode-shortcuts)
+- [Cron Explainer](https://devhub.flinkeo.online/t/cron)
 
 ## AI
 
-- [AI Code Explainer](https://huggable-heart-helper-93.lovable.app/t/ai-explainer)
-- [AI Code Optimizer](https://huggable-heart-helper-93.lovable.app/t/ai-optimizer)
-- [AI Commit Messages](https://huggable-heart-helper-93.lovable.app/t/ai-commit)
-- [AI SQL Generator](https://huggable-heart-helper-93.lovable.app/t/ai-sql)
-- [AI Code Converter](https://huggable-heart-helper-93.lovable.app/t/ai-convert)
-- [AI Error Explainer](https://huggable-heart-helper-93.lovable.app/t/ai-error)
-- [AI Regex Generator](https://huggable-heart-helper-93.lovable.app/t/ai-regex)
-- [AI Unit Test Generator](https://huggable-heart-helper-93.lovable.app/t/ai-tests)
+- [AI Code Explainer](https://devhub.flinkeo.online/t/ai-explainer)
+- [AI Code Optimizer](https://devhub.flinkeo.online/t/ai-optimizer)
+- [AI Commit Messages](https://devhub.flinkeo.online/t/ai-commit)
+- [AI SQL Generator](https://devhub.flinkeo.online/t/ai-sql)
+- [AI Code Converter](https://devhub.flinkeo.online/t/ai-convert)
+- [AI Error Explainer](https://devhub.flinkeo.online/t/ai-error)
+- [AI Regex Generator](https://devhub.flinkeo.online/t/ai-regex)
+- [AI Unit Test Generator](https://devhub.flinkeo.online/t/ai-tests)

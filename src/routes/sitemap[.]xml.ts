@@ -3,14 +3,12 @@ import type {} from "@tanstack/react-start";
 
 import { TOOLS } from "@/lib/tools";
 
-const BASE_URL = "https://huggable-heart-helper-93.lovable.app";
+const BASE_URL = "https://devhub.flinkeo.online";
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: () => {
-        // /favorites is intentionally excluded (noindex + Disallow in robots.txt).
-        // /api/* endpoints are not user-facing pages.
         const paths = ["/", ...TOOLS.map((t) => `/t/${t.slug}`)];
         const urls = paths.map(
           (p) =>

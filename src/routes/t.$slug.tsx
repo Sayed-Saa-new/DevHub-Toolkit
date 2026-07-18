@@ -8,7 +8,7 @@ import { TOOL_COMPONENTS } from "@/tools/registry";
 export const Route = createFileRoute("/t/$slug")({
   head: ({ params }) => {
     const t = TOOLS_BY_SLUG[params.slug];
-    const base = "https://huggable-heart-helper-93.lovable.app";
+    const base = "https://devhub.flinkeo.online";
     const path = `/t/${params.slug}`;
     const url = `${base}${path}`;
     if (!t) {
