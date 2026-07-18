@@ -29,6 +29,55 @@ export const Route = createFileRoute("/t/$slug")({
       : `${t.description} Free, fast, browser-based ${t.category} tool — no signup, no tracking, works in your browser.`;
     const keywords = (seo?.keywords ?? t.keywords).concat([t.name.toLowerCase(), `${t.name.toLowerCase()} online`, `free ${t.name.toLowerCase()}`]);
     const ogImage = "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d73bcc09-2f60-409d-b833-91c82c156e5e/id-preview-aa9e0d77--6b271a1b-d2e8-44e0-909f-190eae9de463.lovable.app-1784378017742.png";
+    const categoryLabel = t.category.charAt(0).toUpperCase() + t.category.slice(1);
+    const softwareApp = {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "@id": `${url}#software`,
+      name: t.name,
+      alternateName: `${t.name} Online`,
+      description: desc,
+      url,
+      applicationCategory: "DeveloperApplication",
+      applicationSubCategory: categoryLabel,
+      operatingSystem: "Any (Web Browser)",
+      browserRequirements: "Requires JavaScript. Requires HTML5.",
+      inLanguage: "en",
+      isAccessibleForFree: true,
+      keywords: Array.from(new Set(keywords)).join(", "),
+      featureList: t.keywords,
+      image: ogImage,
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      publisher: {
+        "@type": "Organization",
+        "@id": `${base}/#org`,
+        name: "DevHub Toolkit",
+        url: base,
+        logo: { "@type": "ImageObject", url: `${base}/favicon.svg` },
+      },
+    };
+    const breadcrumbs = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${base}/` },
+        { "@type": "ListItem", position: 2, name: categoryLabel, item: `${base}/?category=${t.category}` },
+        { "@type": "ListItem", position: 3, name: t.name, item: url },
+      ],
+    };
+    const webPage = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": url,
+      url,
+      name: title,
+      description: desc,
+      inLanguage: "en",
+      isPartOf: { "@type": "WebSite", "@id": `${base}/#website`, name: "DevHub Toolkit", url: base },
+      primaryImageOfPage: { "@type": "ImageObject", url: ogImage },
+      about: { "@id": `${url}#software` },
+      breadcrumb: { "@id": `${url}#breadcrumbs` },
+    };
     return {
       meta: [
         { title },
@@ -50,18 +99,9 @@ export const Route = createFileRoute("/t/$slug")({
       ],
       links: [{ rel: "canonical", href: url }],
       scripts: [
-        {
-          type: "application/ld+json",
-          children: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            name: t.name,
-            description: desc,
-            applicationCategory: "DeveloperApplication",
-            operatingSystem: "Any",
-            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-          }),
-        },
+        { type: "application/ld+json", children: JSON.stringify(softwareApp) },
+        { type: "application/ld+json", children: JSON.stringify({ ...breadcrumbs, "@id": `${url}#breadcrumbs` }) },
+        { type: "application/ld+json", children: JSON.stringify(webPage) },
       ],
     };
   },
