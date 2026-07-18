@@ -8,7 +8,15 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { CopyButton, Field, Panel } from "./primitives";
 
-type Mode = "explain" | "optimize" | "commit";
+type Mode =
+  | "explain"
+  | "optimize"
+  | "commit"
+  | "sql"
+  | "convert"
+  | "error"
+  | "regex"
+  | "tests";
 
 function extractText(messages: UIMessage[]): string {
   const last = [...messages].reverse().find((m) => m.role === "assistant");
@@ -172,6 +180,68 @@ export function AiCommit() {
       submitLabel="Generate commit"
       outputTitle="Commit message"
       inputRows={10}
+    />
+  );
+}
+
+export function AiSql() {
+  return (
+    <AiWorkbench
+      mode="sql"
+      inputTitle="Describe the query"
+      placeholder={"Top 10 users by total order value in the last 30 days, joined with their country."}
+      submitLabel="Generate SQL"
+      outputTitle="SQL query"
+      inputRows={8}
+    />
+  );
+}
+
+export function AiConvert() {
+  return (
+    <AiWorkbench
+      mode="convert"
+      inputTitle="Paste code + target language"
+      placeholder={"// from: python to: typescript\ndef fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a"}
+      submitLabel="Convert"
+      outputTitle="Translated code"
+    />
+  );
+}
+
+export function AiErrorExplainer() {
+  return (
+    <AiWorkbench
+      mode="error"
+      inputTitle="Paste error message or stack trace"
+      placeholder={"TypeError: Cannot read properties of undefined (reading 'map')\n    at UserList (UserList.tsx:14:22)\n    ..."}
+      submitLabel="Explain error"
+      outputTitle="Diagnosis & fix"
+    />
+  );
+}
+
+export function AiRegex() {
+  return (
+    <AiWorkbench
+      mode="regex"
+      inputTitle="Describe the pattern"
+      placeholder={"Match a valid international phone number starting with + followed by 8 to 15 digits."}
+      submitLabel="Generate regex"
+      outputTitle="Regex pattern"
+      inputRows={6}
+    />
+  );
+}
+
+export function AiTests() {
+  return (
+    <AiWorkbench
+      mode="tests"
+      inputTitle="Paste function or module"
+      placeholder={"export function slugify(input: string): string {\n  return input.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');\n}"}
+      submitLabel="Generate tests"
+      outputTitle="Test file (Vitest)"
     />
   );
 }

@@ -10,7 +10,10 @@ import {
   NumberBase, TextDiff, TextStats, HtmlEntities, CronExplainer, MetaTagGenerator,
   Slugify, FaviconGenerator, ImageBase64, TimezoneConverter, StringEscape,
 } from "./extras";
-import { AiExplainer, AiOptimizer, AiCommit } from "./ai";
+import {
+  AiExplainer, AiOptimizer, AiCommit,
+  AiSql, AiConvert, AiErrorExplainer, AiRegex, AiTests,
+} from "./ai";
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-formatter": JsonFormatter,
@@ -52,4 +55,9 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "ai-explainer": AiExplainer,
   "ai-optimizer": AiOptimizer,
   "ai-commit": AiCommit,
+  "ai-sql": AiSql,
+  "ai-convert": AiConvert,
+  "ai-error": AiErrorExplainer,
+  "ai-regex": AiRegex,
+  "ai-tests": AiTests,
 };
