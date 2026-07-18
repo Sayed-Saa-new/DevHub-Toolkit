@@ -2,6 +2,7 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { Loader2, Send, Sparkles, StopCircle } from "lucide-react";
 import { useMemo, useState } from "react";
+import { marked } from "marked";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -51,6 +52,15 @@ function AiWorkbench({
   const [input, setInput] = useState("");
   const busy = status === "submitted" || status === "streaming";
   const output = extractText(messages);
+  const isCommit = mode === "commit";
+  const html = useMemo(() => {
+    if (isCommit || !output) return "";
+    try {
+      return marked.parse(output, { async: false, gfm: true, breaks: true }) as string;
+    } catch {
+      return "";
+    }
+  }, [output, isCommit]);
 
   const onRun = () => {
     const text = input.trim();
@@ -107,9 +117,16 @@ function AiWorkbench({
       >
         <div className="p-4 min-h-64 max-h-[600px] overflow-auto">
           {output ? (
-            <pre className="whitespace-pre-wrap break-words font-mono text-[13px] leading-relaxed">
-              {output}
-            </pre>
+            isCommit ? (
+              <pre className="whitespace-pre-wrap break-words font-mono text-[13px] leading-relaxed">
+                {output}
+              </pre>
+            ) : (
+              <div
+                className="prose-md"
+                dangerouslySetInnerHTML={{ __html: html }}
+              />
+            )
           ) : (
             <div className="text-sm text-muted-foreground flex items-center gap-2 h-full">
               <Sparkles className="size-4 opacity-60" />
