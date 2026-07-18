@@ -1,0 +1,10 @@
+/* TEAM */
+  Site: DevHub Toolkit
+  URL: https://devhub.flinkeo.online
+  Contact: hello [at] flinkeo.online
+
+/* SITE */
+  Last update: 2026/07/18
+  Standards: HTML5, CSS3, ES2024
+  Components: TanStack Start, React 19, Tailwind CSS v4, shadcn/ui
+  Software: Vite, Bun, Cloudflare Workers
