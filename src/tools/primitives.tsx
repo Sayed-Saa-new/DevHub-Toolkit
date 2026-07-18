@@ -9,7 +9,7 @@ export function Panel({ title, actions, children, className }: { title?: string;
     <div className={cn("rounded-xl border border-border bg-card overflow-hidden", className)}>
       {(title || actions) && (
         <div className="flex items-center justify-between px-3 py-2 border-b border-border bg-muted/30">
-          <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{title}</div>
+          <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground m-0">{title}</h2>
           <div className="flex items-center gap-1">{actions}</div>
         </div>
       )}
