@@ -89,7 +89,7 @@ function ChangelogEntryPage() {
       </h1>
 
       <div
-        className="prose prose-invert prose-sm max-w-none mt-8"
+        className="prose-md max-w-none mt-8"
         dangerouslySetInnerHTML={{ __html: entry.html }}
       />
 

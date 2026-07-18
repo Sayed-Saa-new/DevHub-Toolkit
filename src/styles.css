@@ -293,3 +293,21 @@
   text-align: left;
 }
 .prose-md th { background: oklch(1 0 0 / 4%); font-weight: 600; }
+.prose-md img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin: 1.2em 0;
+  background: oklch(0 0 0 / 30%);
+}
+.prose-md kbd {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  padding: 0.1em 0.4em;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: oklch(1 0 0 / 4%);
+}

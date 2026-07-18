@@ -115,7 +115,7 @@ function ChangelogPage() {
                     </h2>
 
                     <div
-                      className="prose prose-invert prose-sm max-w-none"
+                      className="prose-md max-w-none"
                       dangerouslySetInnerHTML={{ __html: post.html }}
                     />
                   </div>
