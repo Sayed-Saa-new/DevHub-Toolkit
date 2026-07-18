@@ -195,13 +195,13 @@ function SidebarNav({
       <Link
         to="/"
         aria-label="DevHub Toolkit — Home"
-        className="group flex items-center gap-2.5 px-5 h-14 border-b border-sidebar-border transition-colors hover:bg-accent/40"
+        className="group flex items-center gap-2.5 px-5 pr-14 lg:pr-5 h-14 border-b border-sidebar-border transition-colors hover:bg-accent/40"
       >
         <BrandMark size={28} className="text-foreground transition-transform group-hover:scale-105" />
         <span className="font-semibold tracking-tight text-[15px]">
           Dev<span className="text-muted-foreground">Hub</span>
         </span>
-        <Badge variant="secondary" className="ml-auto text-[10px] font-mono">v1</Badge>
+        <Badge variant="secondary" className="ml-auto text-[10px] font-mono shrink-0">version 1</Badge>
       </Link>
 
       <button
