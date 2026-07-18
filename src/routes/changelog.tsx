@@ -43,22 +43,22 @@ function ChangelogPage() {
   return (
     <div className="w-full">
       {/* Hero */}
-      <section className="border-b border-border/60 px-6 py-16 md:py-24">
-        <div className="mx-auto max-w-4xl text-center space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-3 py-1 text-[11px] font-mono uppercase tracking-wider text-muted-foreground">
+      <section className="border-b border-border/60 px-4 md:px-8 py-10 md:py-14">
+        <div className="mx-auto max-w-5xl space-y-3">
+          <div className="inline-flex items-center gap-2 rounded-md border border-border bg-muted/30 px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
             <Rss className="size-3" /> Changelog
           </div>
-          <h1 className="text-balance text-4xl md:text-6xl font-medium tracking-tight leading-tight">
-            A log of what we&apos;re shipping.
+          <h1 className="text-balance text-2xl md:text-3xl font-semibold tracking-tight">
+            What we&apos;re shipping
           </h1>
-          <p className="mx-auto max-w-xl text-sm md:text-base text-muted-foreground">
+          <p className="max-w-xl text-sm text-muted-foreground">
             New tools, features, fixes, and small delights — updated as they land.
           </p>
         </div>
       </section>
 
       {/* Entries */}
-      <div className="mx-auto max-w-5xl px-4 md:px-6">
+      <div className="mx-auto max-w-5xl px-4 md:px-8">
         {entries.length === 0 ? (
           <div className="py-24 text-center text-sm text-muted-foreground">
             Nothing to see here yet…
@@ -67,7 +67,7 @@ function ChangelogPage() {
           <ul className="flex flex-col">
             {entries.map((post: ChangelogEntry, i: number) => (
               <li key={post.slug}>
-                <article className="grid grid-cols-1 md:grid-cols-12 py-10 md:py-14">
+                <article className="grid grid-cols-1 md:grid-cols-12 py-8 md:py-10">
                   {/* Date rail */}
                   <div className="hidden md:block md:col-span-2 md:col-start-1 pr-4">
                     <div className="sticky top-20 space-y-2">
@@ -104,7 +104,7 @@ function ChangelogPage() {
                       )}
                     </div>
 
-                    <h2 className="text-balance text-2xl md:text-3xl font-medium leading-tight tracking-tight mb-4">
+                    <h2 className="text-balance text-xl md:text-2xl font-semibold leading-tight tracking-tight mb-3">
                       <Link
                         to="/changelog/$slug"
                         params={{ slug: post.slug }}
@@ -114,17 +114,8 @@ function ChangelogPage() {
                       </Link>
                     </h2>
 
-                    {post.image && (
-                      <img
-                        src={post.image}
-                        alt=""
-                        className="mb-8 aspect-video w-full rounded-xl border border-border object-cover"
-                        loading="lazy"
-                      />
-                    )}
-
                     <div
-                      className="prose prose-invert max-w-none"
+                      className="prose prose-invert prose-sm max-w-none"
                       dangerouslySetInnerHTML={{ __html: post.html }}
                     />
                   </div>
