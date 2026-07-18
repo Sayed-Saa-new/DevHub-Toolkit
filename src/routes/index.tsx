@@ -12,11 +12,8 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "DevHub Toolkit — 44 Free Online Developer Tools" },
-      { name: "description", content: "Free online JSON formatter, Base64 decoder, JWT decoder, UUID & hash generators, regex tester, QR codes, AI SQL & regex generators — 44 developer tools in one keystroke." },
       { name: "keywords", content: "developer tools online, free developer tools, all in one developer tools, json formatter online, base64 decoder online, jwt decoder, uuid generator, hash generator, regex tester online, qr code generator, ai sql generator, ai regex generator, ai code explainer, css gradient generator, box shadow generator, yaml to json, csv to json" },
-      { property: "og:url", content: "https://devhub.flinkeo.online/" },
-      { property: "og:title", content: "DevHub Toolkit — 44 Free Online Developer Tools" },
+      { property: "og:url", content: "https://huggable-heart-helper-93.lovable.app/" },
       { property: "og:description", content: "Every developer utility you actually use — JSON, Base64, JWT, UUID, hashes, regex, QR, AI SQL and 35+ more. Fast, minimal, no signup." },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "DevHub Toolkit" },
@@ -29,24 +26,24 @@ export const Route = createFileRoute("/")({
       { name: "twitter:description", content: "Every developer utility you actually use — JSON, Base64, JWT, UUID, hashes, regex, QR, AI SQL and 35+ more." },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d73bcc09-2f60-409d-b833-91c82c156e5e/id-preview-aa9e0d77--6b271a1b-d2e8-44e0-909f-190eae9de463.lovable.app-1784378017742.png" },
     ],
-    links: [{ rel: "canonical", href: "https://devhub.flinkeo.online/" }],
+    links: [{ rel: "canonical", href: "https://huggable-heart-helper-93.lovable.app/" }],
     scripts: [
       {
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebSite",
-          "@id": "https://devhub.flinkeo.online/#website",
+          "@id": "https://huggable-heart-helper-93.lovable.app/#website",
           name: "DevHub Toolkit",
-          url: "https://devhub.flinkeo.online/",
+          url: "https://huggable-heart-helper-93.lovable.app/",
           description:
             "Free online developer toolkit — 44 utilities in one place: JSON formatter, Base64 decoder, JWT decoder, UUID & hash generators, regex tester, QR codes, AI SQL and regex generators, cheat sheets and more.",
           inLanguage: "en",
-          publisher: { "@id": "https://devhub.flinkeo.online/#org" },
+          publisher: { "@id": "https://huggable-heart-helper-93.lovable.app/#org" },
           potentialAction: {
             "@type": "SearchAction",
             target:
-              "https://devhub.flinkeo.online/?q={search_term_string}",
+              "https://huggable-heart-helper-93.lovable.app/?q={search_term_string}",
             "query-input": "required name=search_term_string",
           },
         }),
@@ -56,12 +53,12 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          "@id": "https://devhub.flinkeo.online/#org",
+          "@id": "https://huggable-heart-helper-93.lovable.app/#org",
           name: "DevHub Toolkit",
-          url: "https://devhub.flinkeo.online/",
+          url: "https://huggable-heart-helper-93.lovable.app/",
           logo: {
             "@type": "ImageObject",
-            url: "https://devhub.flinkeo.online/favicon.svg",
+            url: "https://huggable-heart-helper-93.lovable.app/favicon.svg",
           },
         }),
       },
