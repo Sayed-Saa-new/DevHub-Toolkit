@@ -8,13 +8,13 @@ export const Route = createFileRoute("/favorites")({
   head: () => ({
     meta: [
       { title: "Favorites — DevHub Toolkit" },
-      { name: "description", content: "Your saved developer tools." },
+      { name: "description", content: "Your saved developer tools on DevHub Toolkit — pinned formatters, encoders, generators, and references you use every day." },
       { property: "og:title", content: "Favorites — DevHub Toolkit" },
-      { property: "og:description", content: "Your saved developer tools." },
-      { property: "og:url", content: "/favorites" },
+      { property: "og:description", content: "Your saved developer tools on DevHub Toolkit — pinned formatters, encoders, generators, and references you use every day." },
+      { property: "og:url", content: "https://huggable-heart-helper-93.lovable.app/favorites" },
       { name: "robots", content: "noindex" },
     ],
-    links: [{ rel: "canonical", href: "/favorites" }],
+    links: [{ rel: "canonical", href: "https://huggable-heart-helper-93.lovable.app/favorites" }],
   }),
   component: FavoritesPage,
 });
