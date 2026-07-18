@@ -1,5 +1,17 @@
-import { Link, useRouterState } from "@tanstack/react-router";
-import { Command, Search, Star, Github, Menu, Keyboard } from "lucide-react";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import {
+  Command,
+  Search,
+  Star,
+  Github,
+  Menu,
+  Keyboard,
+  ArrowRight,
+  Clock,
+  Home,
+  CornerDownLeft,
+  StarOff,
+} from "lucide-react";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -10,6 +22,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "@/components/ui/command";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
@@ -169,7 +182,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </footer>
       </div>
 
-      <GlobalCommand open={open} onOpenChange={setOpen} />
+      <GlobalCommand open={open} onOpenChange={setOpen} onShowShortcuts={() => setShortcutsOpen(true)} />
       <ShortcutsDialog open={shortcutsOpen} onOpenChange={setShortcutsOpen} />
     </div>
   );
