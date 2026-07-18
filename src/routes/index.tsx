@@ -12,14 +12,37 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "DevHub Toolkit — 23 developer tools in one place" },
-      { name: "description", content: "JSON, Base64, JWT, UUID, hashes, regex, QR codes, color, gradients and more. Fast, minimal, keyboard-first." },
-      { property: "og:title", content: "DevHub Toolkit — 23 developer tools in one place" },
-      { property: "og:description", content: "JSON, Base64, JWT, UUID, hashes, regex, QR codes, color, gradients and more. Fast, minimal, keyboard-first." },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://huggable-heart-helper-93.lovable.app/" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://huggable-heart-helper-93.lovable.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "DevHub Toolkit",
+          url: "https://huggable-heart-helper-93.lovable.app/",
+          description:
+            "An all-in-one developer utility platform: JSON, Base64, JWT, UUID, hashes, regex, QR codes, color, gradients, cheat sheets and more.",
+          potentialAction: {
+            "@type": "SearchAction",
+            target:
+              "https://huggable-heart-helper-93.lovable.app/?q={search_term_string}",
+            "query-input": "required name=search_term_string",
+          },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "DevHub Toolkit",
+          url: "https://huggable-heart-helper-93.lovable.app/",
+        }),
+      },
+    ],
   }),
   component: Home,
 });
@@ -63,6 +86,7 @@ function Home() {
             <Search className="size-4 text-muted-foreground" />
             <Input
               autoFocus
+              aria-label="Search tools"
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search JSON, base64, hash, regex…"
