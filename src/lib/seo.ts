@@ -284,4 +284,10 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Test JSON-LD structured data like Google Rich Results Test. Fetch a URL or paste HTML — see detected types, required-field errors and warnings.",
     keywords: ["schema validator", "json-ld tester", "structured data test", "rich results test", "schema.org validator", "google rich results", "seo structured data"],
   },
+  "json-to-ts": {
+    title: "JSON to TypeScript — Interface, Type & Zod Generator",
+    description:
+      "Convert JSON to TypeScript interfaces, type aliases or Zod schemas instantly. Handles nested objects, arrays, unions and nullables — free, in-browser.",
+    keywords: ["json to typescript", "json to ts", "json to interface", "json to type", "json to zod", "typescript type generator", "quicktype alternative", "json schema to typescript"],
+  },
 };
