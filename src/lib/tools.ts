@@ -84,6 +84,7 @@ export const TOOLS: Tool[] = [
   { slug: "timezone", name: "Timezone Converter", description: "Convert a moment across world timezones.", category: "converters", icon: Globe, keywords: ["timezone", "tz", "utc", "world clock"] },
   { slug: "string-escape", name: "String Escape", description: "Escape and unescape JSON / JS strings.", category: "converters", icon: Binary, keywords: ["escape", "unescape", "json string", "js string"] },
   { slug: "schema-validator", name: "Schema.org Validator", description: "Test JSON-LD structured data like Google Rich Results.", category: "editors", icon: ShieldCheck, keywords: ["schema", "json-ld", "structured data", "rich results", "seo", "google", "validator"] },
+  { slug: "json-to-ts", name: "JSON → TypeScript", description: "Generate TypeScript interfaces, types, or Zod schemas from JSON.", category: "converters", icon: FileJson, keywords: ["json to typescript", "json to ts", "json to interface", "json to zod", "type generator", "quicktype"] },
 ];
 
 export const TOOLS_BY_SLUG: Record<string, Tool> = Object.fromEntries(
