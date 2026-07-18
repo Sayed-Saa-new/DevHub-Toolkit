@@ -15,6 +15,7 @@ import {
   AiSql, AiConvert, AiErrorExplainer, AiRegex, AiTests,
 } from "./ai";
 import { SchemaValidator } from "./schema-validator";
+import { JsonToTs } from "./json-to-ts";
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-formatter": JsonFormatter,
@@ -54,6 +55,7 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "timezone": TimezoneConverter,
   "string-escape": StringEscape,
   "schema-validator": SchemaValidator,
+  "json-to-ts": JsonToTs,
   "ai-explainer": AiExplainer,
   "ai-optimizer": AiOptimizer,
   "ai-commit": AiCommit,
