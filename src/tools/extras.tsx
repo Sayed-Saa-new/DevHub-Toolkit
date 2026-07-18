@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import yaml from "js-yaml";
+import * as yaml from "js-yaml";
 import { diffWords, diffLines } from "diff";
 
 import { Button } from "@/components/ui/button";
