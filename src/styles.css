@@ -167,3 +167,59 @@
     linear-gradient(to bottom, oklch(1 0 0 / 3%) 1px, transparent 1px);
   background-size: 32px 32px;
 }
+
+/* Custom scrollbar — minimal, premium, monochrome */
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+    scrollbar-color: oklch(1 0 0 / 18%) transparent;
+    scrollbar-width: thin;
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: oklch(1 0 0 / 12%);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 999px;
+    transition: background 0.2s ease;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: oklch(1 0 0 / 28%);
+    background-clip: padding-box;
+  }
+  *::-webkit-scrollbar-thumb:active {
+    background: oklch(1 0 0 / 40%);
+    background-clip: padding-box;
+  }
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+/* Top page scroll progress indicator */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 100;
+  transform-origin: 0 50%;
+  transform: scaleX(var(--scroll, 0));
+  background: linear-gradient(
+    90deg,
+    oklch(1 0 0 / 0%),
+    oklch(1 0 0 / 90%) 40%,
+    oklch(1 0 0 / 90%) 60%,
+    oklch(1 0 0 / 0%)
+  );
+  pointer-events: none;
+  will-change: transform;
+}
