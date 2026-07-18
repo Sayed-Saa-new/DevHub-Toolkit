@@ -1,0 +1,45 @@
+# DevHub Toolkit
+
+> A fast, minimal, keyboard-first collection of 23 everyday developer utilities — formatters, encoders, generators, and references — in one clean interface.
+
+DevHub Toolkit is a browser-based developer productivity platform inspired by Vercel, Linear, and Raycast. All tools run client-side with no tracking.
+
+## Pages
+
+- [Home](/): Browse and search all tools by category.
+- [Favorites](/favorites): Your saved tools for quick access.
+
+## Converters
+
+- [Base64](/t/base64): Encode and decode Base64 strings.
+- [URL Encoder](/t/url-codec): Encode and decode URL components.
+- [JWT Decoder](/t/jwt-decoder): Decode and inspect JSON Web Tokens.
+- [Timestamp Converter](/t/timestamp): Convert Unix timestamps to dates.
+
+## Generators
+
+- [UUID Generator](/t/uuid): Generate v4 UUIDs in bulk.
+- [Hash Generator](/t/hash): MD5, SHA-1, SHA-256, SHA-512 hashes.
+- [QR Code Generator](/t/qrcode): Generate downloadable QR codes.
+
+## Design
+
+- [Color Converter](/t/color): Pick colors and convert HEX/RGB/HSL.
+- [Gradient Generator](/t/gradient): Design smooth CSS gradients.
+- [Box Shadow](/t/box-shadow): Craft layered CSS box-shadows.
+- [Border Radius](/t/border-radius): Visualize corner radius values.
+
+## Editors
+
+- [JSON Formatter](/t/json-formatter): Format, validate, and minify JSON.
+- [Regex Tester](/t/regex): Test regular expressions with live matches.
+- [SVG Optimizer](/t/svg-optimizer): Minify SVG source code.
+- [Markdown Editor](/t/markdown): Write markdown with live preview.
+- [Playground](/t/playground): Live HTML/CSS/JS sandbox.
+
+## Reference
+
+- [HTTP Status Codes](/t/http-status): Every status code, explained.
+- [Git Cheat Sheet](/t/git-cheatsheet): Essential Git commands.
+- [Linux Commands](/t/linux-cheatsheet): Common Linux/Unix commands.
+- [VS Code Shortcuts](/t/vscode-shortcuts): Keyboard shortcuts reference.
