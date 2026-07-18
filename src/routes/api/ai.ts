@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { streamText, convertToModelMessages, type UIMessage } from "ai";
 
-import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
+import { createGeminiProvider } from "@/lib/ai-gateway.server";
 
 type Mode =
   | "explain"
@@ -42,14 +42,14 @@ export const Route = createFileRoute("/api/ai")({
           messages?: UIMessage[];
         };
 
-        const key = process.env.LOVABLE_API_KEY;
-        if (!key) return new Response("Missing LOVABLE_API_KEY", { status: 500 });
+        const key = process.env.GEMINI_API_KEY;
+        if (!key) return new Response("Missing GEMINI_API_KEY", { status: 500 });
 
         const mode = body.mode ?? "explain";
         const system = SYSTEM[mode] ?? SYSTEM.explain;
 
-        const gateway = createLovableAiGatewayProvider(key);
-        const model = gateway("google/gemini-3.5-flash");
+        const google = createGeminiProvider(key);
+        const model = google("gemini-2.0-flash-exp");
 
         const messages: UIMessage[] = body.messages ?? [
           {
