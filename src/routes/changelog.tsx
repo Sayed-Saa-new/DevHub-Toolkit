@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Rss } from "lucide-react";
 
-import { getChangelogEntries } from "@/lib/changelog";
+import { getChangelogEntries, type ChangelogEntry } from "@/lib/changelog";
 
 const BASE = "https://devhub.flinkeo.online";
 
@@ -65,7 +65,7 @@ function ChangelogPage() {
           </div>
         ) : (
           <ul className="flex flex-col">
-            {entries.map((post, i) => (
+            {entries.map((post: ChangelogEntry, i: number) => (
               <li key={post.slug}>
                 <article className="grid grid-cols-1 md:grid-cols-12 py-10 md:py-14">
                   {/* Date rail */}
