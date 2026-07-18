@@ -9,7 +9,12 @@ export const Route = createFileRoute("/favorites")({
     meta: [
       { title: "Favorites — DevHub Toolkit" },
       { name: "description", content: "Your saved developer tools." },
+      { property: "og:title", content: "Favorites — DevHub Toolkit" },
+      { property: "og:description", content: "Your saved developer tools." },
+      { property: "og:url", content: "/favorites" },
+      { name: "robots", content: "noindex" },
     ],
+    links: [{ rel: "canonical", href: "/favorites" }],
   }),
   component: FavoritesPage,
 });

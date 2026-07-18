@@ -7,13 +7,44 @@ import { TOOL_COMPONENTS } from "@/tools/registry";
 export const Route = createFileRoute("/t/$slug")({
   head: ({ params }) => {
     const t = TOOLS_BY_SLUG[params.slug];
-    if (!t) return { meta: [{ title: "Tool not found — DevHub" }, { name: "robots", content: "noindex" }] };
+    const path = `/t/${params.slug}`;
+    if (!t) {
+      return {
+        meta: [
+          { title: "Tool not found — DevHub Toolkit" },
+          { name: "robots", content: "noindex" },
+        ],
+      };
+    }
+    const title = `${t.name} — DevHub Toolkit`;
+    const desc = t.description;
     return {
       meta: [
-        { title: `${t.name} — DevHub Toolkit` },
-        { name: "description", content: t.description },
-        { property: "og:title", content: `${t.name} — DevHub` },
-        { property: "og:description", content: t.description },
+        { title },
+        { name: "description", content: desc },
+        { name: "keywords", content: [t.name, t.category, ...(t.keywords ?? [])].join(", ") },
+        { property: "og:title", content: title },
+        { property: "og:description", content: desc },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: path },
+        { name: "twitter:card", content: "summary" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: desc },
+      ],
+      links: [{ rel: "canonical", href: path }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            name: t.name,
+            description: desc,
+            applicationCategory: "DeveloperApplication",
+            operatingSystem: "Any",
+            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          }),
+        },
       ],
     };
   },

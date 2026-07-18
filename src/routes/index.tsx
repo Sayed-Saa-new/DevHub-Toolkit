@@ -14,7 +14,12 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "DevHub Toolkit — 23 developer tools in one place" },
       { name: "description", content: "JSON, Base64, JWT, UUID, hashes, regex, QR codes, color, gradients and more. Fast, minimal, keyboard-first." },
+      { property: "og:title", content: "DevHub Toolkit — 23 developer tools in one place" },
+      { property: "og:description", content: "JSON, Base64, JWT, UUID, hashes, regex, QR codes, color, gradients and more. Fast, minimal, keyboard-first." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/" },
     ],
+    links: [{ rel: "canonical", href: "/" }],
   }),
   component: Home,
 });
