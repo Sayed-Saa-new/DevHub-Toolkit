@@ -36,10 +36,13 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebSite",
+          "@id": "https://huggable-heart-helper-93.lovable.app/#website",
           name: "DevHub Toolkit",
           url: "https://huggable-heart-helper-93.lovable.app/",
           description:
             "Free online developer toolkit — 44 utilities in one place: JSON formatter, Base64 decoder, JWT decoder, UUID & hash generators, regex tester, QR codes, AI SQL and regex generators, cheat sheets and more.",
+          inLanguage: "en",
+          publisher: { "@id": "https://huggable-heart-helper-93.lovable.app/#org" },
           potentialAction: {
             "@type": "SearchAction",
             target:
@@ -53,8 +56,13 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
+          "@id": "https://huggable-heart-helper-93.lovable.app/#org",
           name: "DevHub Toolkit",
           url: "https://huggable-heart-helper-93.lovable.app/",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://huggable-heart-helper-93.lovable.app/favicon.svg",
+          },
         }),
       },
     ],
