@@ -48,11 +48,12 @@ export function getChangelogEntries(): ChangelogEntry[] {
   const entries: ChangelogEntry[] = [];
   for (const [path, source] of Object.entries(files)) {
     const { data, body } = parseFrontmatter(source);
-    if (!data.title || !data.publishedAt) continue;
+    const published = data.publishedAt ?? data.date;
+    if (!data.title || !published) continue;
     entries.push({
       slug: slugFromPath(path),
       title: data.title,
-      publishedAt: new Date(data.publishedAt).toISOString(),
+      publishedAt: new Date(published).toISOString(),
       summary: data.summary,
       tag: data.tag,
       html: marked.parse(body, { async: false }) as string,
