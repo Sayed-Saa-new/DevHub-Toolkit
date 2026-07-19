@@ -286,18 +286,60 @@ function LandingHeader() {
 
 /* ---------------- Categories Mega-Menu ---------------- */
 
-function CategoriesMenu() {
-  const [open, setOpen] = useState(false);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+/* Shared menu-bar coordination — hovering between triggers swaps
+   the open panel instantly (no close-then-reopen flicker), giving a
+   LottieFiles-style continuous menu. */
+type MenuBarCtx = {
+  active: string | null;
+  open: (id: string) => void;
+  scheduleClose: () => void;
+  cancelClose: () => void;
+};
+const MenuBarContext = createContext<MenuBarCtx | null>(null);
 
-  const openNow = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    setOpen(true);
+function MenuBarProvider({ children }: { children: ReactNode }) {
+  const [active, setActive] = useState<string | null>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  const cancelClose = useCallback(() => {
+    if (timer.current) {
+      clearTimeout(timer.current);
+      timer.current = undefined;
+    }
+  }, []);
+  const open = useCallback(
+    (id: string) => {
+      cancelClose();
+      setActive(id);
+    },
+    [cancelClose],
+  );
+  const scheduleClose = useCallback(() => {
+    cancelClose();
+    timer.current = setTimeout(() => setActive(null), 140);
+  }, [cancelClose]);
+
+  const value = useMemo(
+    () => ({ active, open, scheduleClose, cancelClose }),
+    [active, open, scheduleClose, cancelClose],
+  );
+  return <MenuBarContext.Provider value={value}>{children}</MenuBarContext.Provider>;
+}
+
+function useMenuBar(id: string) {
+  const ctx = useContext(MenuBarContext);
+  const isOpen = ctx?.active === id;
+  return {
+    isOpen,
+    openNow: () => ctx?.open(id),
+    closeSoon: () => ctx?.scheduleClose(),
+    cancelClose: () => ctx?.cancelClose(),
+    forceClose: () => ctx?.scheduleClose(),
   };
-  const closeSoon = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setOpen(false), 150);
-  };
+}
+
+function CategoriesMenu() {
+  const { isOpen: open, openNow, closeSoon } = useMenuBar("categories");
 
   return (
     <div className="relative" onMouseEnter={openNow} onMouseLeave={closeSoon}>
@@ -335,9 +377,9 @@ function CategoriesMenu() {
                 role="menu"
                 onMouseEnter={openNow}
                 onMouseLeave={closeSoon}
-                className="fixed left-1/2 -translate-x-1/2 top-16 w-[980px] max-w-[95vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-fade-in z-50"
+                className="fixed left-1/2 -translate-x-1/2 top-16 w-[980px] max-w-[95vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-scale-in origin-top z-50"
               >
-                <MegaMenuBody onClose={() => setOpen(false)} />
+                <MegaMenuBody onClose={closeSoon} />
               </div>,
               document.body,
             )}
@@ -447,24 +489,17 @@ function MegaColumn({
 
 function HoverMenu({
   label,
+  id,
   width,
   children,
 }: {
   label: string;
+  id: string;
   width: number;
   children: (close: () => void) => ReactNode;
 }) {
-  const [open, setOpen] = useState(false);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const openNow = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    setOpen(true);
-  };
-  const closeSoon = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setOpen(false), 150);
-  };
-  const close = () => setOpen(false);
+  const { isOpen: open, openNow, closeSoon } = useMenuBar(id);
+  const close = closeSoon;
 
   return (
     <div className="relative" onMouseEnter={openNow} onMouseLeave={closeSoon}>
@@ -504,7 +539,7 @@ function HoverMenu({
                 onMouseEnter={openNow}
                 onMouseLeave={closeSoon}
                 style={{ width }}
-                className="fixed left-1/2 -translate-x-1/2 top-16 max-w-[95vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-fade-in z-50"
+                className="fixed left-1/2 -translate-x-1/2 top-16 max-w-[95vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-scale-in origin-top z-50"
               >
                 {children(close)}
               </div>,
@@ -537,7 +572,7 @@ function ToolsMenu() {
   ];
 
   return (
-    <HoverMenu label="Tools" width={820}>
+    <HoverMenu label="Tools" id="tools" width={820}>
       {(close) => (
         <div className="grid grid-cols-[1fr_1fr_0.85fr]">
           <div className="p-5">
@@ -664,7 +699,7 @@ function ChangelogMenu() {
   };
 
   return (
-    <HoverMenu label="Changelog" width={660}>
+    <HoverMenu label="Changelog" id="changelog" width={660}>
       {(close) => (
         <div className="grid grid-cols-[1.5fr_0.9fr]">
           <div className="p-5">
