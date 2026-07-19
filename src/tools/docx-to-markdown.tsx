@@ -27,7 +27,7 @@ import {
 import { toast } from "sonner";
 
 import { CopyButton, Field, Panel } from "./primitives";
-import { copyToClipboard, downloadFile } from "@/lib/utils";
+import { downloadFile } from "@/lib/utils";
 
 type BulletMarker = "-" | "*" | "+";
 type HeadingStyle = "atx" | "setext";
@@ -544,7 +544,7 @@ export function DocxToMarkdown() {
             ) : preview === "markdown" ? (
               <pre
                 className="p-4 font-mono text-sm whitespace-pre-wrap break-words min-h-[440px] max-h-[560px] overflow-auto"
-                onDoubleClick={() => active.markdown && copyToClipboard(active.markdown)}
+                onDoubleClick={() => active.markdown && navigator.clipboard.writeText(active.markdown)}
               >
                 {active.markdown}
               </pre>
