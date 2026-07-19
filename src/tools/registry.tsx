@@ -23,6 +23,7 @@ import { JsonDiff } from "./json-diff";
 import { ClampCalculator } from "./clamp-calculator";
 import { ImageCompressor } from "./image-compressor";
 import { JwtGenerator } from "./jwt-generator";
+import { TextToMarkdown } from "./text-to-markdown";
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-formatter": JsonFormatter,
@@ -70,6 +71,7 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "clamp-calculator": ClampCalculator,
   "image-compressor": ImageCompressor,
   "jwt-generator": JwtGenerator,
+  "text-to-markdown": TextToMarkdown,
   "ai-explainer": AiExplainer,
   "ai-optimizer": AiOptimizer,
   "ai-commit": AiCommit,
