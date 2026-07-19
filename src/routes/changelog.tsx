@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Rss } from "lucide-react";
 
 import { getChangelogEntries, type ChangelogEntry } from "@/lib/changelog";
+import { AnimatedTag } from "@/components/animated-tag";
 
 const BASE = "https://devhub.flinkeo.online";
 
@@ -78,9 +79,7 @@ function ChangelogPage() {
                         {formatDate(post.publishedAt)}
                       </time>
                       {post.tag && (
-                        <div className="inline-block rounded-md border border-border bg-muted/30 px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
-                          {post.tag}
-                        </div>
+                        <AnimatedTag className="inline-flex">{post.tag}</AnimatedTag>
                       )}
                     </div>
                   </div>
@@ -98,9 +97,7 @@ function ChangelogPage() {
                         {formatDate(post.publishedAt)}
                       </time>
                       {post.tag && (
-                        <span className="rounded-md border border-border bg-muted/30 px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
-                          {post.tag}
-                        </span>
+                        <AnimatedTag>{post.tag}</AnimatedTag>
                       )}
                     </div>
 
