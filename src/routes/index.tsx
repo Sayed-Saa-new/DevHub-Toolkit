@@ -25,7 +25,6 @@ import {
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { AnimatedTag } from "@/components/animated-tag";
 import { BrandMark } from "@/components/brand-mark";
 import { CATEGORIES, TOOLS } from "@/lib/tools";
 import { cn } from "@/lib/utils";
