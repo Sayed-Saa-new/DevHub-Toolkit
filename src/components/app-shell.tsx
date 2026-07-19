@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/command";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
+import { AnimatedTag } from "@/components/animated-tag";
 import { Sheet, SheetContent, SheetTitle, SheetHeader } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
@@ -278,9 +279,12 @@ function SidebarNav({
                   <t.icon className="size-3.5 opacity-70" />
                   <span className="truncate">{t.name}</span>
                   {t.isNew && hydrated && !seen.includes(t.slug) && (
-                    <span className="ml-auto text-[9px] font-semibold uppercase tracking-wider px-1.5 py-px rounded bg-foreground text-background">
+                    <AnimatedTag
+                      variant="new"
+                      className="ml-auto text-[9px] px-1.5 py-px"
+                    >
                       New
-                    </span>
+                    </AnimatedTag>
                   )}
                   {t.status === "soon" && (
                     <span className="ml-auto text-[9px] uppercase tracking-wider text-muted-foreground">
@@ -596,9 +600,9 @@ function ToolCommandItem({
       <tool.icon className="size-4 opacity-70 shrink-0" />
       <span className="truncate">{tool.name}</span>
       {showNew && (
-        <span className="text-[9px] font-semibold uppercase tracking-wider px-1.5 py-px rounded bg-foreground text-background shrink-0">
+        <AnimatedTag variant="new" className="text-[9px] px-1.5 py-px shrink-0">
           New
-        </span>
+        </AnimatedTag>
       )}
       <span className="hidden sm:inline text-[11px] text-muted-foreground truncate">
         — {tool.description}
