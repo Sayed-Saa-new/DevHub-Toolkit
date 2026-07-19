@@ -10,7 +10,7 @@ import { CATEGORIES, TOOLS, TOOLS_BY_SLUG, searchTools, type Category } from "@/
 import { useFavorites, useHydrated, useRecents } from "@/lib/storage";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/tools")({
   head: () => ({
     meta: [
       { title: "DevHub Toolkit — 44 Free Online Developer Tools" },

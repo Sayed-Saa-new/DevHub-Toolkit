@@ -9,16 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as ChangelogRouteImport } from './routes/changelog'
-import { Route as IndexRouteImport } from './routes/index'
 import { Route as TSlugRouteImport } from './routes/t.$slug'
 import { Route as ChangelogSlugRouteImport } from './routes/changelog.$slug'
 import { Route as CCategoryRouteImport } from './routes/c.$category'
 import { Route as ApiAiRouteImport } from './routes/api/ai'
 
+const ToolsRoute = ToolsRouteImport.update({
+  id: '/tools',
+  path: '/tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -37,11 +42,6 @@ const FavoritesRoute = FavoritesRouteImport.update({
 const ChangelogRoute = ChangelogRouteImport.update({
   id: '/changelog',
   path: '/changelog',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TSlugRoute = TSlugRouteImport.update({
@@ -66,22 +66,22 @@ const ApiAiRoute = ApiAiRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '/changelog': typeof ChangelogRouteWithChildren
   '/favorites': typeof FavoritesRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/tools': typeof ToolsRoute
   '/api/ai': typeof ApiAiRoute
   '/c/$category': typeof CCategoryRoute
   '/changelog/$slug': typeof ChangelogSlugRoute
   '/t/$slug': typeof TSlugRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/changelog': typeof ChangelogRouteWithChildren
   '/favorites': typeof FavoritesRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/tools': typeof ToolsRoute
   '/api/ai': typeof ApiAiRoute
   '/c/$category': typeof CCategoryRoute
   '/changelog/$slug': typeof ChangelogSlugRoute
@@ -89,11 +89,11 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/changelog': typeof ChangelogRouteWithChildren
   '/favorites': typeof FavoritesRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/tools': typeof ToolsRoute
   '/api/ai': typeof ApiAiRoute
   '/c/$category': typeof CCategoryRoute
   '/changelog/$slug': typeof ChangelogSlugRoute
@@ -102,33 +102,33 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/changelog'
     | '/favorites'
     | '/llms-full.txt'
     | '/sitemap.xml'
+    | '/tools'
     | '/api/ai'
     | '/c/$category'
     | '/changelog/$slug'
     | '/t/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/changelog'
     | '/favorites'
     | '/llms-full.txt'
     | '/sitemap.xml'
+    | '/tools'
     | '/api/ai'
     | '/c/$category'
     | '/changelog/$slug'
     | '/t/$slug'
   id:
     | '__root__'
-    | '/'
     | '/changelog'
     | '/favorites'
     | '/llms-full.txt'
     | '/sitemap.xml'
+    | '/tools'
     | '/api/ai'
     | '/c/$category'
     | '/changelog/$slug'
@@ -136,11 +136,11 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   ChangelogRoute: typeof ChangelogRouteWithChildren
   FavoritesRoute: typeof FavoritesRoute
   LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ToolsRoute: typeof ToolsRoute
   ApiAiRoute: typeof ApiAiRoute
   CCategoryRoute: typeof CCategoryRoute
   TSlugRoute: typeof TSlugRoute
@@ -148,6 +148,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tools': {
+      id: '/tools'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof ToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -174,13 +181,6 @@ declare module '@tanstack/react-router' {
       path: '/changelog'
       fullPath: '/changelog'
       preLoaderRoute: typeof ChangelogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/t/$slug': {
@@ -227,11 +227,11 @@ const ChangelogRouteWithChildren = ChangelogRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   ChangelogRoute: ChangelogRouteWithChildren,
   FavoritesRoute: FavoritesRoute,
   LlmsFullDottxtRoute: LlmsFullDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ToolsRoute: ToolsRoute,
   ApiAiRoute: ApiAiRoute,
   CCategoryRoute: CCategoryRoute,
   TSlugRoute: TSlugRoute,
