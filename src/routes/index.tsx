@@ -440,6 +440,313 @@ function MegaColumn({
   );
 }
 
+/* ---------------- Tools Mega-Menu ---------------- */
+
+function HoverMenu({
+  label,
+  width,
+  children,
+}: {
+  label: string;
+  width: number;
+  children: (close: () => void) => ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const openNow = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpen(true);
+  };
+  const closeSoon = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setOpen(false), 150);
+  };
+  const close = () => setOpen(false);
+
+  return (
+    <div className="relative" onMouseEnter={openNow} onMouseLeave={closeSoon}>
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="true"
+        className={cn(
+          "h-8 px-3 rounded-md text-sm inline-flex items-center gap-1 transition",
+          open
+            ? "text-foreground bg-accent/50"
+            : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
+        )}
+      >
+        {label}
+        <svg
+          className={cn("size-3 transition-transform", open && "rotate-180")}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+
+      {open && (
+        <>
+          <div className="absolute left-0 right-0 top-full h-3" aria-hidden />
+          {typeof document !== "undefined" &&
+            createPortal(
+              <div
+                role="menu"
+                onMouseEnter={openNow}
+                onMouseLeave={closeSoon}
+                style={{ width }}
+                className="fixed left-1/2 -translate-x-1/2 top-16 max-w-[95vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-fade-in z-50"
+              >
+                {children(close)}
+              </div>,
+              document.body,
+            )}
+        </>
+      )}
+    </div>
+  );
+}
+
+const FEATURED_TOOL_SLUGS = [
+  "json-formatter",
+  "jwt-decoder",
+  "regex",
+  "uuid",
+  "hash",
+  "ai-explainer",
+];
+
+function ToolsMenu() {
+  const featured = FEATURED_TOOL_SLUGS.map((s) => TOOLS.find((t) => t.slug === s)).filter(
+    Boolean,
+  ) as typeof TOOLS;
+  const fresh = TOOLS.filter((t) => t.isNew).slice(-6).reverse();
+
+  const jumps = [
+    { icon: Briefcase, label: "All tools", desc: `Browse all ${TOOLS.length} utilities.`, to: "/tools" as const },
+    { icon: Star, label: "Favorites", desc: "Your pinned tools.", to: "/favorites" as const },
+    { icon: Sparkles, label: "AI tools", desc: "Explain, optimize, generate.", to: "/c/$category" as const, params: { category: "ai" } },
+  ];
+
+  return (
+    <HoverMenu label="Tools" width={820}>
+      {(close) => (
+        <div className="grid grid-cols-[1fr_1fr_0.85fr]">
+          <div className="p-5">
+            <div className="text-xs text-muted-foreground mb-3">Featured</div>
+            <ul className="space-y-1">
+              {featured.map((t) => (
+                <li key={t.slug}>
+                  <Link
+                    to="/t/$slug"
+                    params={{ slug: t.slug }}
+                    onClick={close}
+                    className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
+                  >
+                    <div className="mt-0.5 size-8 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition">
+                      <t.icon className="size-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-sm font-medium text-foreground">{t.name}</div>
+                      <div className="text-xs text-muted-foreground leading-snug line-clamp-1">
+                        {t.description}
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="border-l border-border p-5">
+            <div className="text-xs text-muted-foreground mb-3 flex items-center gap-1.5">
+              <span className="inline-block size-1.5 rounded-full bg-foreground" />
+              New in DevHub
+            </div>
+            <ul className="space-y-1">
+              {fresh.map((t) => (
+                <li key={t.slug}>
+                  <Link
+                    to="/t/$slug"
+                    params={{ slug: t.slug }}
+                    onClick={close}
+                    className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
+                  >
+                    <div className="mt-0.5 size-8 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition">
+                      <t.icon className="size-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-sm font-medium text-foreground flex items-center gap-2">
+                        {t.name}
+                        <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded-sm border border-foreground/30 text-foreground/80">
+                          new
+                        </span>
+                      </div>
+                      <div className="text-xs text-muted-foreground leading-snug line-clamp-1">
+                        {t.description}
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="border-l border-border bg-muted/30 p-5 flex flex-col">
+            <div className="text-xs text-muted-foreground mb-3">Jump to</div>
+            <ul className="space-y-1">
+              {jumps.map((j) => (
+                <li key={j.label}>
+                  <Link
+                    to={j.to as "/tools"}
+                    // @ts-expect-error — union params for ai jump
+                    params={j.params}
+                    onClick={close}
+                    className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
+                  >
+                    <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
+                      <j.icon className="size-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-sm font-medium text-foreground">{j.label}</div>
+                      <div className="text-xs text-muted-foreground leading-snug line-clamp-2">
+                        {j.desc}
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-auto pt-4 border-t border-border/60 flex items-center justify-between text-xs text-muted-foreground">
+              <span>Command palette</span>
+              <kbd className="font-mono text-[10px] border border-border rounded px-1.5 py-0.5">⌘K</kbd>
+            </div>
+          </div>
+        </div>
+      )}
+    </HoverMenu>
+  );
+}
+
+/* ---------------- Changelog Mega-Menu ---------------- */
+
+function ChangelogMenu() {
+  const entries = getChangelogEntries().slice(0, 4);
+
+  const tagStyle = (tag?: string) => {
+    const t = (tag || "").toLowerCase();
+    if (t.includes("new")) return "border-foreground/30 text-foreground/80";
+    if (t.includes("improve")) return "border-amber-400/40 text-amber-300/90";
+    if (t.includes("fix")) return "border-sky-400/40 text-sky-300/90";
+    return "border-border text-muted-foreground";
+  };
+
+  return (
+    <HoverMenu label="Changelog" width={660}>
+      {(close) => (
+        <div className="grid grid-cols-[1.5fr_0.9fr]">
+          <div className="p-5">
+            <div className="text-xs text-muted-foreground mb-3 flex items-center gap-1.5">
+              <Rss className="size-3" /> Latest releases
+            </div>
+            {entries.length === 0 ? (
+              <div className="text-sm text-muted-foreground py-6 text-center">
+                No entries yet.
+              </div>
+            ) : (
+              <ul className="space-y-1">
+                {entries.map((e) => (
+                  <li key={e.slug}>
+                    <Link
+                      to="/changelog/$slug"
+                      params={{ slug: e.slug }}
+                      onClick={close}
+                      className="group block rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
+                    >
+                      <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
+                        <span className="font-mono">
+                          {new Date(e.publishedAt).toLocaleDateString(undefined, {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          })}
+                        </span>
+                        {e.tag && (
+                          <span
+                            className={cn(
+                              "text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded-sm border",
+                              tagStyle(e.tag),
+                            )}
+                          >
+                            {e.tag}
+                          </span>
+                        )}
+                      </div>
+                      <div className="mt-0.5 text-sm font-medium text-foreground group-hover:underline underline-offset-4 decoration-foreground/40">
+                        {e.title}
+                      </div>
+                      {e.summary && (
+                        <div className="mt-0.5 text-xs text-muted-foreground line-clamp-1">
+                          {e.summary}
+                        </div>
+                      )}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+          <div className="border-l border-border bg-muted/30 p-5 flex flex-col">
+            <div className="text-xs text-muted-foreground mb-3">More</div>
+            <ul className="space-y-1">
+              <li>
+                <Link
+                  to="/changelog"
+                  onClick={close}
+                  className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
+                >
+                  <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
+                    <BookOpen className="size-4" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-foreground">All releases</div>
+                    <div className="text-xs text-muted-foreground">Every update since day one.</div>
+                  </div>
+                </Link>
+              </li>
+              <li>
+                <a
+                  href="/rss.xml"
+                  onClick={close}
+                  className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
+                >
+                  <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
+                    <Rss className="size-4" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-foreground">RSS feed</div>
+                    <div className="text-xs text-muted-foreground">Subscribe in your reader.</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <div className="mt-auto pt-4 border-t border-border/60">
+              <div className="text-xs text-muted-foreground">
+                <span className="text-foreground font-medium">Tip:</span> star tools you use most —
+                they surface in <span className="text-foreground">Favorites</span>.
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </HoverMenu>
+  );
+}
+
 /* ---------------- Hero ---------------- */
 
 function Hero() {
