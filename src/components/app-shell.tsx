@@ -31,7 +31,7 @@ import { Sheet, SheetContent, SheetTitle, SheetHeader } from "@/components/ui/sh
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { CATEGORIES, TOOLS, TOOLS_BY_SLUG, searchTools, type Category } from "@/lib/tools";
-import { useFavorites, useHydrated, useRecents } from "@/lib/storage";
+import { useFavorites, useHydrated, useRecents, useSeen } from "@/lib/storage";
 import { BrandMark, BrandLockup } from "@/components/brand-mark";
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -42,6 +42,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const hydrated = useHydrated();
   const { favorites } = useFavorites();
   const { recents } = useRecents();
+  const { seen } = useSeen();
 
   // Close mobile drawer on route change
   useEffect(() => {
@@ -109,6 +110,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       hydrated={hydrated}
       favorites={favorites}
       recents={recents}
+      seen={seen}
       byCategory={byCategory}
       onSearchClick={() => setOpen(true)}
     />
@@ -199,6 +201,7 @@ function SidebarNav({
   hydrated,
   favorites,
   recents,
+  seen,
   byCategory,
   onSearchClick,
 }: {
@@ -206,6 +209,7 @@ function SidebarNav({
   hydrated: boolean;
   favorites: string[];
   recents: string[];
+  seen: string[];
   byCategory: Map<Category, typeof TOOLS>;
   onSearchClick: () => void;
 }) {
@@ -270,6 +274,11 @@ function SidebarNav({
                 <SidebarLink key={t.slug} to={`/t/${t.slug}`} active={pathname === `/t/${t.slug}`}>
                   <t.icon className="size-3.5 opacity-70" />
                   <span className="truncate">{t.name}</span>
+                  {t.isNew && hydrated && !seen.includes(t.slug) && (
+                    <span className="ml-auto text-[9px] font-semibold uppercase tracking-wider px-1.5 py-px rounded bg-foreground text-background">
+                      New
+                    </span>
+                  )}
                   {t.status === "soon" && (
                     <span className="ml-auto text-[9px] uppercase tracking-wider text-muted-foreground">
                       soon
@@ -377,6 +386,7 @@ function GlobalCommand({
   const hydrated = useHydrated();
   const { favorites, toggle: toggleFav, isFav } = useFavorites();
   const { recents, push: pushRecent } = useRecents();
+  const { isSeen } = useSeen();
 
   // Reset query each time the palette opens
   useEffect(() => {
@@ -474,6 +484,7 @@ function GlobalCommand({
                   onSelect={() => go(t.slug)}
                   onFav={() => toggleFav(t.slug)}
                   favored={hydrated && isFav(t.slug)}
+                  showNew={hydrated && !!t.isNew && !isSeen(t.slug)}
                 />
               ))}
             </CommandGroup>
@@ -562,12 +573,14 @@ function ToolCommandItem({
   onFav,
   favored,
   hint,
+  showNew,
 }: {
   tool: (typeof TOOLS)[number];
   onSelect: () => void;
   onFav: () => void;
   favored: boolean;
   hint?: ReactNode;
+  showNew?: boolean;
 }) {
   return (
     <CommandItem
@@ -577,6 +590,11 @@ function ToolCommandItem({
     >
       <tool.icon className="size-4 opacity-70 shrink-0" />
       <span className="truncate">{tool.name}</span>
+      {showNew && (
+        <span className="text-[9px] font-semibold uppercase tracking-wider px-1.5 py-px rounded bg-foreground text-background shrink-0">
+          New
+        </span>
+      )}
       <span className="hidden sm:inline text-[11px] text-muted-foreground truncate">
         — {tool.description}
       </span>
