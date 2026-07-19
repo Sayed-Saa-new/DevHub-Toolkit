@@ -320,4 +320,10 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Generate CSS clamp() for fluid typography and spacing. Set min/max size and viewport, get px or rem output with a live responsive preview — free.",
     keywords: ["css clamp calculator", "clamp calculator", "fluid typography", "fluid type scale", "responsive font size", "css clamp generator", "utopia clamp"],
   }, // css clamp — 6,600/mo, KDI 34 (winnable)
+  "image-compressor": {
+    title: "Image Compressor — Compress JPEG, PNG & WebP Online",
+    description:
+      "Compress images in your browser — JPEG, PNG, WebP and AVIF. Batch resize, convert to WebP, adjust quality, download in one click. 100% local, no upload.",
+    keywords: ["image compressor", "compress image online", "compress jpeg", "compress png", "compress webp", "image optimizer", "resize image online", "convert to webp", "reduce image size", "bulk image compressor"],
+  }, // image compressor — 165,000/mo, KDI 78 (long-tail play: "compress image online free")
 };
