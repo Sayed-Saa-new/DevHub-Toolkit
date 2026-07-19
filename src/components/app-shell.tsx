@@ -31,7 +31,7 @@ import { Sheet, SheetContent, SheetTitle, SheetHeader } from "@/components/ui/sh
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { CATEGORIES, TOOLS, TOOLS_BY_SLUG, searchTools, type Category } from "@/lib/tools";
-import { useFavorites, useHydrated, useRecents } from "@/lib/storage";
+import { useFavorites, useHydrated, useRecents, useSeen } from "@/lib/storage";
 import { BrandMark, BrandLockup } from "@/components/brand-mark";
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -42,6 +42,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const hydrated = useHydrated();
   const { favorites } = useFavorites();
   const { recents } = useRecents();
+  const { seen } = useSeen();
 
   // Close mobile drawer on route change
   useEffect(() => {
@@ -109,6 +110,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       hydrated={hydrated}
       favorites={favorites}
       recents={recents}
+      seen={seen}
       byCategory={byCategory}
       onSearchClick={() => setOpen(true)}
     />
