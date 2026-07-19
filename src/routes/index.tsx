@@ -282,14 +282,15 @@ function LandingHeader() {
 
 function CategoriesMenu() {
   const [open, setOpen] = useState(false);
-  let closeTimer: ReturnType<typeof setTimeout> | undefined;
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const openNow = () => {
-    if (closeTimer) clearTimeout(closeTimer);
+    if (closeTimer.current) clearTimeout(closeTimer.current);
     setOpen(true);
   };
   const closeSoon = () => {
-    closeTimer = setTimeout(() => setOpen(false), 120);
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setOpen(false), 150);
   };
 
   return (
