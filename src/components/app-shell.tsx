@@ -201,6 +201,7 @@ function SidebarNav({
   hydrated,
   favorites,
   recents,
+  seen,
   byCategory,
   onSearchClick,
 }: {
@@ -208,6 +209,7 @@ function SidebarNav({
   hydrated: boolean;
   favorites: string[];
   recents: string[];
+  seen: string[];
   byCategory: Map<Category, typeof TOOLS>;
   onSearchClick: () => void;
 }) {
@@ -272,6 +274,11 @@ function SidebarNav({
                 <SidebarLink key={t.slug} to={`/t/${t.slug}`} active={pathname === `/t/${t.slug}`}>
                   <t.icon className="size-3.5 opacity-70" />
                   <span className="truncate">{t.name}</span>
+                  {t.isNew && hydrated && !seen.includes(t.slug) && (
+                    <span className="ml-auto text-[9px] font-semibold uppercase tracking-wider px-1.5 py-px rounded bg-foreground text-background">
+                      New
+                    </span>
+                  )}
                   {t.status === "soon" && (
                     <span className="ml-auto text-[9px] uppercase tracking-wider text-muted-foreground">
                       soon
