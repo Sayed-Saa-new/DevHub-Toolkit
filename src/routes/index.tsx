@@ -211,11 +211,12 @@ function LandingHeader() {
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub"
+            data-motion-icon-group
             className="size-8 grid place-items-center rounded-md border border-border hover:border-foreground/40 hover:bg-accent/40 transition"
           >
             <Github className="size-3.5" />
           </a>
-          <Link to="/tools">
+          <Link to="/tools" data-motion-icon-group>
             <Button size="sm" className="h-8 rounded-full px-4 gap-1.5">
               Open toolkit <ArrowRight className="size-3.5" />
             </Button>
@@ -224,6 +225,7 @@ function LandingHeader() {
 
         <button
           onClick={() => setOpen((v) => !v)}
+          data-motion-icon-group
           className="md:hidden size-9 grid place-items-center rounded-md border border-border"
           aria-label="Menu"
         >
@@ -289,12 +291,12 @@ function Hero() {
           A minimal, fast toolkit for the tasks you do every day. Format JSON, decode JWTs, generate hashes, tweak gradients — from one clean interface.
         </p>
         <div className="mt-9 flex flex-wrap gap-3 justify-center">
-          <Link to="/tools">
+          <Link to="/tools" data-motion-icon-group>
             <Button size="lg" className="h-11 px-5 gap-2 rounded-full">
               Explore all tools <ArrowRight className="size-4" />
             </Button>
           </Link>
-          <Link to="/changelog">
+          <Link to="/changelog" data-motion-icon-group>
             <Button size="lg" variant="outline" className="h-11 px-5 gap-2 rounded-full">
               <Rss className="size-4" /> What's new
             </Button>
@@ -330,6 +332,7 @@ function FeaturedTools() {
               key={t.slug}
               to="/t/$slug"
               params={{ slug: t.slug }}
+              data-motion-icon-group
               className="group relative rounded-xl border border-border bg-card p-5 hover:border-foreground/40 hover:bg-accent/40 transition"
             >
               <div className="size-9 rounded-lg border border-border bg-background grid place-items-center mb-4">
@@ -396,7 +399,7 @@ function Features() {
         />
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {items.map((f) => (
-            <div key={f.title} className="rounded-xl border border-border bg-background p-5">
+            <div key={f.title} data-motion-icon-group className="rounded-xl border border-border bg-background p-5">
               <div className="size-9 rounded-lg border border-border grid place-items-center mb-4">
                 <f.icon className="size-4" />
               </div>
@@ -428,6 +431,7 @@ function CategoriesShowcase() {
               key={cat.id}
               to="/c/$category"
               params={{ category: cat.id }}
+              data-motion-icon-group
               className="group relative rounded-xl border border-border bg-card p-6 hover:border-foreground/40 hover:bg-accent/40 transition"
             >
               <div className="flex items-center justify-between">
