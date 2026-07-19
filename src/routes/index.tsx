@@ -327,107 +327,109 @@ function CategoriesMenu() {
           <div className="absolute left-0 right-0 top-full h-3" aria-hidden />
           <div
             role="menu"
-            className="absolute left-1/2 top-[calc(100%+0.5rem)] -translate-x-1/2 w-[720px] max-w-[92vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-fade-in"
+            className="absolute left-1/2 top-[calc(100%+0.5rem)] -translate-x-1/2 w-[980px] max-w-[95vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-fade-in"
           >
-            <div className="grid grid-cols-[1fr_1.15fr]">
-              {/* Left: category list */}
-              <ul className="p-2 border-r border-border">
-                {CATEGORIES.map((c) => {
-                  const count = TOOLS.filter((t) => t.category === c.id).length;
-                  const isActive = c.id === active.id;
-                  return (
-                    <li key={c.id}>
-                      <Link
-                        to="/c/$category"
-                        params={{ category: c.id }}
-                        onMouseEnter={() => setHovered(c.id)}
-                        onFocus={() => setHovered(c.id)}
-                        onClick={() => setOpen(false)}
-                        className={cn(
-                          "group flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm transition",
-                          isActive
-                            ? "bg-accent text-foreground"
-                            : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
-                        )}
-                      >
-                        <span className="font-medium">{c.label}</span>
-                        <span className="flex items-center gap-2">
-                          <span className="text-[10px] font-mono text-muted-foreground/80">
-                            {count.toString().padStart(2, "0")}
-                          </span>
-                          <ArrowRight
-                            className={cn(
-                              "size-3.5 transition-all",
-                              isActive
-                                ? "opacity-100 translate-x-0"
-                                : "opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0",
-                            )}
-                          />
-                        </span>
-                      </Link>
-                    </li>
-                  );
-                })}
-                <li className="mt-1 border-t border-border pt-2">
-                  <Link
-                    to="/tools"
-                    onClick={() => setOpen(false)}
-                    className="flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm text-foreground hover:bg-accent/50"
-                  >
-                    <span className="font-medium">All tools</span>
-                    <ArrowRight className="size-3.5" />
-                  </Link>
-                </li>
-              </ul>
+            <MegaMenuBody onClose={() => setOpen(false)} />
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 
-              {/* Right: illustration + preview */}
+function MegaMenuBody({ onClose }: { onClose: () => void }) {
+  const half = Math.ceil(CATEGORIES.length / 2);
+  const colA = CATEGORIES.slice(0, half);
+  const colB = CATEGORIES.slice(half);
+
+  const inspiration = [
+    { icon: Briefcase, label: "All tools", desc: "Browse every utility in one grid.", to: "/tools" as const },
+    { icon: Rocket, label: "Favorites", desc: "Your pinned tools, one shortcut away.", to: "/favorites" as const },
+    { icon: BookOpen, label: "Changelog", desc: "New releases, fixes and improvements.", to: "/changelog" as const },
+  ];
+
+  return (
+    <div className="grid grid-cols-[1fr_1fr_0.9fr]">
+      <MegaColumn title="Categories" items={colA} onClose={onClose} />
+      <div className="border-l border-border">
+        <MegaColumn title="All categories" items={colB} onClose={onClose} />
+      </div>
+      <div className="border-l border-border bg-muted/30 p-5">
+        <div className="text-xs text-muted-foreground mb-3">Inspiration</div>
+        <ul className="space-y-1">
+          {inspiration.map((i) => (
+            <li key={i.label}>
+              <Link
+                to={i.to}
+                onClick={onClose}
+                className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
+              >
+                <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
+                  <i.icon className="size-4" />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-sm font-medium text-foreground">{i.label}</div>
+                  <div className="text-xs text-muted-foreground leading-snug line-clamp-2">{i.desc}</div>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function MegaColumn({
+  title,
+  items,
+  onClose,
+}: {
+  title: string;
+  items: typeof CATEGORIES;
+  onClose: () => void;
+}) {
+  return (
+    <div className="p-5">
+      <div className="text-xs text-muted-foreground mb-3">{title}</div>
+      <ul className="space-y-1">
+        {items.map((c) => {
+          const art = CATEGORY_ART[c.id];
+          const count = TOOLS.filter((t) => t.category === c.id).length;
+          return (
+            <li key={c.id}>
               <Link
                 to="/c/$category"
-                params={{ category: active.id }}
-                onClick={() => setOpen(false)}
-                className="block p-3 group"
-                key={active.id}
+                params={{ category: c.id }}
+                onClick={onClose}
+                className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
               >
-                <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-border bg-black">
+                <div className="relative shrink-0 w-[92px] aspect-[16/10] rounded-md overflow-hidden border border-border bg-black">
                   <img
-                    src={activeArt.image}
-                    alt={`${active.label} category illustration`}
-                    className="absolute inset-0 h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-[1.03]"
+                    src={art.image}
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.04] transition-all duration-500"
                     width={800}
                     height={600}
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-3">
-                    <div className="text-[10px] uppercase tracking-[0.14em] text-white/60">
-                      Category
-                    </div>
-                    <div className="text-white font-semibold tracking-tight">{active.label}</div>
+                </div>
+                <div className="min-w-0 pt-0.5">
+                  <div className="text-sm font-medium text-foreground flex items-center gap-2">
+                    {c.label}
+                    <span className="text-[10px] font-mono text-muted-foreground/70">
+                      {count.toString().padStart(2, "0")}
+                    </span>
+                  </div>
+                  <div className="text-xs text-muted-foreground leading-snug line-clamp-2 mt-0.5">
+                    {art.blurb}
                   </div>
                 </div>
-                <p className="mt-3 px-1 text-xs text-muted-foreground leading-relaxed line-clamp-2">
-                  {activeArt.blurb}
-                </p>
-                <div className="mt-2 px-1 flex flex-wrap gap-1.5">
-                  {activeTools.slice(0, 4).map((t) => (
-                    <span
-                      key={t.slug}
-                      className="text-[10px] px-2 py-0.5 rounded-full border border-border text-muted-foreground"
-                    >
-                      {t.name}
-                    </span>
-                  ))}
-                  {activeTools.length > 4 && (
-                    <span className="text-[10px] px-2 py-0.5 rounded-full border border-border text-muted-foreground">
-                      +{activeTools.length - 4} more
-                    </span>
-                  )}
-                </div>
               </Link>
-            </div>
-          </div>
-        </>
-      )}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }
