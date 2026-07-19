@@ -87,7 +87,15 @@ export const Route = createFileRoute("/")({
         content: "Every developer utility you actually use — local-first, keyboard-first, monochrome.",
       },
     ],
-    links: [{ rel: "canonical", href: `${SITE}/` }],
+    links: [
+      { rel: "canonical", href: `${SITE}/` },
+      { rel: "prefetch", as: "image", href: catConverters, type: "image/svg+xml" },
+      { rel: "prefetch", as: "image", href: catGenerators, type: "image/svg+xml" },
+      { rel: "prefetch", as: "image", href: catDesign, type: "image/svg+xml" },
+      { rel: "prefetch", as: "image", href: catEditors, type: "image/svg+xml" },
+      { rel: "prefetch", as: "image", href: catReference, type: "image/svg+xml" },
+      { rel: "prefetch", as: "image", href: catAi, type: "image/svg+xml" },
+    ],
     scripts: [
       {
         type: "application/ld+json",
@@ -413,7 +421,8 @@ function MegaColumn({
                      src={art.image}
                      alt=""
                      className="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 group-hover:scale-[1.06] transition-all duration-500"
-                     loading="lazy"
+                     loading="eager"
+                     decoding="async"
                    />
                  </div>
                 <div className="min-w-0 pt-0.5">
