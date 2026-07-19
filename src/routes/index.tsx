@@ -25,6 +25,7 @@ import { Github, Twitter, Fingerprint } from "lucide-react";
 import { Briefcase, Rocket, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRef } from "react";
+import { createContext, useContext, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
 import type { ReactNode, ComponentType } from "react";
 import { getChangelogEntries } from "@/lib/changelog";
@@ -211,15 +212,17 @@ function LandingHeader() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
-          <ToolsMenu />
-          <CategoriesMenu />
-          <Link
-            to="/favorites"
-            className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
-          >
-            Favorites
-          </Link>
-          <ChangelogMenu />
+          <MenuBarProvider>
+            <ToolsMenu />
+            <CategoriesMenu />
+            <Link
+              to="/favorites"
+              className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
+            >
+              Favorites
+            </Link>
+            <ChangelogMenu />
+          </MenuBarProvider>
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
