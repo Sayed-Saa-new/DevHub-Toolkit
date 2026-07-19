@@ -5,17 +5,19 @@ import { useEffect, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { useFavorites, useRecents } from "@/lib/storage";
+import { useFavorites, useRecents, useSeen } from "@/lib/storage";
 import type { Tool } from "@/lib/tools";
 
 export function ToolShell({ tool, children }: { tool: Tool; children: ReactNode }) {
   const { isFav, toggle } = useFavorites();
   const { push } = useRecents();
+  const { markSeen } = useSeen();
   const favored = isFav(tool.slug);
 
   useEffect(() => {
     push(tool.slug);
-  }, [tool.slug, push]);
+    markSeen(tool.slug);
+  }, [tool.slug, push, markSeen]);
 
   return (
     <div className="mx-auto max-w-5xl px-4 md:px-8 py-6 md:py-10">
