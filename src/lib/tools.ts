@@ -37,6 +37,7 @@ export type Tool = {
   icon: LucideIcon;
   keywords: string[];
   status?: "ready" | "soon";
+  isNew?: boolean;
 };
 
 export const TOOLS: Tool[] = [
