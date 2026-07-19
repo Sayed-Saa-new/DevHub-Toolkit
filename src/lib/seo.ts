@@ -326,4 +326,10 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Compress images in your browser — JPEG, PNG, WebP and AVIF. Batch resize, convert to WebP, adjust quality, download in one click. 100% local, no upload.",
     keywords: ["image compressor", "compress image online", "compress jpeg", "compress png", "compress webp", "image optimizer", "resize image online", "convert to webp", "reduce image size", "bulk image compressor"],
   }, // image compressor — 165,000/mo, KDI 78 (long-tail play: "compress image online free")
+  "jwt-generator": {
+    title: "JWT Generator — Sign HS256, HS384 & HS512 Online",
+    description:
+      "Create and sign JSON Web Tokens with HS256, HS384 or HS512. Edit header, payload and claims, generate a random secret — 100% client-side, no signup.",
+    keywords: ["jwt generator", "sign jwt online", "create jwt", "jwt maker", "hs256 generator", "hs512 generator", "json web token generator", "jwt builder", "generate jwt token"],
+  }, // jwt generator — 6,600/mo, KDI 41 (winnable, pairs with existing jwt decoder)
 };

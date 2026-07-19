@@ -22,6 +22,7 @@ import { SqlFormatter } from "./sql-formatter";
 import { JsonDiff } from "./json-diff";
 import { ClampCalculator } from "./clamp-calculator";
 import { ImageCompressor } from "./image-compressor";
+import { JwtGenerator } from "./jwt-generator";
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-formatter": JsonFormatter,
@@ -68,6 +69,7 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-diff": JsonDiff,
   "clamp-calculator": ClampCalculator,
   "image-compressor": ImageCompressor,
+  "jwt-generator": JwtGenerator,
   "ai-explainer": AiExplainer,
   "ai-optimizer": AiOptimizer,
   "ai-commit": AiCommit,
