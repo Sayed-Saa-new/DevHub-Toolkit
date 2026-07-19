@@ -14,6 +14,16 @@ import {
   AiExplainer, AiOptimizer, AiCommit,
   AiSql, AiConvert, AiErrorExplainer, AiRegex, AiTests,
 } from "./ai";
+import { SchemaValidator } from "./schema-validator";
+import { JsonToTs } from "./json-to-ts";
+import { MockData } from "./mock-data";
+import { CurlConverter } from "./curl-converter";
+import { SqlFormatter } from "./sql-formatter";
+import { JsonDiff } from "./json-diff";
+import { ClampCalculator } from "./clamp-calculator";
+import { ImageCompressor } from "./image-compressor";
+import { JwtGenerator } from "./jwt-generator";
+import { TextToMarkdown } from "./text-to-markdown";
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-formatter": JsonFormatter,
@@ -52,6 +62,16 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "image-base64": ImageBase64,
   "timezone": TimezoneConverter,
   "string-escape": StringEscape,
+  "schema-validator": SchemaValidator,
+  "json-to-ts": JsonToTs,
+  "mock-data": MockData,
+  "curl-converter": CurlConverter,
+  "sql-formatter": SqlFormatter,
+  "json-diff": JsonDiff,
+  "clamp-calculator": ClampCalculator,
+  "image-compressor": ImageCompressor,
+  "jwt-generator": JwtGenerator,
+  "text-to-markdown": TextToMarkdown,
   "ai-explainer": AiExplainer,
   "ai-optimizer": AiOptimizer,
   "ai-commit": AiCommit,

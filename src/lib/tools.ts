@@ -6,6 +6,12 @@ import {
   MessageSquareCode, Lock, Type, CaseSensitive, FileJson, Table2,
   Calculator, GitCompare, AlignLeft, Code2, CalendarClock, Image,
   Link, Smile, Globe2, Database, Languages, Bug, ScanSearch, FlaskConical,
+  ShieldCheck, Boxes, TerminalSquare, Database as DatabaseZap,
+  Diff,
+  Ruler,
+  ImageDown,
+  KeySquare,
+  FileType2,
 } from "lucide-react";
 
 export type Category =
@@ -33,6 +39,7 @@ export type Tool = {
   icon: LucideIcon;
   keywords: string[];
   status?: "ready" | "soon";
+  isNew?: boolean;
 };
 
 export const TOOLS: Tool[] = [
@@ -82,6 +89,16 @@ export const TOOLS: Tool[] = [
   { slug: "image-base64", name: "Image → Base64", description: "Convert images to inline Data URLs.", category: "converters", icon: Image, keywords: ["image", "base64", "data url", "inline"] },
   { slug: "timezone", name: "Timezone Converter", description: "Convert a moment across world timezones.", category: "converters", icon: Globe, keywords: ["timezone", "tz", "utc", "world clock"] },
   { slug: "string-escape", name: "String Escape", description: "Escape and unescape JSON / JS strings.", category: "converters", icon: Binary, keywords: ["escape", "unescape", "json string", "js string"] },
+  { slug: "schema-validator", name: "Schema.org Validator", description: "Test JSON-LD structured data like Google Rich Results.", category: "editors", icon: ShieldCheck, keywords: ["schema", "json-ld", "structured data", "rich results", "seo", "google", "validator"] },
+  { slug: "json-to-ts", name: "JSON → TypeScript", description: "Generate TypeScript interfaces, types, or Zod schemas from JSON.", category: "converters", icon: FileJson, keywords: ["json to typescript", "json to ts", "json to interface", "json to zod", "type generator", "quicktype"], isNew: true },
+  { slug: "mock-data", name: "Mock Data Generator", description: "Design a schema and generate JSON, CSV, SQL, TS or XML mock data.", category: "generators", icon: Boxes, keywords: ["mock data", "fake data", "faker", "test data", "seed data", "dummy json", "json generator", "sql insert generator"], isNew: true },
+  { slug: "curl-converter", name: "cURL → Code", description: "Convert any curl command to fetch, axios, Python, Go, Rust, Java, C#, and more.", category: "converters", icon: TerminalSquare, keywords: ["curl to code", "curl to fetch", "curl to axios", "curl to python", "curl to go", "curl converter", "curl to requests", "http client generator"], isNew: true },
+  { slug: "sql-formatter", name: "SQL Formatter", description: "Beautify, minify and lint SQL for 17 dialects — Postgres, MySQL, BigQuery, Snowflake, T-SQL & more.", category: "editors", icon: DatabaseZap, keywords: ["sql formatter", "sql beautifier", "format sql online", "sql pretty print", "sql minifier", "postgres formatter", "mysql formatter", "bigquery formatter", "tsql formatter", "snowflake formatter"], isNew: true },
+  { slug: "json-diff", name: "JSON Diff", description: "Compare two JSON documents structurally — see added, removed and changed keys with paths.", category: "editors", icon: Diff, keywords: ["json diff", "compare json", "json compare", "json difference", "diff json online", "json patch", "structural diff"], isNew: true },
+  { slug: "clamp-calculator", name: "CSS Clamp Calculator", description: "Fluid typography and spacing with CSS clamp() — px/rem output and live preview.", category: "design", icon: Ruler, keywords: ["css clamp", "clamp calculator", "fluid typography", "fluid type", "responsive font size", "clamp generator", "utopia clamp"], isNew: true },
+  { slug: "image-compressor", name: "Image Compressor", description: "Compress JPEG, PNG, WebP & AVIF in your browser — batch, resize, convert to WebP, 100% local.", category: "converters", icon: ImageDown, keywords: ["image compressor", "compress image", "compress jpeg", "compress png", "webp converter", "image optimizer", "resize image", "bulk compress"], isNew: true },
+  { slug: "jwt-generator", name: "JWT Generator", description: "Sign HS256/384/512 JSON Web Tokens with claim helpers, random secret and live cURL — 100% client-side.", category: "generators", icon: KeySquare, keywords: ["jwt generator", "sign jwt", "create jwt", "hs256 generator", "hs512 generator", "json web token generator", "jwt builder", "jwt maker"], isNew: true },
+  { slug: "text-to-markdown", name: "Text → Markdown", description: "Convert plain text, HTML, or rich pasted content into clean GFM Markdown — with live preview.", category: "converters", icon: FileType2, keywords: ["text to markdown", "html to markdown", "rich text to markdown", "convert to md", "paste to markdown", "turndown", "gfm converter"], isNew: true },
 ];
 
 export const TOOLS_BY_SLUG: Record<string, Tool> = Object.fromEntries(

@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Search, Sparkles, Star } from "lucide-react";
+import { ArrowRight, Search, Star } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { GenerateButton } from "@/components/ui/generate-button";
 import { CATEGORIES, TOOLS, TOOLS_BY_SLUG, searchTools, type Category } from "@/lib/tools";
 import { useFavorites, useHydrated, useRecents } from "@/lib/storage";
 import { cn } from "@/lib/utils";
@@ -90,9 +91,8 @@ function Home() {
         <div className="absolute inset-0 grid-bg opacity-70 pointer-events-none" />
         <div className="absolute inset-x-0 -top-40 h-80 bg-[radial-gradient(ellipse_at_center,_oklch(1_0_0/_8%),_transparent_60%)] pointer-events-none" />
         <div className="relative mx-auto max-w-5xl px-4 md:px-8 py-14 md:py-20">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-border bg-card/50 text-xs text-muted-foreground mb-6">
-            <Sparkles className="size-3" />
-            <span>44 utilities · local-first · zero tracking</span>
+          <div className="mb-6">
+            <GenerateButton label="44 Utilities" activeLabel="Exploring" aria-label="44 utilities, local-first, zero tracking" />
           </div>
           <h1 className="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
             Every developer tool

@@ -278,4 +278,64 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Escape and unescape JSON and JavaScript strings — quotes, newlines, unicode. Free online string escape tool.",
     keywords: ["json string escape", "javascript string escape", "unescape json", "escape string online", "js string escape"],
   },
+  "schema-validator": {
+    title: "Schema.org Validator — JSON-LD Structured Data Test",
+    description:
+      "Test JSON-LD structured data like Google Rich Results Test. Fetch a URL or paste HTML — see detected types, required-field errors and warnings.",
+    keywords: ["schema validator", "json-ld tester", "structured data test", "rich results test", "schema.org validator", "google rich results", "seo structured data"],
+  },
+  "json-to-ts": {
+    title: "JSON to TypeScript — Interface, Type & Zod Generator",
+    description:
+      "Convert JSON to TypeScript interfaces, type aliases or Zod schemas instantly. Handles nested objects, arrays, unions and nullables — free, in-browser.",
+    keywords: ["json to typescript", "json to ts", "json to interface", "json to type", "json to zod", "typescript type generator", "quicktype alternative", "json schema to typescript"],
+  },
+  "mock-data": {
+    title: "Mock Data Generator — Fake JSON, CSV & SQL Test Data",
+    description:
+      "Design a schema and generate realistic mock data as JSON, CSV, SQL INSERT, TypeScript or XML. Seedable, deterministic, and free — no signup.",
+    keywords: ["mock data generator", "fake data generator", "test data generator", "json generator", "csv generator", "sql insert generator", "seed data", "dummy data online", "faker alternative"],
+  },
+  "curl-converter": {
+    title: "cURL to Code — fetch, axios, Python, Go, Rust & more",
+    description:
+      "Convert any curl command to fetch, axios, Node, Python requests, Go, PHP, Ruby, Rust, Java, C# or PowerShell. Paste, pick a language, copy — free.",
+    keywords: ["curl to code", "curl to fetch", "curl to axios", "curl to python", "curl to requests", "curl to go", "curl to php", "curl to c#", "curl converter online", "curl builder"],
+  },
+  "sql-formatter": {
+    title: "SQL Formatter & Beautifier — 17 Dialects, Free Online",
+    description:
+      "Format, beautify and minify SQL for Postgres, MySQL, T-SQL, BigQuery, Snowflake, Oracle and more. Configurable indent, keyword case, expression width — free.",
+    keywords: ["sql formatter", "sql beautifier", "format sql online", "sql pretty print", "sql minifier", "postgres sql formatter", "mysql formatter", "bigquery sql formatter", "snowflake sql formatter", "tsql formatter", "pl/sql formatter", "sql prettier"],
+  }, // sql formatter — 22,200/mo, KDI 51
+  "json-diff": {
+    title: "JSON Diff — Compare Two JSON Files Online, Free",
+    description:
+      "Compare two JSON documents and see added, removed and changed keys with full paths. Sort keys, ignore array order, copy the patch — free, no signup.",
+    keywords: ["json diff", "compare json", "json compare online", "json difference", "diff json", "json patch", "structural json diff", "json compare tool"],
+  }, // json diff — 8,100/mo, KDI 38 (winnable)
+  "clamp-calculator": {
+    title: "CSS Clamp Calculator — Fluid Typography Generator",
+    description:
+      "Generate CSS clamp() for fluid typography and spacing. Set min/max size and viewport, get px or rem output with a live responsive preview — free.",
+    keywords: ["css clamp calculator", "clamp calculator", "fluid typography", "fluid type scale", "responsive font size", "css clamp generator", "utopia clamp"],
+  }, // css clamp — 6,600/mo, KDI 34 (winnable)
+  "image-compressor": {
+    title: "Image Compressor — Compress JPEG, PNG & WebP Online",
+    description:
+      "Compress images in your browser — JPEG, PNG, WebP and AVIF. Batch resize, convert to WebP, adjust quality, download in one click. 100% local, no upload.",
+    keywords: ["image compressor", "compress image online", "compress jpeg", "compress png", "compress webp", "image optimizer", "resize image online", "convert to webp", "reduce image size", "bulk image compressor"],
+  }, // image compressor — 165,000/mo, KDI 78 (long-tail play: "compress image online free")
+  "jwt-generator": {
+    title: "JWT Generator — Sign HS256, HS384 & HS512 Online",
+    description:
+      "Create and sign JSON Web Tokens with HS256, HS384 or HS512. Edit header, payload and claims, generate a random secret — 100% client-side, no signup.",
+    keywords: ["jwt generator", "sign jwt online", "create jwt", "jwt maker", "hs256 generator", "hs512 generator", "json web token generator", "jwt builder", "generate jwt token"],
+  }, // jwt generator — 6,600/mo, KDI 41 (winnable, pairs with existing jwt decoder)
+  "text-to-markdown": {
+    title: "Text to Markdown Converter — HTML & Rich Text to MD",
+    description:
+      "Convert plain text, HTML or rich pasted content (Google Docs, Notion, web pages) into clean GitHub-Flavored Markdown. Live preview, tables, task lists — 100% free, client-side.",
+    keywords: ["text to markdown", "html to markdown", "convert to markdown", "rich text to markdown", "paste to markdown", "google docs to markdown", "notion to markdown", "web page to markdown", "gfm converter", "markdown converter online"],
+  }, // text to markdown — 8,100/mo, KDI 35 (winnable long-tail)
 };
