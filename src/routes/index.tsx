@@ -321,14 +321,18 @@ function CategoriesMenu() {
         <>
           {/* hover bridge to avoid gap flicker */}
           <div className="absolute left-0 right-0 top-full h-3" aria-hidden />
-          <div
-            role="menu"
-            onMouseEnter={openNow}
-            onMouseLeave={closeSoon}
-            className="fixed left-1/2 -translate-x-1/2 top-[4.5rem] w-[980px] max-w-[95vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-fade-in z-50"
-          >
-            <MegaMenuBody onClose={() => setOpen(false)} />
-          </div>
+          {typeof document !== "undefined" &&
+            createPortal(
+              <div
+                role="menu"
+                onMouseEnter={openNow}
+                onMouseLeave={closeSoon}
+                className="fixed left-1/2 -translate-x-1/2 top-[4.5rem] w-[980px] max-w-[95vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-fade-in z-50"
+              >
+                <MegaMenuBody onClose={() => setOpen(false)} />
+              </div>,
+              document.body,
+            )}
         </>
       )}
     </div>
