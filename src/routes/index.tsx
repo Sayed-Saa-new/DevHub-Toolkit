@@ -322,7 +322,9 @@ function CategoriesMenu() {
           <div className="absolute left-0 right-0 top-full h-3" aria-hidden />
           <div
             role="menu"
-            className="absolute left-1/2 top-[calc(100%+0.5rem)] -translate-x-1/2 w-[980px] max-w-[95vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-fade-in"
+            onMouseEnter={openNow}
+            onMouseLeave={closeSoon}
+            className="fixed left-1/2 -translate-x-1/2 top-[calc(var(--header-h,4rem)+0.5rem)] w-[980px] max-w-[95vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-fade-in z-50"
           >
             <MegaMenuBody onClose={() => setOpen(false)} />
           </div>
