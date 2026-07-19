@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Upload, Download, X, Image as ImageIcon } from "lucide-react";
+import { Upload, Download, X, Image as ImageIcon, RefreshCw, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Format = "auto" | "image/jpeg" | "image/webp" | "image/png";
@@ -13,6 +13,7 @@ type Format = "auto" | "image/jpeg" | "image/webp" | "image/png";
 type Row = {
   id: string;
   name: string;
+  file: File;
   originalSize: number;
   originalUrl: string;
   outSize?: number;
@@ -37,6 +38,18 @@ function extFor(type: string | undefined, fallback: string) {
   return fallback;
 }
 
+function resolveOutType(format: Format, sourceType: string): string {
+  if (format !== "auto") return format;
+  // Preserve source type when it's a lossy/lossless format we support.
+  if (sourceType === "image/png") return "image/png";
+  if (sourceType === "image/webp") return "image/webp";
+  return "image/jpeg";
+}
+
+function sleep(ms: number) {
+  return new Promise<void>((r) => setTimeout(r, ms));
+}
+
 export function ImageCompressor() {
   const [rows, setRows] = useState<Row[]>([]);
   const [quality, setQuality] = useState(0.75);
@@ -46,31 +59,22 @@ export function ImageCompressor() {
   const [busy, setBusy] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const addFiles = useCallback((files: FileList | File[]) => {
-    const list = Array.from(files).filter((f) => f.type.startsWith("image/"));
-    const next: Row[] = list.map((f) => ({
-      id: crypto.randomUUID(),
-      name: f.name,
-      originalSize: f.size,
-      originalUrl: URL.createObjectURL(f),
-      status: "queued",
-    }));
-    setRows((r) => [...r, ...next]);
-    // Kick off compression
-    void (async () => {
+  const compressRows = useCallback(
+    async (ids: string[], sourceRows: Row[]) => {
       setBusy(true);
-      for (let i = 0; i < list.length; i++) {
-        const file = list[i];
-        const id = next[i].id;
-        setRows((r) => r.map((x) => (x.id === id ? { ...x, status: "processing" } : x)));
+      for (const id of ids) {
+        const row = sourceRows.find((r) => r.id === id);
+        if (!row) continue;
+        setRows((r) =>
+          r.map((x) =>
+            x.id === id
+              ? { ...x, status: "processing", error: undefined, outUrl: undefined, outBlob: undefined, outSize: undefined }
+              : x,
+          ),
+        );
         try {
-          const outType =
-            format === "auto"
-              ? file.type === "image/png"
-                ? "image/png"
-                : "image/jpeg"
-              : format;
-          const compressed = await imageCompression(file, {
+          const outType = resolveOutType(format, row.file.type);
+          const compressed = await imageCompression(row.file, {
             maxSizeMB,
             maxWidthOrHeight: maxWidth,
             initialQuality: quality,
@@ -79,23 +83,62 @@ export function ImageCompressor() {
           });
           const url = URL.createObjectURL(compressed);
           setRows((r) =>
-            r.map((x) =>
-              x.id === id
-                ? { ...x, status: "done", outBlob: compressed, outSize: compressed.size, outUrl: url, outType }
-                : x
-            )
+            r.map((x) => {
+              if (x.id !== id) return x;
+              if (x.outUrl) URL.revokeObjectURL(x.outUrl);
+              return {
+                ...x,
+                status: "done",
+                outBlob: compressed,
+                outSize: compressed.size,
+                outUrl: url,
+                outType,
+              };
+            }),
           );
         } catch (err) {
           setRows((r) =>
             r.map((x) =>
-              x.id === id ? { ...x, status: "error", error: err instanceof Error ? err.message : "Failed" } : x
-            )
+              x.id === id
+                ? { ...x, status: "error", error: err instanceof Error ? err.message : "Failed" }
+                : x,
+            ),
           );
         }
       }
       setBusy(false);
-    })();
-  }, [format, maxSizeMB, maxWidth, quality]);
+    },
+    [format, maxSizeMB, maxWidth, quality],
+  );
+
+  const addFiles = useCallback(
+    (files: FileList | File[]) => {
+      const list = Array.from(files).filter((f) => f.type.startsWith("image/"));
+      if (!list.length) return;
+      const next: Row[] = list.map((f) => ({
+        id: crypto.randomUUID(),
+        name: f.name,
+        file: f,
+        originalSize: f.size,
+        originalUrl: URL.createObjectURL(f),
+        status: "queued",
+      }));
+      setRows((r) => [...r, ...next]);
+      void compressRows(
+        next.map((n) => n.id),
+        next,
+      );
+    },
+    [compressRows],
+  );
+
+  const recompressAll = useCallback(() => {
+    if (!rows.length) return;
+    void compressRows(
+      rows.map((r) => r.id),
+      rows,
+    );
+  }, [rows, compressRows]);
 
   const remove = (id: string) => {
     setRows((r) => {
@@ -108,17 +151,33 @@ export function ImageCompressor() {
     });
   };
 
+  const clearAll = () => {
+    for (const row of rows) {
+      URL.revokeObjectURL(row.originalUrl);
+      if (row.outUrl) URL.revokeObjectURL(row.outUrl);
+    }
+    setRows([]);
+  };
+
   const download = (row: Row) => {
     if (!row.outBlob) return;
     const a = document.createElement("a");
     a.href = row.outUrl!;
     const base = row.name.replace(/\.[^.]+$/, "");
     a.download = `${base}.min.${extFor(row.outType, "jpg")}`;
+    document.body.appendChild(a);
     a.click();
+    a.remove();
   };
 
   const downloadAll = async () => {
-    for (const row of rows) if (row.status === "done") download(row);
+    for (const row of rows) {
+      if (row.status === "done") {
+        download(row);
+        // Stagger so browsers don't block subsequent downloads.
+        await sleep(180);
+      }
+    }
   };
 
   const totalIn = rows.reduce((s, r) => s + r.originalSize, 0);
@@ -127,16 +186,48 @@ export function ImageCompressor() {
 
   return (
     <div className="space-y-4">
-      <Panel title="Settings">
+      <Panel
+        title="Settings"
+        actions={
+          rows.length > 0 ? (
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-7 gap-1.5 text-xs"
+              onClick={recompressAll}
+              disabled={busy}
+            >
+              <RefreshCw className={cn("size-3", busy && "animate-spin")} /> Re-compress all
+            </Button>
+          ) : null
+        }
+      >
         <div className="grid gap-4 p-3 md:grid-cols-4">
           <Field label="Quality" hint={`${Math.round(quality * 100)}%`}>
             <Slider min={0.1} max={1} step={0.05} value={[quality]} onValueChange={(v) => setQuality(v[0])} />
           </Field>
           <Field label="Max width/height (px)">
-            <Input type="number" value={maxWidth} onChange={(e) => setMaxWidth(+e.target.value || 1920)} />
+            <Input
+              type="number"
+              min={16}
+              value={maxWidth}
+              onChange={(e) => {
+                const v = parseInt(e.target.value, 10);
+                setMaxWidth(Number.isFinite(v) && v > 0 ? v : 1920);
+              }}
+            />
           </Field>
           <Field label="Max size (MB)">
-            <Input type="number" step="0.1" value={maxSizeMB} onChange={(e) => setMaxSizeMB(+e.target.value || 1)} />
+            <Input
+              type="number"
+              step="0.1"
+              min={0.05}
+              value={maxSizeMB}
+              onChange={(e) => {
+                const v = parseFloat(e.target.value);
+                setMaxSizeMB(Number.isFinite(v) && v > 0 ? v : 1);
+              }}
+            />
           </Field>
           <Field label="Output format">
             <Tabs value={format} onValueChange={(v) => setFormat(v as Format)}>
@@ -149,6 +240,11 @@ export function ImageCompressor() {
             </Tabs>
           </Field>
         </div>
+        {format === "image/png" && (
+          <div className="border-t border-border px-3 py-2 text-[11px] text-muted-foreground">
+            PNG output is lossless — the quality slider is ignored. Use JPEG or WebP for stronger compression.
+          </div>
+        )}
       </Panel>
 
       <div
@@ -171,7 +267,11 @@ export function ImageCompressor() {
           accept="image/*"
           multiple
           className="hidden"
-          onChange={(e) => e.target.files && addFiles(e.target.files)}
+          onChange={(e) => {
+            if (e.target.files) addFiles(e.target.files);
+            // Reset so re-selecting the same file re-triggers change.
+            e.target.value = "";
+          }}
         />
       </div>
 
@@ -186,15 +286,19 @@ export function ImageCompressor() {
               <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={downloadAll} disabled={busy}>
                 <Download className="size-3" /> Download all
               </Button>
+              <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={clearAll} disabled={busy}>
+                <Trash2 className="size-3" /> Clear
+              </Button>
             </>
           }
         >
           <ul className="divide-y divide-border">
             {rows.map((row) => {
               const pct =
-                row.outSize && row.originalSize
+                row.outSize != null && row.originalSize
                   ? Math.round((1 - row.outSize / row.originalSize) * 100)
                   : 0;
+              const grew = pct < 0;
               return (
                 <li key={row.id} className="flex items-center gap-3 p-3">
                   <div className="size-12 shrink-0 overflow-hidden rounded-md border border-border bg-muted/30 flex items-center justify-center">
@@ -212,14 +316,19 @@ export function ImageCompressor() {
                         <>
                           {" → "}
                           <span className="text-foreground">{human(row.outSize)}</span>{" "}
-                          <span className={cn(pct > 0 ? "text-emerald-500" : "text-muted-foreground")}>
-                            ({pct > 0 ? `-${pct}%` : `+${Math.abs(pct)}%`})
+                          <span className={cn(grew ? "text-amber-500" : pct > 0 ? "text-emerald-500" : "text-muted-foreground")}>
+                            ({grew ? `+${Math.abs(pct)}%` : pct > 0 ? `-${pct}%` : "0%"})
                           </span>
                         </>
                       )}
                       {row.status === "processing" && <span className="ml-1">· compressing…</span>}
                       {row.status === "error" && <span className="ml-1 text-red-500">· {row.error}</span>}
                     </div>
+                    {row.status === "done" && grew && (
+                      <div className="text-[10px] text-amber-500/90 mt-0.5">
+                        Already smaller than target — try a lower quality or smaller max width.
+                      </div>
+                    )}
                   </div>
                   <Button
                     size="sm"
