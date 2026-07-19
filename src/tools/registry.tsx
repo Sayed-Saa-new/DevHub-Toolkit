@@ -20,6 +20,7 @@ import { MockData } from "./mock-data";
 import { CurlConverter } from "./curl-converter";
 import { SqlFormatter } from "./sql-formatter";
 import { JsonDiff } from "./json-diff";
+import { ClampCalculator } from "./clamp-calculator";
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-formatter": JsonFormatter,
@@ -64,6 +65,7 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "curl-converter": CurlConverter,
   "sql-formatter": SqlFormatter,
   "json-diff": JsonDiff,
+  "clamp-calculator": ClampCalculator,
   "ai-explainer": AiExplainer,
   "ai-optimizer": AiOptimizer,
   "ai-commit": AiCommit,

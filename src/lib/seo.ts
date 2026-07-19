@@ -314,4 +314,10 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Compare two JSON documents and see added, removed and changed keys with full paths. Sort keys, ignore array order, copy the patch — free, no signup.",
     keywords: ["json diff", "compare json", "json compare online", "json difference", "diff json", "json patch", "structural json diff", "json compare tool"],
   }, // json diff — 8,100/mo, KDI 38 (winnable)
+  "clamp-calculator": {
+    title: "CSS Clamp Calculator — Fluid Typography Generator",
+    description:
+      "Generate CSS clamp() for fluid typography and spacing. Set min/max size and viewport, get px or rem output with a live responsive preview — free.",
+    keywords: ["css clamp calculator", "clamp calculator", "fluid typography", "fluid type scale", "responsive font size", "css clamp generator", "utopia clamp"],
+  }, // css clamp — 6,600/mo, KDI 34 (winnable)
 };

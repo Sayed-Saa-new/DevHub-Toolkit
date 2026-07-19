@@ -8,6 +8,7 @@ import {
   Link, Smile, Globe2, Database, Languages, Bug, ScanSearch, FlaskConical,
   ShieldCheck, Boxes, TerminalSquare, Database as DatabaseZap,
   Diff,
+  Ruler,
 } from "lucide-react";
 
 export type Category =
@@ -90,6 +91,7 @@ export const TOOLS: Tool[] = [
   { slug: "curl-converter", name: "cURL → Code", description: "Convert any curl command to fetch, axios, Python, Go, Rust, Java, C#, and more.", category: "converters", icon: TerminalSquare, keywords: ["curl to code", "curl to fetch", "curl to axios", "curl to python", "curl to go", "curl converter", "curl to requests", "http client generator"] },
   { slug: "sql-formatter", name: "SQL Formatter", description: "Beautify, minify and lint SQL for 17 dialects — Postgres, MySQL, BigQuery, Snowflake, T-SQL & more.", category: "editors", icon: DatabaseZap, keywords: ["sql formatter", "sql beautifier", "format sql online", "sql pretty print", "sql minifier", "postgres formatter", "mysql formatter", "bigquery formatter", "tsql formatter", "snowflake formatter"] },
   { slug: "json-diff", name: "JSON Diff", description: "Compare two JSON documents structurally — see added, removed and changed keys with paths.", category: "editors", icon: Diff, keywords: ["json diff", "compare json", "json compare", "json difference", "diff json online", "json patch", "structural diff"] },
+  { slug: "clamp-calculator", name: "CSS Clamp Calculator", description: "Fluid typography and spacing with CSS clamp() — px/rem output and live preview.", category: "design", icon: Ruler, keywords: ["css clamp", "clamp calculator", "fluid typography", "fluid type", "responsive font size", "clamp generator", "utopia clamp"] },
 ];
 
 export const TOOLS_BY_SLUG: Record<string, Tool> = Object.fromEntries(
