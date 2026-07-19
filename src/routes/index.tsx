@@ -24,6 +24,8 @@ import { MotionIconConfig } from "lucide-react-motion";
 import { Github, Twitter, Fingerprint } from "lucide-react";
 import { Briefcase, Rocket, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useRef } from "react";
+import { createPortal } from "react-dom";
 
 import { Button } from "@/components/ui/button";
 import { GenerateButton } from "@/components/ui/generate-button";
@@ -280,14 +282,15 @@ function LandingHeader() {
 
 function CategoriesMenu() {
   const [open, setOpen] = useState(false);
-  let closeTimer: ReturnType<typeof setTimeout> | undefined;
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const openNow = () => {
-    if (closeTimer) clearTimeout(closeTimer);
+    if (closeTimer.current) clearTimeout(closeTimer.current);
     setOpen(true);
   };
   const closeSoon = () => {
-    closeTimer = setTimeout(() => setOpen(false), 120);
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setOpen(false), 150);
   };
 
   return (
@@ -320,12 +323,18 @@ function CategoriesMenu() {
         <>
           {/* hover bridge to avoid gap flicker */}
           <div className="absolute left-0 right-0 top-full h-3" aria-hidden />
-          <div
-            role="menu"
-            className="absolute left-1/2 top-[calc(100%+0.5rem)] -translate-x-1/2 w-[980px] max-w-[95vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-fade-in"
-          >
-            <MegaMenuBody onClose={() => setOpen(false)} />
-          </div>
+          {typeof document !== "undefined" &&
+            createPortal(
+              <div
+                role="menu"
+                onMouseEnter={openNow}
+                onMouseLeave={closeSoon}
+                className="fixed left-1/2 -translate-x-1/2 top-16 w-[980px] max-w-[95vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-fade-in z-50"
+              >
+                <MegaMenuBody onClose={() => setOpen(false)} />
+              </div>,
+              document.body,
+            )}
         </>
       )}
     </div>
