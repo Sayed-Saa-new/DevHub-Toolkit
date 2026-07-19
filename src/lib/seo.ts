@@ -332,4 +332,10 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Create and sign JSON Web Tokens with HS256, HS384 or HS512. Edit header, payload and claims, generate a random secret — 100% client-side, no signup.",
     keywords: ["jwt generator", "sign jwt online", "create jwt", "jwt maker", "hs256 generator", "hs512 generator", "json web token generator", "jwt builder", "generate jwt token"],
   }, // jwt generator — 6,600/mo, KDI 41 (winnable, pairs with existing jwt decoder)
+  "text-to-markdown": {
+    title: "Text to Markdown Converter — HTML & Rich Text to MD",
+    description:
+      "Convert plain text, HTML or rich pasted content (Google Docs, Notion, web pages) into clean GitHub-Flavored Markdown. Live preview, tables, task lists — 100% free, client-side.",
+    keywords: ["text to markdown", "html to markdown", "convert to markdown", "rich text to markdown", "paste to markdown", "google docs to markdown", "notion to markdown", "web page to markdown", "gfm converter", "markdown converter online"],
+  }, // text to markdown — 8,100/mo, KDI 35 (winnable long-tail)
 };
