@@ -15,14 +15,16 @@ import {
   KeyRound,
   Hash,
   QrCode,
-  Palette,
   Fingerprint,
   Regex,
   Blend,
   Terminal,
   Check,
-} from "lucide-react";
-import { useState } from "react";
+  Menu,
+  X,
+} from "lucide-react-motion";
+import { MotionIconConfig } from "lucide-react-motion";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { BrandMark } from "@/components/brand-mark";
@@ -129,17 +131,142 @@ const FEATURE_ICON: Record<string, typeof Braces> = {
 
 function Landing() {
   return (
-    <div className="min-w-0">
-      <Hero />
-      <FeaturedTools />
-      <Features />
-      <CategoriesShowcase />
-      <Stats />
-      <Testimonials />
-      <FAQ />
-      <FinalCTA />
-      <BigFooter />
-    </div>
+    <MotionIconConfig trigger="parent-hover" duration={0.25}>
+      <div className="min-w-0">
+        <LandingHeader />
+        <Hero />
+        <FeaturedTools />
+        <Features />
+        <CategoriesShowcase />
+        <Stats />
+        <Testimonials />
+        <FAQ />
+        <FinalCTA />
+        <BigFooter />
+      </div>
+    </MotionIconConfig>
+  );
+}
+
+/* ---------------- Landing Header ---------------- */
+
+function LandingHeader() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const nav = [
+    { label: "Tools", to: "/tools" as const },
+    { label: "Categories", to: "/c/$category" as const, params: { category: "converters" } },
+    { label: "Favorites", to: "/favorites" as const },
+    { label: "Changelog", to: "/changelog" as const },
+  ];
+
+  return (
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full transition-all duration-300",
+        scrolled
+          ? "border-b border-border bg-background/70 backdrop-blur-xl"
+          : "border-b border-transparent bg-transparent",
+      )}
+    >
+      <div className="mx-auto max-w-6xl px-4 md:px-8 h-14 flex items-center justify-between">
+        <Link to="/" className="group inline-flex items-center gap-2.5">
+          <BrandMark size={26} className="text-foreground" />
+          <span className="font-semibold tracking-tight text-[15px]">
+            Dev<span className="text-muted-foreground">Hub</span>
+          </span>
+        </Link>
+
+        <nav className="hidden md:flex items-center gap-1">
+          {nav.map((item) =>
+            "params" in item ? (
+              <Link
+                key={item.label}
+                to={item.to}
+                params={item.params}
+                className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <Link
+                key={item.label}
+                to={item.to}
+                className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
+              >
+                {item.label}
+              </Link>
+            ),
+          )}
+        </nav>
+
+        <div className="hidden md:flex items-center gap-2">
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="GitHub"
+            className="size-8 grid place-items-center rounded-md border border-border hover:border-foreground/40 hover:bg-accent/40 transition"
+          >
+            <Github className="size-3.5" />
+          </a>
+          <Link to="/tools">
+            <Button size="sm" className="h-8 rounded-full px-4 gap-1.5">
+              Open toolkit <ArrowRight className="size-3.5" />
+            </Button>
+          </Link>
+        </div>
+
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="md:hidden size-9 grid place-items-center rounded-md border border-border"
+          aria-label="Menu"
+        >
+          {open ? <X className="size-4" /> : <Menu className="size-4" />}
+        </button>
+      </div>
+
+      {open && (
+        <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl">
+          <div className="mx-auto max-w-6xl px-4 py-3 flex flex-col">
+            {nav.map((item) =>
+              "params" in item ? (
+                <Link
+                  key={item.label}
+                  to={item.to}
+                  params={item.params}
+                  onClick={() => setOpen(false)}
+                  className="py-2.5 text-sm text-muted-foreground hover:text-foreground"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <Link
+                  key={item.label}
+                  to={item.to}
+                  onClick={() => setOpen(false)}
+                  className="py-2.5 text-sm text-muted-foreground hover:text-foreground"
+                >
+                  {item.label}
+                </Link>
+              ),
+            )}
+            <Link to="/tools" onClick={() => setOpen(false)}>
+              <Button size="sm" className="mt-2 w-full h-9 rounded-full gap-1.5">
+                Open toolkit <ArrowRight className="size-3.5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      )}
+    </header>
   );
 }
 
