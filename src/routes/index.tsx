@@ -517,15 +517,13 @@ function ToolsMenuBody({ close }: { close: () => void }) {
               <kbd className="font-mono text-[10px] border border-border rounded px-1.5 py-0.5">⌘K</kbd>
             </div>
           </div>
-        </div>
-      )}
-    </HoverMenu>
+    </div>
   );
 }
 
 /* ---------------- Changelog Mega-Menu ---------------- */
 
-function ChangelogMenu() {
+function ChangelogMenuBody({ close }: { close: () => void }) {
   const entries = getChangelogEntries().slice(0, 4);
 
   const tagStyle = (tag?: string) => {
@@ -537,9 +535,7 @@ function ChangelogMenu() {
   };
 
   return (
-    <HoverMenu label="Changelog" id="changelog" width={660}>
-      {(close) => (
-        <div className="grid grid-cols-[1.5fr_0.9fr]">
+    <div className="w-[660px] max-w-[95vw] grid grid-cols-[1.5fr_0.9fr]">
           <div className="p-5">
             <div className="text-xs text-muted-foreground mb-3 flex items-center gap-1.5">
               <Rss className="size-3" /> Latest releases
@@ -632,9 +628,7 @@ function ChangelogMenu() {
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </HoverMenu>
+    </div>
   );
 }
 
