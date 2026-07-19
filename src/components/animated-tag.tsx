@@ -20,7 +20,7 @@ export function AnimatedTag({
 }) {
   const variantClass =
     variant === "new"
-      ? "border-foreground/40 bg-foreground/10 text-foreground"
+      ? "border-foreground/60 bg-foreground text-background"
       : variant === "improvement"
         ? "border-amber-400/40 bg-amber-400/10 text-amber-300"
         : variant === "fix"
