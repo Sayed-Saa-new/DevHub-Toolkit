@@ -211,22 +211,15 @@ function LandingHeader() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
+          <ToolsMenu />
+          <CategoriesMenu />
           <Link
-            to="/tools"
+            to="/favorites"
             className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
           >
-            Tools
+            Favorites
           </Link>
-          <CategoriesMenu />
-          {nav.slice(1).map((item) => (
-            <Link
-              key={item.label}
-              to={item.to}
-              className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
-            >
-              {item.label}
-            </Link>
-          ))}
+          <ChangelogMenu />
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
