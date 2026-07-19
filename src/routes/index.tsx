@@ -32,12 +32,12 @@ import { GenerateButton } from "@/components/ui/generate-button";
 import { BrandMark } from "@/components/brand-mark";
 import { CATEGORIES, TOOLS } from "@/lib/tools";
 import { cn } from "@/lib/utils";
-import catConverters from "@/assets/cat-converters.jpg";
-import catGenerators from "@/assets/cat-generators.jpg";
-import catDesign from "@/assets/cat-design.jpg";
-import catEditors from "@/assets/cat-editors.jpg";
-import catReference from "@/assets/cat-reference.jpg";
-import catAi from "@/assets/cat-ai.jpg";
+import catConverters from "@/assets/cat-converters.svg";
+import catGenerators from "@/assets/cat-generators.svg";
+import catDesign from "@/assets/cat-design.svg";
+import catEditors from "@/assets/cat-editors.svg";
+import catReference from "@/assets/cat-reference.svg";
+import catAi from "@/assets/cat-ai.svg";
 
 const CATEGORY_ART: Record<string, { image: string; blurb: string }> = {
   converters: { image: catConverters, blurb: "Transform data between formats — JSON, Base64, YAML, CSV, cURL." },
@@ -408,16 +408,14 @@ function MegaColumn({
                 onClick={onClose}
                 className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
               >
-                <div className="relative shrink-0 w-[92px] aspect-[16/10] rounded-md overflow-hidden border border-border bg-black">
-                  <img
-                    src={art.image}
-                    alt=""
-                    className="absolute inset-0 h-full w-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.04] transition-all duration-500"
-                    width={800}
-                    height={600}
-                    loading="lazy"
-                  />
-                </div>
+                 <div className="relative shrink-0 w-[92px] aspect-[16/10] rounded-md overflow-hidden border border-border bg-gradient-to-br from-neutral-900 to-black flex items-center justify-center p-2">
+                   <img
+                     src={art.image}
+                     alt=""
+                     className="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 group-hover:scale-[1.06] transition-all duration-500"
+                     loading="lazy"
+                   />
+                 </div>
                 <div className="min-w-0 pt-0.5">
                   <div className="text-sm font-medium text-foreground flex items-center gap-2">
                     {c.label}
