@@ -528,7 +528,7 @@ function ToolsMenu() {
   ) as typeof TOOLS;
   const fresh = TOOLS.filter((t) => t.isNew).slice(-6).reverse();
 
-  const jumps: { icon: typeof Briefcase; label: string; desc: string; to: "/tools" | "/favorites" }[] = [
+  const jumps: { icon: React.ComponentType<{ className?: string }>; label: string; desc: string; to: "/tools" | "/favorites" }[] = [
     { icon: Briefcase, label: "All tools", desc: `Browse all ${TOOLS.length} utilities.`, to: "/tools" },
     { icon: Star, label: "Favorites", desc: "Your pinned tools.", to: "/favorites" },
   ];
