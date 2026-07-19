@@ -4,6 +4,9 @@
 
 DevHub Toolkit is a browser-based developer productivity platform. All non-AI tools run client-side with no tracking. AI tools call Google Gemini via a server endpoint.
 
+Full, machine-readable index (all tools, SEO titles, descriptions, keywords, categories, changelog):
+https://devhub.flinkeo.online/llms-full.txt
+
 ## Pages
 
 - [Home](https://devhub.flinkeo.online/): Browse and search all tools.
