@@ -1,12 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
-import { format as formatSql, type FormatOptions } from "sql-formatter";
+import {
+  format as formatSql,
+  type FormatOptionsWithLanguage,
+  type SqlLanguage,
+} from "sql-formatter";
 import { Wand2, Minimize2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Field, Panel, CopyButton, DownloadButton } from "./primitives";
 
-type Dialect = FormatOptions["language"];
+type Dialect = SqlLanguage;
+type KeywordCase = NonNullable<FormatOptionsWithLanguage["keywordCase"]>;
+type IndentStyle = NonNullable<FormatOptionsWithLanguage["indentStyle"]>;
 
 const DIALECTS: { id: Dialect; label: string }[] = [
   { id: "sql", label: "Standard SQL" },
@@ -28,7 +34,7 @@ const DIALECTS: { id: Dialect; label: string }[] = [
   { id: "tidb", label: "TiDB" },
 ];
 
-const KEYWORD_CASE: { id: FormatOptions["keywordCase"]; label: string }[] = [
+const KEYWORD_CASE: { id: KeywordCase; label: string }[] = [
   { id: "upper", label: "UPPER" },
   { id: "lower", label: "lower" },
   { id: "preserve", label: "Preserve" },
@@ -83,10 +89,10 @@ export function SqlFormatter() {
   const [input, setInput] = useState(SAMPLE);
   const [dialect, setDialect] = useState<Dialect>("postgresql");
   const [indent, setIndent] = useState(2);
-  const [keywordCase, setKeywordCase] = useState<FormatOptions["keywordCase"]>("upper");
+  const [keywordCase, setKeywordCase] = useState<KeywordCase>("upper");
   const [linesBetweenQueries, setLinesBetweenQueries] = useState(2);
-  const [tabulateAlias, setTabulateAlias] = useState(false);
-  const [commaPosition, setCommaPosition] = useState<FormatOptions["expressionWidth"] extends number ? "before" | "after" | "tabular" : never>("after" as never);
+  const [indentStyle, setIndentStyle] = useState<IndentStyle>("standard");
+  const [expressionWidth, setExpressionWidth] = useState(60);
   const [mode, setMode] = useState<"format" | "minify">("format");
   const [error, setError] = useState<string | null>(null);
 
@@ -100,21 +106,17 @@ export function SqlFormatter() {
         useTabs: false,
         keywordCase,
         linesBetweenQueries,
-        indentStyle: "standard",
+        indentStyle,
         logicalOperatorNewline: "before",
-        expressionWidth: 60,
+        expressionWidth,
         denseOperators: false,
         newlineBeforeSemicolon: false,
-        // @ts-expect-error runtime supports
-        commaPosition,
-        // @ts-expect-error runtime supports
-        tabulateAlias,
       });
       return res;
     } catch (e) {
       throw e;
     }
-  }, [input, dialect, indent, keywordCase, linesBetweenQueries, tabulateAlias, commaPosition, mode]);
+  }, [input, dialect, indent, keywordCase, linesBetweenQueries, indentStyle, expressionWidth, mode]);
 
   useEffect(() => {
     try {
@@ -149,7 +151,7 @@ export function SqlFormatter() {
           <Field label="Keyword case">
             <select
               value={keywordCase}
-              onChange={(e) => setKeywordCase(e.target.value as FormatOptions["keywordCase"])}
+              onChange={(e) => setKeywordCase(e.target.value as KeywordCase)}
               className="w-full h-9 rounded-md border border-input bg-background px-2 text-sm"
             >
               {KEYWORD_CASE.map((k) => (
@@ -171,22 +173,23 @@ export function SqlFormatter() {
               className="w-full"
             />
           </Field>
-          <Field label="Comma position">
+          <Field label="Indent style">
             <select
-              value={commaPosition as string}
-              onChange={(e) => setCommaPosition(e.target.value as never)}
+              value={indentStyle}
+              onChange={(e) => setIndentStyle(e.target.value as IndentStyle)}
               className="w-full h-9 rounded-md border border-input bg-background px-2 text-sm"
             >
-              <option value="after">After (a, b, c)</option>
-              <option value="before">Before (, a)</option>
-              <option value="tabular">Tabular</option>
+              <option value="standard">Standard</option>
+              <option value="tabularLeft">Tabular left</option>
+              <option value="tabularRight">Tabular right</option>
             </select>
           </Field>
-          <Field label="Align aliases">
-            <label className="flex items-center gap-2 h-9">
-              <input type="checkbox" checked={tabulateAlias} onChange={(e) => setTabulateAlias(e.target.checked)} />
-              <span className="text-sm text-muted-foreground">Tabulate AS aliases</span>
-            </label>
+          <Field label={`Expression width (${expressionWidth})`}>
+            <input
+              type="range" min={30} max={120} step={5} value={expressionWidth}
+              onChange={(e) => setExpressionWidth(Number(e.target.value))}
+              className="w-full"
+            />
           </Field>
           <Field label="Mode">
             <div className="flex gap-1">
