@@ -92,7 +92,7 @@ function Home() {
         <div className="absolute inset-x-0 -top-40 h-80 bg-[radial-gradient(ellipse_at_center,_oklch(1_0_0/_8%),_transparent_60%)] pointer-events-none" />
         <div className="relative mx-auto max-w-5xl px-4 md:px-8 py-14 md:py-20">
           <div className="mb-6">
-            <GenerateButton hue={210} aria-label="44 utilities, local-first, zero tracking" />
+            <GenerateButton label="44 Utilities" activeLabel="Exploring" aria-label="44 utilities, local-first, zero tracking" />
           </div>
           <h1 className="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
             Every developer tool
