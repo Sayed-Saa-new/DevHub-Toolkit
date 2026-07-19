@@ -18,6 +18,7 @@ import { SchemaValidator } from "./schema-validator";
 import { JsonToTs } from "./json-to-ts";
 import { MockData } from "./mock-data";
 import { CurlConverter } from "./curl-converter";
+import { SqlFormatter } from "./sql-formatter";
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-formatter": JsonFormatter,
@@ -60,6 +61,7 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-to-ts": JsonToTs,
   "mock-data": MockData,
   "curl-converter": CurlConverter,
+  "sql-formatter": SqlFormatter,
   "ai-explainer": AiExplainer,
   "ai-optimizer": AiOptimizer,
   "ai-commit": AiCommit,

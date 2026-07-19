@@ -302,4 +302,10 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Convert any curl command to fetch, axios, Node, Python requests, Go, PHP, Ruby, Rust, Java, C# or PowerShell. Paste, pick a language, copy — free.",
     keywords: ["curl to code", "curl to fetch", "curl to axios", "curl to python", "curl to requests", "curl to go", "curl to php", "curl to c#", "curl converter online", "curl builder"],
   },
+  "sql-formatter": {
+    title: "SQL Formatter & Beautifier — 17 Dialects, Free Online",
+    description:
+      "Format, beautify and minify SQL for Postgres, MySQL, T-SQL, BigQuery, Snowflake, Oracle and more. Configurable indent, keyword case, expression width — free.",
+    keywords: ["sql formatter", "sql beautifier", "format sql online", "sql pretty print", "sql minifier", "postgres sql formatter", "mysql formatter", "bigquery sql formatter", "snowflake sql formatter", "tsql formatter", "pl/sql formatter", "sql prettier"],
+  }, // sql formatter — 22,200/mo, KDI 51
 };

@@ -6,7 +6,7 @@ import {
   MessageSquareCode, Lock, Type, CaseSensitive, FileJson, Table2,
   Calculator, GitCompare, AlignLeft, Code2, CalendarClock, Image,
   Link, Smile, Globe2, Database, Languages, Bug, ScanSearch, FlaskConical,
-  ShieldCheck, Boxes, TerminalSquare,
+  ShieldCheck, Boxes, TerminalSquare, Database as DatabaseZap,
 } from "lucide-react";
 
 export type Category =
@@ -87,6 +87,7 @@ export const TOOLS: Tool[] = [
   { slug: "json-to-ts", name: "JSON → TypeScript", description: "Generate TypeScript interfaces, types, or Zod schemas from JSON.", category: "converters", icon: FileJson, keywords: ["json to typescript", "json to ts", "json to interface", "json to zod", "type generator", "quicktype"] },
   { slug: "mock-data", name: "Mock Data Generator", description: "Design a schema and generate JSON, CSV, SQL, TS or XML mock data.", category: "generators", icon: Boxes, keywords: ["mock data", "fake data", "faker", "test data", "seed data", "dummy json", "json generator", "sql insert generator"] },
   { slug: "curl-converter", name: "cURL → Code", description: "Convert any curl command to fetch, axios, Python, Go, Rust, Java, C#, and more.", category: "converters", icon: TerminalSquare, keywords: ["curl to code", "curl to fetch", "curl to axios", "curl to python", "curl to go", "curl converter", "curl to requests", "http client generator"] },
+  { slug: "sql-formatter", name: "SQL Formatter", description: "Beautify, minify and lint SQL for 17 dialects — Postgres, MySQL, BigQuery, Snowflake, T-SQL & more.", category: "editors", icon: DatabaseZap, keywords: ["sql formatter", "sql beautifier", "format sql online", "sql pretty print", "sql minifier", "postgres formatter", "mysql formatter", "bigquery formatter", "tsql formatter", "snowflake formatter"] },
 ];
 
 export const TOOLS_BY_SLUG: Record<string, Tool> = Object.fromEntries(
