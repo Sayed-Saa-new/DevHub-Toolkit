@@ -400,7 +400,7 @@ const FEATURED_TOOL_SLUGS = [
   "ai-explainer",
 ];
 
-function ToolsMenu() {
+function ToolsMenuBody({ close }: { close: () => void }) {
   const featured = FEATURED_TOOL_SLUGS.map((s) => TOOLS.find((t) => t.slug === s)).filter(
     Boolean,
   ) as typeof TOOLS;
@@ -412,9 +412,7 @@ function ToolsMenu() {
   ];
 
   return (
-    <HoverMenu label="Tools" id="tools" width={820}>
-      {(close) => (
-        <div className="grid grid-cols-[1fr_1fr_0.85fr]">
+    <div className="w-[820px] max-w-[95vw] grid grid-cols-[1fr_1fr_0.85fr]">
           <div className="p-5">
             <div className="text-xs text-muted-foreground mb-3">Featured</div>
             <ul className="space-y-1">
