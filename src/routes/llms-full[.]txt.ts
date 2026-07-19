@@ -74,7 +74,7 @@ export const Route = createFileRoute("/llms-full.txt")({
           "",
           ...changelog.map(
             (e) =>
-              `- [${e.title}](${BASE_URL}/changelog/${e.slug}) — ${e.publishedAt}${e.description ? ` — ${e.description}` : ""}`,
+              `- [${e.title}](${BASE_URL}/changelog/${e.slug}) — ${e.publishedAt}${e.summary ? ` — ${e.summary}` : ""}`,
           ),
           "",
           `## Notes for AI crawlers`,
