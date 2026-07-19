@@ -1,4 +1,3 @@
-import type { LucideIcon } from "lucide-react";
 import {
   Braces, Binary, Link2, KeyRound, Fingerprint, Hash, Clock, Regex,
   QrCode, Palette, Blend, BoxSelect, Squircle, FileCode2, FileText,
@@ -12,7 +11,10 @@ import {
   ImageDown,
   KeySquare,
   FileType2,
-} from "lucide-react";
+} from "lucide-react-motion";
+import type { ComponentType, SVGProps } from "react";
+
+type LucideIcon = ComponentType<SVGProps<SVGSVGElement> & { size?: number | string }>;
 
 export type Category =
   | "converters"
