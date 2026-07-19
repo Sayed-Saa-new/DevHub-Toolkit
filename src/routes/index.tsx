@@ -29,6 +29,21 @@ import { GenerateButton } from "@/components/ui/generate-button";
 import { BrandMark } from "@/components/brand-mark";
 import { CATEGORIES, TOOLS } from "@/lib/tools";
 import { cn } from "@/lib/utils";
+import catConverters from "@/assets/cat-converters.jpg";
+import catGenerators from "@/assets/cat-generators.jpg";
+import catDesign from "@/assets/cat-design.jpg";
+import catEditors from "@/assets/cat-editors.jpg";
+import catReference from "@/assets/cat-reference.jpg";
+import catAi from "@/assets/cat-ai.jpg";
+
+const CATEGORY_ART: Record<string, { image: string; blurb: string }> = {
+  converters: { image: catConverters, blurb: "Transform data between formats — JSON, Base64, YAML, CSV, cURL." },
+  generators: { image: catGenerators, blurb: "Create UUIDs, hashes, QR codes, JWTs, passwords and mock data." },
+  design: { image: catDesign, blurb: "Craft gradients, shadows, colors and fluid CSS values." },
+  editors: { image: catEditors, blurb: "Live editors for JSON, Markdown, Regex, SQL and playgrounds." },
+  reference: { image: catReference, blurb: "HTTP codes, Git, Linux, VS Code and cron — searchable." },
+  ai: { image: catAi, blurb: "AI helpers: explain, optimize, convert code and craft SQL or tests." },
+};
 
 const SITE = "https://devhub.flinkeo.online";
 
