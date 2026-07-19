@@ -116,7 +116,7 @@ const FEATURED_SLUGS = [
   "gradient",
 ];
 
-const FEATURE_ICON: Record<string, typeof Braces> = {
+const FEATURE_ICON: Record<string, React.ComponentType<{ className?: string }>> = {
   "json-formatter": Braces,
   "jwt-decoder": KeyRound,
   base64: Terminal,
