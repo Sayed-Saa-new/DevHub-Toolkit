@@ -11,7 +11,7 @@ import {
   ImageDown,
   KeySquare,
   FileType as FileType2,
-  FileType2 as FileWord,
+  FileText as FileWord,
 } from "lucide-react-motion";
 import type { ComponentType, SVGProps } from "react";
 
