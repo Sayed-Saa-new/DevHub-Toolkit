@@ -386,7 +386,7 @@ function GlobalCommand({
   const hydrated = useHydrated();
   const { favorites, toggle: toggleFav, isFav } = useFavorites();
   const { recents, push: pushRecent } = useRecents();
-  const { seen, isSeen } = useSeen();
+  const { isSeen } = useSeen();
 
   // Reset query each time the palette opens
   useEffect(() => {
@@ -573,12 +573,14 @@ function ToolCommandItem({
   onFav,
   favored,
   hint,
+  showNew,
 }: {
   tool: (typeof TOOLS)[number];
   onSelect: () => void;
   onFav: () => void;
   favored: boolean;
   hint?: ReactNode;
+  showNew?: boolean;
 }) {
   return (
     <CommandItem
@@ -588,6 +590,11 @@ function ToolCommandItem({
     >
       <tool.icon className="size-4 opacity-70 shrink-0" />
       <span className="truncate">{tool.name}</span>
+      {showNew && (
+        <span className="text-[9px] font-semibold uppercase tracking-wider px-1.5 py-px rounded bg-foreground text-background shrink-0">
+          New
+        </span>
+      )}
       <span className="hidden sm:inline text-[11px] text-muted-foreground truncate">
         — {tool.description}
       </span>
