@@ -421,7 +421,8 @@ function MegaColumn({
                      src={art.image}
                      alt=""
                      className="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 group-hover:scale-[1.06] transition-all duration-500"
-                     loading="lazy"
+                     loading="eager"
+                     decoding="async"
                    />
                  </div>
                 <div className="min-w-0 pt-0.5">
