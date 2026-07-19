@@ -97,7 +97,7 @@ export const Route = createFileRoute("/c/$category")({
 });
 
 function CategoryPage() {
-  const { category } = Route.useLoaderData();
+  const { category } = Route.useLoaderData() as { category: Category };
   const label = CATEGORIES.find((c) => c.id === category)?.label ?? category;
   const meta = CATEGORY_META[category];
   const tools = TOOLS.filter((t) => t.category === category);
