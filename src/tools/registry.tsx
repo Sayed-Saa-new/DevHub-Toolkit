@@ -19,6 +19,7 @@ import { JsonToTs } from "./json-to-ts";
 import { MockData } from "./mock-data";
 import { CurlConverter } from "./curl-converter";
 import { SqlFormatter } from "./sql-formatter";
+import { JsonDiff } from "./json-diff";
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-formatter": JsonFormatter,
@@ -62,6 +63,7 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "mock-data": MockData,
   "curl-converter": CurlConverter,
   "sql-formatter": SqlFormatter,
+  "json-diff": JsonDiff,
   "ai-explainer": AiExplainer,
   "ai-optimizer": AiOptimizer,
   "ai-commit": AiCommit,

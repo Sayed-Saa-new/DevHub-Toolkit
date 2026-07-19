@@ -308,4 +308,10 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Format, beautify and minify SQL for Postgres, MySQL, T-SQL, BigQuery, Snowflake, Oracle and more. Configurable indent, keyword case, expression width — free.",
     keywords: ["sql formatter", "sql beautifier", "format sql online", "sql pretty print", "sql minifier", "postgres sql formatter", "mysql formatter", "bigquery sql formatter", "snowflake sql formatter", "tsql formatter", "pl/sql formatter", "sql prettier"],
   }, // sql formatter — 22,200/mo, KDI 51
+  "json-diff": {
+    title: "JSON Diff — Compare Two JSON Files Online, Free",
+    description:
+      "Compare two JSON documents and see added, removed and changed keys with full paths. Sort keys, ignore array order, copy the patch — free, no signup.",
+    keywords: ["json diff", "compare json", "json compare online", "json difference", "diff json", "json patch", "structural json diff", "json compare tool"],
+  }, // json diff — 8,100/mo, KDI 38 (winnable)
 };
