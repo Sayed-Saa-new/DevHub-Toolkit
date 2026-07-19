@@ -528,10 +528,9 @@ function ToolsMenu() {
   ) as typeof TOOLS;
   const fresh = TOOLS.filter((t) => t.isNew).slice(-6).reverse();
 
-  const jumps = [
-    { icon: Briefcase, label: "All tools", desc: `Browse all ${TOOLS.length} utilities.`, to: "/tools" as const },
-    { icon: Star, label: "Favorites", desc: "Your pinned tools.", to: "/favorites" as const },
-    { icon: Sparkles, label: "AI tools", desc: "Explain, optimize, generate.", to: "/c/$category" as const, params: { category: "ai" } },
+  const jumps: { icon: typeof Briefcase; label: string; desc: string; to: "/tools" | "/favorites" }[] = [
+    { icon: Briefcase, label: "All tools", desc: `Browse all ${TOOLS.length} utilities.`, to: "/tools" },
+    { icon: Star, label: "Favorites", desc: "Your pinned tools.", to: "/favorites" },
   ];
 
   return (
@@ -602,9 +601,7 @@ function ToolsMenu() {
               {jumps.map((j) => (
                 <li key={j.label}>
                   <Link
-                    to={j.to as "/tools"}
-                    // @ts-expect-error — union params for ai jump
-                    params={j.params}
+                    to={j.to}
                     onClick={close}
                     className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
                   >
@@ -620,6 +617,24 @@ function ToolsMenu() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  to="/c/$category"
+                  params={{ category: "ai" }}
+                  onClick={close}
+                  className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
+                >
+                  <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
+                    <Sparkles className="size-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-sm font-medium text-foreground">AI tools</div>
+                    <div className="text-xs text-muted-foreground leading-snug line-clamp-2">
+                      Explain, optimize, generate.
+                    </div>
+                  </div>
+                </Link>
+              </li>
             </ul>
             <div className="mt-auto pt-4 border-t border-border/60 flex items-center justify-between text-xs text-muted-foreground">
               <span>Command palette</span>
