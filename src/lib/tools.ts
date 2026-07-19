@@ -11,6 +11,7 @@ import {
   Ruler,
   ImageDown,
   KeySquare,
+  FileType2,
 } from "lucide-react";
 
 export type Category =
@@ -97,6 +98,7 @@ export const TOOLS: Tool[] = [
   { slug: "clamp-calculator", name: "CSS Clamp Calculator", description: "Fluid typography and spacing with CSS clamp() — px/rem output and live preview.", category: "design", icon: Ruler, keywords: ["css clamp", "clamp calculator", "fluid typography", "fluid type", "responsive font size", "clamp generator", "utopia clamp"], isNew: true },
   { slug: "image-compressor", name: "Image Compressor", description: "Compress JPEG, PNG, WebP & AVIF in your browser — batch, resize, convert to WebP, 100% local.", category: "converters", icon: ImageDown, keywords: ["image compressor", "compress image", "compress jpeg", "compress png", "webp converter", "image optimizer", "resize image", "bulk compress"], isNew: true },
   { slug: "jwt-generator", name: "JWT Generator", description: "Sign HS256/384/512 JSON Web Tokens with claim helpers, random secret and live cURL — 100% client-side.", category: "generators", icon: KeySquare, keywords: ["jwt generator", "sign jwt", "create jwt", "hs256 generator", "hs512 generator", "json web token generator", "jwt builder", "jwt maker"], isNew: true },
+  { slug: "text-to-markdown", name: "Text → Markdown", description: "Convert plain text, HTML, or rich pasted content into clean GFM Markdown — with live preview.", category: "converters", icon: FileType2, keywords: ["text to markdown", "html to markdown", "rich text to markdown", "convert to md", "paste to markdown", "turndown", "gfm converter"], isNew: true },
 ];
 
 export const TOOLS_BY_SLUG: Record<string, Tool> = Object.fromEntries(
