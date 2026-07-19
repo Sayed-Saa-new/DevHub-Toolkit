@@ -118,7 +118,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   );
 
   return (
-    <MotionIconConfig trigger="parent-hover" duration={0.5}>
+    <MotionIconConfig trigger="parent-hover" duration={0.25}>
     <div className="min-h-svh flex bg-background text-foreground">
       <div className="scroll-progress" aria-hidden />
       {/* Sidebar */}
