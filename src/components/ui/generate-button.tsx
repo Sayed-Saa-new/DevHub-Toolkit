@@ -273,6 +273,19 @@ export function GenerateButton({
           filter: drop-shadow(0 0 3px rgba(255,255,255,0.8)) drop-shadow(0 -4px 6px rgba(0,0,0,0.6));
           animation: none;
         }
+
+        .gen-btn[data-size="sm"] {
+          --border-radius: 18px;
+          font-size: 0.72em;
+          padding: 0.35em 0.7em 0.35em 0.8em;
+        }
+        .gen-btn[data-size="sm"] .gen-btn-svg {
+          height: 16px;
+          margin-right: 0.35rem;
+        }
+        .gen-btn[data-size="sm"] .gen-txt-wrapper {
+          min-width: 5.2em;
+        }
       `}</style>
 
       <button
