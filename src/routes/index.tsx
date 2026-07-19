@@ -341,6 +341,7 @@ function FeaturedTools() {
               key={t.slug}
               to="/t/$slug"
               params={{ slug: t.slug }}
+              data-motion-icon-group
               className="group relative rounded-xl border border-border bg-card p-5 hover:border-foreground/40 hover:bg-accent/40 transition"
             >
               <div className="size-9 rounded-lg border border-border bg-background grid place-items-center mb-4">
@@ -407,7 +408,7 @@ function Features() {
         />
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {items.map((f) => (
-            <div key={f.title} className="rounded-xl border border-border bg-background p-5">
+            <div key={f.title} data-motion-icon-group className="rounded-xl border border-border bg-background p-5">
               <div className="size-9 rounded-lg border border-border grid place-items-center mb-4">
                 <f.icon className="size-4" />
               </div>
