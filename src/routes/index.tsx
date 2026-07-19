@@ -22,6 +22,7 @@ import {
 } from "lucide-react-motion";
 import { MotionIconConfig } from "lucide-react-motion";
 import { Github, Twitter, Fingerprint } from "lucide-react";
+import { Briefcase, Rocket, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
