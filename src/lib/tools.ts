@@ -2,7 +2,7 @@ import {
   Braces, Binary, Link2, KeyRound, FingerprintPattern as Fingerprint, Hash, Clock, Regex,
   QrCode, Palette, Blend, SquareDashed as BoxSelect, Squircle, FileCode as FileCode2, FileText,
   CirclePlay as PlayCircle, Globe, GitBranch, Terminal, Keyboard, Sparkles, Zap,
-  MessageSquareCode, Lock, Type, CaseSensitive, FileJson, Table2,
+  MessageSquareCode, Lock, Type, CaseSensitive, FileBraces as FileJson, Table2,
   Calculator, GitCompare, TextAlignStart as AlignLeft, Code as Code2, CalendarClock, Image,
   Link, Smile, Globe as Globe2, Database, Languages, Bug, ScanSearch, FlaskConical,
   ShieldCheck, Boxes, SquareTerminal as TerminalSquare, Database as DatabaseZap,
