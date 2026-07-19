@@ -25,6 +25,7 @@ import { Github, Twitter, Fingerprint } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { GenerateButton } from "@/components/ui/generate-button";
 import { BrandMark } from "@/components/brand-mark";
 import { CATEGORIES, TOOLS } from "@/lib/tools";
 import { cn } from "@/lib/utils";
