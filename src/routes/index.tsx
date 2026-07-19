@@ -25,7 +25,6 @@ import { Github, Twitter, Fingerprint } from "lucide-react";
 import { Briefcase, Rocket, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRef } from "react";
-import { createContext, useContext, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
 import type { ReactNode, ComponentType } from "react";
 import { getChangelogEntries } from "@/lib/changelog";
@@ -33,6 +32,14 @@ import { getChangelogEntries } from "@/lib/changelog";
 import { Button } from "@/components/ui/button";
 import { GenerateButton } from "@/components/ui/generate-button";
 import { BrandMark } from "@/components/brand-mark";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { CATEGORIES, TOOLS } from "@/lib/tools";
 import { cn } from "@/lib/utils";
 import catConverters from "@/assets/cat-converters.svg";
@@ -181,6 +188,8 @@ function Landing() {
 function LandingHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [menuValue, setMenuValue] = useState("");
+  const closeMenu = () => setMenuValue("");
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -211,19 +220,52 @@ function LandingHeader() {
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1">
-          <MenuBarProvider>
-            <ToolsMenu />
-            <CategoriesMenu />
-            <Link
-              to="/favorites"
-              className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
-            >
-              Favorites
-            </Link>
-            <ChangelogMenu />
-          </MenuBarProvider>
-        </nav>
+        <NavigationMenu
+          value={menuValue}
+          onValueChange={setMenuValue}
+          className="hidden md:flex"
+          delayDuration={80}
+          skipDelayDuration={200}
+        >
+          <NavigationMenuList className="gap-0">
+            <NavigationMenuItem value="tools">
+              <NavigationMenuTrigger className="h-8 px-3 text-sm bg-transparent data-[state=open]:bg-accent/50 hover:bg-accent/50 text-muted-foreground data-[state=open]:text-foreground hover:text-foreground">
+                Tools
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ToolsMenuBody close={closeMenu} />
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem value="categories">
+              <NavigationMenuTrigger className="h-8 px-3 text-sm bg-transparent data-[state=open]:bg-accent/50 hover:bg-accent/50 text-muted-foreground data-[state=open]:text-foreground hover:text-foreground">
+                Categories
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <div className="w-[980px] max-w-[95vw]">
+                  <MegaMenuBody onClose={closeMenu} />
+                </div>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  to="/favorites"
+                  className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
+                >
+                  Favorites
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem value="changelog">
+              <NavigationMenuTrigger className="h-8 px-3 text-sm bg-transparent data-[state=open]:bg-accent/50 hover:bg-accent/50 text-muted-foreground data-[state=open]:text-foreground hover:text-foreground">
+                Changelog
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ChangelogMenuBody close={closeMenu} />
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
 
         <div className="hidden md:flex items-center gap-2">
           <a
@@ -284,110 +326,6 @@ function LandingHeader() {
   );
 }
 
-/* ---------------- Categories Mega-Menu ---------------- */
-
-/* Shared menu-bar coordination — hovering between triggers swaps
-   the open panel instantly (no close-then-reopen flicker), giving a
-   LottieFiles-style continuous menu. */
-type MenuBarCtx = {
-  active: string | null;
-  open: (id: string) => void;
-  scheduleClose: () => void;
-  cancelClose: () => void;
-};
-const MenuBarContext = createContext<MenuBarCtx | null>(null);
-
-function MenuBarProvider({ children }: { children: ReactNode }) {
-  const [active, setActive] = useState<string | null>(null);
-  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-
-  const cancelClose = useCallback(() => {
-    if (timer.current) {
-      clearTimeout(timer.current);
-      timer.current = undefined;
-    }
-  }, []);
-  const open = useCallback(
-    (id: string) => {
-      cancelClose();
-      setActive(id);
-    },
-    [cancelClose],
-  );
-  const scheduleClose = useCallback(() => {
-    cancelClose();
-    timer.current = setTimeout(() => setActive(null), 140);
-  }, [cancelClose]);
-
-  const value = useMemo(
-    () => ({ active, open, scheduleClose, cancelClose }),
-    [active, open, scheduleClose, cancelClose],
-  );
-  return <MenuBarContext.Provider value={value}>{children}</MenuBarContext.Provider>;
-}
-
-function useMenuBar(id: string) {
-  const ctx = useContext(MenuBarContext);
-  const isOpen = ctx?.active === id;
-  return {
-    isOpen,
-    openNow: () => ctx?.open(id),
-    closeSoon: () => ctx?.scheduleClose(),
-    cancelClose: () => ctx?.cancelClose(),
-    forceClose: () => ctx?.scheduleClose(),
-  };
-}
-
-function CategoriesMenu() {
-  const { isOpen: open, openNow, closeSoon } = useMenuBar("categories");
-
-  return (
-    <div className="relative" onMouseEnter={openNow} onMouseLeave={closeSoon}>
-      <button
-        type="button"
-        aria-expanded={open}
-        aria-haspopup="true"
-        className={cn(
-          "h-8 px-3 rounded-md text-sm inline-flex items-center gap-1 transition",
-          open ? "text-foreground bg-accent/50" : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
-        )}
-      >
-        Categories
-        <svg
-          className={cn("size-3 transition-transform", open && "rotate-180")}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden
-        >
-          <path d="m6 9 6 6 6-6" />
-        </svg>
-      </button>
-
-      {open && (
-        <>
-          {/* hover bridge to avoid gap flicker */}
-          <div className="absolute left-0 right-0 top-full h-3" aria-hidden />
-          {typeof document !== "undefined" &&
-            createPortal(
-              <div
-                role="menu"
-                onMouseEnter={openNow}
-                onMouseLeave={closeSoon}
-                className="fixed left-1/2 -translate-x-1/2 top-16 w-[980px] max-w-[95vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-scale-in origin-top z-50"
-              >
-                <MegaMenuBody onClose={closeSoon} />
-              </div>,
-              document.body,
-            )}
-        </>
-      )}
-    </div>
-  );
-}
 
 function MegaMenuBody({ onClose }: { onClose: () => void }) {
   const half = Math.ceil(CATEGORIES.length / 2);
@@ -487,69 +425,6 @@ function MegaColumn({
 
 /* ---------------- Tools Mega-Menu ---------------- */
 
-function HoverMenu({
-  label,
-  id,
-  width,
-  children,
-}: {
-  label: string;
-  id: string;
-  width: number;
-  children: (close: () => void) => ReactNode;
-}) {
-  const { isOpen: open, openNow, closeSoon } = useMenuBar(id);
-  const close = closeSoon;
-
-  return (
-    <div className="relative" onMouseEnter={openNow} onMouseLeave={closeSoon}>
-      <button
-        type="button"
-        aria-expanded={open}
-        aria-haspopup="true"
-        className={cn(
-          "h-8 px-3 rounded-md text-sm inline-flex items-center gap-1 transition",
-          open
-            ? "text-foreground bg-accent/50"
-            : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
-        )}
-      >
-        {label}
-        <svg
-          className={cn("size-3 transition-transform", open && "rotate-180")}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden
-        >
-          <path d="m6 9 6 6 6-6" />
-        </svg>
-      </button>
-
-      {open && (
-        <>
-          <div className="absolute left-0 right-0 top-full h-3" aria-hidden />
-          {typeof document !== "undefined" &&
-            createPortal(
-              <div
-                role="menu"
-                onMouseEnter={openNow}
-                onMouseLeave={closeSoon}
-                style={{ width }}
-                className="fixed left-1/2 -translate-x-1/2 top-16 max-w-[95vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-scale-in origin-top z-50"
-              >
-                {children(close)}
-              </div>,
-              document.body,
-            )}
-        </>
-      )}
-    </div>
-  );
-}
 
 const FEATURED_TOOL_SLUGS = [
   "json-formatter",
@@ -560,7 +435,7 @@ const FEATURED_TOOL_SLUGS = [
   "ai-explainer",
 ];
 
-function ToolsMenu() {
+function ToolsMenuBody({ close }: { close: () => void }) {
   const featured = FEATURED_TOOL_SLUGS.map((s) => TOOLS.find((t) => t.slug === s)).filter(
     Boolean,
   ) as typeof TOOLS;
@@ -572,9 +447,7 @@ function ToolsMenu() {
   ];
 
   return (
-    <HoverMenu label="Tools" id="tools" width={820}>
-      {(close) => (
-        <div className="grid grid-cols-[1fr_1fr_0.85fr]">
+    <div className="w-[820px] max-w-[95vw] grid grid-cols-[1fr_1fr_0.85fr]">
           <div className="p-5">
             <div className="text-xs text-muted-foreground mb-3">Featured</div>
             <ul className="space-y-1">
@@ -679,15 +552,13 @@ function ToolsMenu() {
               <kbd className="font-mono text-[10px] border border-border rounded px-1.5 py-0.5">⌘K</kbd>
             </div>
           </div>
-        </div>
-      )}
-    </HoverMenu>
+    </div>
   );
 }
 
 /* ---------------- Changelog Mega-Menu ---------------- */
 
-function ChangelogMenu() {
+function ChangelogMenuBody({ close }: { close: () => void }) {
   const entries = getChangelogEntries().slice(0, 4);
 
   const tagStyle = (tag?: string) => {
@@ -699,9 +570,7 @@ function ChangelogMenu() {
   };
 
   return (
-    <HoverMenu label="Changelog" id="changelog" width={660}>
-      {(close) => (
-        <div className="grid grid-cols-[1.5fr_0.9fr]">
+    <div className="w-[660px] max-w-[95vw] grid grid-cols-[1.5fr_0.9fr]">
           <div className="p-5">
             <div className="text-xs text-muted-foreground mb-3 flex items-center gap-1.5">
               <Rss className="size-3" /> Latest releases
@@ -794,9 +663,7 @@ function ChangelogMenu() {
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </HoverMenu>
+    </div>
   );
 }
 
