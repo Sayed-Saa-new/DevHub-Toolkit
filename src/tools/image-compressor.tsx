@@ -3,7 +3,6 @@ import imageCompression from "browser-image-compression";
 import { Panel, Field } from "./primitives";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Upload, Download, X, Image as ImageIcon } from "lucide-react";
@@ -243,6 +242,3 @@ export function ImageCompressor() {
     </div>
   );
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _label = Label; // keep import stable if needed elsewhere
