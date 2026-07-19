@@ -6,8 +6,6 @@ import {
   Sparkles,
   Keyboard,
   Search,
-  Github,
-  Twitter,
   Rss,
   Star,
   Command,
@@ -15,7 +13,6 @@ import {
   KeyRound,
   Hash,
   QrCode,
-  Fingerprint,
   Regex,
   Blend,
   Terminal,
@@ -24,6 +21,7 @@ import {
   X,
 } from "lucide-react-motion";
 import { MotionIconConfig } from "lucide-react-motion";
+import { Github, Twitter, Fingerprint } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
