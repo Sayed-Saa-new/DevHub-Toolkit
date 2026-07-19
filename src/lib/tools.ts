@@ -10,6 +10,7 @@ import {
   Diff,
   Ruler,
   ImageDown,
+  KeySquare,
 } from "lucide-react";
 
 export type Category =
@@ -95,6 +96,7 @@ export const TOOLS: Tool[] = [
   { slug: "json-diff", name: "JSON Diff", description: "Compare two JSON documents structurally — see added, removed and changed keys with paths.", category: "editors", icon: Diff, keywords: ["json diff", "compare json", "json compare", "json difference", "diff json online", "json patch", "structural diff"], isNew: true },
   { slug: "clamp-calculator", name: "CSS Clamp Calculator", description: "Fluid typography and spacing with CSS clamp() — px/rem output and live preview.", category: "design", icon: Ruler, keywords: ["css clamp", "clamp calculator", "fluid typography", "fluid type", "responsive font size", "clamp generator", "utopia clamp"], isNew: true },
   { slug: "image-compressor", name: "Image Compressor", description: "Compress JPEG, PNG, WebP & AVIF in your browser — batch, resize, convert to WebP, 100% local.", category: "converters", icon: ImageDown, keywords: ["image compressor", "compress image", "compress jpeg", "compress png", "webp converter", "image optimizer", "resize image", "bulk compress"], isNew: true },
+  { slug: "jwt-generator", name: "JWT Generator", description: "Sign HS256/384/512 JSON Web Tokens with claim helpers, random secret and live cURL — 100% client-side.", category: "generators", icon: KeySquare, keywords: ["jwt generator", "sign jwt", "create jwt", "hs256 generator", "hs512 generator", "json web token generator", "jwt builder", "jwt maker"], isNew: true },
 ];
 
 export const TOOLS_BY_SLUG: Record<string, Tool> = Object.fromEntries(
