@@ -7,6 +7,8 @@ version: 1.14
 
 A new **DOCX → Markdown** tool lands on the Converters shelf. Drop one Word file or dozens, get clean GitHub-Flavored Markdown back — all processed locally in your browser via `mammoth.js`, never uploaded anywhere.
 
+![DOCX → Markdown converter interface](/changelog/docx-to-markdown.png)
+
 ## What's inside
 
 - **Batch drag-and-drop** — up to 50 MB per file, 150 MB per batch
