@@ -31,42 +31,6 @@ export const Route = createFileRoute("/tools")({
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d73bcc09-2f60-409d-b833-91c82c156e5e/id-preview-aa9e0d77--6b271a1b-d2e8-44e0-909f-190eae9de463.lovable.app-1784378017742.png" },
     ],
     links: [{ rel: "canonical", href: "https://devhub.flinkeo.online/tools" }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          "@id": "https://devhub.flinkeo.online/#website",
-          name: "DevHub Toolkit",
-          url: "https://devhub.flinkeo.online/tools",
-          description:
-            "Free online developer toolkit — 44 utilities in one place: JSON formatter, Base64 decoder, JWT decoder, UUID & hash generators, regex tester, QR codes, AI SQL and regex generators, cheat sheets and more.",
-          inLanguage: "en",
-          publisher: { "@id": "https://devhub.flinkeo.online/#org" },
-          potentialAction: {
-            "@type": "SearchAction",
-            target:
-              "https://devhub.flinkeo.online/?q={search_term_string}",
-            "query-input": "required name=search_term_string",
-          },
-        }),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          "@id": "https://devhub.flinkeo.online/#org",
-          name: "DevHub Toolkit",
-          url: "https://devhub.flinkeo.online/tools",
-          logo: {
-            "@type": "ImageObject",
-            url: "https://devhub.flinkeo.online/favicon.svg",
-          },
-        }),
-      },
-    ],
   }),
   component: Home,
 });
