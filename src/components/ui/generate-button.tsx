@@ -10,6 +10,8 @@ export interface GenerateButtonProps extends React.ButtonHTMLAttributes<HTMLButt
   label?: string;
   /** Active label text (shown on focus/click). */
   activeLabel?: string;
+  /** Visual size. */
+  size?: "sm" | "md";
 }
 
 export function GenerateButton({
@@ -18,6 +20,7 @@ export function GenerateButton({
   activeLabel = "Exploring",
   className,
   onClick,
+  size = "md",
   ...props
 }: GenerateButtonProps) {
   const [isFocused, setIsFocused] = useState(false);
@@ -276,6 +279,7 @@ export function GenerateButton({
         type="button"
         className={cn("gen-btn", className)}
         data-generating={isGenerating}
+        data-size={size}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         onClick={(e) => {
