@@ -188,6 +188,8 @@ function Landing() {
 function LandingHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [menuValue, setMenuValue] = useState("");
+  const closeMenu = () => setMenuValue("");
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -218,19 +220,52 @@ function LandingHeader() {
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1">
-          <MenuBarProvider>
-            <ToolsMenu />
-            <CategoriesMenu />
-            <Link
-              to="/favorites"
-              className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
-            >
-              Favorites
-            </Link>
-            <ChangelogMenu />
-          </MenuBarProvider>
-        </nav>
+        <NavigationMenu
+          value={menuValue}
+          onValueChange={setMenuValue}
+          className="hidden md:flex"
+          delayDuration={80}
+          skipDelayDuration={200}
+        >
+          <NavigationMenuList className="gap-0">
+            <NavigationMenuItem value="tools">
+              <NavigationMenuTrigger className="h-8 px-3 text-sm bg-transparent data-[state=open]:bg-accent/50 hover:bg-accent/50 text-muted-foreground data-[state=open]:text-foreground hover:text-foreground">
+                Tools
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ToolsMenuBody close={closeMenu} />
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem value="categories">
+              <NavigationMenuTrigger className="h-8 px-3 text-sm bg-transparent data-[state=open]:bg-accent/50 hover:bg-accent/50 text-muted-foreground data-[state=open]:text-foreground hover:text-foreground">
+                Categories
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <div className="w-[980px] max-w-[95vw]">
+                  <MegaMenuBody onClose={closeMenu} />
+                </div>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  to="/favorites"
+                  className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
+                >
+                  Favorites
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem value="changelog">
+              <NavigationMenuTrigger className="h-8 px-3 text-sm bg-transparent data-[state=open]:bg-accent/50 hover:bg-accent/50 text-muted-foreground data-[state=open]:text-foreground hover:text-foreground">
+                Changelog
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ChangelogMenuBody close={closeMenu} />
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
 
         <div className="hidden md:flex items-center gap-2">
           <a
