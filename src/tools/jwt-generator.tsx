@@ -46,12 +46,17 @@ function encodeSecret(secret: string, encoding: SecretEncoding): Uint8Array {
 async function signHmac(alg: Alg, key: Uint8Array, data: string): Promise<string> {
   const cryptoKey = await crypto.subtle.importKey(
     "raw",
-    key,
+    key.buffer.slice(key.byteOffset, key.byteOffset + key.byteLength) as ArrayBuffer,
     { name: "HMAC", hash: ALG_HASH[alg] },
     false,
     ["sign"],
   );
-  const sig = await crypto.subtle.sign("HMAC", cryptoKey, new TextEncoder().encode(data));
+  const enc = new TextEncoder().encode(data);
+  const sig = await crypto.subtle.sign(
+    "HMAC",
+    cryptoKey,
+    enc.buffer.slice(enc.byteOffset, enc.byteOffset + enc.byteLength) as ArrayBuffer,
+  );
   return b64urlEncode(sig);
 }
 
