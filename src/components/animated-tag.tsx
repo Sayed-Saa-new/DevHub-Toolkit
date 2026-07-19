@@ -12,14 +12,25 @@ import type { ReactNode } from "react";
 export function AnimatedTag({
   children,
   className,
+  variant = "default",
 }: {
   children: ReactNode;
   className?: string;
+  variant?: "default" | "new" | "improvement" | "fix";
 }) {
+  const variantClass =
+    variant === "new"
+      ? "border-foreground/40 bg-foreground/10 text-foreground"
+      : variant === "improvement"
+        ? "border-amber-400/40 bg-amber-400/10 text-amber-300"
+        : variant === "fix"
+          ? "border-sky-400/40 bg-sky-400/10 text-sky-300"
+          : "border-border bg-muted/30 text-muted-foreground";
   return (
     <span
       className={cn(
-        "group relative inline-flex items-center justify-center overflow-hidden rounded-md border border-border bg-muted/30 px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider text-muted-foreground",
+        "group relative inline-flex items-center justify-center overflow-hidden rounded-md border px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider",
+        variantClass,
         "[--shine:rgba(0,0,0,.66)] dark:[--shine:rgba(255,255,255,.66)]",
         className,
       )}
