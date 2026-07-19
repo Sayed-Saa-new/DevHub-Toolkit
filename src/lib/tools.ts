@@ -9,6 +9,7 @@ import {
   ShieldCheck, Boxes, TerminalSquare, Database as DatabaseZap,
   Diff,
   Ruler,
+  ImageDown,
 } from "lucide-react";
 
 export type Category =
@@ -92,6 +93,7 @@ export const TOOLS: Tool[] = [
   { slug: "sql-formatter", name: "SQL Formatter", description: "Beautify, minify and lint SQL for 17 dialects — Postgres, MySQL, BigQuery, Snowflake, T-SQL & more.", category: "editors", icon: DatabaseZap, keywords: ["sql formatter", "sql beautifier", "format sql online", "sql pretty print", "sql minifier", "postgres formatter", "mysql formatter", "bigquery formatter", "tsql formatter", "snowflake formatter"] },
   { slug: "json-diff", name: "JSON Diff", description: "Compare two JSON documents structurally — see added, removed and changed keys with paths.", category: "editors", icon: Diff, keywords: ["json diff", "compare json", "json compare", "json difference", "diff json online", "json patch", "structural diff"] },
   { slug: "clamp-calculator", name: "CSS Clamp Calculator", description: "Fluid typography and spacing with CSS clamp() — px/rem output and live preview.", category: "design", icon: Ruler, keywords: ["css clamp", "clamp calculator", "fluid typography", "fluid type", "responsive font size", "clamp generator", "utopia clamp"] },
+  { slug: "image-compressor", name: "Image Compressor", description: "Compress JPEG, PNG, WebP & AVIF in your browser — batch, resize, convert to WebP, 100% local.", category: "converters", icon: ImageDown, keywords: ["image compressor", "compress image", "compress jpeg", "compress png", "webp converter", "image optimizer", "resize image", "bulk compress"] },
 ];
 
 export const TOOLS_BY_SLUG: Record<string, Tool> = Object.fromEntries(
