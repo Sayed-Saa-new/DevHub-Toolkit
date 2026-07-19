@@ -280,8 +280,8 @@ function Hero() {
         <div className="hero-badge mb-6 inline-flex">
           <style>{`
             .hero-badge .gen-txt-wrapper { min-width: 0 !important; width: auto !important; }
-            .hero-badge .gen-txt-1 { position: relative !important; word-spacing: normal !important; }
-            .hero-badge .gen-txt-2 { word-spacing: normal !important; }
+            .hero-badge .gen-txt-1 { position: relative !important; word-spacing: normal !important; white-space: nowrap !important; }
+            .hero-badge .gen-txt-2 { word-spacing: normal !important; white-space: nowrap !important; }
           `}</style>
           <GenerateButton
             label={`${TOOLS.length}+ utilities • Local-first • No signup`}
