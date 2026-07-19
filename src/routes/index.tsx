@@ -341,6 +341,7 @@ function FeaturedTools() {
               key={t.slug}
               to="/t/$slug"
               params={{ slug: t.slug }}
+              data-motion-icon-group
               className="group relative rounded-xl border border-border bg-card p-5 hover:border-foreground/40 hover:bg-accent/40 transition"
             >
               <div className="size-9 rounded-lg border border-border bg-background grid place-items-center mb-4">
