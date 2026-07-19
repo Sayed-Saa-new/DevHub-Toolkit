@@ -55,6 +55,7 @@ function FavoritesPage() {
             <Link
               key={t.slug}
               to={`/t/${t.slug}`}
+              data-motion-icon-group
               className="rounded-xl border border-border bg-card p-4 hover:border-foreground/40 transition flex items-start gap-3"
             >
               <div className="size-9 rounded-lg border border-border bg-background grid place-items-center">
