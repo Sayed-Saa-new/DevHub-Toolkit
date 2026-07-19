@@ -276,27 +276,13 @@ function Hero() {
       <div className="absolute inset-0 grid-bg opacity-60 pointer-events-none" />
       <div className="absolute inset-x-0 -top-40 h-96 bg-[radial-gradient(ellipse_at_center,_oklch(1_0_0/_10%),_transparent_65%)] pointer-events-none" />
       <div className="relative mx-auto max-w-5xl px-4 md:px-8 py-20 md:py-28 text-center">
-        <div className="group relative inline-flex mb-6">
-          {/* outer glow */}
-          <span className="pointer-events-none absolute -inset-px rounded-full bg-[conic-gradient(from_180deg_at_50%_50%,oklch(0.75_0.15_155/_0.35),transparent_35%,oklch(1_0_0/_0.25)_60%,transparent_85%,oklch(0.75_0.15_155/_0.35))] opacity-60 blur-[6px] transition-opacity duration-500 group-hover:opacity-90" />
-          {/* gradient border wrapper */}
-          <div className="relative rounded-full p-[1px] bg-gradient-to-r from-white/20 via-emerald-400/40 to-white/10">
-            <div className="inline-flex items-center gap-2.5 h-8 pl-2.5 pr-4 rounded-full bg-background/80 backdrop-blur-xl text-[11px] font-medium tracking-wide">
-              {/* animated status dot with ring */}
-              <span className="relative inline-flex size-2 items-center justify-center">
-                <span className="absolute inline-flex size-full rounded-full bg-emerald-400/60 animate-ping" />
-                <span className="relative inline-flex size-2 rounded-full bg-emerald-400 shadow-[0_0_10px_oklch(0.75_0.18_155/_0.9)]" />
-              </span>
-              <span className="flex items-center gap-1.5 text-foreground/90">
-                <span className="font-semibold text-foreground tabular-nums">{TOOLS.length}+</span>
-                <span className="text-muted-foreground">utilities</span>
-                <span className="text-border">•</span>
-                <span className="text-muted-foreground">Local-first</span>
-                <span className="text-border">•</span>
-                <span className="text-muted-foreground">No signup</span>
-              </span>
-            </div>
-          </div>
+        <div className="mb-6 inline-flex">
+          <GenerateButton
+            size="sm"
+            label={`${TOOLS.length} Utilities`}
+            activeLabel="Exploring"
+            aria-label={`${TOOLS.length} utilities, local-first, zero tracking`}
+          />
         </div>
         <h1 className="text-5xl md:text-7xl font-semibold tracking-tight leading-[1.02]">
           Every developer tool
