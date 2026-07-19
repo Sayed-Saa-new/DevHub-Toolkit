@@ -280,7 +280,6 @@ function LandingHeader() {
 
 function CategoriesMenu() {
   const [open, setOpen] = useState(false);
-  const [hovered, setHovered] = useState<string>(CATEGORIES[0].id);
   let closeTimer: ReturnType<typeof setTimeout> | undefined;
 
   const openNow = () => {
@@ -290,10 +289,6 @@ function CategoriesMenu() {
   const closeSoon = () => {
     closeTimer = setTimeout(() => setOpen(false), 120);
   };
-
-  const active = CATEGORIES.find((c) => c.id === hovered) ?? CATEGORIES[0];
-  const activeArt = CATEGORY_ART[active.id];
-  const activeTools = TOOLS.filter((t) => t.category === active.id);
 
   return (
     <div className="relative" onMouseEnter={openNow} onMouseLeave={closeSoon}>
