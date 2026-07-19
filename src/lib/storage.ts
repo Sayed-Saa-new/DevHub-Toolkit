@@ -27,6 +27,7 @@ function writeLS<T>(key: string, value: T) {
 
 const FAV_KEY = "devhub:favorites";
 const REC_KEY = "devhub:recents";
+const SEEN_KEY = "devhub:seen";
 const MAX_RECENTS = 8;
 
 export function useFavorites() {
@@ -58,6 +59,23 @@ export function useRecents() {
   }, []);
 
   return { recents: items, push };
+}
+
+export function useSeen() {
+  const [items, setItems] = useState<string[]>([]);
+  useEffect(() => setItems(readLS<string[]>(SEEN_KEY, [])), []);
+
+  const markSeen = useCallback((slug: string) => {
+    setItems((prev) => {
+      if (prev.includes(slug)) return prev;
+      const next = [...prev, slug];
+      writeLS(SEEN_KEY, next);
+      return next;
+    });
+  }, []);
+
+  const isSeen = useCallback((slug: string) => items.includes(slug), [items]);
+  return { seen: items, markSeen, isSeen };
 }
 
 export function useLocalState<T>(key: string, initial: T) {
