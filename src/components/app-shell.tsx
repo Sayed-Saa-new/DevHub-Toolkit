@@ -187,10 +187,12 @@ export function AppShell({ children }: { children: ReactNode }) {
 
         <main className="flex-1 min-w-0">{children}</main>
 
-        <footer className="border-t border-border px-6 py-6 text-xs text-muted-foreground flex flex-wrap gap-4 justify-between">
-          <span>DevHub Toolkit — Built for developers.</span>
-          <span className="font-mono">All processing runs locally in your browser.</span>
-        </footer>
+        {pathname !== "/" && (
+          <footer className="border-t border-border px-6 py-6 text-xs text-muted-foreground flex flex-wrap gap-4 justify-between">
+            <span>DevHub Toolkit — Built for developers.</span>
+            <span className="font-mono">All processing runs locally in your browser.</span>
+          </footer>
+        )}
       </div>
 
       <GlobalCommand open={open} onOpenChange={setOpen} onShowShortcuts={() => setShortcutsOpen(true)} />
