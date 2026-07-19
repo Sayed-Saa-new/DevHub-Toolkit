@@ -279,7 +279,7 @@ function Hero() {
       <div className="relative mx-auto max-w-5xl px-4 md:px-8 py-20 md:py-28 text-center">
         <div className="hero-badge mb-6 inline-flex">
           <style>{`
-            .hero-badge .gen-txt-wrapper { min-width: 24em !important; }
+            .hero-badge .gen-txt-wrapper { min-width: 0 !important; width: auto !important; }
             .hero-badge .gen-txt-1, .hero-badge .gen-txt-2 { word-spacing: normal !important; }
           `}</style>
           <GenerateButton
