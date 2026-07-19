@@ -52,6 +52,7 @@ export const Route = createFileRoute("/llms-full.txt")({
           "",
           `Primary entry points:`,
           `- Home / all tools: ${BASE_URL}/`,
+          `- Category hubs: ${CATEGORIES.map((c) => `${BASE_URL}/c/${c.id}`).join(", ")}`,
           `- Favorites: ${BASE_URL}/favorites`,
           `- Changelog: ${BASE_URL}/changelog`,
           `- Sitemap: ${BASE_URL}/sitemap.xml`,

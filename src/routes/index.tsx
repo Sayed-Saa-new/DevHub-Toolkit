@@ -131,6 +131,20 @@ function Home() {
               </CatChip>
             ))}
           </div>
+
+          <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
+            <span className="uppercase tracking-wider text-[10px]">Browse hubs:</span>
+            {CATEGORIES.map((c) => (
+              <Link
+                key={c.id}
+                to="/c/$category"
+                params={{ category: c.id }}
+                className="hover:text-foreground underline-offset-4 hover:underline transition"
+              >
+                {c.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -16,6 +16,7 @@ import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TSlugRouteImport } from './routes/t.$slug'
 import { Route as ChangelogSlugRouteImport } from './routes/changelog.$slug'
+import { Route as CCategoryRouteImport } from './routes/c.$category'
 import { Route as ApiAiRouteImport } from './routes/api/ai'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -53,6 +54,11 @@ const ChangelogSlugRoute = ChangelogSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => ChangelogRoute,
 } as any)
+const CCategoryRoute = CCategoryRouteImport.update({
+  id: '/c/$category',
+  path: '/c/$category',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAiRoute = ApiAiRouteImport.update({
   id: '/api/ai',
   path: '/api/ai',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/ai': typeof ApiAiRoute
+  '/c/$category': typeof CCategoryRoute
   '/changelog/$slug': typeof ChangelogSlugRoute
   '/t/$slug': typeof TSlugRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/ai': typeof ApiAiRoute
+  '/c/$category': typeof CCategoryRoute
   '/changelog/$slug': typeof ChangelogSlugRoute
   '/t/$slug': typeof TSlugRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/ai': typeof ApiAiRoute
+  '/c/$category': typeof CCategoryRoute
   '/changelog/$slug': typeof ChangelogSlugRoute
   '/t/$slug': typeof TSlugRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/llms-full.txt'
     | '/sitemap.xml'
     | '/api/ai'
+    | '/c/$category'
     | '/changelog/$slug'
     | '/t/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/llms-full.txt'
     | '/sitemap.xml'
     | '/api/ai'
+    | '/c/$category'
     | '/changelog/$slug'
     | '/t/$slug'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/llms-full.txt'
     | '/sitemap.xml'
     | '/api/ai'
+    | '/c/$category'
     | '/changelog/$slug'
     | '/t/$slug'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiAiRoute: typeof ApiAiRoute
+  CCategoryRoute: typeof CCategoryRoute
   TSlugRoute: typeof TSlugRoute
 }
 
@@ -184,6 +197,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChangelogSlugRouteImport
       parentRoute: typeof ChangelogRoute
     }
+    '/c/$category': {
+      id: '/c/$category'
+      path: '/c/$category'
+      fullPath: '/c/$category'
+      preLoaderRoute: typeof CCategoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/ai': {
       id: '/api/ai'
       path: '/api/ai'
@@ -213,18 +233,9 @@ const rootRouteChildren: RootRouteChildren = {
   LlmsFullDottxtRoute: LlmsFullDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiAiRoute: ApiAiRoute,
+  CCategoryRoute: CCategoryRoute,
   TSlugRoute: TSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
