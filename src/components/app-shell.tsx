@@ -14,6 +14,7 @@ import {
   Rss,
 } from "lucide-react";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { MotionIconConfig } from "lucide-react-motion";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -117,6 +118,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   );
 
   return (
+    <MotionIconConfig trigger="parent-hover" duration={0.5}>
     <div className="min-h-svh flex bg-background text-foreground">
       <div className="scroll-progress" aria-hidden />
       {/* Sidebar */}
@@ -193,6 +195,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <GlobalCommand open={open} onOpenChange={setOpen} onShowShortcuts={() => setShortcutsOpen(true)} />
       <ShortcutsDialog open={shortcutsOpen} onOpenChange={setShortcutsOpen} />
     </div>
+    </MotionIconConfig>
   );
 }
 
@@ -360,6 +363,7 @@ function SidebarLink({
   return (
     <Link
       to={to}
+      data-motion-icon-group
       className={cn(
         "mx-1 flex items-center gap-2 h-8 px-2 rounded-md text-sm transition",
         active
@@ -587,6 +591,7 @@ function ToolCommandItem({
       value={`${tool.name} ${tool.category} ${tool.keywords.join(" ")}`}
       onSelect={onSelect}
       className="gap-2.5 group"
+      data-motion-icon-group
     >
       <tool.icon className="size-4 opacity-70 shrink-0" />
       <span className="truncate">{tool.name}</span>

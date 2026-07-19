@@ -1,18 +1,20 @@
-import type { LucideIcon } from "lucide-react";
 import {
-  Braces, Binary, Link2, KeyRound, Fingerprint, Hash, Clock, Regex,
-  QrCode, Palette, Blend, BoxSelect, Squircle, FileCode2, FileText,
-  PlayCircle, Globe, GitBranch, Terminal, Keyboard, Sparkles, Zap,
-  MessageSquareCode, Lock, Type, CaseSensitive, FileJson, Table2,
-  Calculator, GitCompare, AlignLeft, Code2, CalendarClock, Image,
-  Link, Smile, Globe2, Database, Languages, Bug, ScanSearch, FlaskConical,
-  ShieldCheck, Boxes, TerminalSquare, Database as DatabaseZap,
+  Braces, Binary, Link2, KeyRound, FingerprintPattern as Fingerprint, Hash, Clock, Regex,
+  QrCode, Palette, Blend, SquareDashed as BoxSelect, Squircle, FileCode as FileCode2, FileText,
+  CirclePlay as PlayCircle, Globe, GitBranch, Terminal, Keyboard, Sparkles, Zap,
+  MessageSquareCode, Lock, Type, CaseSensitive, FileBraces as FileJson, Table2,
+  Calculator, GitCompare, TextAlignStart as AlignLeft, Code as Code2, CalendarClock, Image,
+  Link, Smile, Globe as Globe2, Database, Languages, Bug, ScanSearch, FlaskConical,
+  ShieldCheck, Boxes, SquareTerminal as TerminalSquare, Database as DatabaseZap,
   Diff,
   Ruler,
   ImageDown,
   KeySquare,
-  FileType2,
-} from "lucide-react";
+  FileType as FileType2,
+} from "lucide-react-motion";
+import type { ComponentType, SVGProps } from "react";
+
+type LucideIcon = ComponentType<{ className?: string; size?: number } & Record<string, unknown>>;
 
 export type Category =
   | "converters"
