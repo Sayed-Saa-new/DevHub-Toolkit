@@ -26,6 +26,8 @@ import { Briefcase, Rocket, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import { createPortal } from "react-dom";
+import type { ReactNode } from "react";
+import { getChangelogEntries } from "@/lib/changelog";
 
 import { Button } from "@/components/ui/button";
 import { GenerateButton } from "@/components/ui/generate-button";
