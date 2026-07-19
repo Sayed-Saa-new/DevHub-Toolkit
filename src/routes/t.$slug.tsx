@@ -119,14 +119,17 @@ export const Route = createFileRoute("/t/$slug")({
   loader: ({ params }) => {
     const tool = TOOLS_BY_SLUG[params.slug];
     if (!tool) throw notFound();
-    return { tool };
+    // Return only the serializable slug — the full Tool object contains a
+    // React component (icon) which cannot be dehydrated for client hydration.
+    return { slug: params.slug };
   },
   notFoundComponent: ToolNotFound,
   component: ToolRoute,
 });
 
 function ToolRoute() {
-  const { tool } = Route.useLoaderData();
+  const { slug } = Route.useLoaderData();
+  const tool = TOOLS_BY_SLUG[slug]!;
   const Component = TOOL_COMPONENTS[tool.slug] ?? ComingSoon;
   return (
     <ToolShell tool={tool}>
