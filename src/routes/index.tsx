@@ -277,7 +277,11 @@ function Hero() {
       <div className="absolute inset-0 grid-bg opacity-60 pointer-events-none" />
       <div className="absolute inset-x-0 -top-40 h-96 bg-[radial-gradient(ellipse_at_center,_oklch(1_0_0/_10%),_transparent_65%)] pointer-events-none" />
       <div className="relative mx-auto max-w-5xl px-4 md:px-8 py-20 md:py-28 text-center">
-        <div className="mb-6 inline-flex [&_.gen-txt-wrapper]:!min-w-[22em]">
+        <div className="hero-badge mb-6 inline-flex">
+          <style>{`
+            .hero-badge .gen-txt-wrapper { min-width: 24em !important; }
+            .hero-badge .gen-txt-1, .hero-badge .gen-txt-2 { word-spacing: normal !important; }
+          `}</style>
           <GenerateButton
             label={`${TOOLS.length}+ utilities • Local-first • No signup`}
             activeLabel="Exploring the toolkit"
