@@ -29,6 +29,21 @@ import { GenerateButton } from "@/components/ui/generate-button";
 import { BrandMark } from "@/components/brand-mark";
 import { CATEGORIES, TOOLS } from "@/lib/tools";
 import { cn } from "@/lib/utils";
+import catConverters from "@/assets/cat-converters.jpg";
+import catGenerators from "@/assets/cat-generators.jpg";
+import catDesign from "@/assets/cat-design.jpg";
+import catEditors from "@/assets/cat-editors.jpg";
+import catReference from "@/assets/cat-reference.jpg";
+import catAi from "@/assets/cat-ai.jpg";
+
+const CATEGORY_ART: Record<string, { image: string; blurb: string }> = {
+  converters: { image: catConverters, blurb: "Transform data between formats — JSON, Base64, YAML, CSV, cURL." },
+  generators: { image: catGenerators, blurb: "Create UUIDs, hashes, QR codes, JWTs, passwords and mock data." },
+  design: { image: catDesign, blurb: "Craft gradients, shadows, colors and fluid CSS values." },
+  editors: { image: catEditors, blurb: "Live editors for JSON, Markdown, Regex, SQL and playgrounds." },
+  reference: { image: catReference, blurb: "HTTP codes, Git, Linux, VS Code and cron — searchable." },
+  ai: { image: catAi, blurb: "AI helpers: explain, optimize, convert code and craft SQL or tests." },
+};
 
 const SITE = "https://devhub.flinkeo.online";
 
@@ -161,7 +176,6 @@ function LandingHeader() {
 
   const nav = [
     { label: "Tools", to: "/tools" as const },
-    { label: "Categories", to: "/c/$category" as const, params: { category: "converters" } },
     { label: "Favorites", to: "/favorites" as const },
     { label: "Changelog", to: "/changelog" as const },
   ];
@@ -184,26 +198,22 @@ function LandingHeader() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
-          {nav.map((item) =>
-            "params" in item ? (
-              <Link
-                key={item.label}
-                to={item.to}
-                params={item.params}
-                className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
-              >
-                {item.label}
-              </Link>
-            ) : (
-              <Link
-                key={item.label}
-                to={item.to}
-                className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
-              >
-                {item.label}
-              </Link>
-            ),
-          )}
+          <Link
+            to="/tools"
+            className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
+          >
+            Tools
+          </Link>
+          <CategoriesMenu />
+          {nav.slice(1).map((item) => (
+            <Link
+              key={item.label}
+              to={item.to}
+              className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
@@ -236,17 +246,6 @@ function LandingHeader() {
         <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl">
           <div className="mx-auto max-w-6xl px-4 py-3 flex flex-col">
             {nav.map((item) =>
-              "params" in item ? (
-                <Link
-                  key={item.label}
-                  to={item.to}
-                  params={item.params}
-                  onClick={() => setOpen(false)}
-                  className="py-2.5 text-sm text-muted-foreground hover:text-foreground"
-                >
-                  {item.label}
-                </Link>
-              ) : (
                 <Link
                   key={item.label}
                   to={item.to}
@@ -255,8 +254,15 @@ function LandingHeader() {
                 >
                   {item.label}
                 </Link>
-              ),
             )}
+            <Link
+              to="/c/$category"
+              params={{ category: "converters" }}
+              onClick={() => setOpen(false)}
+              className="py-2.5 text-sm text-muted-foreground hover:text-foreground"
+            >
+              Categories
+            </Link>
             <Link to="/tools" onClick={() => setOpen(false)}>
               <Button size="sm" className="mt-2 w-full h-9 rounded-full gap-1.5">
                 Open toolkit <ArrowRight className="size-3.5" />
@@ -266,6 +272,162 @@ function LandingHeader() {
         </div>
       )}
     </header>
+  );
+}
+
+/* ---------------- Categories Mega-Menu ---------------- */
+
+function CategoriesMenu() {
+  const [open, setOpen] = useState(false);
+  const [hovered, setHovered] = useState<string>(CATEGORIES[0].id);
+  let closeTimer: ReturnType<typeof setTimeout> | undefined;
+
+  const openNow = () => {
+    if (closeTimer) clearTimeout(closeTimer);
+    setOpen(true);
+  };
+  const closeSoon = () => {
+    closeTimer = setTimeout(() => setOpen(false), 120);
+  };
+
+  const active = CATEGORIES.find((c) => c.id === hovered) ?? CATEGORIES[0];
+  const activeArt = CATEGORY_ART[active.id];
+  const activeTools = TOOLS.filter((t) => t.category === active.id);
+
+  return (
+    <div className="relative" onMouseEnter={openNow} onMouseLeave={closeSoon}>
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="true"
+        className={cn(
+          "h-8 px-3 rounded-md text-sm inline-flex items-center gap-1 transition",
+          open ? "text-foreground bg-accent/50" : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
+        )}
+      >
+        Categories
+        <svg
+          className={cn("size-3 transition-transform", open && "rotate-180")}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+
+      {open && (
+        <>
+          {/* hover bridge to avoid gap flicker */}
+          <div className="absolute left-0 right-0 top-full h-3" aria-hidden />
+          <div
+            role="menu"
+            className="absolute left-1/2 top-[calc(100%+0.5rem)] -translate-x-1/2 w-[720px] max-w-[92vw] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-fade-in"
+          >
+            <div className="grid grid-cols-[1fr_1.15fr]">
+              {/* Left: category list */}
+              <ul className="p-2 border-r border-border">
+                {CATEGORIES.map((c) => {
+                  const count = TOOLS.filter((t) => t.category === c.id).length;
+                  const isActive = c.id === active.id;
+                  return (
+                    <li key={c.id}>
+                      <Link
+                        to="/c/$category"
+                        params={{ category: c.id }}
+                        onMouseEnter={() => setHovered(c.id)}
+                        onFocus={() => setHovered(c.id)}
+                        onClick={() => setOpen(false)}
+                        className={cn(
+                          "group flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm transition",
+                          isActive
+                            ? "bg-accent text-foreground"
+                            : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
+                        )}
+                      >
+                        <span className="font-medium">{c.label}</span>
+                        <span className="flex items-center gap-2">
+                          <span className="text-[10px] font-mono text-muted-foreground/80">
+                            {count.toString().padStart(2, "0")}
+                          </span>
+                          <ArrowRight
+                            className={cn(
+                              "size-3.5 transition-all",
+                              isActive
+                                ? "opacity-100 translate-x-0"
+                                : "opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0",
+                            )}
+                          />
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                })}
+                <li className="mt-1 border-t border-border pt-2">
+                  <Link
+                    to="/tools"
+                    onClick={() => setOpen(false)}
+                    className="flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm text-foreground hover:bg-accent/50"
+                  >
+                    <span className="font-medium">All tools</span>
+                    <ArrowRight className="size-3.5" />
+                  </Link>
+                </li>
+              </ul>
+
+              {/* Right: illustration + preview */}
+              <Link
+                to="/c/$category"
+                params={{ category: active.id }}
+                onClick={() => setOpen(false)}
+                className="block p-3 group"
+                key={active.id}
+              >
+                <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-border bg-black">
+                  <img
+                    src={activeArt.image}
+                    alt={`${active.label} category illustration`}
+                    className="absolute inset-0 h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-[1.03]"
+                    width={800}
+                    height={600}
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-3">
+                    <div className="text-[10px] uppercase tracking-[0.14em] text-white/60">
+                      Category
+                    </div>
+                    <div className="text-white font-semibold tracking-tight">{active.label}</div>
+                  </div>
+                </div>
+                <p className="mt-3 px-1 text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                  {activeArt.blurb}
+                </p>
+                <div className="mt-2 px-1 flex flex-wrap gap-1.5">
+                  {activeTools.slice(0, 4).map((t) => (
+                    <span
+                      key={t.slug}
+                      className="text-[10px] px-2 py-0.5 rounded-full border border-border text-muted-foreground"
+                    >
+                      {t.name}
+                    </span>
+                  ))}
+                  {activeTools.length > 4 && (
+                    <span className="text-[10px] px-2 py-0.5 rounded-full border border-border text-muted-foreground">
+                      +{activeTools.length - 4} more
+                    </span>
+                  )}
+                </div>
+              </Link>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
   );
 }
 
