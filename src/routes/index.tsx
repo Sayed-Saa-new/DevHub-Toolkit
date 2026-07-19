@@ -25,7 +25,6 @@ import { Github, Twitter, Fingerprint } from "lucide-react";
 import { Briefcase, Rocket, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRef } from "react";
-import { createContext, useContext, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
 import type { ReactNode, ComponentType } from "react";
 import { getChangelogEntries } from "@/lib/changelog";
@@ -33,6 +32,14 @@ import { getChangelogEntries } from "@/lib/changelog";
 import { Button } from "@/components/ui/button";
 import { GenerateButton } from "@/components/ui/generate-button";
 import { BrandMark } from "@/components/brand-mark";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { CATEGORIES, TOOLS } from "@/lib/tools";
 import { cn } from "@/lib/utils";
 import catConverters from "@/assets/cat-converters.svg";
