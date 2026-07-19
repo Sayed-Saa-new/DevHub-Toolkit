@@ -338,4 +338,10 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Convert plain text, HTML or rich pasted content (Google Docs, Notion, web pages) into clean GitHub-Flavored Markdown. Live preview, tables, task lists — 100% free, client-side.",
     keywords: ["text to markdown", "html to markdown", "convert to markdown", "rich text to markdown", "paste to markdown", "google docs to markdown", "notion to markdown", "web page to markdown", "gfm converter", "markdown converter online"],
   }, // text to markdown — 8,100/mo, KDI 35 (winnable long-tail)
+  "docx-to-markdown": {
+    title: "DOCX to Markdown Converter — Word to MD, Batch, In-Browser",
+    description:
+      "Convert Word .docx files to clean Markdown online. Batch upload, preserve headings, tables, lists and images, download individually or as a ZIP — 100% client-side, no signup.",
+    keywords: ["docx to markdown", "word to markdown", "docx to md", "convert docx to markdown", "word document to markdown", "docx converter online", "batch docx to markdown", "mammoth converter", "word to md", "docx markdown converter"],
+  }, // docx to markdown — 1,000+/mo combined, KDI 21 (very winnable)
 };
