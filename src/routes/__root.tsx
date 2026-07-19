@@ -84,6 +84,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "keywords", content: "developer tools online, free developer tools, json formatter, base64 decode, jwt decoder, uuid generator, regex tester, hash generator, qr code generator, ai sql generator, ai regex generator" },
       { name: "author", content: "DevHub" },
       { name: "theme-color", content: "#0a0a0a" },
+      { name: "google-site-verification", content: "4GW5hFWsbJa_98tGQoSUIX-OAfhGOfhh7ZLsxEoHqc0" },
       { property: "og:title", content: "DevHub Toolkit — 44 Free Online Developer Tools" },
       { property: "og:description", content: "JSON, Base64, JWT, UUID, hashes, regex, QR codes, AI SQL, AI regex and 35+ more. Fast, minimal, keyboard-first — no signup." },
       { property: "og:site_name", content: "DevHub Toolkit" },
