@@ -176,7 +176,6 @@ function LandingHeader() {
 
   const nav = [
     { label: "Tools", to: "/tools" as const },
-    { label: "Categories", to: "/c/$category" as const, params: { category: "converters" } },
     { label: "Favorites", to: "/favorites" as const },
     { label: "Changelog", to: "/changelog" as const },
   ];
@@ -199,26 +198,22 @@ function LandingHeader() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
-          {nav.map((item) =>
-            "params" in item ? (
-              <Link
-                key={item.label}
-                to={item.to}
-                params={item.params}
-                className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
-              >
-                {item.label}
-              </Link>
-            ) : (
-              <Link
-                key={item.label}
-                to={item.to}
-                className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
-              >
-                {item.label}
-              </Link>
-            ),
-          )}
+          <Link
+            to="/tools"
+            className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
+          >
+            Tools
+          </Link>
+          <CategoriesMenu />
+          {nav.slice(1).map((item) => (
+            <Link
+              key={item.label}
+              to={item.to}
+              className="h-8 px-3 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 inline-flex items-center transition"
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
