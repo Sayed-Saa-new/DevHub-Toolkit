@@ -1,18 +1,21 @@
-import type { LucideIcon } from "lucide-react";
 import {
-  Braces, Binary, Link2, KeyRound, Fingerprint, Hash, Clock, Regex,
-  QrCode, Palette, Blend, BoxSelect, Squircle, FileCode2, FileText,
-  PlayCircle, Globe, GitBranch, Terminal, Keyboard, Sparkles, Zap,
-  MessageSquareCode, Lock, Type, CaseSensitive, FileJson, Table2,
-  Calculator, GitCompare, AlignLeft, Code2, CalendarClock, Image,
-  Link, Smile, Globe2, Database, Languages, Bug, ScanSearch, FlaskConical,
-  ShieldCheck, Boxes, TerminalSquare, Database as DatabaseZap,
+  Braces, Binary, Link2, KeyRound, FingerprintPattern as Fingerprint, Hash, Clock, Regex,
+  QrCode, Palette, Blend, SquareDashed as BoxSelect, Squircle, FileCode as FileCode2, FileText,
+  CirclePlay as PlayCircle, Globe, GitBranch, Terminal, Keyboard, Sparkles, Zap,
+  MessageSquareCode, Lock, Type, CaseSensitive, FileBraces as FileJson, Table2,
+  Calculator, GitCompare, TextAlignStart as AlignLeft, Code as Code2, CalendarClock, Image,
+  Link, Smile, Globe as Globe2, Database, Languages, Bug, ScanSearch, FlaskConical,
+  ShieldCheck, Boxes, SquareTerminal as TerminalSquare, Database as DatabaseZap,
   Diff,
   Ruler,
   ImageDown,
   KeySquare,
-  FileType2,
-} from "lucide-react";
+  FileType as FileType2,
+  FileText as FileWord,
+} from "lucide-react-motion";
+import type { ComponentType, SVGProps } from "react";
+
+type LucideIcon = ComponentType<{ className?: string; size?: number } & Record<string, unknown>>;
 
 export type Category =
   | "converters"
@@ -99,6 +102,7 @@ export const TOOLS: Tool[] = [
   { slug: "image-compressor", name: "Image Compressor", description: "Compress JPEG, PNG, WebP & AVIF in your browser — batch, resize, convert to WebP, 100% local.", category: "converters", icon: ImageDown, keywords: ["image compressor", "compress image", "compress jpeg", "compress png", "webp converter", "image optimizer", "resize image", "bulk compress"], isNew: true },
   { slug: "jwt-generator", name: "JWT Generator", description: "Sign HS256/384/512 JSON Web Tokens with claim helpers, random secret and live cURL — 100% client-side.", category: "generators", icon: KeySquare, keywords: ["jwt generator", "sign jwt", "create jwt", "hs256 generator", "hs512 generator", "json web token generator", "jwt builder", "jwt maker"], isNew: true },
   { slug: "text-to-markdown", name: "Text → Markdown", description: "Convert plain text, HTML, or rich pasted content into clean GFM Markdown — with live preview.", category: "converters", icon: FileType2, keywords: ["text to markdown", "html to markdown", "rich text to markdown", "convert to md", "paste to markdown", "turndown", "gfm converter"], isNew: true },
+  { slug: "docx-to-markdown", name: "DOCX → Markdown", description: "Convert Word .docx files to clean Markdown in your browser — batch, images, tables, 100% client-side.", category: "converters", icon: FileWord, keywords: ["docx to markdown", "word to markdown", "docx converter", "word to md", "docx to md", "convert docx", "mammoth", "batch docx"], isNew: true },
 ];
 
 export const TOOLS_BY_SLUG: Record<string, Tool> = Object.fromEntries(

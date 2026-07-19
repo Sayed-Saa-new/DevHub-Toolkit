@@ -200,6 +200,7 @@ function Grid({ tools, isFav, hydrated }: { tools: ReturnType<typeof searchTools
         <Link
           key={t.slug}
           to={`/t/${t.slug}`}
+          data-motion-icon-group
           className="group relative rounded-xl border border-border bg-card p-4 hover:border-foreground/40 hover:bg-accent/40 transition"
         >
           <div className="flex items-start gap-3">

@@ -38,6 +38,15 @@ function formatDate(iso: string) {
   });
 }
 
+function tagVariant(tag?: string): "default" | "new" | "improvement" | "fix" {
+  if (!tag) return "default";
+  const t = tag.toLowerCase();
+  if (t.includes("new")) return "new";
+  if (t.includes("fix")) return "fix";
+  if (t.includes("improv") || t.includes("update") || t.includes("enhanc")) return "improvement";
+  return "default";
+}
+
 function ChangelogPage() {
   const { entries } = Route.useLoaderData();
 
@@ -79,7 +88,9 @@ function ChangelogPage() {
                         {formatDate(post.publishedAt)}
                       </time>
                       {post.tag && (
-                        <AnimatedTag className="inline-flex">{post.tag}</AnimatedTag>
+                        <AnimatedTag className="inline-flex" variant={tagVariant(post.tag)}>
+                          {post.tag}
+                        </AnimatedTag>
                       )}
                     </div>
                   </div>
@@ -97,7 +108,7 @@ function ChangelogPage() {
                         {formatDate(post.publishedAt)}
                       </time>
                       {post.tag && (
-                        <AnimatedTag>{post.tag}</AnimatedTag>
+                        <AnimatedTag variant={tagVariant(post.tag)}>{post.tag}</AnimatedTag>
                       )}
                     </div>
 
