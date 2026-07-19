@@ -4,21 +4,18 @@ import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 export interface GenerateButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  /** 
-   * The hue value (0-360) for the button's highlight color.
-   * Default is 210 (Blue).
-   */
-  hue?: number;
-  /**
-   * If true, forces the button into its "Generating" state.
-   * By default, the button also enters this state when focused or clicked.
-   */
+  /** If true, forces the button into its active/animated state. */
   isGenerating?: boolean;
+  /** Idle label text. */
+  label?: string;
+  /** Active label text (shown on focus/click). */
+  activeLabel?: string;
 }
 
 export function GenerateButton({
-  hue = 210,
   isGenerating: controlledIsGenerating,
+  label = "44 Utilities",
+  activeLabel = "Exploring",
   className,
   onClick,
   ...props
@@ -34,8 +31,7 @@ export function GenerateButton({
           --border-radius: 24px;
           --padding: 4px;
           --transition: 0.4s;
-          --button-color: #101010;
-          --highlight-color-hue: ${hue}deg;
+          --button-color: #0a0a0a;
 
           user-select: none;
           display: flex;
@@ -189,7 +185,7 @@ export function GenerateButton({
           0%, 100% { filter: blur(0px); }
           50% {
             transform: scale(2);
-            filter: blur(10px) brightness(150%) drop-shadow(-36px 12px 12px hsl(var(--highlight-color-hue), 100%, 70%));
+            filter: blur(10px) brightness(150%) drop-shadow(-36px 12px 12px rgba(255,255,255,0.85));
           }
         }
         
@@ -200,7 +196,7 @@ export function GenerateButton({
 
         .gen-btn[data-generating="true"]::before {
           box-shadow: 0 -8px 12px -6px rgba(255,255,255,0.2) inset,
-            0 -16px 16px -8px hsla(var(--highlight-color-hue), 100%, 70%, 20%) inset,
+            0 -16px 16px -8px rgba(255,255,255,0.18) inset,
             1px 1px 1px rgba(255,255,255,0.2), 
             2px 2px 2px rgba(255,255,255,0.067), 
             -1px -1px 1px rgba(0,0,0,0.133),
@@ -211,6 +207,7 @@ export function GenerateButton({
           opacity: 0.6;
           mask-image: linear-gradient(0deg, #fff, transparent);
           filter: brightness(100%);
+          background-image: linear-gradient(0deg, #fff, rgba(255,255,255,0.7), rgba(255,255,255,0.3), 8%, transparent);
         }
 
         /* Animation delays for letters */
@@ -230,12 +227,12 @@ export function GenerateButton({
 
         /* Hover & Active states */
         .gen-btn:active {
-          border: solid 1px hsla(var(--highlight-color-hue), 100%, 80%, 70%);
-          background-color: hsla(var(--highlight-color-hue), 50%, 20%, 0.5);
+          border: solid 1px rgba(255,255,255,0.6);
+          background-color: rgba(255,255,255,0.08);
         }
         .gen-btn:active::before {
           box-shadow: 0 -8px 12px -6px rgba(255,255,255,0.667) inset,
-            0 -16px 16px -8px hsla(var(--highlight-color-hue), 100%, 70%, 80%) inset,
+            0 -16px 16px -8px rgba(255,255,255,0.7) inset,
             1px 1px 1px rgba(255,255,255,0.267), 
             2px 2px 2px rgba(255,255,255,0.133), 
             -1px -1px 1px rgba(0,0,0,0.133),
@@ -245,18 +242,19 @@ export function GenerateButton({
           opacity: 1;
           mask-image: linear-gradient(0deg, #fff, transparent);
           filter: brightness(200%);
+          background-image: linear-gradient(0deg, #fff, rgba(255,255,255,0.8), rgba(255,255,255,0.4), 8%, transparent);
         }
         .gen-btn:active .gen-btn-letter {
-          text-shadow: 0 0 1px hsla(var(--highlight-color-hue), 100%, 90%, 90%);
+          text-shadow: 0 0 1px rgba(255,255,255,0.9);
           animation: none;
         }
 
         .gen-btn:hover {
-          border: solid 1px hsla(var(--highlight-color-hue), 100%, 80%, 40%);
+          border: solid 1px rgba(255,255,255,0.35);
         }
         .gen-btn:hover::before {
           box-shadow: 0 -8px 8px -6px rgba(255,255,255,0.667) inset,
-            0 -16px 16px -8px hsla(var(--highlight-color-hue), 100%, 70%, 30%) inset,
+            0 -16px 16px -8px rgba(255,255,255,0.25) inset,
             1px 1px 1px rgba(255,255,255,0.133), 
             2px 2px 2px rgba(255,255,255,0.067), 
             -1px -1px 1px rgba(0,0,0,0.133),
@@ -265,10 +263,11 @@ export function GenerateButton({
         .gen-btn:hover::after {
           opacity: 1;
           mask-image: linear-gradient(0deg, #fff, transparent);
+          background-image: linear-gradient(0deg, #fff, rgba(255,255,255,0.6), rgba(255,255,255,0.2), 8%, transparent);
         }
         .gen-btn:hover .gen-btn-svg {
           fill: #fff;
-          filter: drop-shadow(0 0 3px hsl(var(--highlight-color-hue), 100%, 70%)) drop-shadow(0 -4px 6px rgba(0,0,0,0.6));
+          filter: drop-shadow(0 0 3px rgba(255,255,255,0.8)) drop-shadow(0 -4px 6px rgba(0,0,0,0.6));
           animation: none;
         }
       `}</style>
@@ -291,13 +290,13 @@ export function GenerateButton({
 
         <div className="gen-txt-wrapper">
           <div className="gen-txt-1">
-            {"Generate".split("").map((letter, i) => (
-              <span key={`t1-${i}`} className="gen-btn-letter">{letter}</span>
+            {label.split("").map((letter, i) => (
+              <span key={`t1-${i}`} className="gen-btn-letter">{letter === " " ? "\u00A0" : letter}</span>
             ))}
           </div>
           <div className="gen-txt-2">
-            {"Generating".split("").map((letter, i) => (
-              <span key={`t2-${i}`} className="gen-btn-letter">{letter}</span>
+            {activeLabel.split("").map((letter, i) => (
+              <span key={`t2-${i}`} className="gen-btn-letter">{letter === " " ? "\u00A0" : letter}</span>
             ))}
           </div>
         </div>
