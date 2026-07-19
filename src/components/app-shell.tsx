@@ -386,6 +386,7 @@ function GlobalCommand({
   const hydrated = useHydrated();
   const { favorites, toggle: toggleFav, isFav } = useFavorites();
   const { recents, push: pushRecent } = useRecents();
+  const { seen, isSeen } = useSeen();
 
   // Reset query each time the palette opens
   useEffect(() => {
@@ -483,6 +484,7 @@ function GlobalCommand({
                   onSelect={() => go(t.slug)}
                   onFav={() => toggleFav(t.slug)}
                   favored={hydrated && isFav(t.slug)}
+                  showNew={hydrated && !!t.isNew && !isSeen(t.slug)}
                 />
               ))}
             </CommandGroup>
