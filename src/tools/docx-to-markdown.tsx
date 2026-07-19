@@ -197,11 +197,12 @@ export function DocxToMarkdown() {
         imageMode === "skip"
           ? mammoth.images.imgElement(() => Promise.resolve({ src: "" }))
           : imageMode === "placeholder"
-          ? mammoth.images.imgElement((img: { altText?: string }) => {
+          ? mammoth.images.imgElement((img) => {
               imageCount++;
-              return Promise.resolve({ src: `#image-${imageCount}`, alt: img.altText ?? `image-${imageCount}` });
+              const alt = (img as unknown as { altText?: string }).altText ?? `image-${imageCount}`;
+              return Promise.resolve({ src: `#image-${imageCount}`, alt });
             })
-          : mammoth.images.imgElement(async (img: { contentType: string; read: (fmt: string) => Promise<string> }) => {
+          : mammoth.images.imgElement(async (img) => {
               imageCount++;
               const data = await img.read("base64");
               return { src: `data:${img.contentType};base64,${data}` };
