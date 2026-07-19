@@ -600,9 +600,9 @@ function ToolCommandItem({
       <tool.icon className="size-4 opacity-70 shrink-0" />
       <span className="truncate">{tool.name}</span>
       {showNew && (
-        <span className="text-[9px] font-semibold uppercase tracking-wider px-1.5 py-px rounded bg-foreground text-background shrink-0">
+        <AnimatedTag variant="new" className="text-[9px] px-1.5 py-px shrink-0">
           New
-        </span>
+        </AnimatedTag>
       )}
       <span className="hidden sm:inline text-[11px] text-muted-foreground truncate">
         — {tool.description}
