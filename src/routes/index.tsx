@@ -32,6 +32,7 @@ import { getChangelogEntries } from "@/lib/changelog";
 import { Button } from "@/components/ui/button";
 import { GenerateButton } from "@/components/ui/generate-button";
 import { BrandMark } from "@/components/brand-mark";
+import { AsciiWordmark } from "@/components/ascii-wordmark";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -1148,19 +1149,10 @@ function BigFooter() {
         aria-hidden
         className="relative select-none pointer-events-none -mt-2"
       >
-        <div
-          className="mx-auto max-w-[1400px] px-4 md:px-8 text-center font-semibold tracking-tighter leading-[0.85]"
-          style={{
-            fontSize: "clamp(5rem, 22vw, 20rem)",
-            backgroundImage:
-              "linear-gradient(to bottom, rgba(255,255,255,0.14), rgba(255,255,255,0.02))",
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}
-        >
-          DevHub
-        </div>
+        <AsciiWordmark
+          text="DevHub"
+          className="mx-auto max-w-[1400px] px-4 md:px-8 pointer-events-auto"
+        />
       </div>
     </footer>
   );
