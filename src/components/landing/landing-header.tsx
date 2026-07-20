@@ -200,7 +200,7 @@ function MegaMenuBody({ onClose }: { onClose: () => void }) {
                 className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
               >
                 <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
-                  <i.icon className="size-4" />
+                  <i.icon className="size-4 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:-rotate-6" />
                 </div>
                 <div className="min-w-0">
                   <div className="text-sm font-medium text-foreground">{i.label}</div>
@@ -292,8 +292,8 @@ function ToolsMenuBody({ close }: { close: () => void }) {
                 onClick={close}
                 className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
               >
-                <div className="mt-0.5 size-8 shrink-0 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition">
-                  <t.icon className="size-4 shrink-0" />
+                <div className="mt-0.5 size-8 shrink-0 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 group-hover:bg-foreground/5 transition">
+                  <t.icon className="size-4 shrink-0 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:-rotate-6" />
                 </div>
                 <div className="min-w-0">
                   <div className="text-sm font-medium text-foreground">{t.name}</div>
@@ -320,8 +320,8 @@ function ToolsMenuBody({ close }: { close: () => void }) {
                 onClick={close}
                 className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
               >
-                <div className="mt-0.5 size-8 shrink-0 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition">
-                  <t.icon className="size-4 shrink-0" />
+                <div className="mt-0.5 size-8 shrink-0 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 group-hover:bg-foreground/5 transition">
+                  <t.icon className="size-4 shrink-0 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:-rotate-6" />
                 </div>
                 <div className="min-w-0">
                   <div className="text-sm font-medium text-foreground flex items-center gap-2">
@@ -350,7 +350,7 @@ function ToolsMenuBody({ close }: { close: () => void }) {
                 className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
               >
                 <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
-                  <j.icon className="size-4" />
+                  <j.icon className="size-4 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:-rotate-6" />
                 </div>
                 <div className="min-w-0">
                   <div className="text-sm font-medium text-foreground">{j.label}</div>
@@ -368,7 +368,7 @@ function ToolsMenuBody({ close }: { close: () => void }) {
               onClick={close}
               className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
             >
-              <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
+              <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors" data-motion-icon-group>
                 <Sparkles className="size-4" />
               </div>
               <div className="min-w-0">
