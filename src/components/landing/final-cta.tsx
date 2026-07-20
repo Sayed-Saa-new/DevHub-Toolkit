@@ -4,13 +4,14 @@ import { Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { TOOLS } from "@/lib/tools";
+import { Reveal } from "./reveal";
 
 export function FinalCTA() {
   return (
     <section className="relative overflow-hidden border-t border-border">
       <div className="absolute inset-0 grid-bg opacity-50 pointer-events-none" />
       <div className="absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_center,_oklch(1_0_0/_10%),_transparent_60%)] pointer-events-none" />
-      <div className="relative mx-auto max-w-3xl px-4 md:px-8 py-24 text-center">
+      <Reveal className="relative mx-auto max-w-3xl px-4 md:px-8 py-24 text-center">
         <h2 className="text-3xl md:text-5xl font-semibold tracking-tight">
           Stop hunting tabs.
           <br />
@@ -35,7 +36,7 @@ export function FinalCTA() {
             </Button>
           </a>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

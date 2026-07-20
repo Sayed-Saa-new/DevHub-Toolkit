@@ -3,24 +3,27 @@ import { ArrowUpRight } from "lucide-react-motion";
 import { CATEGORIES, TOOLS } from "@/lib/tools";
 import { CATEGORY_ART } from "./data";
 import { SectionHead } from "./section-head";
+import { Reveal, Stagger, StaggerItem } from "./reveal";
 
 export function CategoriesShowcase() {
   return (
     <section className="mx-auto max-w-6xl px-4 md:px-8 py-20 md:py-28">
-      <SectionHead
+      <Reveal>
+        <SectionHead
         title="Six categories. Forty-four tools. Zero clutter."
         subtitle="Everything is organized so you can find the right utility in seconds — not tabs."
-      />
-      <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        />
+      </Reveal>
+      <Stagger className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {CATEGORIES.map((cat, i) => {
           const count = TOOLS.filter((t) => t.category === cat.id).length;
           const art = CATEGORY_ART[cat.id];
           return (
+            <StaggerItem key={cat.id} className="h-full">
             <Link
-              key={cat.id}
               to="/c/$category"
               params={{ category: cat.id }}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 hover:border-foreground/40 hover:bg-accent/40 transition-colors flex flex-col min-h-[200px]"
+              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 hover:border-foreground/40 hover:bg-accent/40 transition-colors flex flex-col min-h-[200px] h-full"
             >
               <div className="flex items-start justify-between">
                 <span className="font-mono text-[10px] text-muted-foreground/60 tabular-nums">
@@ -42,9 +45,10 @@ export function CategoriesShowcase() {
                 </div>
               </div>
             </Link>
+            </StaggerItem>
           );
         })}
-      </div>
+      </Stagger>
     </section>
   );
 }
