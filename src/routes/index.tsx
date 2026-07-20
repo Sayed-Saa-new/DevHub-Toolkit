@@ -33,6 +33,9 @@ import { Button } from "@/components/ui/button";
 import { GenerateButton } from "@/components/ui/generate-button";
 import { BrandMark } from "@/components/brand-mark";
 import { AsciiWordmark } from "@/components/ascii-wordmark";
+import { WobbleCard } from "@/components/wobble-card";
+import paletteAsset from "@/assets/devhub-palette.png.asset.json";
+import aiAsset from "@/assets/devhub-ai.png.asset.json";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -178,6 +181,7 @@ function Landing() {
         <Testimonials />
         <FAQ />
         <FinalCTA />
+        <WhyDevHub />
         <BigFooter />
       </div>
     </MotionIconConfig>
@@ -1020,6 +1024,69 @@ function FinalCTA() {
 }
 
 /* ---------------- Big premium footer ---------------- */
+
+function WhyDevHub() {
+  return (
+    <section className="relative border-t border-border/40 bg-background py-24 sm:py-32">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="mb-14 max-w-2xl">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/40 px-3 py-1 text-xs uppercase tracking-widest text-muted-foreground">
+            <span className="h-1.5 w-1.5 rounded-full bg-foreground" />
+            Why DevHub
+          </div>
+          <h2 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+            A toolkit that <span className="text-muted-foreground">respects your time.</span>
+          </h2>
+          <p className="mt-4 text-base text-muted-foreground sm:text-lg">
+            No sign-ups, no tracking, no paywalls. Just 55+ battle-tested utilities that run instantly in your browser.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          <WobbleCard containerClassName="lg:col-span-2 min-h-[420px] sm:min-h-[480px]">
+            <div className="flex h-full flex-col justify-between p-8 sm:p-10">
+              <div className="max-w-md">
+                <h3 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">55+ dev tools, one keystroke away.</h3>
+                <p className="mt-3 text-sm text-muted-foreground sm:text-base">Hit ⌘K anywhere — search, jump, execute. Formatters, decoders, generators — all indexed, all instant.</p>
+              </div>
+              <img src={paletteAsset.url} alt="DevHub command palette" loading="lazy" className="pointer-events-none mt-8 w-full max-w-[520px] self-end rounded-lg border border-white/[0.06] shadow-2xl" />
+            </div>
+          </WobbleCard>
+          <WobbleCard containerClassName="min-h-[420px] sm:min-h-[480px]">
+            <div className="flex h-full flex-col justify-between p-8 sm:p-10">
+              <div>
+                <div className="mb-6 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03]">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="text-foreground"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+                </div>
+                <h3 className="text-2xl font-semibold tracking-tight text-foreground">100% client-side.</h3>
+                <p className="mt-3 text-sm text-muted-foreground">Your JSON, tokens, and code never leave your browser. Zero servers, zero telemetry.</p>
+              </div>
+              <div className="mt-8 grid grid-cols-3 gap-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground/70">
+                <div className="rounded border border-white/[0.06] bg-white/[0.02] px-2 py-2 text-center">No auth</div>
+                <div className="rounded border border-white/[0.06] bg-white/[0.02] px-2 py-2 text-center">No cookies</div>
+                <div className="rounded border border-white/[0.06] bg-white/[0.02] px-2 py-2 text-center">No logs</div>
+              </div>
+            </div>
+          </WobbleCard>
+          <WobbleCard containerClassName="lg:col-span-3 min-h-[420px] sm:min-h-[480px]">
+            <div className="grid h-full grid-cols-1 gap-8 p-8 sm:p-10 lg:grid-cols-2 lg:gap-4">
+              <div className="flex flex-col justify-center">
+                <div className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
+                  <span className="h-1 w-1 rounded-full bg-foreground/70" />
+                  AI Built-in
+                </div>
+                <h3 className="max-w-md text-2xl font-semibold tracking-tight text-foreground sm:text-3xl lg:text-4xl">Explain, optimize, and refactor code with AI.</h3>
+                <p className="mt-4 max-w-md text-sm text-muted-foreground sm:text-base">Nine AI-powered utilities — code explainer, optimizer, commit messages, SQL, regex, unit tests — all wired to Gemini out of the box.</p>
+              </div>
+              <div className="relative flex items-center justify-center lg:justify-end">
+                <img src={aiAsset.url} alt="DevHub AI Code Explainer" loading="lazy" className="pointer-events-none w-full max-w-[560px] rounded-lg border border-white/[0.06] shadow-2xl" />
+              </div>
+            </div>
+          </WobbleCard>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function BigFooter() {
   const productLinks = [
