@@ -344,4 +344,10 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Convert Word .docx files to clean Markdown online. Batch upload, preserve headings, tables, lists and images, download individually or as a ZIP — 100% client-side, no signup.",
     keywords: ["docx to markdown", "word to markdown", "docx to md", "convert docx to markdown", "word document to markdown", "docx converter online", "batch docx to markdown", "mammoth converter", "word to md", "docx markdown converter"],
   }, // docx to markdown — 1,000+/mo combined, KDI 21 (very winnable)
+  "diff-checker": {
+    title: "Diff Checker — Compare Text, Code & Files Online",
+    description:
+      "Compare two text, code or files side-by-side or unified. Line, word or character diff, ignore whitespace/case, export unified patch — 100% free, client-side.",
+    keywords: ["diff checker", "text diff", "compare text online", "code diff", "file compare", "compare two files", "diff tool", "unified diff", "side by side diff", "text compare online", "diff viewer", "diffchecker"],
+  }, // diff checker — 74,000/mo, KDI 55 (long-tail winnable)
 };
