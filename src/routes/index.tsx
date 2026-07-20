@@ -793,7 +793,7 @@ function Features() {
                 src="/screenshots/tool.png"
                 alt="DevHub JSON Formatter tool preview"
                 loading="lazy"
-                className="hidden md:block pointer-events-none select-none absolute top-1/2 -right-16 lg:-right-10 w-[520px] max-w-[70%] -translate-y-1/2 rotate-[-6deg] rounded-xl border border-border/70 shadow-2xl shadow-black/60 ring-1 ring-white/5"
+                className="hidden md:block pointer-events-none select-none absolute -bottom-12 -right-12 lg:-bottom-10 lg:-right-8 w-[440px] lg:w-[500px] max-w-[65%] rotate-[-8deg] rounded-xl border border-border/70 shadow-2xl shadow-black/60 ring-1 ring-white/5"
               />
             </div>
           </WobbleCard>
@@ -836,7 +836,7 @@ function Features() {
                 src="/screenshots/palette.png"
                 alt="DevHub command palette preview"
                 loading="lazy"
-                className="hidden md:block pointer-events-none select-none absolute -bottom-10 -right-8 lg:-right-4 w-[460px] lg:w-[520px] max-w-[55%] rotate-[-4deg] rounded-xl border border-border/70 shadow-2xl shadow-black/60 ring-1 ring-white/5"
+                className="hidden md:block pointer-events-none select-none absolute -bottom-14 -right-12 lg:-bottom-10 lg:-right-6 w-[520px] lg:w-[580px] max-w-[55%] rotate-[-8deg] rounded-xl border border-border/70 shadow-2xl shadow-black/60 ring-1 ring-white/5"
               />
             </div>
           </WobbleCard>
