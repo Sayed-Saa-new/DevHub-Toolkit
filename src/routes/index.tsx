@@ -36,7 +36,6 @@ import { AsciiWordmark } from "@/components/ascii-wordmark";
 import { WobbleCard } from "@/components/wobble-card";
 import paletteAsset from "@/assets/devhub-palette.png.asset.json";
 import aiAsset from "@/assets/devhub-ai.png.asset.json";
-import toolsAsset from "@/assets/devhub-tools.png.asset.json";
 import {
   NavigationMenu,
   NavigationMenuContent,
