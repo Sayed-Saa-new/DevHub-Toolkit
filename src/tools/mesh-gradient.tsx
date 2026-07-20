@@ -466,8 +466,8 @@ export function MeshGradient() {
           onPointerUp={onPointerUp}
           onPointerLeave={onPointerUp}
           onClick={() => setSelected(null)}
-                className={`relative ${ASPECTS[fx.aspect].cls} max-h-[70vh] max-w-full w-auto h-auto cursor-crosshair overflow-hidden bg-black rounded-md border border-border`}
-                style={{ aspectRatio: fx.aspect.replace("/", " / ") }}
+                className={`relative ${ASPECTS[fx.aspect].cls} w-full max-h-[70vh] cursor-crosshair overflow-hidden bg-black rounded-md border border-border`}
+                style={{ aspectRatio: fx.aspect.replace("/", " / "), maxWidth: `calc(70vh * (${ASPECTS[fx.aspect].w} / ${ASPECTS[fx.aspect].h}))` }}
               >
           <div className="pointer-events-none absolute inset-0" style={{ ...style, filter: filterCss || undefined }} />
           {fx.grain > 0 && (
