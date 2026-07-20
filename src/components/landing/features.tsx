@@ -8,17 +8,21 @@ import {
 } from "lucide-react-motion";
 import { WobbleCard } from "@/components/wobble-card";
 import { SectionHead } from "./section-head";
+import { Reveal, Stagger, StaggerItem } from "./reveal";
 
 export function Features() {
   return (
     <section className="border-t border-border bg-card/20">
       <div className="mx-auto max-w-6xl px-4 md:px-8 py-20">
-        <SectionHead
+        <Reveal>
+          <SectionHead
           title="Built the way developers actually work"
           subtitle="Six things that make the toolkit feel effortless — every day, all day."
-        />
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-3">
-          <WobbleCard containerClassName="lg:col-span-2 min-h-[280px]">
+          />
+        </Reveal>
+        <Stagger className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-3">
+          <StaggerItem className="lg:col-span-2">
+          <WobbleCard containerClassName="min-h-[280px]">
             <div className="p-8 md:p-10 max-w-lg" data-motion-icon-group>
               <div className="size-10 rounded-lg border border-border grid place-items-center mb-5 bg-background/50 backdrop-blur">
                 <ShieldCheck className="size-5" />
@@ -31,7 +35,9 @@ export function Features() {
               </p>
             </div>
           </WobbleCard>
+          </StaggerItem>
 
+          <StaggerItem>
           <WobbleCard containerClassName="min-h-[280px]">
             <div className="p-8 h-full flex flex-col" data-motion-icon-group>
               <div className="size-10 rounded-lg border border-border grid place-items-center mb-5 bg-background/50 backdrop-blur">
@@ -45,8 +51,10 @@ export function Features() {
               </p>
             </div>
           </WobbleCard>
+          </StaggerItem>
 
-          <WobbleCard containerClassName="lg:col-span-3 min-h-[260px]">
+          <StaggerItem className="lg:col-span-3">
+          <WobbleCard containerClassName="min-h-[260px]">
             <div className="p-8 md:p-12 flex flex-col md:flex-row md:items-center gap-6 md:gap-10" data-motion-icon-group>
               <div className="flex-1 max-w-xl">
                 <div className="size-10 rounded-lg border border-border grid place-items-center mb-5 bg-background/50 backdrop-blur">
@@ -67,7 +75,9 @@ export function Features() {
               </div>
             </div>
           </WobbleCard>
+          </StaggerItem>
 
+          <StaggerItem>
           <WobbleCard containerClassName="min-h-[240px]">
             <div className="p-8 h-full flex flex-col" data-motion-icon-group>
               <div className="size-10 rounded-lg border border-border grid place-items-center mb-5 bg-background/50 backdrop-blur">
@@ -79,7 +89,9 @@ export function Features() {
               </p>
             </div>
           </WobbleCard>
+          </StaggerItem>
 
+          <StaggerItem>
           <WobbleCard containerClassName="min-h-[240px]">
             <div className="p-8 h-full flex flex-col" data-motion-icon-group>
               <div className="size-10 rounded-lg border border-border grid place-items-center mb-5 bg-background/50 backdrop-blur">
@@ -91,7 +103,9 @@ export function Features() {
               </p>
             </div>
           </WobbleCard>
+          </StaggerItem>
 
+          <StaggerItem>
           <WobbleCard containerClassName="min-h-[240px]">
             <div className="p-8 h-full flex flex-col" data-motion-icon-group>
               <div className="size-10 rounded-lg border border-border grid place-items-center mb-5 bg-background/50 backdrop-blur">
@@ -103,7 +117,8 @@ export function Features() {
               </p>
             </div>
           </WobbleCard>
-        </div>
+          </StaggerItem>
+        </Stagger>
       </div>
     </section>
   );
