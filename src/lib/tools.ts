@@ -12,6 +12,7 @@ import {
   KeySquare,
   FileType as FileType2,
   FileText as FileWord,
+  GitCompareArrows,
 } from "lucide-react-motion";
 import type { ComponentType, SVGProps } from "react";
 
