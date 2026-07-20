@@ -1,6 +1,6 @@
 # DevHub Toolkit
 
-> 44 fast, keyboard-first developer utilities — formatters, encoders, generators, AI helpers, and references — in one clean interface.
+> 55 fast, keyboard-first developer utilities — formatters, encoders, generators, AI helpers, and references — in one clean interface.
 
 DevHub Toolkit is a browser-based developer productivity platform. All non-AI tools run client-side with no tracking. AI tools call Google Gemini via a server endpoint.
 
@@ -10,6 +10,8 @@ https://devhub.flinkeo.online/llms-full.txt
 ## Pages
 
 - [Home](https://devhub.flinkeo.online/): Browse and search all tools.
+- [All Tools](https://devhub.flinkeo.online/tools): Filterable grid of every tool.
+- [Changelog](https://devhub.flinkeo.online/changelog): Recent updates.
 - [Favorites](https://devhub.flinkeo.online/favorites): Your saved tools.
 
 ## Converters
@@ -27,6 +29,11 @@ https://devhub.flinkeo.online/llms-full.txt
 - [Image → Base64](https://devhub.flinkeo.online/t/image-base64)
 - [Timezone Converter](https://devhub.flinkeo.online/t/timezone)
 - [String Escape](https://devhub.flinkeo.online/t/string-escape)
+- [JSON → TypeScript](https://devhub.flinkeo.online/t/json-to-ts)
+- [cURL → Code](https://devhub.flinkeo.online/t/curl-converter)
+- [Image Compressor](https://devhub.flinkeo.online/t/image-compressor)
+- [Text → Markdown](https://devhub.flinkeo.online/t/text-to-markdown)
+- [DOCX → Markdown](https://devhub.flinkeo.online/t/docx-to-markdown)
 
 ## Generators
 
@@ -37,6 +44,8 @@ https://devhub.flinkeo.online/llms-full.txt
 - [Lorem Ipsum](https://devhub.flinkeo.online/t/lorem)
 - [Meta Tag Generator](https://devhub.flinkeo.online/t/meta-tags)
 - [Emoji Favicon](https://devhub.flinkeo.online/t/favicon)
+- [Mock Data Generator](https://devhub.flinkeo.online/t/mock-data)
+- [JWT Generator](https://devhub.flinkeo.online/t/jwt-generator)
 
 ## Design
 
@@ -44,6 +53,7 @@ https://devhub.flinkeo.online/llms-full.txt
 - [Gradient Generator](https://devhub.flinkeo.online/t/gradient)
 - [Box Shadow](https://devhub.flinkeo.online/t/box-shadow)
 - [Border Radius](https://devhub.flinkeo.online/t/border-radius)
+- [CSS Clamp Calculator](https://devhub.flinkeo.online/t/clamp-calculator)
 
 ## Editors
 
@@ -54,6 +64,9 @@ https://devhub.flinkeo.online/llms-full.txt
 - [HTML/CSS/JS Playground](https://devhub.flinkeo.online/t/playground)
 - [Text Diff](https://devhub.flinkeo.online/t/text-diff)
 - [Text Statistics](https://devhub.flinkeo.online/t/text-stats)
+- [Schema.org Validator](https://devhub.flinkeo.online/t/schema-validator)
+- [SQL Formatter](https://devhub.flinkeo.online/t/sql-formatter)
+- [JSON Diff](https://devhub.flinkeo.online/t/json-diff)
 
 ## Reference
 
@@ -73,3 +86,4 @@ https://devhub.flinkeo.online/llms-full.txt
 - [AI Error Explainer](https://devhub.flinkeo.online/t/ai-error)
 - [AI Regex Generator](https://devhub.flinkeo.online/t/ai-regex)
 - [AI Unit Test Generator](https://devhub.flinkeo.online/t/ai-tests)
+
