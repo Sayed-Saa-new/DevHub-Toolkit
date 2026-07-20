@@ -25,6 +25,9 @@ import { ImageCompressor } from "./image-compressor";
 import { JwtGenerator } from "./jwt-generator";
 import { TextToMarkdown } from "./text-to-markdown";
 import { DocxToMarkdown } from "./docx-to-markdown";
+import { DiffChecker } from "./diff-checker";
+import { MeshGradient } from "./mesh-gradient";
+import { FaviconGenerator as FaviconGeneratorPack } from "./favicon-generator";
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-formatter": JsonFormatter,
@@ -74,6 +77,9 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "jwt-generator": JwtGenerator,
   "text-to-markdown": TextToMarkdown,
   "docx-to-markdown": DocxToMarkdown,
+  "diff-checker": DiffChecker,
+  "mesh-gradient": MeshGradient,
+  "favicon-generator": FaviconGeneratorPack,
   "ai-explainer": AiExplainer,
   "ai-optimizer": AiOptimizer,
   "ai-commit": AiCommit,

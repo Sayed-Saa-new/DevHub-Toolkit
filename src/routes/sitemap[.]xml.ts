@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 
-import { TOOLS } from "@/lib/tools";
+import { TOOLS, CATEGORIES } from "@/lib/tools";
 import { getChangelogEntries } from "@/lib/changelog";
 
 const BASE_URL = "https://devhub.flinkeo.online";
@@ -12,7 +12,9 @@ export const Route = createFileRoute("/sitemap.xml")({
       GET: () => {
         const paths = [
           "/",
+          "/tools",
           "/changelog",
+          ...CATEGORIES.map((c) => `/c/${c.id}`),
           ...TOOLS.map((t) => `/t/${t.slug}`),
           ...getChangelogEntries().map((e) => `/changelog/${e.slug}`),
         ];

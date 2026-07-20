@@ -4,6 +4,8 @@ import { ToolShell } from "@/components/tool-shell";
 import { TOOLS_BY_SLUG } from "@/lib/tools";
 import { TOOL_SEO } from "@/lib/seo";
 import { TOOL_COMPONENTS } from "@/tools/registry";
+import { TOOL_CONTENT } from "@/lib/tool-content";
+import { ToolContent } from "@/components/tool-content";
 
 export const Route = createFileRoute("/t/$slug")({
   head: ({ params }) => {
@@ -89,6 +91,39 @@ export const Route = createFileRoute("/t/$slug")({
       datePublished: "2026-07-01T00:00:00.000Z",
       dateModified: nowIso,
     };
+    const content = TOOL_CONTENT[params.slug];
+    const extraScripts = content
+      ? [
+          {
+            type: "application/ld+json",
+            children: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "@id": `${url}#faq`,
+              mainEntity: content.faq.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            }),
+          },
+          {
+            type: "application/ld+json",
+            children: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "HowTo",
+              "@id": `${url}#howto`,
+              name: content.howTo.name,
+              step: content.howTo.steps.map((s, i) => ({
+                "@type": "HowToStep",
+                position: i + 1,
+                name: s.name,
+                text: s.text,
+              })),
+            }),
+          },
+        ]
+      : [];
     return {
       meta: [
         { title },
@@ -113,6 +148,7 @@ export const Route = createFileRoute("/t/$slug")({
         { type: "application/ld+json", children: JSON.stringify(softwareApp) },
         { type: "application/ld+json", children: JSON.stringify({ ...breadcrumbs, "@id": `${url}#breadcrumbs` }) },
         { type: "application/ld+json", children: JSON.stringify(webPage) },
+        ...extraScripts,
       ],
     };
   },
@@ -134,6 +170,7 @@ function ToolRoute() {
   return (
     <ToolShell tool={tool}>
       <Component />
+      <ToolContent slug={slug} />
     </ToolShell>
   );
 }

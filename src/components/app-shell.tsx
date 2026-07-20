@@ -187,10 +187,12 @@ export function AppShell({ children }: { children: ReactNode }) {
 
         <main className="flex-1 min-w-0">{children}</main>
 
-        <footer className="border-t border-border px-6 py-6 text-xs text-muted-foreground flex flex-wrap gap-4 justify-between">
-          <span>DevHub Toolkit — Built for developers.</span>
-          <span className="font-mono">All processing runs locally in your browser.</span>
-        </footer>
+        {pathname !== "/" && (
+          <footer className="border-t border-border px-6 py-6 text-xs text-muted-foreground flex flex-wrap gap-4 justify-between">
+            <span>DevHub Toolkit — Built for developers.</span>
+            <span className="font-mono">All processing runs locally in your browser.</span>
+          </footer>
+        )}
       </div>
 
       <GlobalCommand open={open} onOpenChange={setOpen} onShowShortcuts={() => setShortcutsOpen(true)} />
@@ -273,7 +275,11 @@ function SidebarNav({
           const tools = byCategory.get(cat.id) ?? [];
           if (tools.length === 0) return null;
           return (
-            <SidebarGroup key={cat.id} title={cat.label}>
+            <SidebarGroup
+              key={cat.id}
+              title={cat.label}
+              href={`/c/${cat.id}`}
+            >
               {tools.map((t) => (
                 <SidebarLink key={t.slug} to={`/t/${t.slug}`} active={pathname === `/t/${t.slug}`}>
                   <t.icon className="size-3.5 opacity-70" />
@@ -344,12 +350,21 @@ function ShortcutsDialog({ open, onOpenChange }: { open: boolean; onOpenChange: 
   );
 }
 
-function SidebarGroup({ title, children }: { title: string; children: ReactNode }) {
+function SidebarGroup({ title, href, children }: { title: string; href?: string; children: ReactNode }) {
   return (
     <div className="mb-3">
-      <div className="px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-        {title}
-      </div>
+      {href ? (
+        <Link
+          to={href}
+          className="block px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground hover:text-foreground transition"
+        >
+          {title}
+        </Link>
+      ) : (
+        <div className="px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+          {title}
+        </div>
+      )}
       <div className="flex flex-col gap-0.5">{children}</div>
     </div>
   );

@@ -344,4 +344,22 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Convert Word .docx files to clean Markdown online. Batch upload, preserve headings, tables, lists and images, download individually or as a ZIP — 100% client-side, no signup.",
     keywords: ["docx to markdown", "word to markdown", "docx to md", "convert docx to markdown", "word document to markdown", "docx converter online", "batch docx to markdown", "mammoth converter", "word to md", "docx markdown converter"],
   }, // docx to markdown — 1,000+/mo combined, KDI 21 (very winnable)
+  "diff-checker": {
+    title: "Diff Checker — Compare Text, Code & Files Online",
+    description:
+      "Compare two text, code or files side-by-side or unified. Line, word or character diff, ignore whitespace/case, export unified patch — 100% free, client-side.",
+    keywords: ["diff checker", "text diff", "compare text online", "code diff", "file compare", "compare two files", "diff tool", "unified diff", "side by side diff", "text compare online", "diff viewer", "diffchecker"],
+  }, // diff checker — 74,000/mo, KDI 55 (long-tail winnable)
+  "mesh-gradient": {
+    title: "Mesh Gradient Generator — CSS, SVG & PNG Export",
+    description:
+      "Design vibrant mesh gradients with draggable color points, curated presets, grain overlay and one-click CSS, SVG or PNG export. 100% free, in-browser.",
+    keywords: ["mesh gradient generator", "css mesh gradient", "mesh gradient", "gradient generator", "mesh background generator", "svg mesh gradient", "colorful gradient", "aurora gradient", "background maker", "mesh gradient css"],
+  }, // mesh gradient — 22,000/mo, KDI 30 (winnable)
+  "favicon-generator": {
+    title: "Favicon Generator — ICO, PNG, Apple Touch & Manifest",
+    description:
+      "Generate a full favicon pack from text or an image — favicon.ico, PNGs (16 → 512), apple-touch-icon and site.webmanifest. Live preview, 100% in-browser, free.",
+    keywords: ["favicon generator", "favicon maker", "favicon.ico generator", "generate favicon", "png to ico", "favicon converter", "apple touch icon generator", "site webmanifest generator", "favicon from image", "favicon from text", "favicon pack"],
+  }, // favicon generator — 60,500/mo, KDI 71 (long-tail winnable)
 };
