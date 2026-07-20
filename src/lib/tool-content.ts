@@ -123,4 +123,119 @@ ORDER BY event_date;`,
       { slug: "ai-explainer", label: "AI Code Explainer" },
     ],
   },
+  "yaml-json": {
+    intro:
+      "DevHub's YAML ↔ JSON converter turns YAML into JSON and JSON into YAML instantly, in your browser. Paste a Kubernetes manifest, a GitHub Actions workflow, a docker-compose file or an OpenAPI spec — get valid, formatted output with syntax highlighting, error messages that point at the exact line, and one-click copy or download. It's free, works offline after first load, and never sends your data to a server.",
+    features: [
+      { title: "Two-way conversion", body: "YAML → JSON and JSON → YAML in the same workspace. Swap direction with one click without losing your input." },
+      { title: "Runs in your browser", body: "Parsing and serialization happen client-side with js-yaml. Your configs, secrets and manifests never leave your machine." },
+      { title: "Precise error messages", body: "Invalid indentation, duplicate keys, tab characters and unclosed quotes are surfaced with the exact line and column — no guessing." },
+      { title: "Handles real-world YAML", body: "Multi-document streams (---), anchors and aliases (&, *), block scalars (|, >), flow style and quoted keys are all supported." },
+      { title: "Pretty output", body: "JSON is emitted with configurable indentation. YAML uses block style with sensible line widths so diffs stay small." },
+      { title: "Copy, download, share", body: "Copy to clipboard, download as .json / .yaml, or paste a raw URL — DevHub handles the fetch and conversion." },
+    ],
+    howTo: {
+      name: "How to convert YAML to JSON (and back)",
+      steps: [
+        { name: "Paste your source", text: "Drop your YAML or JSON into the input pane. Files up to a few MB work without lag." },
+        { name: "Pick a direction", text: "Choose YAML → JSON or JSON → YAML. The converter auto-detects the input format if you're unsure." },
+        { name: "Review the output", text: "The formatted result appears on the right. Errors are shown inline with line and column numbers." },
+        { name: "Tune the format", text: "Set JSON indentation (2 or 4 spaces) or YAML block style options to match your project conventions." },
+        { name: "Copy or download", text: "Copy to clipboard for a quick paste, or download the file to drop straight into your repo." },
+      ],
+    },
+    useCases: [
+      { title: "Kubernetes & Helm", body: "Convert a JSON API response from kubectl into readable YAML, or turn a Helm values.yaml into JSON for a script that expects JSON input." },
+      { title: "GitHub Actions & CI", body: "Debug a workflow file by converting it to JSON and pretty-printing the resulting object graph — much easier than eyeballing indentation." },
+      { title: "OpenAPI / Swagger", body: "Swap between openapi.yaml and openapi.json depending on which tool you're feeding — Redoc, Swagger UI, Postman, code generators." },
+      { title: "Config migrations", body: "Moving from a JSON-based config to YAML (or vice versa) across a codebase — convert files in bulk without hand-rewriting." },
+    ],
+    examples: [
+      {
+        dialect: "YAML → JSON",
+        prompt: "A simple Kubernetes Deployment",
+        sql: `apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels: { app: web }
+  template:
+    metadata: { labels: { app: web } }
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27
+          ports: [{ containerPort: 80 }]`,
+      },
+      {
+        dialect: "JSON → YAML",
+        prompt: "A package.json scripts block",
+        sql: `{
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "vitest run"
+  }
+}`,
+      },
+      {
+        dialect: "YAML anchors",
+        prompt: "Shared config with anchors and aliases",
+        sql: `defaults: &defaults
+  timeout: 30
+  retries: 3
+
+production:
+  <<: *defaults
+  host: api.example.com
+
+staging:
+  <<: *defaults
+  host: staging.example.com`,
+      },
+    ],
+    faq: [
+      {
+        q: "Is the YAML to JSON converter free?",
+        a: "Yes — completely free, no signup, no ads, no rate limits. Everything runs client-side in your browser.",
+      },
+      {
+        q: "Is my data sent to a server?",
+        a: "No. Conversion happens locally in your browser using js-yaml. Your YAML and JSON never leave your machine, so it's safe for internal configs and secrets.",
+      },
+      {
+        q: "Does it support YAML 1.2, anchors and multi-document streams?",
+        a: "Yes. The converter handles YAML 1.2 syntax including anchors (&), aliases (*), merge keys (<<), block scalars (| and >), flow style, and multi-document streams separated by ---.",
+      },
+      {
+        q: "Why do I get 'duplicate key' or 'bad indentation' errors?",
+        a: "YAML is strict about indentation (spaces only, never tabs) and forbids duplicate keys at the same level. The error message shows the exact line and column — fix that spot and re-run.",
+      },
+      {
+        q: "Can I convert a whole file, not just a snippet?",
+        a: "Yes. Drag a .yaml, .yml or .json file into the input pane, or paste the entire contents. Files up to several megabytes convert instantly.",
+      },
+      {
+        q: "How is YAML different from JSON?",
+        a: "JSON is a strict data format optimized for machines — quoted keys, brackets, commas. YAML is a superset designed for humans — indentation-based, comments allowed, anchors for reuse. Both represent the same underlying data structures (objects, arrays, strings, numbers, booleans, null).",
+      },
+      {
+        q: "Which tools accept YAML vs JSON?",
+        a: "Kubernetes, Helm, GitHub Actions, GitLab CI, Ansible, Docker Compose and OpenAPI accept both but prefer YAML. Most REST APIs, package.json, tsconfig.json and Terraform state files use JSON. Converting between the two is common in day-to-day DevOps work.",
+      },
+      {
+        q: "Does it preserve comments when converting YAML to JSON?",
+        a: "No — JSON has no comment syntax, so YAML comments are dropped on conversion. When converting JSON back to YAML you can add comments manually in the output pane before downloading.",
+      },
+    ],
+    related: [
+      { slug: "json-formatter", label: "JSON Formatter" },
+      { slug: "json-to-ts", label: "JSON → TypeScript" },
+      { slug: "json-diff", label: "JSON Diff" },
+      { slug: "env-json", label: ".env ↔ JSON" },
+    ],
+  },
 };
