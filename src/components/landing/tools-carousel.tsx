@@ -39,9 +39,8 @@ export function ToolsCarousel() {
     <section className="border-b border-border">
       <div className="mx-auto max-w-6xl px-4 md:px-8 py-16 md:py-24">
         <SectionHead
-          eyebrow="Tour"
           title="A glimpse of what's inside"
-          subtitle="Six categories, forty-four hand-crafted utilities. Autoplay tour below — hover to focus, click a dot to jump."
+          subtitle="Six categories, forty-four hand-crafted utilities. Hover to focus, click a dot to jump."
         />
         <div className="mt-10">
           <LoadingCarousel tips={tips} aspectRatio="wide" autoplayInterval={4500} />

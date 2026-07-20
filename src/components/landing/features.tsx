@@ -14,7 +14,6 @@ export function Features() {
     <section className="border-t border-border bg-card/20">
       <div className="mx-auto max-w-6xl px-4 md:px-8 py-20">
         <SectionHead
-          eyebrow="Why DevHub"
           title="Built the way developers actually work"
           subtitle="Six things that make the toolkit feel effortless — every day, all day."
         />

@@ -8,7 +8,7 @@ export function FAQ() {
   return (
     <section className="border-t border-border bg-card/20">
       <div className="mx-auto max-w-3xl px-4 md:px-8 py-20">
-        <SectionHead eyebrow="FAQ" title="Frequently asked" />
+        <SectionHead title="Questions, answered" />
         <div className="mt-10 divide-y divide-border border border-border rounded-xl bg-background overflow-hidden">
           {FAQ_ITEMS.map((it, i) => {
             const isOpen = open === i;
