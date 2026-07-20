@@ -33,6 +33,7 @@ import { Button } from "@/components/ui/button";
 import { GenerateButton } from "@/components/ui/generate-button";
 import { BrandMark } from "@/components/brand-mark";
 import { AsciiWordmark } from "@/components/ascii-wordmark";
+import { WobbleCard } from "@/components/wobble-card";
 import {
   NavigationMenu,
   NavigationMenuContent,
