@@ -777,7 +777,7 @@ function Features() {
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-3">
           {/* Row 1: hero (2-col) + small */}
           <WobbleCard containerClassName="lg:col-span-2 min-h-[280px]">
-            <div className="p-8 md:p-10 max-w-lg">
+            <div className="p-8 md:p-10 max-w-lg" data-motion-icon-group>
               <div className="size-10 rounded-lg border border-border grid place-items-center mb-5 bg-background/50 backdrop-blur">
                 <ShieldCheck className="size-5" />
               </div>
@@ -791,7 +791,7 @@ function Features() {
           </WobbleCard>
 
           <WobbleCard containerClassName="min-h-[280px]">
-            <div className="p-8 h-full flex flex-col">
+            <div className="p-8 h-full flex flex-col" data-motion-icon-group>
               <div className="size-10 rounded-lg border border-border grid place-items-center mb-5 bg-background/50 backdrop-blur">
                 <Zap className="size-5" />
               </div>
@@ -806,7 +806,7 @@ function Features() {
 
           {/* Row 2: wide (3-col) */}
           <WobbleCard containerClassName="lg:col-span-3 min-h-[260px]">
-            <div className="p-8 md:p-12 flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+            <div className="p-8 md:p-12 flex flex-col md:flex-row md:items-center gap-6 md:gap-10" data-motion-icon-group>
               <div className="flex-1 max-w-xl">
                 <div className="size-10 rounded-lg border border-border grid place-items-center mb-5 bg-background/50 backdrop-blur">
                   <Command className="size-5" />
@@ -829,7 +829,7 @@ function Features() {
 
           {/* Row 3: three equal */}
           <WobbleCard containerClassName="min-h-[240px]">
-            <div className="p-8 h-full flex flex-col">
+            <div className="p-8 h-full flex flex-col" data-motion-icon-group>
               <div className="size-10 rounded-lg border border-border grid place-items-center mb-5 bg-background/50 backdrop-blur">
                 <Sparkles className="size-5" />
               </div>
@@ -841,7 +841,7 @@ function Features() {
           </WobbleCard>
 
           <WobbleCard containerClassName="min-h-[240px]">
-            <div className="p-8 h-full flex flex-col">
+            <div className="p-8 h-full flex flex-col" data-motion-icon-group>
               <div className="size-10 rounded-lg border border-border grid place-items-center mb-5 bg-background/50 backdrop-blur">
                 <Star className="size-5" />
               </div>
@@ -853,7 +853,7 @@ function Features() {
           </WobbleCard>
 
           <WobbleCard containerClassName="min-h-[240px]">
-            <div className="p-8 h-full flex flex-col">
+            <div className="p-8 h-full flex flex-col" data-motion-icon-group>
               <div className="size-10 rounded-lg border border-border grid place-items-center mb-5 bg-background/50 backdrop-blur">
                 <Keyboard className="size-5" />
               </div>
