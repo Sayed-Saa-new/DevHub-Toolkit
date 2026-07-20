@@ -239,3 +239,117 @@ staging:
     ],
   },
 };
+
+TOOL_CONTENT["json-to-ts"] = {
+  intro:
+    "DevHub's JSON to TypeScript converter turns any JSON payload — an API response, a config file, a Firestore document — into accurate TypeScript interfaces and types in one click. It infers unions, optional properties, nested objects, arrays of mixed shapes and tuple types, and gives you clean, ready-to-paste code. Free, client-side, no signup.",
+  features: [
+    { title: "Accurate type inference", body: "Detects strings, numbers, booleans, null, arrays, nested objects, unions and tuples — including mixed arrays where each element has a different shape." },
+    { title: "Interfaces or type aliases", body: "Choose `interface` or `type` output to match your project's style guide. Root name is configurable." },
+    { title: "Optional & nullable handling", body: "Fields missing from some objects become optional (?:). Explicit nulls become union types like `string | null`." },
+    { title: "Nested type extraction", body: "Nested objects are lifted into their own named types so you can import and reuse them across your codebase." },
+    { title: "Runs in your browser", body: "Inference happens locally. Your JSON, tokens, PII and internal API shapes never touch a server." },
+    { title: "Copy-ready output", body: "Formatted with two-space indentation, sorted keys and JSDoc-friendly output that plays nicely with Prettier and ESLint." },
+  ],
+  howTo: {
+    name: "How to convert JSON to TypeScript interfaces",
+    steps: [
+      { name: "Paste JSON", text: "Drop your JSON payload — an API response, mock, or fixture — into the input pane." },
+      { name: "Name the root type", text: "Set the root interface name (e.g. `User`, `ApiResponse`) so nested types get consistent names." },
+      { name: "Pick output style", text: "Choose `interface` or `type` and whether to inline or extract nested types." },
+      { name: "Convert", text: "The generated TypeScript appears instantly with fully typed nested structures." },
+      { name: "Copy into your project", text: "Paste into `types.ts` or a `.d.ts` file and import wherever you consume that JSON." },
+    ],
+  },
+  useCases: [
+    { title: "Typing third-party APIs", body: "Stripe, GitHub, OpenAI, Notion — capture a real response, generate types, and get autocomplete plus compile-time safety instantly." },
+    { title: "Frontend / backend contracts", body: "Share generated interfaces between your React app and Node/Bun API so a schema change breaks the build, not production." },
+    { title: "Firestore & MongoDB documents", body: "Turn a document sample into a strongly-typed model without hand-writing every field." },
+    { title: "Prototyping", body: "Sketch a JSON shape, generate types, and scaffold components against real interfaces in minutes." },
+  ],
+  examples: [
+    {
+      dialect: "Simple object",
+      prompt: "User profile",
+      sql: `{
+  "id": 42,
+  "name": "Ada Lovelace",
+  "email": "ada@example.com",
+  "isAdmin": false
+}
+
+// →
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  isAdmin: boolean;
+}`,
+    },
+    {
+      dialect: "Nested & optional",
+      prompt: "API response with nested address",
+      sql: `{
+  "user": {
+    "id": 1,
+    "name": "Ada",
+    "address": { "city": "London", "zip": null }
+  }
+}
+
+// →
+
+export interface Address {
+  city: string;
+  zip: string | null;
+}
+
+export interface UserInfo {
+  id: number;
+  name: string;
+  address: Address;
+}
+
+export interface Root {
+  user: UserInfo;
+}`,
+    },
+    {
+      dialect: "Mixed arrays",
+      prompt: "Array with varying item shapes",
+      sql: `{
+  "events": [
+    { "type": "click", "x": 10, "y": 20 },
+    { "type": "keypress", "key": "Enter" }
+  ]
+}
+
+// →
+
+export type Event =
+  | { type: "click"; x: number; y: number }
+  | { type: "keypress"; key: string };
+
+export interface Root {
+  events: Event[];
+}`,
+    },
+  ],
+  faq: [
+    { q: "Is the JSON to TypeScript converter free?", a: "Yes — 100% free, no signup, no rate limits. Runs entirely in your browser." },
+    { q: "Is my JSON sent to a server?", a: "No. All parsing and type inference happens client-side in your browser, so it's safe for internal API responses, tokens and PII." },
+    { q: "Does it generate interfaces or type aliases?", a: "Both. Choose `interface` for extendable object shapes, or `type` for aliases, unions and tuples. The default is `interface` because that matches most style guides." },
+    { q: "How are optional and nullable fields handled?", a: "Fields present in some samples but missing in others become optional (`?:`). Fields with explicit `null` become union types like `string | null`. If you paste an array of samples, the converter merges them intelligently." },
+    { q: "Can it handle deeply nested JSON?", a: "Yes. Nested objects are lifted into their own named interfaces so you can import and reuse them across your codebase — no giant inline types." },
+    { q: "What about arrays of different shapes?", a: "Mixed arrays are inferred as discriminated unions when possible, so you get exhaustive `switch` support and proper narrowing in TypeScript." },
+    { q: "Does the output work with Prettier and ESLint?", a: "Yes. Output is 2-space indented, uses double quotes, semicolons and sorted keys — matching the defaults of Prettier and the recommended TypeScript ESLint rules." },
+    { q: "How is this different from quicktype?", a: "Same underlying idea, but focused on developer speed: paste-and-copy in one screen, no schema wizard, and grouped with 55+ other tools (JSON formatter, JSON diff, YAML converter, mock data) you already use daily." },
+  ],
+  related: [
+    { slug: "json-formatter", label: "JSON Formatter" },
+    { slug: "yaml-json", label: "YAML ↔ JSON" },
+    { slug: "json-diff", label: "JSON Diff" },
+    { slug: "mock-data", label: "Mock Data Generator" },
+  ],
+};
