@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import type { ComponentType } from "react";
 
 import { Button } from "@/components/ui/button";
-import { PremiumButton } from "@/components/ui/premium-button";
 import { BrandMark } from "@/components/brand-mark";
 import {
   NavigationMenu,
@@ -120,9 +119,9 @@ export function LandingHeader() {
             <Github className="size-3.5" />
           </a>
           <Link to="/tools">
-            <PremiumButton variant="primary" size="sm" rightIcon={<ArrowRight className="size-3.5" />}>
-              Open toolkit
-            </PremiumButton>
+            <Button size="sm" className="h-8 rounded-full px-4 gap-1.5">
+              Open toolkit <ArrowRight className="size-3.5" />
+            </Button>
           </Link>
         </div>
 
