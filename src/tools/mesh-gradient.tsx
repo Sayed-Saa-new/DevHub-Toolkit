@@ -5,10 +5,55 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Trash2, Shuffle, Download, Eye } from "lucide-react";
+import { Plus, Trash2, Shuffle, Download, Eye, RotateCcw } from "lucide-react";
 import { downloadFile } from "@/lib/utils";
 
 type Point = { id: string; x: number; y: number; color: string; size: number };
+
+type Fx = {
+  blur: number;        // px, 0-80
+  grain: number;       // 0-100 opacity
+  grainScale: number;  // 0.3 - 2 baseFrequency
+  grainBlend: "overlay" | "soft-light" | "multiply" | "screen" | "normal";
+  vignette: number;    // 0-100
+  brightness: number;  // 50-150
+  contrast: number;    // 50-200
+  saturate: number;    // 0-200
+  hue: number;         // -180..180
+  aspect: "16/9" | "1/1" | "4/3" | "21/9" | "9/16" | "3/4";
+};
+
+const DEFAULT_FX: Fx = {
+  blur: 0,
+  grain: 0,
+  grainScale: 0.9,
+  grainBlend: "overlay",
+  vignette: 0,
+  brightness: 100,
+  contrast: 100,
+  saturate: 100,
+  hue: 0,
+  aspect: "16/9",
+};
+
+const ASPECTS: Record<Fx["aspect"], { w: number; h: number; cls: string }> = {
+  "16/9": { w: 1600, h: 900, cls: "aspect-[16/9]" },
+  "1/1": { w: 1200, h: 1200, cls: "aspect-square" },
+  "4/3": { w: 1600, h: 1200, cls: "aspect-[4/3]" },
+  "21/9": { w: 2100, h: 900, cls: "aspect-[21/9]" },
+  "9/16": { w: 900, h: 1600, cls: "aspect-[9/16]" },
+  "3/4": { w: 1200, h: 1600, cls: "aspect-[3/4]" },
+};
+
+function filterString(fx: Fx) {
+  const parts: string[] = [];
+  if (fx.brightness !== 100) parts.push(`brightness(${fx.brightness}%)`);
+  if (fx.contrast !== 100) parts.push(`contrast(${fx.contrast}%)`);
+  if (fx.saturate !== 100) parts.push(`saturate(${fx.saturate}%)`);
+  if (fx.hue !== 0) parts.push(`hue-rotate(${fx.hue}deg)`);
+  if (fx.blur > 0) parts.push(`blur(${fx.blur}px)`);
+  return parts.join(" ");
+}
 
 const PRESETS: { name: string; base: string; points: Omit<Point, "id">[] }[] = [
   {
@@ -113,19 +158,29 @@ export function MeshGradient() {
   );
   const [selected, setSelected] = useState<string | null>(null);
   const [format, setFormat] = useState<"css" | "tailwind" | "svg">("css");
-  const [grain, setGrain] = useState(0);
+  const [fx, setFx] = useState<Fx>(DEFAULT_FX);
+  const setFxField = <K extends keyof Fx>(k: K, v: Fx[K]) => setFx((s) => ({ ...s, [k]: v }));
   const stageRef = useRef<HTMLDivElement>(null);
   const draggingRef = useRef<string | null>(null);
 
   const css = useMemo(() => buildCss(points, base), [points, base]);
   const style = useMemo(() => buildStyle(points, base), [points, base]);
+  const filterCss = useMemo(() => filterString(fx), [fx]);
+  const grainSvgUrl = useMemo(
+    () =>
+      `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='${fx.grainScale}' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")`,
+    [fx.grainScale],
+  );
 
   const output = useMemo(() => {
-    if (format === "css") return `.mesh {\n  ${css.replace(/\n/g, "\n  ")}\n}`;
-    if (format === "tailwind")
+    const filterLine = filterCss ? `\n  filter: ${filterCss};` : "";
+    if (format === "css") return `.mesh {\n  ${css.replace(/\n/g, "\n  ")}${filterLine}\n}`;
+    if (format === "tailwind") {
+      const filterProp = filterCss ? `,\n    filter: "${filterCss}"` : "";
       return `<div\n  className="mesh"\n  style={{\n    backgroundColor: "${base}",\n    backgroundImage: \`${points
         .map((p) => `radial-gradient(at ${p.x}% ${p.y}%, ${p.color} 0px, transparent ${p.size}%)`)
-        .join(", ")}\`,\n  }}\n/>`;
+        .join(", ")}\`${filterProp},\n  }}\n/>`;
+    }
     // SVG
     const stops = points
       .map(
@@ -134,8 +189,23 @@ export function MeshGradient() {
       )
       .join("\n");
     const rects = points.map((_, i) => `  <rect width="100%" height="100%" fill="url(#g${i})"/>`).join("\n");
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">\n<defs>\n${stops}\n</defs>\n  <rect width="100%" height="100%" fill="${base}"/>\n${rects}\n</svg>`;
-  }, [css, points, base, format]);
+    const grainDef = fx.grain > 0
+      ? `\n  <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="${fx.grainScale}" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0"/></filter>`
+      : "";
+    const blurDef = fx.blur > 0
+      ? `\n  <filter id="blur"><feGaussianBlur stdDeviation="${fx.blur}"/></filter>`
+      : "";
+    const groupOpen = fx.blur > 0 ? `<g filter="url(#blur)">` : "";
+    const groupClose = fx.blur > 0 ? `</g>` : "";
+    const grainRect = fx.grain > 0
+      ? `\n  <rect width="100%" height="100%" fill="#fff" filter="url(#grain)" opacity="${fx.grain / 100}" style="mix-blend-mode:${fx.grainBlend}"/>`
+      : "";
+    const vignetteDef = fx.vignette > 0
+      ? `\n  <radialGradient id="vig" cx="50%" cy="50%" r="75%"><stop offset="60%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="${fx.vignette / 100}"/></radialGradient>`
+      : "";
+    const vignetteRect = fx.vignette > 0 ? `\n  <rect width="100%" height="100%" fill="url(#vig)"/>` : "";
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">\n<defs>\n${stops}${grainDef}${blurDef}${vignetteDef}\n</defs>\n  ${groupOpen}<rect width="100%" height="100%" fill="${base}"/>\n${rects}\n${groupClose}${grainRect}${vignetteRect}\n</svg>`;
+  }, [css, points, base, format, filterCss, fx]);
 
   const addPoint = () => {
     if (points.length >= 8) return;
@@ -185,18 +255,25 @@ export function MeshGradient() {
     draggingRef.current = null;
   };
 
-  const exportPng = async () => {
-    const w = 1600, h = 1000;
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
-<defs>${points
+  const buildExportSvg = (w: number, h: number) => {
+    const defs = `${points
       .map(
         (p, i) =>
           `<radialGradient id="g${i}" cx="${p.x}%" cy="${p.y}%" r="${p.size}%"><stop offset="0%" stop-color="${p.color}"/><stop offset="100%" stop-color="${p.color}" stop-opacity="0"/></radialGradient>`,
       )
-      .join("")}</defs>
-<rect width="100%" height="100%" fill="${base}"/>
-${points.map((_, i) => `<rect width="100%" height="100%" fill="url(#g${i})"/>`).join("")}
-</svg>`;
+      .join("")}${fx.blur > 0 ? `<filter id="blur" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="${(fx.blur * w) / 1600}"/></filter>` : ""}${fx.grain > 0 ? `<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="${fx.grainScale}" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0"/></filter>` : ""}${fx.vignette > 0 ? `<radialGradient id="vig" cx="50%" cy="50%" r="75%"><stop offset="60%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="${fx.vignette / 100}"/></radialGradient>` : ""}`;
+    const filterAttr = filterCss ? ` style="filter:${filterCss.replace(/blur\([^)]+\)\s*/, "")}"` : "";
+    const groupOpen = fx.blur > 0 ? `<g filter="url(#blur)">` : "";
+    const groupClose = fx.blur > 0 ? `</g>` : "";
+    const layers = points.map((_, i) => `<rect width="100%" height="100%" fill="url(#g${i})"/>`).join("");
+    const grainRect = fx.grain > 0 ? `<rect width="100%" height="100%" fill="#fff" filter="url(#grain)" opacity="${fx.grain / 100}" style="mix-blend-mode:${fx.grainBlend}"/>` : "";
+    const vignetteRect = fx.vignette > 0 ? `<rect width="100%" height="100%" fill="url(#vig)"/>` : "";
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"${filterAttr}><defs>${defs}</defs>${groupOpen}<rect width="100%" height="100%" fill="${base}"/>${layers}${groupClose}${grainRect}${vignetteRect}</svg>`;
+  };
+
+  const exportPng = async () => {
+    const { w, h } = ASPECTS[fx.aspect];
+    const svg = buildExportSvg(w, h);
     const img = new window.Image();
     const blob = new Blob([svg], { type: "image/svg+xml" });
     const url = URL.createObjectURL(blob);
@@ -217,17 +294,8 @@ ${points.map((_, i) => `<rect width="100%" height="100%" fill="url(#g${i})"/>`).
   };
 
   const exportSvg = () => {
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
-<defs>${points
-      .map(
-        (p, i) =>
-          `<radialGradient id="g${i}" cx="${p.x}%" cy="${p.y}%" r="${p.size}%"><stop offset="0%" stop-color="${p.color}"/><stop offset="100%" stop-color="${p.color}" stop-opacity="0"/></radialGradient>`,
-      )
-      .join("")}</defs>
-<rect width="100%" height="100%" fill="${base}"/>
-${points.map((_, i) => `<rect width="100%" height="100%" fill="url(#g${i})"/>`).join("")}
-</svg>`;
-    downloadFile("mesh-gradient.svg", svg, "image/svg+xml");
+    const { w, h } = ASPECTS[fx.aspect];
+    downloadFile("mesh-gradient.svg", buildExportSvg(w, h), "image/svg+xml");
   };
 
   const sel = points.find((p) => p.id === selected) ?? null;
@@ -271,16 +339,25 @@ ${points.map((_, i) => `<rect width="100%" height="100%" fill="url(#g${i})"/>`).
           onPointerUp={onPointerUp}
           onPointerLeave={onPointerUp}
           onClick={() => setSelected(null)}
-          className="relative w-full aspect-[16/9] cursor-crosshair overflow-hidden"
+          className={`relative w-full ${ASPECTS[fx.aspect].cls} cursor-crosshair overflow-hidden`}
           style={style}
         >
-          {grain > 0 && (
+          <div className="absolute inset-0" style={{ ...style, filter: filterCss || undefined }} />
+          {fx.grain > 0 && (
             <div
-              className="pointer-events-none absolute inset-0 mix-blend-overlay"
+              className="pointer-events-none absolute inset-0"
               style={{
-                opacity: grain / 100,
-                backgroundImage:
-                  "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>\")",
+                opacity: fx.grain / 100,
+                mixBlendMode: fx.grainBlend,
+                backgroundImage: grainSvgUrl,
+              }}
+            />
+          )}
+          {fx.vignette > 0 && (
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background: `radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,${fx.vignette / 100}) 100%)`,
               }}
             />
           )}
@@ -292,7 +369,7 @@ ${points.map((_, i) => `<rect width="100%" height="100%" fill="url(#g${i})"/>`).
                 e.stopPropagation();
                 setSelected(p.id);
               }}
-              className={`absolute -translate-x-1/2 -translate-y-1/2 size-6 rounded-full ring-2 shadow-lg transition-transform hover:scale-110 ${
+              className={`absolute z-10 -translate-x-1/2 -translate-y-1/2 size-6 rounded-full ring-2 shadow-lg transition-transform hover:scale-110 ${
                 selected === p.id ? "ring-white scale-110" : "ring-white/60"
               }`}
               style={{ left: `${p.x}%`, top: `${p.y}%`, background: p.color }}
@@ -317,7 +394,14 @@ ${points.map((_, i) => `<rect width="100%" height="100%" fill="url(#g${i})"/>`).
         </Panel>
 
         <div className="space-y-4">
-          <Panel title="Stage">
+          <Panel
+            title="Stage & Effects"
+            actions={
+              <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={() => setFx(DEFAULT_FX)}>
+                <RotateCcw className="size-3" /> Reset
+              </Button>
+            }
+          >
             <div className="p-3 grid gap-3">
               <Field label="Base color">
                 <div className="flex gap-2">
@@ -325,9 +409,67 @@ ${points.map((_, i) => `<rect width="100%" height="100%" fill="url(#g${i})"/>`).
                   <Input value={base} onChange={(e) => setBase(e.target.value)} className="h-9 font-mono text-xs" />
                 </div>
               </Field>
-              <Field label={`Grain (${grain}%)`}>
-                <Slider value={[grain]} onValueChange={(v) => setGrain(v[0])} max={60} step={1} />
+              <Field label="Aspect ratio">
+                <div className="grid grid-cols-6 gap-1">
+                  {(Object.keys(ASPECTS) as Fx["aspect"][]).map((a) => (
+                    <button
+                      key={a}
+                      onClick={() => setFxField("aspect", a)}
+                      className={`h-8 rounded-md border text-[10px] font-mono transition ${
+                        fx.aspect === a ? "border-foreground bg-foreground/10" : "border-border hover:border-foreground/40"
+                      }`}
+                    >
+                      {a}
+                    </button>
+                  ))}
+                </div>
               </Field>
+              <Field label={`Blur (${fx.blur}px)`}>
+                <Slider value={[fx.blur]} onValueChange={(v) => setFxField("blur", v[0])} max={80} step={1} />
+              </Field>
+              <Field label={`Noise (${fx.grain}%)`}>
+                <Slider value={[fx.grain]} onValueChange={(v) => setFxField("grain", v[0])} max={100} step={1} />
+              </Field>
+              {fx.grain > 0 && (
+                <>
+                  <Field label={`Noise scale (${fx.grainScale.toFixed(2)})`}>
+                    <Slider value={[fx.grainScale * 100]} onValueChange={(v) => setFxField("grainScale", v[0] / 100)} min={20} max={200} step={1} />
+                  </Field>
+                  <Field label="Noise blend">
+                    <div className="grid grid-cols-5 gap-1">
+                      {(["overlay","soft-light","multiply","screen","normal"] as Fx["grainBlend"][]).map((b) => (
+                        <button
+                          key={b}
+                          onClick={() => setFxField("grainBlend", b)}
+                          className={`h-8 rounded-md border text-[9px] transition ${
+                            fx.grainBlend === b ? "border-foreground bg-foreground/10" : "border-border hover:border-foreground/40"
+                          }`}
+                          title={b}
+                        >
+                          {b === "soft-light" ? "soft" : b.slice(0, 5)}
+                        </button>
+                      ))}
+                    </div>
+                  </Field>
+                </>
+              )}
+              <Field label={`Vignette (${fx.vignette}%)`}>
+                <Slider value={[fx.vignette]} onValueChange={(v) => setFxField("vignette", v[0])} max={100} step={1} />
+              </Field>
+              <div className="pt-2 border-t border-border grid gap-3">
+                <Field label={`Brightness (${fx.brightness}%)`}>
+                  <Slider value={[fx.brightness]} onValueChange={(v) => setFxField("brightness", v[0])} min={50} max={150} step={1} />
+                </Field>
+                <Field label={`Contrast (${fx.contrast}%)`}>
+                  <Slider value={[fx.contrast]} onValueChange={(v) => setFxField("contrast", v[0])} min={50} max={200} step={1} />
+                </Field>
+                <Field label={`Saturation (${fx.saturate}%)`}>
+                  <Slider value={[fx.saturate]} onValueChange={(v) => setFxField("saturate", v[0])} min={0} max={200} step={1} />
+                </Field>
+                <Field label={`Hue (${fx.hue}°)`}>
+                  <Slider value={[fx.hue + 180]} onValueChange={(v) => setFxField("hue", v[0] - 180)} min={0} max={360} step={1} />
+                </Field>
+              </div>
             </div>
           </Panel>
 
