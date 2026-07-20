@@ -16,7 +16,7 @@ export interface GenerateButtonProps extends React.ButtonHTMLAttributes<HTMLButt
 
 export function GenerateButton({
   isGenerating: controlledIsGenerating,
-  label = "55 Utilities",
+  label = "56 Utilities",
   activeLabel = "Exploring",
   className,
   onClick,
