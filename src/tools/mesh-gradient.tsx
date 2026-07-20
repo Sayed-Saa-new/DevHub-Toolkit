@@ -614,6 +614,84 @@ export function MeshGradient() {
           </Panel>
 
           <Panel title="Presets">
+          {null}
+          </Panel>
+          <Panel title="Export">
+            <div className="p-3 grid gap-3">
+              <Field label="Background">
+                <div className="grid grid-cols-2 gap-1">
+                  {[
+                    { v: false, label: "Solid" },
+                    { v: true, label: "Transparent" },
+                  ].map((o) => (
+                    <button
+                      key={String(o.v)}
+                      onClick={() => setTransparentBg(o.v)}
+                      className={`h-8 rounded-md border text-[11px] transition ${
+                        transparentBg === o.v ? "border-foreground bg-foreground/10" : "border-border hover:border-foreground/40"
+                      }`}
+                    >
+                      {o.label}
+                    </button>
+                  ))}
+                </div>
+              </Field>
+              <Field label={`Resolution scale (${scale}×)`} hint={`${exportDims.w} × ${exportDims.h}`}>
+                <div className="grid grid-cols-4 gap-1">
+                  {([1, 2, 3, 4] as const).map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => {
+                        setScale(s);
+                        setCustomW("");
+                        setCustomH("");
+                      }}
+                      disabled={exportDims.custom ? false : false}
+                      className={`h-8 rounded-md border text-[11px] font-mono transition ${
+                        !exportDims.custom && scale === s ? "border-foreground bg-foreground/10" : "border-border hover:border-foreground/40"
+                      }`}
+                    >
+                      {s}×
+                    </button>
+                  ))}
+                </div>
+              </Field>
+              <Field label="Custom size (px)" hint="Overrides scale">
+                <div className="flex items-center gap-1.5">
+                  <Input
+                    inputMode="numeric"
+                    placeholder="width"
+                    value={customW}
+                    onChange={(e) => setCustomW(e.target.value.replace(/\D/g, ""))}
+                    className="h-9 font-mono text-xs"
+                  />
+                  <span className="text-xs text-muted-foreground">×</span>
+                  <Input
+                    inputMode="numeric"
+                    placeholder="height"
+                    value={customH}
+                    onChange={(e) => setCustomH(e.target.value.replace(/\D/g, ""))}
+                    className="h-9 font-mono text-xs"
+                  />
+                </div>
+              </Field>
+              <div className="grid grid-cols-2 gap-2 pt-1">
+                <Button size="sm" variant="secondary" onClick={exportPng} className="h-9 gap-1.5 text-xs">
+                  <Download className="size-3.5" /> PNG
+                </Button>
+                <Button size="sm" variant="secondary" onClick={exportSvg} className="h-9 gap-1.5 text-xs">
+                  <Download className="size-3.5" /> SVG
+                </Button>
+              </div>
+              {transparentBg && (
+                <p className="text-[10px] text-muted-foreground leading-relaxed">
+                  Base color is omitted. Points render on a transparent canvas — perfect for overlays.
+                </p>
+              )}
+            </div>
+          </Panel>
+
+          <Panel title="Presets" className="mt-4">
             <div className="p-3 grid grid-cols-3 gap-2">
               {PRESETS.map((p, i) => (
                 <button
