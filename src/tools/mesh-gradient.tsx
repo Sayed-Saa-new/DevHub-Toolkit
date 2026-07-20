@@ -118,6 +118,130 @@ const PRESETS: { name: string; base: string; points: Omit<Point, "id">[] }[] = [
   },
 ];
 
+PRESETS.push(
+  {
+    name: "Midnight",
+    base: "#020617",
+    points: [
+      { x: 15, y: 20, color: "#1e3a8a", size: 70 },
+      { x: 85, y: 25, color: "#4c1d95", size: 65 },
+      { x: 30, y: 80, color: "#0369a1", size: 70 },
+      { x: 80, y: 85, color: "#5b21b6", size: 60 },
+    ],
+  },
+  {
+    name: "Ocean",
+    base: "#082f49",
+    points: [
+      { x: 20, y: 20, color: "#0ea5e9", size: 65 },
+      { x: 80, y: 15, color: "#22d3ee", size: 55 },
+      { x: 25, y: 85, color: "#164e63", size: 75 },
+      { x: 85, y: 80, color: "#67e8f9", size: 55 },
+    ],
+  },
+  {
+    name: "Ember",
+    base: "#0a0000",
+    points: [
+      { x: 20, y: 30, color: "#dc2626", size: 60 },
+      { x: 80, y: 20, color: "#f59e0b", size: 55 },
+      { x: 35, y: 85, color: "#7c2d12", size: 75 },
+      { x: 85, y: 80, color: "#b45309", size: 60 },
+    ],
+  },
+  {
+    name: "Candy",
+    base: "#fdf2f8",
+    points: [
+      { x: 20, y: 25, color: "#f472b6", size: 60 },
+      { x: 80, y: 20, color: "#c084fc", size: 60 },
+      { x: 30, y: 85, color: "#7dd3fc", size: 65 },
+      { x: 85, y: 80, color: "#fda4af", size: 60 },
+    ],
+  },
+  {
+    name: "Forest",
+    base: "#052e16",
+    points: [
+      { x: 20, y: 25, color: "#16a34a", size: 65 },
+      { x: 80, y: 20, color: "#84cc16", size: 55 },
+      { x: 30, y: 85, color: "#065f46", size: 70 },
+      { x: 85, y: 80, color: "#4d7c0f", size: 60 },
+    ],
+  },
+  {
+    name: "Nebula",
+    base: "#0a0118",
+    points: [
+      { x: 15, y: 15, color: "#a855f7", size: 55 },
+      { x: 85, y: 20, color: "#f0abfc", size: 50 },
+      { x: 20, y: 80, color: "#3b0764", size: 75 },
+      { x: 75, y: 75, color: "#6366f1", size: 60 },
+      { x: 50, y: 50, color: "#e879f9", size: 45 },
+    ],
+  },
+  {
+    name: "Mono Light",
+    base: "#f5f5f4",
+    points: [
+      { x: 20, y: 20, color: "#e7e5e4", size: 70 },
+      { x: 80, y: 25, color: "#d6d3d1", size: 65 },
+      { x: 25, y: 85, color: "#a8a29e", size: 60 },
+      { x: 85, y: 80, color: "#c7c3bf", size: 65 },
+    ],
+  },
+  {
+    name: "Cyberpunk",
+    base: "#0a0014",
+    points: [
+      { x: 15, y: 20, color: "#f0f", size: 55 },
+      { x: 85, y: 20, color: "#0ff", size: 55 },
+      { x: 50, y: 85, color: "#ff0080", size: 65 },
+      { x: 80, y: 55, color: "#7c3aed", size: 55 },
+    ],
+  },
+  {
+    name: "Sahara",
+    base: "#78350f",
+    points: [
+      { x: 20, y: 25, color: "#fbbf24", size: 65 },
+      { x: 80, y: 20, color: "#fde68a", size: 55 },
+      { x: 30, y: 85, color: "#92400e", size: 70 },
+      { x: 85, y: 75, color: "#f97316", size: 60 },
+    ],
+  },
+  {
+    name: "Iceberg",
+    base: "#f0f9ff",
+    points: [
+      { x: 20, y: 25, color: "#bae6fd", size: 65 },
+      { x: 80, y: 20, color: "#e0f2fe", size: 65 },
+      { x: 30, y: 85, color: "#7dd3fc", size: 60 },
+      { x: 85, y: 80, color: "#cffafe", size: 60 },
+    ],
+  },
+  {
+    name: "Rose Gold",
+    base: "#1c0a0a",
+    points: [
+      { x: 20, y: 20, color: "#fda4af", size: 60 },
+      { x: 80, y: 25, color: "#fcd34d", size: 55 },
+      { x: 30, y: 85, color: "#be185d", size: 70 },
+      { x: 85, y: 80, color: "#f472b6", size: 60 },
+    ],
+  },
+  {
+    name: "Matrix",
+    base: "#000000",
+    points: [
+      { x: 20, y: 20, color: "#16a34a", size: 55 },
+      { x: 80, y: 25, color: "#4ade80", size: 55 },
+      { x: 30, y: 85, color: "#052e16", size: 70 },
+      { x: 85, y: 80, color: "#22c55e", size: 55 },
+    ],
+  },
+);
+
 const uid = () => Math.random().toString(36).slice(2, 9);
 const rand = (min: number, max: number) => Math.random() * (max - min) + min;
 const randHex = () => "#" + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, "0");
