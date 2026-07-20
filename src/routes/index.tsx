@@ -1026,8 +1026,6 @@ function FinalCTA() {
 
 /* ---------------- Big premium footer ---------------- */
 
-function BigFooter() {
-  const productLinks = [
 function WhyDevHub() {
   return (
     <section className="relative border-t border-border/40 bg-background py-24 sm:py-32">
