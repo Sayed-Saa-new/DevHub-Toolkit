@@ -1149,11 +1149,11 @@ function BigFooter() {
         className="relative select-none pointer-events-none -mt-2"
       >
         <div
-          className="mx-auto max-w-[1400px] px-4 md:px-8 text-center font-semibold tracking-tighter leading-[0.85] text-foreground/[0.06]"
+          className="mx-auto max-w-[1400px] px-4 md:px-8 text-center font-semibold tracking-tighter leading-[0.85]"
           style={{
             fontSize: "clamp(5rem, 22vw, 20rem)",
             backgroundImage:
-              "linear-gradient(to bottom, hsl(var(--foreground) / 0.10), hsl(var(--foreground) / 0))",
+              "linear-gradient(to bottom, rgba(255,255,255,0.14), rgba(255,255,255,0.02))",
             WebkitBackgroundClip: "text",
             backgroundClip: "text",
             WebkitTextFillColor: "transparent",
