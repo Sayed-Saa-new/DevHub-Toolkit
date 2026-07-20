@@ -27,7 +27,7 @@ export function AsciiWordmark({
   cellSize = 14,
   fontSize = 13,
   charColor = "rgba(255,255,255,0.18)",
-  hoverColor = "rgba(255,255,255,0.95)",
+  hoverColor = "rgba(255,255,255,0.35)",
   hoverCharColor = "#0a0a0a",
   className,
 }: {
