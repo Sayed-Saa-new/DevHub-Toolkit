@@ -13,7 +13,7 @@ import {
   FileType as FileType2,
   FileText as FileWord,
   GitCompareArrows,
-  Waves,
+  WavesHorizontal as Waves,
 } from "lucide-react-motion";
 import type { ComponentType, SVGProps } from "react";
 
