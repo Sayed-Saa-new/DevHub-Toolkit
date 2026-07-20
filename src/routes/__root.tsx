@@ -109,6 +109,37 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "DevHub Toolkit",
+          alternateName: ["DevHub", "DevHub Tools"],
+          url: "https://devhub.flinkeo.online/",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: {
+              "@type": "EntryPoint",
+              urlTemplate: "https://devhub.flinkeo.online/tools?q={search_term_string}",
+            },
+            "query-input": "required name=search_term_string",
+          },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "DevHub Toolkit",
+          alternateName: "DevHub",
+          url: "https://devhub.flinkeo.online/",
+          logo: "https://devhub.flinkeo.online/favicon-512.png",
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
