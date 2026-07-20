@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { forwardRef, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   ArrowLeftRight,
   Upload,
@@ -105,18 +105,17 @@ function computeStats(changes: Change[]) {
   return { added, removed, unchanged, similarity };
 }
 
-function runDiff(left: string, right: string, granularity: Granularity, ignoreCase: boolean) {
-  const opts = { ignoreCase } as const;
+function runDiff(left: string, right: string, granularity: Granularity) {
   switch (granularity) {
     case "word":
-      return diffWordsWithSpace(left, right, opts);
+      return diffWordsWithSpace(left, right);
     case "char":
-      return diffChars(left, right, opts);
+      return diffChars(left, right);
     case "sentence":
-      return diffSentences(left, right, opts);
+      return diffSentences(left, right);
     case "line":
     default:
-      return diffLines(left, right, { ...opts, newlineIsToken: false });
+      return diffLines(left, right);
   }
 }
 
@@ -235,12 +234,12 @@ export function DiffChecker() {
   const processedRight = useMemo(() => preprocess(right, opts), [right, ignoreCase, ignoreWhitespace, trimLines, ignoreBlank]);
 
   const changes = useMemo(
-    () => runDiff(processedLeft, processedRight, granularity, ignoreCase),
-    [processedLeft, processedRight, granularity, ignoreCase],
+    () => runDiff(processedLeft, processedRight, granularity),
+    [processedLeft, processedRight, granularity],
   );
   const lineChanges = useMemo(
-    () => diffLines(processedLeft, processedRight, { ignoreCase, newlineIsToken: false }),
-    [processedLeft, processedRight, ignoreCase],
+    () => diffLines(processedLeft, processedRight),
+    [processedLeft, processedRight],
   );
   const stats = useMemo(() => {
     let added = 0;
@@ -506,17 +505,16 @@ function Stat({ label, value, className }: { label: string; value: string; class
   );
 }
 
-const ScrollShell = (() => {
-  const inner = (
-    { children }: { children: React.ReactNode },
-    ref: React.ForwardedRef<HTMLDivElement>,
-  ) => (
+const ScrollShell = forwardRef<HTMLDivElement, { children: ReactNode }>(function ScrollShell(
+  { children },
+  ref,
+) {
+  return (
     <div ref={ref} className="max-h-[520px] overflow-auto">
       {children}
     </div>
   );
-  return (require("react") as typeof import("react")).forwardRef(inner);
-})();
+});
 
 function InputPane({
   side,
@@ -643,7 +641,7 @@ function UnifiedView({
   if (granularity === "line") {
     let leftNo = 1;
     let rightNo = 1;
-    const rows: React.ReactNode[] = [];
+  const rows: ReactNode[] = [];
     let key = 0;
     for (const c of changes) {
       const lines = c.value.replace(/\n$/, "").split("\n");
