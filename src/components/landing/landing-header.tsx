@@ -320,8 +320,8 @@ function ToolsMenuBody({ close }: { close: () => void }) {
                 onClick={close}
                 className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
               >
-                <div className="mt-0.5 size-8 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition">
-                  <t.icon className="size-4" />
+                <div className="mt-0.5 size-8 shrink-0 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition">
+                  <t.icon className="size-4 shrink-0" />
                 </div>
                 <div className="min-w-0">
                   <div className="text-sm font-medium text-foreground flex items-center gap-2">
