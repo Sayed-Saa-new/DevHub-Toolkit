@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, Rss } from "lucide-react-motion";
 import { Button } from "@/components/ui/button";
 import { GenerateButton } from "@/components/ui/generate-button";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { TOOLS } from "@/lib/tools";
 
 export function Hero() {
@@ -33,10 +34,14 @@ export function Hero() {
           A minimal, fast toolkit for the tasks you do every day. Format JSON, decode JWTs, generate hashes, tweak gradients — from one clean interface.
         </p>
         <div className="mt-9 flex flex-wrap gap-3 justify-center">
-          <Link to="/tools">
-            <Button size="lg" className="h-11 px-5 gap-2 rounded-full">
+          <Link to="/tools" aria-label="Explore all tools">
+            <HoverBorderGradient
+              as="div"
+              containerClassName="rounded-full"
+              className="text-sm font-medium flex items-center gap-2 px-5 py-2.5"
+            >
               Explore all tools <ArrowRight className="size-4" />
-            </Button>
+            </HoverBorderGradient>
           </Link>
           <Link to="/changelog">
             <Button size="lg" variant="outline" className="h-11 px-5 gap-2 rounded-full">

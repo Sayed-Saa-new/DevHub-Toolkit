@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react-motion";
 import { Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { TOOLS } from "@/lib/tools";
 
 export function FinalCTA() {
@@ -19,10 +20,14 @@ export function FinalCTA() {
           {TOOLS.length}+ developer utilities in a single, monochrome, keyboard-first workspace. Free, forever.
         </p>
         <div className="mt-9 flex flex-wrap gap-3 justify-center">
-          <Link to="/tools">
-            <Button size="lg" className="h-11 px-5 gap-2 rounded-full">
+          <Link to="/tools" aria-label="Open the toolkit">
+            <HoverBorderGradient
+              as="div"
+              containerClassName="rounded-full"
+              className="text-sm font-medium flex items-center gap-2 px-5 py-2.5"
+            >
               Open the toolkit <ArrowRight className="size-4" />
-            </Button>
+            </HoverBorderGradient>
           </Link>
           <a href="https://github.com" target="_blank" rel="noreferrer">
             <Button size="lg" variant="outline" className="h-11 px-5 gap-2 rounded-full">
