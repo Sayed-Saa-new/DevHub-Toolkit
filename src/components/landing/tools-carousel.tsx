@@ -42,7 +42,7 @@ export function ToolsCarousel() {
         <SectionHead
           eyebrow="Tour"
           title="A glimpse of what's inside"
-          description="Six categories, forty-four hand-crafted utilities. Autoplay tour below — hover to focus, click a dot to jump."
+          subtitle="Six categories, forty-four hand-crafted utilities. Autoplay tour below — hover to focus, click a dot to jump."
         />
         <div className="mt-10">
           <LoadingCarousel tips={tips} aspectRatio="wide" autoplayInterval={4500} />
