@@ -2,4 +2,20 @@ User-agent: *
 Allow: /
 Disallow: /favorites
 
+# Explicitly allow Google's AI/extended crawler
+User-agent: Google-Extended
+Allow: /
+Disallow: /favorites
+
+# Explicitly allow Googlebot (web + smartphone)
+User-agent: Googlebot
+Allow: /
+Disallow: /favorites
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
 Sitemap: https://devhub.flinkeo.online/sitemap.xml
