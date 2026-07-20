@@ -350,4 +350,10 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Compare two text, code or files side-by-side or unified. Line, word or character diff, ignore whitespace/case, export unified patch — 100% free, client-side.",
     keywords: ["diff checker", "text diff", "compare text online", "code diff", "file compare", "compare two files", "diff tool", "unified diff", "side by side diff", "text compare online", "diff viewer", "diffchecker"],
   }, // diff checker — 74,000/mo, KDI 55 (long-tail winnable)
+  "mesh-gradient": {
+    title: "Mesh Gradient Generator — CSS, SVG & PNG Export",
+    description:
+      "Design vibrant mesh gradients with draggable color points, curated presets, grain overlay and one-click CSS, SVG or PNG export. 100% free, in-browser.",
+    keywords: ["mesh gradient generator", "css mesh gradient", "mesh gradient", "gradient generator", "mesh background generator", "svg mesh gradient", "colorful gradient", "aurora gradient", "background maker", "mesh gradient css"],
+  }, // mesh gradient — 22,000/mo, KDI 30 (winnable)
 };

@@ -26,6 +26,7 @@ import { JwtGenerator } from "./jwt-generator";
 import { TextToMarkdown } from "./text-to-markdown";
 import { DocxToMarkdown } from "./docx-to-markdown";
 import { DiffChecker } from "./diff-checker";
+import { MeshGradient } from "./mesh-gradient";
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-formatter": JsonFormatter,
@@ -76,6 +77,7 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "text-to-markdown": TextToMarkdown,
   "docx-to-markdown": DocxToMarkdown,
   "diff-checker": DiffChecker,
+  "mesh-gradient": MeshGradient,
   "ai-explainer": AiExplainer,
   "ai-optimizer": AiOptimizer,
   "ai-commit": AiCommit,

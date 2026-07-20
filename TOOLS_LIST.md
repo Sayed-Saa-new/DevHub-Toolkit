@@ -1,6 +1,6 @@
 # DevHub Toolkit — Full Tool List
 
-Total: **55 tools** across 6 categories.
+Total: **57 tools** across 6 categories.
 Live: [https://devhub.flinkeo.online](https://devhub.flinkeo.online)
 
 | # | Tool | Category | Description | Link |
@@ -60,6 +60,8 @@ Live: [https://devhub.flinkeo.online](https://devhub.flinkeo.online)
 | 53 | **JWT Generator** | generators | Sign HS256/384/512 JSON Web Tokens with claim helpers, random secret and live cURL — 100% client-side. | [/t/jwt-generator](https://devhub.flinkeo.online/t/jwt-generator) |
 | 54 | **Text → Markdown** | converters | Convert plain text, HTML, or rich pasted content into clean GFM Markdown — with live preview. | [/t/text-to-markdown](https://devhub.flinkeo.online/t/text-to-markdown) |
 | 55 | **DOCX → Markdown** | converters | Convert Word .docx files to clean Markdown in your browser — batch, images, tables, 100% client-side. | [/t/docx-to-markdown](https://devhub.flinkeo.online/t/docx-to-markdown) |
+| 56 | **Diff Checker** | editors | Compare text, code or files side-by-side or unified — line, word or char diff, patch export, 100% local. | [/t/diff-checker](https://devhub.flinkeo.online/t/diff-checker) |
+| 57 | **Mesh Gradient** | design | Design vibrant mesh gradients — drag color points, presets, export CSS, SVG or PNG. | [/t/mesh-gradient](https://devhub.flinkeo.online/t/mesh-gradient) |
 
 ---
 

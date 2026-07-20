@@ -1,6 +1,6 @@
 # DevHub Toolkit
 
-> 55 free, fast, keyboard-first developer utilities in one clean interface. Inspired by Vercel, Linear, and Raycast.
+> 57 free, fast, keyboard-first developer utilities in one clean interface. Inspired by Vercel, Linear, and Raycast.
 
 Live: **[devhub.flinkeo.online](https://devhub.flinkeo.online)**
 
@@ -8,7 +8,7 @@ Live: **[devhub.flinkeo.online](https://devhub.flinkeo.online)**
 
 ## Features
 
-- **55 tools** — JSON, Base64, JWT, UUID, hashes, regex, QR, color, gradient, shadow, markdown, playground, cheat sheets, and more
+- **57 tools** — JSON, Base64, JWT, UUID, hashes, regex, QR, color, gradient, shadow, markdown, playground, cheat sheets, and more
 - **AI-powered** — SQL, regex, code explainer, optimizer, commit messages, tests, code converter, error fixer (Gemini)
 - **Global search** — `⌘K` / `Ctrl+K` to jump to any tool
 - **Favorites & recents** — persisted locally

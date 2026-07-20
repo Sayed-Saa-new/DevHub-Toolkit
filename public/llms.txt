@@ -1,6 +1,6 @@
 # DevHub Toolkit
 
-> 55 fast, keyboard-first developer utilities — formatters, encoders, generators, AI helpers, and references — in one clean interface.
+> 57 fast, keyboard-first developer utilities — formatters, encoders, generators, AI helpers, and references — in one clean interface.
 
 DevHub Toolkit is a browser-based developer productivity platform. All non-AI tools run client-side with no tracking. AI tools call Google Gemini via a server endpoint.
 
