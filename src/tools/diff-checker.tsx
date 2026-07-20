@@ -21,8 +21,6 @@ import {
 } from "diff";
 import { toast } from "sonner";
 
-import { ToolShell } from "@/components/tool-shell";
-import { TOOLS_BY_SLUG } from "@/lib/tools";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -189,7 +187,6 @@ function useSyncScroll() {
 }
 
 export function DiffChecker() {
-  const tool = TOOLS_BY_SLUG["diff-checker"];
   const [left, setLeft] = useState(SAMPLE_LEFT);
   const [right, setRight] = useState(SAMPLE_RIGHT);
   const [leftName, setLeftName] = useState("original.txt");
@@ -324,8 +321,7 @@ export function DiffChecker() {
   };
 
   return (
-    <ToolShell tool={tool}>
-      <div className="space-y-4">
+    <div className="space-y-4">
         {/* Toolbar */}
         <div className="rounded-xl border border-border bg-card p-3 flex flex-wrap items-center gap-2">
           <Tabs value={granularity} onValueChange={(v) => setGranularity(v as Granularity)}>
@@ -482,8 +478,7 @@ export function DiffChecker() {
           <kbd className="px-1 border rounded">K</kbd>/<kbd className="px-1 border rounded">P</kbd> previous ·{" "}
           <kbd className="px-1 border rounded">⌘S</kbd> swap sides
         </p>
-      </div>
-    </ToolShell>
+    </div>
   );
 }
 
