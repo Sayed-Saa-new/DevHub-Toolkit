@@ -474,12 +474,6 @@ export function MeshGradient() {
               <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={addPoint} disabled={points.length >= 8}>
                 <Plus className="size-3" /> Add point
               </Button>
-              <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={exportSvg}>
-                <Download className="size-3" /> SVG
-              </Button>
-              <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={exportPng}>
-                <Download className="size-3" /> PNG
-              </Button>
             </>
           }
         >
