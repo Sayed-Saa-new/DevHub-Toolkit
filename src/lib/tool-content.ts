@@ -353,3 +353,69 @@ export interface Root {
     { slug: "mock-data", label: "Mock Data Generator" },
   ],
 };
+
+TOOL_CONTENT["slugify"] = {
+  intro:
+    "DevHub's Slugify tool turns any headline, product name or filename into a clean, URL-safe slug you can drop straight into your router, CMS or database. It transliterates Unicode (Bangla, Arabic, Chinese, emoji), collapses whitespace, strips punctuation and enforces a consistent separator — the same rules WordPress, Ghost, Notion and Next.js use for pretty URLs. Free, no signup, runs 100% in your browser.",
+  features: [
+    { title: "Unicode transliteration", body: "Bangla, Arabic, Cyrillic, Chinese, Japanese, emoji and accented Latin all collapse to safe ASCII (হ্যালো → hyalo, café → cafe, 你好 → ni-hao)." },
+    { title: "Custom separator", body: "Pick hyphen (-), underscore (_) or dot (.) to match your framework — hyphens for SEO, underscores for filenames, dots for package paths." },
+    { title: "Case control", body: "Lowercase, uppercase or preserve original case. Lowercase is the default because Google treats /About and /about as the same URL but many CDNs don't." },
+    { title: "Length limit", body: "Cap slugs at 60-80 chars to fit Google's title truncation and avoid ugly URL wrapping in emails and Slack previews." },
+    { title: "Bulk mode", body: "Paste a list of titles, one per line, and get back a matching list of slugs — perfect for CSV imports, sitemap generation and content migrations." },
+    { title: "Private by default", body: "Everything happens in your browser. Nothing is uploaded, logged or stored. Safe for internal product names and unreleased content." },
+  ],
+  howTo: {
+    name: "How to convert text to a URL slug",
+    steps: [
+      { name: "Paste your text", text: "Drop a title, headline or filename into the input — a single line or a full list." },
+      { name: "Choose a separator", text: "Hyphen (-) for web URLs and SEO, underscore (_) for filenames or database keys." },
+      { name: "Pick a case", text: "Lowercase is the standard for URLs. Keep original case only for case-sensitive systems." },
+      { name: "Set a max length (optional)", text: "60-80 characters keeps slugs readable and inside Google's title cutoff." },
+      { name: "Copy the result", text: "Click Copy and paste it into your CMS, Next.js route, Markdown frontmatter or database seed." },
+    ],
+  },
+  useCases: [
+    { title: "Blog & CMS URLs", body: "Convert post titles into permalinks for Next.js, Astro, Ghost, WordPress or any headless CMS — matching what editors expect." },
+    { title: "Product & SKU slugs", body: "Generate stable, human-readable identifiers for e-commerce products, courses and marketplace listings." },
+    { title: "File & folder names", body: "Sanitize user-uploaded filenames before saving to S3, R2 or the local filesystem — no spaces, no unicode surprises." },
+    { title: "Database seeds & migrations", body: "Bulk-slugify a CSV of legacy titles when migrating from an old CMS to a new stack." },
+  ],
+  examples: [
+    {
+      dialect: "Default (hyphen, lowercase)",
+      prompt: "Hello World! This is a Test Post.",
+      sql: "hello-world-this-is-a-test-post",
+    },
+    {
+      dialect: "Unicode transliteration",
+      prompt: "Café — Résumé for São Paulo (2026)",
+      sql: "cafe-resume-for-sao-paulo-2026",
+    },
+    {
+      dialect: "Bulk mode",
+      prompt: `10 Best React Libraries in 2026
+How to Deploy Next.js to Cloudflare
+GraphQL vs REST: The Real Story`,
+      sql: `10-best-react-libraries-in-2026
+how-to-deploy-next-js-to-cloudflare
+graphql-vs-rest-the-real-story`,
+    },
+  ],
+  faq: [
+    { q: "Is the slugify tool free?", a: "Yes — 100% free, no signup, no rate limits. Everything runs in your browser." },
+    { q: "Is my text sent to a server?", a: "No. All slugification happens client-side, so it's safe for unreleased product names, internal titles and confidential drafts." },
+    { q: "Does it handle non-English characters?", a: "Yes. Bangla, Arabic, Cyrillic, Chinese, Japanese, accented Latin and emoji are all transliterated to safe ASCII using a comprehensive Unicode mapping." },
+    { q: "Should I use hyphens or underscores in URLs?", a: "Hyphens. Google treats hyphens as word separators, but underscores as part of a single word — so 'my-post' ranks better than 'my_post' for the phrase 'my post'." },
+    { q: "What's the ideal slug length?", a: "3-5 words, under 60 characters. Long slugs get truncated in Google results and look messy when shared in emails or Slack." },
+    { q: "Should slugs be lowercase?", a: "Yes. Lowercase avoids duplicate URLs (/About vs /about) and works consistently across CDNs, load balancers and case-sensitive filesystems." },
+    { q: "Can I use numbers and dates in slugs?", a: "Absolutely — numbers are safe and often helpful (e.g. 'react-19-release-notes'). Avoid leading zeros unless they're meaningful." },
+    { q: "How is this different from a Node.js slugify library?", a: "Same output — but with zero setup, a live preview, bulk mode and no npm install. Great for one-off content migrations or when you're not in a Node project." },
+  ],
+  related: [
+    { slug: "url-codec", label: "URL Encoder" },
+    { slug: "case-converter", label: "Case Converter" },
+    { slug: "text-to-markdown", label: "Text to Markdown" },
+    { slug: "json-formatter", label: "JSON Formatter" },
+  ],
+};
