@@ -180,7 +180,12 @@ export function LoadingCarousel({
                       src={tip.image}
                       alt=""
                       aria-hidden="true"
-                      loading="lazy"
+                      loading={index === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                      fetchPriority={index === 0 ? "high" : "low"}
+                      width={1600}
+                      height={1000}
+                      sizes="(min-width: 1024px) 1152px, 100vw"
                       className="absolute inset-0 h-full w-full object-contain p-8"
                     />
                     {backgroundGradient && (

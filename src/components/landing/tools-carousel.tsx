@@ -1,11 +1,11 @@
 import { LoadingCarousel, type Tip } from "@/components/ui/loading-carousel";
 import { SectionHead } from "./section-head";
-import shotConverters from "@/assets/screenshots/converters.png.asset.json";
-import shotGenerators from "@/assets/screenshots/generators.png.asset.json";
-import shotDesign from "@/assets/screenshots/design.png.asset.json";
-import shotEditors from "@/assets/screenshots/editors.png.asset.json";
-import shotReference from "@/assets/screenshots/reference.png.asset.json";
-import shotAi from "@/assets/screenshots/ai.png.asset.json";
+import shotConverters from "@/assets/screenshots/converters.webp.asset.json";
+import shotGenerators from "@/assets/screenshots/generators.webp.asset.json";
+import shotDesign from "@/assets/screenshots/design.webp.asset.json";
+import shotEditors from "@/assets/screenshots/editors.webp.asset.json";
+import shotReference from "@/assets/screenshots/reference.webp.asset.json";
+import shotAi from "@/assets/screenshots/ai.webp.asset.json";
 
 const tips: Tip[] = [
   {
