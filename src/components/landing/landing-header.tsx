@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import type { ComponentType } from "react";
 
 import { Button } from "@/components/ui/button";
+import { PremiumButton } from "@/components/ui/premium-button";
 import { BrandMark } from "@/components/brand-mark";
 import {
   NavigationMenu,
