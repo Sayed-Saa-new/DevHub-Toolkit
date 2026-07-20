@@ -7,6 +7,7 @@ import { LandingHeader } from "@/components/landing/landing-header";
 import { Hero } from "@/components/landing/hero";
 import { FeaturedTools } from "@/components/landing/featured-tools";
 import { Features } from "@/components/landing/features";
+import { ToolsCarousel } from "@/components/landing/tools-carousel";
 import { CategoriesShowcase } from "@/components/landing/categories-showcase";
 import { Stats } from "@/components/landing/stats";
 import { Testimonials } from "@/components/landing/testimonials";
@@ -104,6 +105,7 @@ function Landing() {
         <Hero />
         <FeaturedTools />
         <Features />
+        <ToolsCarousel />
         <CategoriesShowcase />
         <Stats />
         <Testimonials />
