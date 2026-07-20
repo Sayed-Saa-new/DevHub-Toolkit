@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { ChevronRight } from "lucide-react";
 import {
@@ -36,6 +36,7 @@ interface LoadingCarouselProps {
   onTipChange?: (index: number) => void;
   backgroundTips?: boolean;
   backgroundGradient?: boolean;
+  ariaLabel?: string;
 }
 
 function getTipKey(tip: Tip): string {
@@ -71,16 +72,30 @@ export function LoadingCarousel({
   textPosition = "bottom",
   autoplayInterval = 4500,
   backgroundGradient = false,
+  ariaLabel = "Featured tips",
 }: LoadingCarouselProps) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(0);
   const prefersReducedMotion = useReducedMotion();
+  const rootRef = useRef<HTMLDivElement>(null);
 
   const autoplay = useMemo(
-    () => Autoplay({ delay: autoplayInterval, stopOnInteraction: false }),
-    [autoplayInterval],
+    () =>
+      Autoplay({
+        delay: autoplayInterval,
+        stopOnInteraction: false,
+        stopOnMouseEnter: true,
+        stopOnFocusIn: true,
+        playOnInit: !prefersReducedMotion,
+      }),
+    [autoplayInterval, prefersReducedMotion],
   );
+
+  useEffect(() => {
+    if (!api) return;
+    if (prefersReducedMotion) autoplay.stop();
+  }, [api, autoplay, prefersReducedMotion]);
 
   useEffect(() => {
     if (!api) return;
@@ -99,13 +114,44 @@ export function LoadingCarousel({
 
   const handleSelect = useCallback((index: number) => api?.scrollTo(index), [api]);
 
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      if (!api) return;
+      switch (event.key) {
+        case "ArrowLeft":
+          event.preventDefault();
+          api.scrollPrev();
+          break;
+        case "ArrowRight":
+          event.preventDefault();
+          api.scrollNext();
+          break;
+        case "Home":
+          event.preventDefault();
+          api.scrollTo(0);
+          break;
+        case "End":
+          event.preventDefault();
+          api.scrollTo(tips.length - 1);
+          break;
+      }
+    },
+    [api, tips.length],
+  );
+
   return (
     <motion.div
+      ref={rootRef}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label={ariaLabel}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
       initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.8, ease: "easeOut" }}
       className={cn(
-        "mx-auto w-full max-w-6xl overflow-hidden rounded-xl bg-muted border border-border",
+        "mx-auto w-full max-w-6xl overflow-hidden rounded-xl bg-muted border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         className,
       )}
     >
@@ -113,8 +159,14 @@ export function LoadingCarousel({
         <Carousel setApi={setApi} plugins={[autoplay]} className="relative w-full" opts={{ loop: true }}>
           <CarouselContent>
             <AnimatePresence initial={false} custom={direction}>
-              {tips.map((tip) => (
-                <CarouselItem key={getTipKey(tip)} className="min-w-0">
+              {tips.map((tip, index) => (
+                <CarouselItem
+                  key={getTipKey(tip)}
+                  className="min-w-0"
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`${index + 1} of ${tips.length}: ${tip.text}`}
+                >
                   <motion.div
                     variants={carouselVariants}
                     initial={prefersReducedMotion ? false : "enter"}
@@ -126,7 +178,8 @@ export function LoadingCarousel({
                   >
                     <img
                       src={tip.image}
-                      alt={tip.text}
+                      alt=""
+                      aria-hidden="true"
                       loading="lazy"
                       className="absolute inset-0 h-full w-full object-contain p-8"
                     />
@@ -161,6 +214,9 @@ export function LoadingCarousel({
           )}
         </Carousel>
         <div className={cn("bg-muted p-4 sm:p-5", showIndicators && !backgroundTips ? "lg:px-4 lg:py-3" : "")}>
+          <span className="sr-only" aria-live="polite" aria-atomic="true">
+            Slide {current + 1} of {tips.length}: {tips[current]?.text}
+          </span>
           <div
             className={cn(
               "flex min-w-0 flex-col items-start justify-between gap-3 sm:flex-row sm:items-center",
