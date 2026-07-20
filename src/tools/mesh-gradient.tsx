@@ -613,9 +613,6 @@ export function MeshGradient() {
             </div>
           </Panel>
 
-          <Panel title="Presets">
-          {null}
-          </Panel>
           <Panel title="Export">
             <div className="p-3 grid gap-3">
               <Field label="Background">
