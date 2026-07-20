@@ -11,12 +11,12 @@ export function FeaturedTools() {
   return (
     <section className="mx-auto max-w-6xl px-4 md:px-8 py-20">
       <SectionHead
-        eyebrow="Most-used"
-        title="Popular tools, ready in a click"
-        subtitle="A curated slice of the toolkit — the utilities developers open every day."
+        title="The utilities you open every day"
+        subtitle="A curated slice of the toolkit. Everything else lives one keystroke away."
+        align="left"
       />
-      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        {tools.map((t) => {
+      <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border rounded-2xl overflow-hidden border border-border">
+        {tools.map((t, i) => {
           const Icon = FEATURE_ICON[t.slug] ?? Sparkles;
           return (
             <Link
@@ -24,14 +24,19 @@ export function FeaturedTools() {
               to="/t/$slug"
               params={{ slug: t.slug }}
               data-motion-icon-group
-              className="group relative rounded-xl border border-border bg-card p-5 hover:border-foreground/40 hover:bg-accent/40 transition"
+              className="group relative bg-card p-6 hover:bg-accent/40 transition"
             >
-              <div className="size-9 rounded-lg border border-border bg-background grid place-items-center mb-4">
-                <Icon className="size-4" />
+              <div className="flex items-start justify-between mb-8">
+                <div className="size-9 rounded-lg border border-border bg-background grid place-items-center">
+                  <Icon className="size-4" />
+                </div>
+                <span className="font-mono text-[10px] text-muted-foreground/60 tabular-nums">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
               </div>
-              <div className="font-medium">{t.name}</div>
-              <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{t.description}</p>
-              <ArrowRight className="size-4 absolute top-5 right-5 text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
+              <div className="font-medium tracking-tight">{t.name}</div>
+              <p className="text-[13px] text-muted-foreground mt-1.5 line-clamp-2 leading-relaxed">{t.description}</p>
+              <ArrowRight className="size-3.5 absolute bottom-6 right-6 text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
             </Link>
           );
         })}

@@ -2,18 +2,26 @@ export function SectionHead({
   eyebrow,
   title,
   subtitle,
+  align = "center",
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   subtitle?: string;
+  align?: "center" | "left";
 }) {
+  const isLeft = align === "left";
   return (
-    <div className="text-center max-w-2xl mx-auto">
-      <div className="inline-block text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground border border-border rounded-full px-3 py-1">
-        {eyebrow}
-      </div>
-      <h2 className="mt-4 text-3xl md:text-4xl font-semibold tracking-tight">{title}</h2>
-      {subtitle && <p className="mt-3 text-muted-foreground">{subtitle}</p>}
+    <div className={isLeft ? "max-w-2xl" : "text-center max-w-2xl mx-auto"}>
+      {eyebrow && (
+        <div className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+          <span className="h-px w-6 bg-border" />
+          {eyebrow}
+        </div>
+      )}
+      <h2 className={`${eyebrow ? "mt-3" : ""} text-3xl md:text-[2.75rem] font-semibold tracking-[-0.02em] leading-[1.05]`}>
+        {title}
+      </h2>
+      {subtitle && <p className="mt-4 text-[15px] text-muted-foreground leading-relaxed">{subtitle}</p>}
     </div>
   );
 }

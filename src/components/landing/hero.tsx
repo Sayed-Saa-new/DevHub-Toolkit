@@ -25,22 +25,22 @@ export function Hero() {
             className="text-base md:text-lg"
           />
         </div>
-        <h1 className="text-5xl md:text-7xl font-semibold tracking-tight leading-[1.02]">
-          Every developer tool
+        <h1 className="text-5xl md:text-7xl font-semibold tracking-[-0.035em] leading-[0.98]">
+          Every developer tool,
           <br />
-          <span className="text-muted-foreground">in one keystroke.</span>
+          <span className="text-muted-foreground">one keystroke away.</span>
         </h1>
-        <p className="mt-6 max-w-xl mx-auto text-base md:text-lg text-muted-foreground">
-          A minimal, fast toolkit for the tasks you do every day. Format JSON, decode JWTs, generate hashes, tweak gradients — from one clean interface.
+        <p className="mt-7 max-w-lg mx-auto text-[15px] md:text-base text-muted-foreground leading-relaxed">
+          Format JSON, decode JWTs, generate hashes, craft gradients — {TOOLS.length}+ utilities in one minimal, local-first workspace.
         </p>
-        <div className="mt-9 flex flex-wrap gap-3 justify-center">
-          <Link to="/tools" aria-label="Explore all tools">
+        <div className="mt-10 flex flex-wrap gap-3 justify-center">
+          <Link to="/tools" aria-label="Open the toolkit">
             <HoverBorderGradient
               as="div"
               containerClassName="rounded-full"
               className="text-sm font-medium flex items-center gap-2 px-5 py-2.5"
             >
-              Explore all tools <ArrowRight className="size-4" />
+              Open the toolkit <ArrowRight className="size-4" />
             </HoverBorderGradient>
           </Link>
           <Link to="/changelog">
