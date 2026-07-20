@@ -22,7 +22,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "The all-in-one developer toolkit. Format JSON, decode JWTs, generate hashes, tweak gradients, run AI helpers — 56+ premium utilities, local-first, zero signup.",
+          "The all-in-one developer toolkit. Format JSON, decode JWTs, generate hashes, tweak gradients, run AI helpers — 57+ premium utilities, local-first, zero signup.",
       },
       {
         name: "keywords",
@@ -71,7 +71,7 @@ export const Route = createFileRoute("/")({
           name: "DevHub Toolkit",
           url: `${SITE}/`,
           description:
-            "All-in-one developer toolkit — 56+ utilities: JSON, Base64, JWT, UUID, hashes, regex, QR, AI helpers and more.",
+            "All-in-one developer toolkit — 57+ utilities: JSON, Base64, JWT, UUID, hashes, regex, QR, AI helpers and more.",
           inLanguage: "en",
           publisher: { "@id": `${SITE}/#org` },
           potentialAction: {

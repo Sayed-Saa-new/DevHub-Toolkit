@@ -1,6 +1,6 @@
 # DevHub Toolkit — Full Tool List
 
-Total: **56 tools** across 6 categories.
+Total: **57 tools** across 6 categories.
 Live: [https://devhub.flinkeo.online](https://devhub.flinkeo.online)
 
 | # | Tool | Category | Description | Link |
