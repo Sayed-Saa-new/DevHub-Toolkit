@@ -100,7 +100,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: "How is this different from other online tools?",
-    a: "One clean interface for 44+ tools, keyboard-first navigation, favorites/recents, and a monochrome premium UI — no ads, no cross-site tracking.",
+    a: "One clean interface for 55+ tools, keyboard-first navigation, favorites/recents, and a monochrome premium UI — no ads, no cross-site tracking.",
   },
   {
     q: "Can I request a tool?",
