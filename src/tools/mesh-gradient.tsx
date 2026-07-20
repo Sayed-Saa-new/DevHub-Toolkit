@@ -339,10 +339,9 @@ export function MeshGradient() {
           onPointerUp={onPointerUp}
           onPointerLeave={onPointerUp}
           onClick={() => setSelected(null)}
-          className={`relative w-full ${ASPECTS[fx.aspect].cls} cursor-crosshair overflow-hidden`}
-          style={style}
+          className={`relative w-full ${ASPECTS[fx.aspect].cls} cursor-crosshair overflow-hidden bg-black`}
         >
-          <div className="absolute inset-0" style={{ ...style, filter: filterCss || undefined }} />
+          <div className="pointer-events-none absolute inset-0" style={{ ...style, filter: filterCss || undefined }} />
           {fx.grain > 0 && (
             <div
               className="pointer-events-none absolute inset-0"
