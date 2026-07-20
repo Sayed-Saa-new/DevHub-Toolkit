@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import type { ComponentType } from "react";
 
 import { Button } from "@/components/ui/button";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { BrandMark } from "@/components/brand-mark";
 import {
   NavigationMenu,
@@ -118,10 +119,14 @@ export function LandingHeader() {
           >
             <Github className="size-3.5" />
           </a>
-          <Link to="/tools">
-            <Button size="sm" className="h-8 rounded-full px-4 gap-1.5">
+          <Link to="/tools" aria-label="Open toolkit">
+            <HoverBorderGradient
+              as="div"
+              containerClassName="rounded-full"
+              className="text-xs font-medium flex items-center gap-1.5 px-3.5 py-1.5"
+            >
               Open toolkit <ArrowRight className="size-3.5" />
-            </Button>
+            </HoverBorderGradient>
           </Link>
         </div>
 
