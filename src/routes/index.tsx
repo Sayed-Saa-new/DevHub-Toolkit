@@ -777,16 +777,24 @@ function Features() {
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-3">
           {/* Row 1: hero (2-col) + small */}
           <WobbleCard containerClassName="lg:col-span-2 min-h-[280px]">
-            <div className="p-8 md:p-10 max-w-lg" data-motion-icon-group>
-              <div className="size-10 rounded-lg border border-border grid place-items-center mb-5 bg-background/50 backdrop-blur">
-                <ShieldCheck className="size-5" />
+            <div className="relative h-full min-h-[280px] overflow-hidden">
+              <div className="p-8 md:p-10 max-w-lg md:max-w-[55%] relative z-10" data-motion-icon-group>
+                <div className="size-10 rounded-lg border border-border grid place-items-center mb-5 bg-background/50 backdrop-blur">
+                  <ShieldCheck className="size-5" />
+                </div>
+                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">
+                  Local-first, private by default
+                </h3>
+                <p className="mt-3 text-sm md:text-base text-muted-foreground leading-relaxed">
+                  Your data never leaves the browser. No tracking, no telemetry, no server round-trips for the tools you run — encoding, hashing, formatting, all client-side.
+                </p>
               </div>
-              <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">
-                Local-first, private by default
-              </h3>
-              <p className="mt-3 text-sm md:text-base text-muted-foreground leading-relaxed">
-                Your data never leaves the browser. No tracking, no telemetry, no server round-trips for the tools you run — encoding, hashing, formatting, all client-side.
-              </p>
+              <img
+                src="/screenshots/tool.png"
+                alt="DevHub JSON Formatter tool preview"
+                loading="lazy"
+                className="hidden md:block pointer-events-none select-none absolute top-1/2 -right-16 lg:-right-10 w-[520px] max-w-[70%] -translate-y-1/2 rotate-[-6deg] rounded-xl border border-border/70 shadow-2xl shadow-black/60 ring-1 ring-white/5"
+              />
             </div>
           </WobbleCard>
 
@@ -806,8 +814,8 @@ function Features() {
 
           {/* Row 2: wide (3-col) */}
           <WobbleCard containerClassName="lg:col-span-3 min-h-[260px]">
-            <div className="p-8 md:p-12 flex flex-col md:flex-row md:items-center gap-6 md:gap-10" data-motion-icon-group>
-              <div className="flex-1 max-w-xl">
+            <div className="relative h-full min-h-[320px] md:min-h-[380px] overflow-hidden">
+              <div className="p-8 md:p-12 max-w-xl relative z-10" data-motion-icon-group>
                 <div className="size-10 rounded-lg border border-border grid place-items-center mb-5 bg-background/50 backdrop-blur">
                   <Command className="size-5" />
                 </div>
@@ -817,13 +825,19 @@ function Features() {
                 <p className="mt-3 text-sm md:text-base text-muted-foreground leading-relaxed">
                   ⌘K searches every tool, category, recent and favorite. Never lift your hands off the keyboard — the whole toolkit is one shortcut away.
                 </p>
+                <div className="mt-5 inline-flex items-center gap-2 rounded-lg border border-border bg-background/60 backdrop-blur px-3 py-2 font-mono text-xs">
+                  <kbd className="px-1.5 py-0.5 rounded-md border border-border bg-card">⌘</kbd>
+                  <span className="text-muted-foreground">+</span>
+                  <kbd className="px-1.5 py-0.5 rounded-md border border-border bg-card">K</kbd>
+                  <span className="ml-2 text-muted-foreground">Search anything…</span>
+                </div>
               </div>
-              <div className="hidden md:flex flex-shrink-0 items-center gap-2 rounded-xl border border-border bg-background/60 backdrop-blur px-5 py-4 font-mono text-sm">
-                <kbd className="px-2 py-1 rounded-md border border-border bg-card">⌘</kbd>
-                <span className="text-muted-foreground">+</span>
-                <kbd className="px-2 py-1 rounded-md border border-border bg-card">K</kbd>
-                <span className="ml-3 text-muted-foreground">Search anything…</span>
-              </div>
+              <img
+                src="/screenshots/palette.png"
+                alt="DevHub command palette preview"
+                loading="lazy"
+                className="hidden md:block pointer-events-none select-none absolute -bottom-10 -right-8 lg:-right-4 w-[460px] lg:w-[520px] max-w-[55%] rotate-[-4deg] rounded-xl border border-border/70 shadow-2xl shadow-black/60 ring-1 ring-white/5"
+              />
             </div>
           </WobbleCard>
 
