@@ -1,41 +1,35 @@
 import { LoadingCarousel, type Tip } from "@/components/ui/loading-carousel";
 import { SectionHead } from "./section-head";
-import shotConverters from "@/assets/screenshots/converters.webp.asset.json";
-import shotGenerators from "@/assets/screenshots/generators.webp.asset.json";
-import shotDesign from "@/assets/screenshots/design.webp.asset.json";
-import shotEditors from "@/assets/screenshots/editors.webp.asset.json";
-import shotReference from "@/assets/screenshots/reference.webp.asset.json";
-import shotAi from "@/assets/screenshots/ai.webp.asset.json";
 
 const tips: Tip[] = [
   {
     text: "Convert & format anything — JSON, Base64, YAML, cURL, SQL.",
-    image: shotConverters.url,
+    image: "/img/screenshots/converters.webp",
     url: "/c/converters",
   },
   {
     text: "Generate UUIDs, hashes, JWTs, QR codes and rich mock data.",
-    image: shotGenerators.url,
+    image: "/img/screenshots/generators.webp",
     url: "/c/generators",
   },
   {
     text: "Design tokens on tap — gradients, shadows, radii, fluid clamps.",
-    image: shotDesign.url,
+    image: "/img/screenshots/design.webp",
     url: "/c/design",
   },
   {
     text: "Live editors for JSON, Markdown, Regex and SQL — instant feedback.",
-    image: shotEditors.url,
+    image: "/img/screenshots/editors.webp",
     url: "/c/editors",
   },
   {
     text: "Searchable cheat sheets — HTTP, Git, Linux, VS Code, cron.",
-    image: shotReference.url,
+    image: "/img/screenshots/reference.webp",
     url: "/c/reference",
   },
   {
     text: "AI helpers — explain, optimize, convert code and craft SQL.",
-    image: shotAi.url,
+    image: "/img/screenshots/ai.webp",
     url: "/c/ai",
   },
 ];
