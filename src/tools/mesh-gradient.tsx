@@ -438,33 +438,37 @@ export function MeshGradient() {
 
   return (
     <div className="space-y-4">
-      <Panel
-        title="Canvas"
-        actions={
-          <>
-            <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={randomize}>
-              <Shuffle className="size-3" /> Random
-            </Button>
-            <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={addPoint} disabled={points.length >= 8}>
-              <Plus className="size-3" /> Add point
-            </Button>
-            <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={exportSvg}>
-              <Download className="size-3" /> SVG
-            </Button>
-            <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={exportPng}>
-              <Download className="size-3" /> PNG
-            </Button>
-          </>
-        }
-      >
-        <div
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_360px]">
+        <Panel
+          title="Canvas"
+          actions={
+            <>
+              <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={randomize}>
+                <Shuffle className="size-3" /> Random
+              </Button>
+              <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={addPoint} disabled={points.length >= 8}>
+                <Plus className="size-3" /> Add point
+              </Button>
+              <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={exportSvg}>
+                <Download className="size-3" /> SVG
+              </Button>
+              <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={exportPng}>
+                <Download className="size-3" /> PNG
+              </Button>
+            </>
+          }
+        >
+          <div className="p-3">
+            <div className="mx-auto w-full max-h-[70vh] flex items-center justify-center">
+              <div
           ref={stageRef}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onPointerLeave={onPointerUp}
           onClick={() => setSelected(null)}
-          className={`relative w-full ${ASPECTS[fx.aspect].cls} cursor-crosshair overflow-hidden bg-black`}
-        >
+                className={`relative ${ASPECTS[fx.aspect].cls} max-h-[70vh] max-w-full w-auto h-auto cursor-crosshair overflow-hidden bg-black rounded-md border border-border`}
+                style={{ aspectRatio: fx.aspect.replace("/", " / ") }}
+              >
           <div className="pointer-events-none absolute inset-0" style={{ ...style, filter: filterCss || undefined }} />
           {fx.grain > 0 && (
             <div
@@ -499,24 +503,12 @@ export function MeshGradient() {
               aria-label={`Gradient point at ${p.x}%, ${p.y}%`}
             />
           ))}
-        </div>
-      </Panel>
-
-      <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
-        <Panel title="Output" actions={<CopyButton text={output} />}>
-          <div className="p-3 space-y-3">
-            <Tabs value={format} onValueChange={(v) => setFormat(v as typeof format)}>
-              <TabsList className="h-8">
-                <TabsTrigger value="css" className="text-xs">CSS</TabsTrigger>
-                <TabsTrigger value="tailwind" className="text-xs">React / JSX</TabsTrigger>
-                <TabsTrigger value="svg" className="text-xs">SVG</TabsTrigger>
-              </TabsList>
-            </Tabs>
-            <pre className="text-xs font-mono bg-muted/40 rounded-md p-3 overflow-x-auto max-h-72 border border-border">{output}</pre>
+              </div>
+            </div>
           </div>
         </Panel>
 
-        <div className="space-y-4">
+        <div className="space-y-4 xl:max-h-[calc(100vh-6rem)] xl:overflow-y-auto xl:pr-1">
           <Panel
             title="Stage & Effects"
             actions={
@@ -597,7 +589,7 @@ export function MeshGradient() {
           </Panel>
 
           <Panel title="Presets">
-            <div className="p-3 grid grid-cols-2 gap-2">
+            <div className="p-3 grid grid-cols-3 gap-2">
               {PRESETS.map((p, i) => (
                 <button
                   key={p.name}
@@ -663,6 +655,19 @@ export function MeshGradient() {
           </Panel>
         </div>
       </div>
+
+      <Panel title="Output" actions={<CopyButton text={output} />}>
+        <div className="p-3 space-y-3">
+          <Tabs value={format} onValueChange={(v) => setFormat(v as typeof format)}>
+            <TabsList className="h-8">
+              <TabsTrigger value="css" className="text-xs">CSS</TabsTrigger>
+              <TabsTrigger value="tailwind" className="text-xs">React / JSX</TabsTrigger>
+              <TabsTrigger value="svg" className="text-xs">SVG</TabsTrigger>
+            </TabsList>
+          </Tabs>
+          <pre className="text-xs font-mono bg-muted/40 rounded-md p-3 overflow-x-auto max-h-72 border border-border">{output}</pre>
+        </div>
+      </Panel>
     </div>
   );
 }
