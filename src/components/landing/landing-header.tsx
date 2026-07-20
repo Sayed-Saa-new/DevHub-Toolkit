@@ -198,10 +198,10 @@ function MegaMenuBody({ onClose }: { onClose: () => void }) {
               <Link
                 to={i.to}
                 onClick={onClose}
+                data-motion-icon-group
                 className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
               >
                 <div
-                  data-motion-icon-group
                   className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors"
                 >
                   <i.icon className="size-4" />
@@ -241,10 +241,10 @@ function MegaColumn({
                 to="/c/$category"
                 params={{ category: c.id }}
                 onClick={onClose}
+                data-motion-icon-group
                 className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
               >
                 <div
-                  data-motion-icon-group
                   className="relative shrink-0 w-[92px] aspect-[16/10] rounded-md overflow-hidden border border-border bg-gradient-to-br from-neutral-900 to-black flex items-center justify-center p-2"
                 >
                   <img
@@ -297,10 +297,10 @@ function ToolsMenuBody({ close }: { close: () => void }) {
                 to="/t/$slug"
                 params={{ slug: t.slug }}
                 onClick={close}
+                data-motion-icon-group
                 className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
               >
                 <div
-                  data-motion-icon-group
                   className="mt-0.5 size-8 shrink-0 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition"
                 >
                   <t.icon className="size-4 shrink-0" />
@@ -328,10 +328,10 @@ function ToolsMenuBody({ close }: { close: () => void }) {
                 to="/t/$slug"
                 params={{ slug: t.slug }}
                 onClick={close}
+                data-motion-icon-group
                 className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
               >
                 <div
-                  data-motion-icon-group
                   className="mt-0.5 size-8 shrink-0 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition"
                 >
                   <t.icon className="size-4 shrink-0" />
@@ -360,10 +360,10 @@ function ToolsMenuBody({ close }: { close: () => void }) {
               <Link
                 to={j.to}
                 onClick={close}
+                data-motion-icon-group
                 className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
               >
                 <div
-                  data-motion-icon-group
                   className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors"
                 >
                   <j.icon className="size-4" />
@@ -382,10 +382,10 @@ function ToolsMenuBody({ close }: { close: () => void }) {
               to="/c/$category"
               params={{ category: "ai" }}
               onClick={close}
+              data-motion-icon-group
               className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
             >
               <div
-                data-motion-icon-group
                 className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors"
               >
                 <Sparkles className="size-4" />
