@@ -126,7 +126,8 @@ export function LoadingCarousel({
                   >
                     <img
                       src={tip.image}
-                      alt={tip.text}
+                      alt=""
+                      aria-hidden="true"
                       loading="lazy"
                       className="absolute inset-0 h-full w-full object-contain p-8"
                     />
