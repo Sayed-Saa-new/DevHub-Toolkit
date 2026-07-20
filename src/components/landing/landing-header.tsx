@@ -6,8 +6,11 @@ import {
   Star,
   Menu,
   X,
+  Github,
+  Briefcase,
+  Rocket,
+  BookOpen,
 } from "lucide-react-motion";
-import { Github, Briefcase, Rocket, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { ComponentType } from "react";
 
