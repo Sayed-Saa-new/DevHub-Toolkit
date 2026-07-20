@@ -1,36 +1,41 @@
 import { LoadingCarousel, type Tip } from "@/components/ui/loading-carousel";
-import { CATEGORY_ART_ASSETS } from "./data";
 import { SectionHead } from "./section-head";
+import shotConverters from "@/assets/screenshots/converters.png.asset.json";
+import shotGenerators from "@/assets/screenshots/generators.png.asset.json";
+import shotDesign from "@/assets/screenshots/design.png.asset.json";
+import shotEditors from "@/assets/screenshots/editors.png.asset.json";
+import shotReference from "@/assets/screenshots/reference.png.asset.json";
+import shotAi from "@/assets/screenshots/ai.png.asset.json";
 
 const tips: Tip[] = [
   {
     text: "Convert & format anything — JSON, Base64, YAML, cURL, SQL.",
-    image: CATEGORY_ART_ASSETS.catConverters,
+    image: shotConverters.url,
     url: "/c/converters",
   },
   {
     text: "Generate UUIDs, hashes, JWTs, QR codes and rich mock data.",
-    image: CATEGORY_ART_ASSETS.catGenerators,
+    image: shotGenerators.url,
     url: "/c/generators",
   },
   {
     text: "Design tokens on tap — gradients, shadows, radii, fluid clamps.",
-    image: CATEGORY_ART_ASSETS.catDesign,
+    image: shotDesign.url,
     url: "/c/design",
   },
   {
     text: "Live editors for JSON, Markdown, Regex and SQL — instant feedback.",
-    image: CATEGORY_ART_ASSETS.catEditors,
+    image: shotEditors.url,
     url: "/c/editors",
   },
   {
     text: "Searchable cheat sheets — HTTP, Git, Linux, VS Code, cron.",
-    image: CATEGORY_ART_ASSETS.catReference,
+    image: shotReference.url,
     url: "/c/reference",
   },
   {
     text: "AI helpers — explain, optimize, convert code and craft SQL.",
-    image: CATEGORY_ART_ASSETS.catAi,
+    image: shotAi.url,
     url: "/c/ai",
   },
 ];
