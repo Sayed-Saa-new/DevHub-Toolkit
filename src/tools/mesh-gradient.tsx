@@ -287,6 +287,20 @@ export function MeshGradient() {
   const stageRef = useRef<HTMLDivElement>(null);
   const draggingRef = useRef<string | null>(null);
 
+  // Export controls
+  const [transparentBg, setTransparentBg] = useState(false);
+  const [scale, setScale] = useState<1 | 2 | 3 | 4>(2);
+  const [customW, setCustomW] = useState<string>("");
+  const [customH, setCustomH] = useState<string>("");
+
+  const exportDims = useMemo(() => {
+    const cw = parseInt(customW, 10);
+    const ch = parseInt(customH, 10);
+    if (cw > 0 && ch > 0) return { w: Math.min(cw, 8192), h: Math.min(ch, 8192), custom: true };
+    const { w, h } = ASPECTS[fx.aspect];
+    return { w: w * scale, h: h * scale, custom: false };
+  }, [customW, customH, scale, fx.aspect]);
+
   const css = useMemo(() => buildCss(points, base), [points, base]);
   const style = useMemo(() => buildStyle(points, base), [points, base]);
   const filterCss = useMemo(() => filterString(fx), [fx]);
@@ -379,7 +393,8 @@ export function MeshGradient() {
     draggingRef.current = null;
   };
 
-  const buildExportSvg = (w: number, h: number) => {
+  const buildExportSvg = (w: number, h: number, opts?: { transparent?: boolean }) => {
+    const transparent = opts?.transparent ?? false;
     const defs = `${points
       .map(
         (p, i) =>
@@ -392,12 +407,13 @@ export function MeshGradient() {
     const layers = points.map((_, i) => `<rect width="100%" height="100%" fill="url(#g${i})"/>`).join("");
     const grainRect = fx.grain > 0 ? `<rect width="100%" height="100%" fill="#fff" filter="url(#grain)" opacity="${fx.grain / 100}" style="mix-blend-mode:${fx.grainBlend}"/>` : "";
     const vignetteRect = fx.vignette > 0 ? `<rect width="100%" height="100%" fill="url(#vig)"/>` : "";
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"${filterAttr}><defs>${defs}</defs>${groupOpen}<rect width="100%" height="100%" fill="${base}"/>${layers}${groupClose}${grainRect}${vignetteRect}</svg>`;
+    const baseRect = transparent ? "" : `<rect width="100%" height="100%" fill="${base}"/>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"${filterAttr}><defs>${defs}</defs>${groupOpen}${baseRect}${layers}${groupClose}${grainRect}${vignetteRect}</svg>`;
   };
 
   const exportPng = async () => {
-    const { w, h } = ASPECTS[fx.aspect];
-    const svg = buildExportSvg(w, h);
+    const { w, h } = exportDims;
+    const svg = buildExportSvg(w, h, { transparent: transparentBg });
     const img = new window.Image();
     const blob = new Blob([svg], { type: "image/svg+xml" });
     const url = URL.createObjectURL(blob);
@@ -410,16 +426,25 @@ export function MeshGradient() {
     canvas.width = w;
     canvas.height = h;
     const ctx = canvas.getContext("2d")!;
+    if (!transparentBg) {
+      // Explicit fill guarantees fully opaque background even if base uses alpha
+      ctx.fillStyle = base;
+      ctx.fillRect(0, 0, w, h);
+    }
     ctx.drawImage(img, 0, 0, w, h);
     URL.revokeObjectURL(url);
     canvas.toBlob((b) => {
-      if (b) downloadFile("mesh-gradient.png", b, "image/png");
+      if (b) downloadFile(`mesh-gradient-${w}x${h}${transparentBg ? "-transparent" : ""}.png`, b, "image/png");
     }, "image/png");
   };
 
   const exportSvg = () => {
-    const { w, h } = ASPECTS[fx.aspect];
-    downloadFile("mesh-gradient.svg", buildExportSvg(w, h), "image/svg+xml");
+    const { w, h } = exportDims;
+    downloadFile(
+      `mesh-gradient-${w}x${h}${transparentBg ? "-transparent" : ""}.svg`,
+      buildExportSvg(w, h, { transparent: transparentBg }),
+      "image/svg+xml",
+    );
   };
 
   const sel = points.find((p) => p.id === selected) ?? null;
