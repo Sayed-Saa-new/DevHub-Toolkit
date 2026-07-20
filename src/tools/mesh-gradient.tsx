@@ -287,6 +287,20 @@ export function MeshGradient() {
   const stageRef = useRef<HTMLDivElement>(null);
   const draggingRef = useRef<string | null>(null);
 
+  // Export controls
+  const [transparentBg, setTransparentBg] = useState(false);
+  const [scale, setScale] = useState<1 | 2 | 3 | 4>(2);
+  const [customW, setCustomW] = useState<string>("");
+  const [customH, setCustomH] = useState<string>("");
+
+  const exportDims = useMemo(() => {
+    const cw = parseInt(customW, 10);
+    const ch = parseInt(customH, 10);
+    if (cw > 0 && ch > 0) return { w: Math.min(cw, 8192), h: Math.min(ch, 8192), custom: true };
+    const { w, h } = ASPECTS[fx.aspect];
+    return { w: w * scale, h: h * scale, custom: false };
+  }, [customW, customH, scale, fx.aspect]);
+
   const css = useMemo(() => buildCss(points, base), [points, base]);
   const style = useMemo(() => buildStyle(points, base), [points, base]);
   const filterCss = useMemo(() => filterString(fx), [fx]);
@@ -379,7 +393,8 @@ export function MeshGradient() {
     draggingRef.current = null;
   };
 
-  const buildExportSvg = (w: number, h: number) => {
+  const buildExportSvg = (w: number, h: number, opts?: { transparent?: boolean }) => {
+    const transparent = opts?.transparent ?? false;
     const defs = `${points
       .map(
         (p, i) =>
@@ -392,12 +407,13 @@ export function MeshGradient() {
     const layers = points.map((_, i) => `<rect width="100%" height="100%" fill="url(#g${i})"/>`).join("");
     const grainRect = fx.grain > 0 ? `<rect width="100%" height="100%" fill="#fff" filter="url(#grain)" opacity="${fx.grain / 100}" style="mix-blend-mode:${fx.grainBlend}"/>` : "";
     const vignetteRect = fx.vignette > 0 ? `<rect width="100%" height="100%" fill="url(#vig)"/>` : "";
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"${filterAttr}><defs>${defs}</defs>${groupOpen}<rect width="100%" height="100%" fill="${base}"/>${layers}${groupClose}${grainRect}${vignetteRect}</svg>`;
+    const baseRect = transparent ? "" : `<rect width="100%" height="100%" fill="${base}"/>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"${filterAttr}><defs>${defs}</defs>${groupOpen}${baseRect}${layers}${groupClose}${grainRect}${vignetteRect}</svg>`;
   };
 
   const exportPng = async () => {
-    const { w, h } = ASPECTS[fx.aspect];
-    const svg = buildExportSvg(w, h);
+    const { w, h } = exportDims;
+    const svg = buildExportSvg(w, h, { transparent: transparentBg });
     const img = new window.Image();
     const blob = new Blob([svg], { type: "image/svg+xml" });
     const url = URL.createObjectURL(blob);
@@ -410,16 +426,25 @@ export function MeshGradient() {
     canvas.width = w;
     canvas.height = h;
     const ctx = canvas.getContext("2d")!;
+    if (!transparentBg) {
+      // Explicit fill guarantees fully opaque background even if base uses alpha
+      ctx.fillStyle = base;
+      ctx.fillRect(0, 0, w, h);
+    }
     ctx.drawImage(img, 0, 0, w, h);
     URL.revokeObjectURL(url);
     canvas.toBlob((b) => {
-      if (b) downloadFile("mesh-gradient.png", b, "image/png");
+      if (b) downloadFile(`mesh-gradient-${w}x${h}${transparentBg ? "-transparent" : ""}.png`, b, "image/png");
     }, "image/png");
   };
 
   const exportSvg = () => {
-    const { w, h } = ASPECTS[fx.aspect];
-    downloadFile("mesh-gradient.svg", buildExportSvg(w, h), "image/svg+xml");
+    const { w, h } = exportDims;
+    downloadFile(
+      `mesh-gradient-${w}x${h}${transparentBg ? "-transparent" : ""}.svg`,
+      buildExportSvg(w, h, { transparent: transparentBg }),
+      "image/svg+xml",
+    );
   };
 
   const sel = points.find((p) => p.id === selected) ?? null;
@@ -448,12 +473,6 @@ export function MeshGradient() {
               </Button>
               <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={addPoint} disabled={points.length >= 8}>
                 <Plus className="size-3" /> Add point
-              </Button>
-              <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={exportSvg}>
-                <Download className="size-3" /> SVG
-              </Button>
-              <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={exportPng}>
-                <Download className="size-3" /> PNG
               </Button>
             </>
           }
@@ -588,7 +607,82 @@ export function MeshGradient() {
             </div>
           </Panel>
 
-          <Panel title="Presets">
+          <Panel title="Export">
+            <div className="p-3 grid gap-3">
+              <Field label="Background">
+                <div className="grid grid-cols-2 gap-1">
+                  {[
+                    { v: false, label: "Solid" },
+                    { v: true, label: "Transparent" },
+                  ].map((o) => (
+                    <button
+                      key={String(o.v)}
+                      onClick={() => setTransparentBg(o.v)}
+                      className={`h-8 rounded-md border text-[11px] transition ${
+                        transparentBg === o.v ? "border-foreground bg-foreground/10" : "border-border hover:border-foreground/40"
+                      }`}
+                    >
+                      {o.label}
+                    </button>
+                  ))}
+                </div>
+              </Field>
+              <Field label={`Resolution scale (${scale}×)`} hint={`${exportDims.w} × ${exportDims.h}`}>
+                <div className="grid grid-cols-4 gap-1">
+                  {([1, 2, 3, 4] as const).map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => {
+                        setScale(s);
+                        setCustomW("");
+                        setCustomH("");
+                      }}
+                      disabled={exportDims.custom ? false : false}
+                      className={`h-8 rounded-md border text-[11px] font-mono transition ${
+                        !exportDims.custom && scale === s ? "border-foreground bg-foreground/10" : "border-border hover:border-foreground/40"
+                      }`}
+                    >
+                      {s}×
+                    </button>
+                  ))}
+                </div>
+              </Field>
+              <Field label="Custom size (px)" hint="Overrides scale">
+                <div className="flex items-center gap-1.5">
+                  <Input
+                    inputMode="numeric"
+                    placeholder="width"
+                    value={customW}
+                    onChange={(e) => setCustomW(e.target.value.replace(/\D/g, ""))}
+                    className="h-9 font-mono text-xs"
+                  />
+                  <span className="text-xs text-muted-foreground">×</span>
+                  <Input
+                    inputMode="numeric"
+                    placeholder="height"
+                    value={customH}
+                    onChange={(e) => setCustomH(e.target.value.replace(/\D/g, ""))}
+                    className="h-9 font-mono text-xs"
+                  />
+                </div>
+              </Field>
+              <div className="grid grid-cols-2 gap-2 pt-1">
+                <Button size="sm" variant="secondary" onClick={exportPng} className="h-9 gap-1.5 text-xs">
+                  <Download className="size-3.5" /> PNG
+                </Button>
+                <Button size="sm" variant="secondary" onClick={exportSvg} className="h-9 gap-1.5 text-xs">
+                  <Download className="size-3.5" /> SVG
+                </Button>
+              </div>
+              {transparentBg && (
+                <p className="text-[10px] text-muted-foreground leading-relaxed">
+                  Base color is omitted. Points render on a transparent canvas — perfect for overlays.
+                </p>
+              )}
+            </div>
+          </Panel>
+
+          <Panel title="Presets" className="mt-4">
             <div className="p-3 grid grid-cols-3 gap-2">
               {PRESETS.map((p, i) => (
                 <button
