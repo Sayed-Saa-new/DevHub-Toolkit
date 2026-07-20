@@ -356,4 +356,10 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "Design vibrant mesh gradients with draggable color points, curated presets, grain overlay and one-click CSS, SVG or PNG export. 100% free, in-browser.",
     keywords: ["mesh gradient generator", "css mesh gradient", "mesh gradient", "gradient generator", "mesh background generator", "svg mesh gradient", "colorful gradient", "aurora gradient", "background maker", "mesh gradient css"],
   }, // mesh gradient — 22,000/mo, KDI 30 (winnable)
+  "favicon-generator": {
+    title: "Favicon Generator — ICO, PNG, Apple Touch & Manifest",
+    description:
+      "Generate a full favicon pack from text or an image — favicon.ico, PNGs (16 → 512), apple-touch-icon and site.webmanifest. Live preview, 100% in-browser, free.",
+    keywords: ["favicon generator", "favicon maker", "favicon.ico generator", "generate favicon", "png to ico", "favicon converter", "apple touch icon generator", "site webmanifest generator", "favicon from image", "favicon from text", "favicon pack"],
+  }, // favicon generator — 60,500/mo, KDI 71 (long-tail winnable)
 };
