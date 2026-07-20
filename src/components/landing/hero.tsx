@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Rss } from "lucide-react-motion";
-import { Button } from "@/components/ui/button";
+import { PremiumButton } from "@/components/ui/premium-button";
 import { GenerateButton } from "@/components/ui/generate-button";
 import { TOOLS } from "@/lib/tools";
 
@@ -34,14 +34,14 @@ export function Hero() {
         </p>
         <div className="mt-9 flex flex-wrap gap-3 justify-center">
           <Link to="/tools">
-            <Button size="lg" className="h-11 px-5 gap-2 rounded-full">
-              Explore all tools <ArrowRight className="size-4" />
-            </Button>
+            <PremiumButton variant="primary" rightIcon={<ArrowRight className="size-4" />}>
+              Explore all tools
+            </PremiumButton>
           </Link>
           <Link to="/changelog">
-            <Button size="lg" variant="outline" className="h-11 px-5 gap-2 rounded-full">
-              <Rss className="size-4" /> What's new
-            </Button>
+            <PremiumButton variant="ghost" leftIcon={<Rss className="size-4" />}>
+              What's new
+            </PremiumButton>
           </Link>
         </div>
         <div className="mt-6 flex items-center gap-2 justify-center text-xs text-muted-foreground">

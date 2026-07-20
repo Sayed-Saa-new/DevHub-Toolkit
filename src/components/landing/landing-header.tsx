@@ -119,9 +119,9 @@ export function LandingHeader() {
             <Github className="size-3.5" />
           </a>
           <Link to="/tools">
-            <Button size="sm" className="h-8 rounded-full px-4 gap-1.5">
-              Open toolkit <ArrowRight className="size-3.5" />
-            </Button>
+            <PremiumButton variant="primary" size="sm" rightIcon={<ArrowRight className="size-3.5" />}>
+              Open toolkit
+            </PremiumButton>
           </Link>
         </div>
 
