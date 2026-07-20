@@ -27,7 +27,7 @@ import { TextToMarkdown } from "./text-to-markdown";
 import { DocxToMarkdown } from "./docx-to-markdown";
 import { DiffChecker } from "./diff-checker";
 import { MeshGradient } from "./mesh-gradient";
-import { FaviconGenerator } from "./favicon-generator";
+import { FaviconGenerator as FaviconGeneratorPack } from "./favicon-generator";
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "json-formatter": JsonFormatter,
@@ -79,7 +79,7 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "docx-to-markdown": DocxToMarkdown,
   "diff-checker": DiffChecker,
   "mesh-gradient": MeshGradient,
-  "favicon-generator": FaviconGenerator,
+  "favicon-generator": FaviconGeneratorPack,
   "ai-explainer": AiExplainer,
   "ai-optimizer": AiOptimizer,
   "ai-commit": AiCommit,
