@@ -7,7 +7,8 @@ import {
   Menu,
   X,
 } from "lucide-react-motion";
-import { Github, Briefcase, Rocket, BookOpen } from "lucide-react";
+import { Briefcase, Rocket, BookOpen } from "lucide-react-motion";
+import { Github } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { ComponentType } from "react";
 
@@ -199,7 +200,10 @@ function MegaMenuBody({ onClose }: { onClose: () => void }) {
                 onClick={onClose}
                 className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
               >
-                <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
+                <div
+                  data-motion-icon-group
+                  className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors"
+                >
                   <i.icon className="size-4" />
                 </div>
                 <div className="min-w-0">
@@ -239,7 +243,10 @@ function MegaColumn({
                 onClick={onClose}
                 className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
               >
-                <div className="relative shrink-0 w-[92px] aspect-[16/10] rounded-md overflow-hidden border border-border bg-gradient-to-br from-neutral-900 to-black flex items-center justify-center p-2">
+                <div
+                  data-motion-icon-group
+                  className="relative shrink-0 w-[92px] aspect-[16/10] rounded-md overflow-hidden border border-border bg-gradient-to-br from-neutral-900 to-black flex items-center justify-center p-2"
+                >
                   <img
                     src={art.image}
                     alt=""
@@ -292,7 +299,10 @@ function ToolsMenuBody({ close }: { close: () => void }) {
                 onClick={close}
                 className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
               >
-                <div className="mt-0.5 size-8 shrink-0 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition">
+                <div
+                  data-motion-icon-group
+                  className="mt-0.5 size-8 shrink-0 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition"
+                >
                   <t.icon className="size-4 shrink-0" />
                 </div>
                 <div className="min-w-0">
@@ -320,7 +330,10 @@ function ToolsMenuBody({ close }: { close: () => void }) {
                 onClick={close}
                 className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
               >
-                <div className="mt-0.5 size-8 shrink-0 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition">
+                <div
+                  data-motion-icon-group
+                  className="mt-0.5 size-8 shrink-0 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition"
+                >
                   <t.icon className="size-4 shrink-0" />
                 </div>
                 <div className="min-w-0">
@@ -349,7 +362,10 @@ function ToolsMenuBody({ close }: { close: () => void }) {
                 onClick={close}
                 className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
               >
-                <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
+                <div
+                  data-motion-icon-group
+                  className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors"
+                >
                   <j.icon className="size-4" />
                 </div>
                 <div className="min-w-0">
@@ -368,7 +384,10 @@ function ToolsMenuBody({ close }: { close: () => void }) {
               onClick={close}
               className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
             >
-              <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
+              <div
+                data-motion-icon-group
+                className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors"
+              >
                 <Sparkles className="size-4" />
               </div>
               <div className="min-w-0">
@@ -460,7 +479,10 @@ function ChangelogMenuBody({ close }: { close: () => void }) {
               onClick={close}
               className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
             >
-              <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
+              <div
+                data-motion-icon-group
+                className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors"
+              >
                 <BookOpen className="size-4" />
               </div>
               <div>
@@ -475,7 +497,10 @@ function ChangelogMenuBody({ close }: { close: () => void }) {
               onClick={close}
               className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
             >
-              <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
+              <div
+                data-motion-icon-group
+                className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors"
+              >
                 <Rss className="size-4" />
               </div>
               <div>
