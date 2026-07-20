@@ -1027,8 +1027,19 @@ function BigFooter() {
     { label: "Changelog", to: "/changelog" as const },
   ];
   return (
-    <footer className="border-t border-border bg-card/10">
-      <div className="mx-auto max-w-6xl px-4 md:px-8 pt-16 pb-10">
+    <footer className="relative overflow-hidden border-t border-border bg-card/10">
+      {/* Subtle grid backdrop */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+          maskImage: "radial-gradient(ellipse at 50% 100%, black 40%, transparent 75%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-6xl px-4 md:px-8 pt-16 pb-4">
         <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
           <div className="col-span-2 md:col-span-2">
             <Link to="/" className="inline-flex items-center gap-2.5">
@@ -1129,6 +1140,26 @@ function BigFooter() {
           <div>
             © {new Date().getFullYear()} DevHub Toolkit · Built for developers.
           </div>
+        </div>
+      </div>
+
+      {/* Giant editorial wordmark */}
+      <div
+        aria-hidden
+        className="relative select-none pointer-events-none -mt-2"
+      >
+        <div
+          className="mx-auto max-w-[1400px] px-4 md:px-8 text-center font-semibold tracking-tighter leading-[0.85] text-foreground/[0.06]"
+          style={{
+            fontSize: "clamp(5rem, 22vw, 20rem)",
+            backgroundImage:
+              "linear-gradient(to bottom, hsl(var(--foreground) / 0.10), hsl(var(--foreground) / 0))",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          DevHub
         </div>
       </div>
     </footer>
