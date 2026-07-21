@@ -4,6 +4,7 @@ import { MotionIconConfig } from "lucide-react-motion";
 import { TOOLS } from "@/lib/tools";
 import { SITE, CATEGORY_ART_ASSETS } from "@/components/landing/data";
 import { LandingHeader } from "@/components/landing/landing-header";
+import { PHBanner } from "@/components/landing/ph-banner";
 import { Hero } from "@/components/landing/hero";
 import { FeaturedTools } from "@/components/landing/featured-tools";
 import { Features } from "@/components/landing/features";
@@ -101,6 +102,7 @@ function Landing() {
   return (
     <MotionIconConfig trigger="parent-hover" duration={0.25}>
       <div className="min-w-0">
+        <PHBanner />
         <LandingHeader />
         <Hero />
         <FeaturedTools />
