@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import logoAsset from "@/assets/devhub-logo.png.asset.json";
 
 /**
  * DevHub brand mark — 3D embossed "D." tile.
@@ -7,7 +6,7 @@ import logoAsset from "@/assets/devhub-logo.png.asset.json";
 export function BrandMark({ className, size = 24 }: { className?: string; size?: number }) {
   return (
     <img
-      src={logoAsset.url}
+      src="/devhub-logo.png"
       width={size}
       height={size}
       alt=""
