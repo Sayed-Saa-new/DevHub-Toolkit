@@ -27,13 +27,13 @@ export function PHBanner() {
 
   return (
     <div className="relative z-40 border-b border-border bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto max-w-6xl px-4 md:px-8 h-10 flex items-center justify-between gap-3 text-xs">
+      <div className="mx-auto max-w-6xl px-4 md:px-8 h-10 flex items-center justify-center gap-3 text-xs relative">
         <a
           href={PH_URL}
           target="_blank"
           rel="noreferrer"
           data-motion-icon-group
-          className="group flex items-center gap-2 min-w-0 text-muted-foreground hover:text-foreground transition"
+          className="group flex items-center justify-center gap-2 min-w-0 text-center text-muted-foreground hover:text-foreground transition"
         >
           <span className="inline-flex items-center gap-1.5 shrink-0 rounded-full border border-foreground/20 bg-foreground/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-foreground/80">
             <span className="size-1.5 rounded-full bg-foreground animate-pulse" />
@@ -50,7 +50,7 @@ export function PHBanner() {
         <button
           onClick={dismiss}
           aria-label="Dismiss"
-          className="shrink-0 size-6 grid place-items-center rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition"
+          className="absolute right-4 md:right-8 shrink-0 size-6 grid place-items-center rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition"
         >
           <X className="size-3.5" />
         </button>
