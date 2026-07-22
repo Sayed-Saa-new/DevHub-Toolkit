@@ -4,6 +4,7 @@ import { MotionIconConfig } from "lucide-react-motion";
 import { TOOLS } from "@/lib/tools";
 import { SITE, CATEGORY_ART_ASSETS } from "@/components/landing/data";
 import { LandingHeader } from "@/components/landing/landing-header";
+import { PHBanner } from "@/components/landing/ph-banner";
 import { Hero } from "@/components/landing/hero";
 import { FeaturedTools } from "@/components/landing/featured-tools";
 import { Features } from "@/components/landing/features";
@@ -38,11 +39,10 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "DevHub Toolkit" },
-      {
-        property: "og:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d73bcc09-2f60-409d-b833-91c82c156e5e/id-preview-aa9e0d77--6b271a1b-d2e8-44e0-909f-190eae9de463.lovable.app-1784378017742.png",
-      },
+      { property: "og:image", content: `${SITE}/og-image.png` },
+      { property: "og:image:secure_url", content: `${SITE}/og-image.png` },
+      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:alt", content: "DevHub Toolkit — 55 developer tools, one ⌘K away" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -51,6 +51,7 @@ export const Route = createFileRoute("/")({
         name: "twitter:description",
         content: "Every developer utility you actually use — local-first, keyboard-first, monochrome.",
       },
+      { name: "twitter:image", content: `${SITE}/og-image.png` },
     ],
     links: [
       { rel: "canonical", href: `${SITE}/` },
@@ -101,6 +102,7 @@ function Landing() {
   return (
     <MotionIconConfig trigger="parent-hover" duration={0.25}>
       <div className="min-w-0">
+        <PHBanner />
         <LandingHeader />
         <Hero />
         <FeaturedTools />
