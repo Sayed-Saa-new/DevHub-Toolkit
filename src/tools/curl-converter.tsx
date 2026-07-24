@@ -39,10 +39,19 @@ function tokenize(input: string): string[] {
       }
       continue;
     }
-    if (ch === '"' || ch === "'") { quote = ch as '"' | "'"; continue; }
-    if (ch === "\\" && i + 1 < src.length) { buf += src[++i]; continue; }
+    if (ch === '"' || ch === "'") {
+      quote = ch as '"' | "'";
+      continue;
+    }
+    if (ch === "\\" && i + 1 < src.length) {
+      buf += src[++i];
+      continue;
+    }
     if (/\s/.test(ch)) {
-      if (buf) { tokens.push(buf); buf = ""; }
+      if (buf) {
+        tokens.push(buf);
+        buf = "";
+      }
       continue;
     }
     buf += ch;
@@ -77,19 +86,28 @@ function parseCurl(input: string): CurlRequest | { error: string } {
     const t = tokens[i];
     const next = () => tokens[++i];
     switch (t) {
-      case "-X": case "--request":
-        req.method = next().toUpperCase(); methodSet = true; break;
-      case "-H": case "--header": {
+      case "-X":
+      case "--request":
+        req.method = next().toUpperCase();
+        methodSet = true;
+        break;
+      case "-H":
+      case "--header": {
         const h = next();
         const idx = h.indexOf(":");
         if (idx > 0) req.headers[h.slice(0, idx).trim()] = h.slice(idx + 1).trim();
         break;
       }
-      case "-A": case "--user-agent":
-        req.headers["User-Agent"] = next(); break;
-      case "-e": case "--referer":
-        req.headers["Referer"] = next(); break;
-      case "-b": case "--cookie": {
+      case "-A":
+      case "--user-agent":
+        req.headers["User-Agent"] = next();
+        break;
+      case "-e":
+      case "--referer":
+        req.headers["Referer"] = next();
+        break;
+      case "-b":
+      case "--cookie": {
         const c = next();
         for (const pair of c.split(";")) {
           const [k, ...v] = pair.trim().split("=");
@@ -97,17 +115,27 @@ function parseCurl(input: string): CurlRequest | { error: string } {
         }
         break;
       }
-      case "-u": case "--user": {
+      case "-u":
+      case "--user": {
         const val = next();
         const [user, ...rest] = val.split(":");
         req.auth = { user, pass: rest.join(":") };
         break;
       }
-      case "-d": case "--data": case "--data-raw": case "--data-ascii":
-        dataParts.push(next()); if (!methodSet) req.method = "POST"; break;
-      case "--data-binary": case "--data-urlencode":
-        dataParts.push(next()); if (!methodSet) req.method = "POST"; break;
-      case "-F": case "--form": {
+      case "-d":
+      case "--data":
+      case "--data-raw":
+      case "--data-ascii":
+        dataParts.push(next());
+        if (!methodSet) req.method = "POST";
+        break;
+      case "--data-binary":
+      case "--data-urlencode":
+        dataParts.push(next());
+        if (!methodSet) req.method = "POST";
+        break;
+      case "-F":
+      case "--form": {
         const f = next();
         const eq = f.indexOf("=");
         if (eq > 0) req.formFields[f.slice(0, eq)] = f.slice(eq + 1);
@@ -115,21 +143,38 @@ function parseCurl(input: string): CurlRequest | { error: string } {
         if (!methodSet) req.method = "POST";
         break;
       }
-      case "-L": case "--location": req.followRedirects = true; break;
-      case "-k": case "--insecure": req.insecure = true; break;
-      case "-I": case "--head":
-        req.method = "HEAD"; methodSet = true; break;
-      case "-G": case "--get":
-        req.method = "GET"; methodSet = true; break;
-      case "-i": case "--include":
-      case "-s": case "--silent":
-      case "-v": case "--verbose":
-      case "-o": case "--output":
+      case "-L":
+      case "--location":
+        req.followRedirects = true;
+        break;
+      case "-k":
+      case "--insecure":
+        req.insecure = true;
+        break;
+      case "-I":
+      case "--head":
+        req.method = "HEAD";
+        methodSet = true;
+        break;
+      case "-G":
+      case "--get":
+        req.method = "GET";
+        methodSet = true;
+        break;
+      case "-i":
+      case "--include":
+      case "-s":
+      case "--silent":
+      case "-v":
+      case "--verbose":
+      case "-o":
+      case "--output":
       case "--compressed":
       case "--max-time":
       case "--connect-timeout":
         // accept & ignore (consume value where needed)
-        if (t === "-o" || t === "--output" || t === "--max-time" || t === "--connect-timeout") next();
+        if (t === "-o" || t === "--output" || t === "--max-time" || t === "--connect-timeout")
+          next();
         break;
       default:
         if (t.startsWith("-")) {
@@ -146,8 +191,17 @@ function parseCurl(input: string): CurlRequest | { error: string } {
     req.body = dataParts.join("&");
     // try json
     const trimmed = req.body.trim();
-    if ((trimmed.startsWith("{") && trimmed.endsWith("}")) || (trimmed.startsWith("[") && trimmed.endsWith("]"))) {
-      try { JSON.parse(trimmed); req.bodyIsJson = true; req.body = trimmed; } catch { /* not json */ }
+    if (
+      (trimmed.startsWith("{") && trimmed.endsWith("}")) ||
+      (trimmed.startsWith("[") && trimmed.endsWith("]"))
+    ) {
+      try {
+        JSON.parse(trimmed);
+        req.bodyIsJson = true;
+        req.body = trimmed;
+      } catch {
+        /* not json */
+      }
     }
   }
   return req;
@@ -155,9 +209,15 @@ function parseCurl(input: string): CurlRequest | { error: string } {
 
 // ---------- language generators ----------
 
-function q(s: string) { return JSON.stringify(s); }
-function pyStr(s: string) { return JSON.stringify(s); }
-function goStr(s: string) { return JSON.stringify(s); }
+function q(s: string) {
+  return JSON.stringify(s);
+}
+function pyStr(s: string) {
+  return JSON.stringify(s);
+}
+function goStr(s: string) {
+  return JSON.stringify(s);
+}
 
 function headersWithCookies(req: CurlRequest): Record<string, string> {
   const h = { ...req.headers };
@@ -181,7 +241,8 @@ function toFetch(req: CurlRequest): string {
   }
   if (req.bodyIsForm) {
     const lines = ["const form = new FormData();"];
-    for (const [k, v] of Object.entries(req.formFields)) lines.push(`form.append(${q(k)}, ${q(v)});`);
+    for (const [k, v] of Object.entries(req.formFields))
+      lines.push(`form.append(${q(k)}, ${q(v)});`);
     opts.push(`  body: form`);
     return `${lines.join("\n")}\n\nconst res = await fetch(${q(req.url)}, {\n${opts.join(",\n")},\n});\nconst data = await res.text();`;
   }
@@ -197,10 +258,17 @@ function toAxios(req: CurlRequest): string {
   const cfg: string[] = [];
   cfg.push(`  method: ${q(req.method.toLowerCase())}`);
   cfg.push(`  url: ${q(req.url)}`);
-  if (Object.keys(headers).length) cfg.push(`  headers: ${JSON.stringify(headers, null, 4).replace(/\n/g, "\n  ")}`);
+  if (Object.keys(headers).length)
+    cfg.push(`  headers: ${JSON.stringify(headers, null, 4).replace(/\n/g, "\n  ")}`);
   if (req.bodyIsForm) {
-    const lines = [`import axios from "axios";`, `import FormData from "form-data";`, ``, `const form = new FormData();`];
-    for (const [k, v] of Object.entries(req.formFields)) lines.push(`form.append(${q(k)}, ${q(v)});`);
+    const lines = [
+      `import axios from "axios";`,
+      `import FormData from "form-data";`,
+      ``,
+      `const form = new FormData();`,
+    ];
+    for (const [k, v] of Object.entries(req.formFields))
+      lines.push(`form.append(${q(k)}, ${q(v)});`);
     cfg.push(`  data: form`);
     cfg.push(`  headers: { ...form.getHeaders?.() }`);
     return `${lines.join("\n")}\n\nconst res = await axios({\n${cfg.join(",\n")},\n});`;
@@ -241,20 +309,28 @@ function toGo(req: CurlRequest): string {
   const headers = headersWithCookies(req);
   const bodyExpr = req.body !== undefined ? `strings.NewReader(${goStr(req.body)})` : "nil";
   const setHeaders = Object.entries(headers)
-    .map(([k, v]) => `\treq.Header.Set(${goStr(k)}, ${goStr(v)})`).join("\n");
+    .map(([k, v]) => `\treq.Header.Set(${goStr(k)}, ${goStr(v)})`)
+    .join("\n");
   return `package main\n\nimport (\n\t"fmt"\n\t"io"\n\t"net/http"\n\t"strings"\n)\n\nfunc main() {\n\treq, _ := http.NewRequest(${goStr(req.method)}, ${goStr(req.url)}, ${bodyExpr})\n${setHeaders}\n\n\tres, err := http.DefaultClient.Do(req)\n\tif err != nil { panic(err) }\n\tdefer res.Body.Close()\n\n\tbody, _ := io.ReadAll(res.Body)\n\tfmt.Println(string(body))\n}`;
 }
 
 function toPhp(req: CurlRequest): string {
   const headers = headersWithCookies(req);
-  const hArr = Object.entries(headers).map(([k, v]) => `    ${JSON.stringify(`${k}: ${v}`)}`).join(",\n");
-  const bodyLine = req.body !== undefined ? `curl_setopt($ch, CURLOPT_POSTFIELDS, ${JSON.stringify(req.body)});\n` : "";
+  const hArr = Object.entries(headers)
+    .map(([k, v]) => `    ${JSON.stringify(`${k}: ${v}`)}`)
+    .join(",\n");
+  const bodyLine =
+    req.body !== undefined
+      ? `curl_setopt($ch, CURLOPT_POSTFIELDS, ${JSON.stringify(req.body)});\n`
+      : "";
   return `<?php\n$ch = curl_init(${JSON.stringify(req.url)});\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_CUSTOMREQUEST, ${JSON.stringify(req.method)});\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n${hArr}\n]);\n${bodyLine}$response = curl_exec($ch);\ncurl_close($ch);\necho $response;`;
 }
 
 function toRuby(req: CurlRequest): string {
   const headers = headersWithCookies(req);
-  const setHeaders = Object.entries(headers).map(([k, v]) => `req[${JSON.stringify(k)}] = ${JSON.stringify(v)}`).join("\n");
+  const setHeaders = Object.entries(headers)
+    .map(([k, v]) => `req[${JSON.stringify(k)}] = ${JSON.stringify(v)}`)
+    .join("\n");
   const bodyLine = req.body !== undefined ? `req.body = ${JSON.stringify(req.body)}\n` : "";
   const klass = req.method[0] + req.method.slice(1).toLowerCase();
   return `require "net/http"\nrequire "uri"\n\nuri = URI(${JSON.stringify(req.url)})\nhttp = Net::HTTP.new(uri.host, uri.port)\nhttp.use_ssl = uri.scheme == "https"\n\nreq = Net::HTTP::${klass}.new(uri)\n${setHeaders}\n${bodyLine}res = http.request(req)\nputs res.body`;
@@ -263,7 +339,8 @@ function toRuby(req: CurlRequest): string {
 function toRust(req: CurlRequest): string {
   const headers = headersWithCookies(req);
   const setHeaders = Object.entries(headers)
-    .map(([k, v]) => `        .header(${JSON.stringify(k)}, ${JSON.stringify(v)})`).join("\n");
+    .map(([k, v]) => `        .header(${JSON.stringify(k)}, ${JSON.stringify(v)})`)
+    .join("\n");
   const bodyLine = req.body !== undefined ? `        .body(${JSON.stringify(req.body)})\n` : "";
   return `// Cargo.toml: reqwest = { version = "0.12", features = ["blocking", "json"] }\nuse reqwest::blocking::Client;\n\nfn main() -> Result<(), Box<dyn std::error::Error>> {\n    let client = Client::new();\n    let res = client\n        .${req.method.toLowerCase()}(${JSON.stringify(req.url)})\n${setHeaders}\n${bodyLine}        .send()?;\n    println!("{}", res.text()?);\n    Ok(())\n}`;
 }
@@ -271,32 +348,45 @@ function toRust(req: CurlRequest): string {
 function toJava(req: CurlRequest): string {
   const headers = headersWithCookies(req);
   const setHeaders = Object.entries(headers)
-    .map(([k, v]) => `    .header(${JSON.stringify(k)}, ${JSON.stringify(v)})`).join("\n");
-  const bodyLine = req.body !== undefined
-    ? `HttpRequest.BodyPublishers.ofString(${JSON.stringify(req.body)})`
-    : `HttpRequest.BodyPublishers.noBody()`;
+    .map(([k, v]) => `    .header(${JSON.stringify(k)}, ${JSON.stringify(v)})`)
+    .join("\n");
+  const bodyLine =
+    req.body !== undefined
+      ? `HttpRequest.BodyPublishers.ofString(${JSON.stringify(req.body)})`
+      : `HttpRequest.BodyPublishers.noBody()`;
   return `import java.net.URI;\nimport java.net.http.*;\n\nHttpClient client = HttpClient.newHttpClient();\nHttpRequest request = HttpRequest.newBuilder()\n    .uri(URI.create(${JSON.stringify(req.url)}))\n    .method(${JSON.stringify(req.method)}, ${bodyLine})\n${setHeaders}\n    .build();\n\nHttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());\nSystem.out.println(response.body());`;
 }
 
 function toCSharp(req: CurlRequest): string {
   const headers = headersWithCookies(req);
   const addHeaders = Object.entries(headers)
-    .map(([k, v]) => `request.Headers.TryAddWithoutValidation(${JSON.stringify(k)}, ${JSON.stringify(v)});`).join("\n");
-  const contentLine = req.body !== undefined
-    ? `request.Content = new StringContent(${JSON.stringify(req.body)}, System.Text.Encoding.UTF8, ${JSON.stringify(req.bodyIsJson ? "application/json" : "text/plain")});\n`
-    : "";
+    .map(
+      ([k, v]) =>
+        `request.Headers.TryAddWithoutValidation(${JSON.stringify(k)}, ${JSON.stringify(v)});`,
+    )
+    .join("\n");
+  const contentLine =
+    req.body !== undefined
+      ? `request.Content = new StringContent(${JSON.stringify(req.body)}, System.Text.Encoding.UTF8, ${JSON.stringify(req.bodyIsJson ? "application/json" : "text/plain")});\n`
+      : "";
   return `using System.Net.Http;\n\nvar client = new HttpClient();\nvar request = new HttpRequestMessage(new HttpMethod(${JSON.stringify(req.method)}), ${JSON.stringify(req.url)});\n${addHeaders}\n${contentLine}var response = await client.SendAsync(request);\nvar body = await response.Content.ReadAsStringAsync();\nConsole.WriteLine(body);`;
 }
 
 function toPowershell(req: CurlRequest): string {
   const headers = headersWithCookies(req);
-  const hLines = Object.entries(headers).map(([k, v]) => `  ${JSON.stringify(k)} = ${JSON.stringify(v)}`).join("\n");
+  const hLines = Object.entries(headers)
+    .map(([k, v]) => `  ${JSON.stringify(k)} = ${JSON.stringify(v)}`)
+    .join("\n");
   const bodyLine = req.body !== undefined ? ` -Body ${JSON.stringify(req.body)}` : "";
   return `$headers = @{\n${hLines}\n}\n\nInvoke-RestMethod -Uri ${JSON.stringify(req.url)} -Method ${req.method} -Headers $headers${bodyLine}`;
 }
 
 function safeUrl(url: string): URL {
-  try { return new URL(url); } catch { return new URL("http://" + url); }
+  try {
+    return new URL(url);
+  } catch {
+    return new URL("http://" + url);
+  }
 }
 
 // ---------- component ----------
@@ -366,9 +456,14 @@ export function CurlConverter() {
         )}
         {!isError && (
           <div className="border-t border-border px-3 py-2 text-[11px] font-mono text-muted-foreground flex flex-wrap gap-x-4 gap-y-1">
-            <span><span className="text-foreground">{(parsed as CurlRequest).method}</span> {(parsed as CurlRequest).url}</span>
+            <span>
+              <span className="text-foreground">{(parsed as CurlRequest).method}</span>{" "}
+              {(parsed as CurlRequest).url}
+            </span>
             <span>{Object.keys((parsed as CurlRequest).headers).length} headers</span>
-            {(parsed as CurlRequest).body && <span>{new Blob([(parsed as CurlRequest).body!]).size} B body</span>}
+            {(parsed as CurlRequest).body && (
+              <span>{new Blob([(parsed as CurlRequest).body!]).size} B body</span>
+            )}
           </div>
         )}
       </Panel>

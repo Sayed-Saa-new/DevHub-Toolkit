@@ -60,7 +60,9 @@ async function signHmac(alg: Alg, key: Uint8Array, data: string): Promise<string
   return b64urlEncode(sig);
 }
 
-function safeParse(json: string): { ok: true; value: Record<string, unknown> } | { ok: false; error: string } {
+function safeParse(
+  json: string,
+): { ok: true; value: Record<string, unknown> } | { ok: false; error: string } {
   try {
     const v = JSON.parse(json);
     if (v === null || typeof v !== "object" || Array.isArray(v)) {
@@ -206,13 +208,21 @@ export function JwtGenerator() {
                   className="font-mono text-xs"
                   placeholder="signing secret"
                 />
-                <Button variant="outline" size="sm" onClick={generateSecret} className="shrink-0 gap-1.5">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={generateSecret}
+                  className="shrink-0 gap-1.5"
+                >
                   <Sparkles className="size-3" /> Random
                 </Button>
               </div>
             </Field>
             <Field label="Secret encoding">
-              <Tabs value={secretEncoding} onValueChange={(v) => setSecretEncoding(v as SecretEncoding)}>
+              <Tabs
+                value={secretEncoding}
+                onValueChange={(v) => setSecretEncoding(v as SecretEncoding)}
+              >
                 <TabsList className="grid w-full grid-cols-3">
                   <TabsTrigger value="utf8">UTF-8</TabsTrigger>
                   <TabsTrigger value="base64">Base64</TabsTrigger>
@@ -271,16 +281,36 @@ export function JwtGenerator() {
             <Button variant="outline" size="sm" className="h-6 text-[11px]" onClick={setNbfNow}>
               nbf = now
             </Button>
-            <Button variant="outline" size="sm" className="h-6 text-[11px]" onClick={() => addExp(60 * 15)}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-6 text-[11px]"
+              onClick={() => addExp(60 * 15)}
+            >
               exp +15m
             </Button>
-            <Button variant="outline" size="sm" className="h-6 text-[11px]" onClick={() => addExp(60 * 60)}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-6 text-[11px]"
+              onClick={() => addExp(60 * 60)}
+            >
               exp +1h
             </Button>
-            <Button variant="outline" size="sm" className="h-6 text-[11px]" onClick={() => addExp(60 * 60 * 24)}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-6 text-[11px]"
+              onClick={() => addExp(60 * 60 * 24)}
+            >
               exp +1d
             </Button>
-            <Button variant="outline" size="sm" className="h-6 text-[11px]" onClick={() => addExp(60 * 60 * 24 * 30)}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-6 text-[11px]"
+              onClick={() => addExp(60 * 60 * 24 * 30)}
+            >
               exp +30d
             </Button>
             <Button variant="outline" size="sm" className="h-6 text-[11px]" onClick={setJti}>
@@ -314,19 +344,31 @@ export function JwtGenerator() {
               <span className="text-teal-500 dark:text-teal-400">{parts[2]}</span>
             </div>
           ) : (
-            <div className="p-4 text-xs text-muted-foreground">Fix JSON errors to generate a token.</div>
+            <div className="p-4 text-xs text-muted-foreground">
+              Fix JSON errors to generate a token.
+            </div>
           )}
         </Panel>
 
         <Panel title="Claims summary">
           <div className="p-3 grid gap-2 text-xs">
-            <SummaryRow label="alg" value={headerParsed.ok ? String(headerParsed.value.alg ?? "—") : "—"} />
-            <SummaryRow label="typ" value={headerParsed.ok ? String(headerParsed.value.typ ?? "—") : "—"} />
+            <SummaryRow
+              label="alg"
+              value={headerParsed.ok ? String(headerParsed.value.alg ?? "—") : "—"}
+            />
+            <SummaryRow
+              label="typ"
+              value={headerParsed.ok ? String(headerParsed.value.typ ?? "—") : "—"}
+            />
             <SummaryRow label="iss" value={String(payloadClaims.iss ?? "—")} />
             <SummaryRow label="sub" value={String(payloadClaims.sub ?? "—")} />
             <SummaryRow
               label="aud"
-              value={Array.isArray(payloadClaims.aud) ? payloadClaims.aud.join(", ") : String(payloadClaims.aud ?? "—")}
+              value={
+                Array.isArray(payloadClaims.aud)
+                  ? payloadClaims.aud.join(", ")
+                  : String(payloadClaims.aud ?? "—")
+              }
             />
             <SummaryRow label="iat" value={iatIso ?? "—"} />
             <SummaryRow label="nbf" value={nbfIso ?? "—"} />
@@ -343,15 +385,15 @@ export function JwtGenerator() {
         <Panel title="cURL example">
           <div className="p-3">
             <pre className="text-[11px] font-mono whitespace-pre-wrap break-all leading-relaxed">
-{`curl -H "Authorization: Bearer ${token || "<token>"}" \\
+              {`curl -H "Authorization: Bearer ${token || "<token>"}" \\
   https://api.example.com/me`}
             </pre>
           </div>
         </Panel>
 
         <p className="text-[11px] text-muted-foreground px-1">
-          100% client-side. Secrets and tokens never leave your browser. HS-family only — RS/ES asymmetric signing
-          is planned.
+          100% client-side. Secrets and tokens never leave your browser. HS-family only — RS/ES
+          asymmetric signing is planned.
         </p>
       </div>
     </div>
@@ -374,7 +416,12 @@ function SummaryRow({
       <span className="w-10 shrink-0 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
         {label}
       </span>
-      <span className={cn("font-mono truncate", tone === "warn" && "text-amber-600 dark:text-amber-400")}>
+      <span
+        className={cn(
+          "font-mono truncate",
+          tone === "warn" && "text-amber-600 dark:text-amber-400",
+        )}
+      >
         {value}
       </span>
       {suffix && (

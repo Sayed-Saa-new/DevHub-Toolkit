@@ -18,7 +18,8 @@ export function FinalCTA() {
           <span className="text-muted-foreground">Start shipping.</span>
         </h2>
         <p className="mt-5 text-muted-foreground max-w-lg mx-auto">
-          {TOOLS.length}+ developer utilities in a single, monochrome, keyboard-first workspace. Free, forever.
+          {TOOLS.length}+ developer utilities in a single, monochrome, keyboard-first workspace.
+          Free, forever.
         </p>
         <div className="mt-9 flex flex-wrap gap-3 justify-center">
           <Link to="/tools" aria-label="Open the toolkit">

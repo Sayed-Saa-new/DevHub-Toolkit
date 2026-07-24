@@ -8,33 +8,45 @@ const BASE = "https://devhub.flinkeo.online";
 const CATEGORY_META: Record<Category, { title: string; description: string; keywords: string }> = {
   converters: {
     title: "Developer Converters — JSON, Base64, CSV, YAML, cURL & more",
-    description: "Free online developer converters: JSON ↔ TypeScript, Base64, URL, YAML ↔ JSON, CSV ↔ JSON, cURL → code, Markdown, timezone, number base and more.",
-    keywords: "developer converters, json converter, base64 converter, yaml to json, csv to json, curl to fetch, markdown converter, url encoder",
+    description:
+      "Free online developer converters: JSON ↔ TypeScript, Base64, URL, YAML ↔ JSON, CSV ↔ JSON, cURL → code, Markdown, timezone, number base and more.",
+    keywords:
+      "developer converters, json converter, base64 converter, yaml to json, csv to json, curl to fetch, markdown converter, url encoder",
   },
   generators: {
     title: "Developer Generators — UUID, Hash, QR, JWT, Passwords, Mock Data",
-    description: "Generate UUIDs, hashes (MD5/SHA), QR codes, JWTs, strong passwords, Lorem Ipsum, mock JSON/SQL data, meta tags, favicons and more — free and instant.",
-    keywords: "uuid generator, hash generator, qr code generator, jwt generator, password generator, mock data generator, lorem ipsum, meta tag generator",
+    description:
+      "Generate UUIDs, hashes (MD5/SHA), QR codes, JWTs, strong passwords, Lorem Ipsum, mock JSON/SQL data, meta tags, favicons and more — free and instant.",
+    keywords:
+      "uuid generator, hash generator, qr code generator, jwt generator, password generator, mock data generator, lorem ipsum, meta tag generator",
   },
   design: {
     title: "CSS Design Tools — Gradients, Shadows, Colors, Clamp",
-    description: "Design CSS gradients, box shadows, border radius, pick colors (HEX/RGB/HSL) and build fluid typography with CSS clamp() — live previews, copy-ready code.",
-    keywords: "css gradient generator, box shadow generator, css clamp calculator, color converter, border radius generator, fluid typography",
+    description:
+      "Design CSS gradients, box shadows, border radius, pick colors (HEX/RGB/HSL) and build fluid typography with CSS clamp() — live previews, copy-ready code.",
+    keywords:
+      "css gradient generator, box shadow generator, css clamp calculator, color converter, border radius generator, fluid typography",
   },
   editors: {
     title: "Developer Editors — JSON, Markdown, Regex, SQL, Playground",
-    description: "Live editors for JSON, Markdown, Regex, SQL, HTML/CSS/JS playground, JSON diff, text diff and Schema.org validator — fast, keyboard-first, monochrome UI.",
-    keywords: "json formatter, markdown editor, regex tester, sql formatter, json diff, text diff, code playground, schema validator",
+    description:
+      "Live editors for JSON, Markdown, Regex, SQL, HTML/CSS/JS playground, JSON diff, text diff and Schema.org validator — fast, keyboard-first, monochrome UI.",
+    keywords:
+      "json formatter, markdown editor, regex tester, sql formatter, json diff, text diff, code playground, schema validator",
   },
   reference: {
     title: "Developer Reference — HTTP Codes, Git, Linux, VS Code, Cron",
-    description: "Quick reference for HTTP status codes, Git commands, Linux/Unix shell, VS Code shortcuts and cron expressions — searchable and copy-ready.",
-    keywords: "http status codes, git cheat sheet, linux commands, vscode shortcuts, cron cheat sheet",
+    description:
+      "Quick reference for HTTP status codes, Git commands, Linux/Unix shell, VS Code shortcuts and cron expressions — searchable and copy-ready.",
+    keywords:
+      "http status codes, git cheat sheet, linux commands, vscode shortcuts, cron cheat sheet",
   },
   ai: {
     title: "AI Developer Tools — Explainer, Optimizer, SQL, Regex, Tests",
-    description: "AI-powered developer helpers: explain code, optimize snippets, generate commit messages, SQL, regex, unit tests and error fixes — powered by Gemini.",
-    keywords: "ai code explainer, ai code optimizer, ai commit message, ai sql generator, ai regex generator, ai unit test generator",
+    description:
+      "AI-powered developer helpers: explain code, optimize snippets, generate commit messages, SQL, regex, unit tests and error fixes — powered by Gemini.",
+    keywords:
+      "ai code explainer, ai code optimizer, ai commit message, ai sql generator, ai regex generator, ai unit test generator",
   },
 };
 
@@ -86,7 +98,12 @@ export const Route = createFileRoute("/c/$category")({
             "@type": "BreadcrumbList",
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Home", item: BASE + "/" },
-              { "@type": "ListItem", position: 2, name: CATEGORIES.find((c) => c.id === cat)?.label, item: url },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: CATEGORIES.find((c) => c.id === cat)?.label,
+                item: url,
+              },
             ],
           }),
         },
@@ -104,8 +121,13 @@ function CategoryPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 md:px-8 py-10">
-      <nav className="text-xs text-muted-foreground mb-4 flex items-center gap-1.5" aria-label="Breadcrumb">
-        <Link to="/" className="hover:text-foreground">Home</Link>
+      <nav
+        className="text-xs text-muted-foreground mb-4 flex items-center gap-1.5"
+        aria-label="Breadcrumb"
+      >
+        <Link to="/" className="hover:text-foreground">
+          Home
+        </Link>
         <span>/</span>
         <span className="text-foreground">{label}</span>
       </nav>

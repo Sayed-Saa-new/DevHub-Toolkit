@@ -230,27 +230,63 @@
   line-height: 1.65;
   color: var(--foreground);
 }
-.prose-md > * + * { margin-top: 0.85em; }
-.prose-md h1, .prose-md h2, .prose-md h3, .prose-md h4 {
+.prose-md > * + * {
+  margin-top: 0.85em;
+}
+.prose-md h1,
+.prose-md h2,
+.prose-md h3,
+.prose-md h4 {
   font-weight: 600;
   letter-spacing: -0.01em;
   margin-top: 1.4em;
   margin-bottom: 0.4em;
   line-height: 1.25;
 }
-.prose-md h1 { font-size: 1.4em; }
-.prose-md h2 { font-size: 1.2em; }
-.prose-md h3 { font-size: 1.05em; }
-.prose-md h4 { font-size: 0.95em; color: var(--muted-foreground); }
-.prose-md p { margin: 0.6em 0; }
-.prose-md a { color: var(--foreground); text-decoration: underline; text-underline-offset: 3px; }
-.prose-md strong { font-weight: 600; }
-.prose-md em { font-style: italic; }
-.prose-md ul, .prose-md ol { padding-left: 1.35em; margin: 0.6em 0; }
-.prose-md ul { list-style: disc; }
-.prose-md ol { list-style: decimal; }
-.prose-md li { margin: 0.25em 0; }
-.prose-md li > p { margin: 0.2em 0; }
+.prose-md h1 {
+  font-size: 1.4em;
+}
+.prose-md h2 {
+  font-size: 1.2em;
+}
+.prose-md h3 {
+  font-size: 1.05em;
+}
+.prose-md h4 {
+  font-size: 0.95em;
+  color: var(--muted-foreground);
+}
+.prose-md p {
+  margin: 0.6em 0;
+}
+.prose-md a {
+  color: var(--foreground);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-md strong {
+  font-weight: 600;
+}
+.prose-md em {
+  font-style: italic;
+}
+.prose-md ul,
+.prose-md ol {
+  padding-left: 1.35em;
+  margin: 0.6em 0;
+}
+.prose-md ul {
+  list-style: disc;
+}
+.prose-md ol {
+  list-style: decimal;
+}
+.prose-md li {
+  margin: 0.25em 0;
+}
+.prose-md li > p {
+  margin: 0.2em 0;
+}
 .prose-md code {
   font-family: var(--font-mono);
   font-size: 0.88em;
@@ -280,19 +316,27 @@
   color: var(--muted-foreground);
   margin: 0.8em 0;
 }
-.prose-md hr { border: 0; border-top: 1px solid var(--border); margin: 1.4em 0; }
+.prose-md hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 1.4em 0;
+}
 .prose-md table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
   margin: 0.8em 0;
 }
-.prose-md th, .prose-md td {
+.prose-md th,
+.prose-md td {
   border: 1px solid var(--border);
   padding: 0.45em 0.7em;
   text-align: left;
 }
-.prose-md th { background: oklch(1 0 0 / 4%); font-weight: 600; }
+.prose-md th {
+  background: oklch(1 0 0 / 4%);
+  font-weight: 600;
+}
 .prose-md img {
   display: block;
   width: 100%;

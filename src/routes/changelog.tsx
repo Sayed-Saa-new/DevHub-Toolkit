@@ -128,9 +128,7 @@ function ChangelogPage() {
                     />
                   </div>
                 </article>
-                {i < entries.length - 1 && (
-                  <div className="border-t border-dashed border-border" />
-                )}
+                {i < entries.length - 1 && <div className="border-t border-dashed border-border" />}
               </li>
             ))}
           </ul>

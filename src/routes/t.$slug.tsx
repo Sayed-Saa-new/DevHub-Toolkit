@@ -17,20 +17,35 @@ export const Route = createFileRoute("/t/$slug")({
       return {
         meta: [
           { title: "Tool not found — DevHub Toolkit" },
-          { name: "description", content: "The developer tool you're looking for doesn't exist on DevHub Toolkit. Browse the full catalog of formatters, encoders, generators, and references." },
+          {
+            name: "description",
+            content:
+              "The developer tool you're looking for doesn't exist on DevHub Toolkit. Browse the full catalog of formatters, encoders, generators, and references.",
+          },
           { property: "og:title", content: "Tool not found — DevHub Toolkit" },
-          { property: "og:description", content: "The developer tool you're looking for doesn't exist on DevHub Toolkit. Browse the full catalog of formatters, encoders, generators, and references." },
+          {
+            property: "og:description",
+            content:
+              "The developer tool you're looking for doesn't exist on DevHub Toolkit. Browse the full catalog of formatters, encoders, generators, and references.",
+          },
           { name: "robots", content: "noindex" },
         ],
       };
     }
     const seo = TOOL_SEO[params.slug];
-    const title = seo ? `${seo.title} · DevHub Toolkit` : `${t.name} — Free Online ${t.category} Tool · DevHub Toolkit`;
+    const title = seo
+      ? `${seo.title} · DevHub Toolkit`
+      : `${t.name} — Free Online ${t.category} Tool · DevHub Toolkit`;
     const desc = seo
       ? seo.description
       : `${t.description} Free, fast, browser-based ${t.category} tool — no signup, no tracking, works in your browser.`;
-    const keywords = (seo?.keywords ?? t.keywords).concat([t.name.toLowerCase(), `${t.name.toLowerCase()} online`, `free ${t.name.toLowerCase()}`]);
-    const ogImage = "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d73bcc09-2f60-409d-b833-91c82c156e5e/id-preview-aa9e0d77--6b271a1b-d2e8-44e0-909f-190eae9de463.lovable.app-1784378017742.png";
+    const keywords = (seo?.keywords ?? t.keywords).concat([
+      t.name.toLowerCase(),
+      `${t.name.toLowerCase()} online`,
+      `free ${t.name.toLowerCase()}`,
+    ]);
+    const ogImage =
+      "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d73bcc09-2f60-409d-b833-91c82c156e5e/id-preview-aa9e0d77--6b271a1b-d2e8-44e0-909f-190eae9de463.lovable.app-1784378017742.png";
     const categoryLabel = t.category.charAt(0).toUpperCase() + t.category.slice(1);
     const softwareApp = {
       "@context": "https://schema.org",
@@ -71,7 +86,12 @@ export const Route = createFileRoute("/t/$slug")({
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: `${base}/` },
-        { "@type": "ListItem", position: 2, name: categoryLabel, item: `${base}/?category=${t.category}` },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: categoryLabel,
+          item: `${base}/?category=${t.category}`,
+        },
         { "@type": "ListItem", position: 3, name: t.name, item: url },
       ],
     };
@@ -146,7 +166,10 @@ export const Route = createFileRoute("/t/$slug")({
       links: [{ rel: "canonical", href: url }],
       scripts: [
         { type: "application/ld+json", children: JSON.stringify(softwareApp) },
-        { type: "application/ld+json", children: JSON.stringify({ ...breadcrumbs, "@id": `${url}#breadcrumbs` }) },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({ ...breadcrumbs, "@id": `${url}#breadcrumbs` }),
+        },
         { type: "application/ld+json", children: JSON.stringify(webPage) },
         ...extraScripts,
       ],
@@ -190,7 +213,9 @@ function ToolNotFound() {
   return (
     <div className="mx-auto max-w-2xl px-6 py-24 text-center">
       <h1 className="text-2xl font-semibold tracking-tight">Tool not found</h1>
-      <p className="text-sm text-muted-foreground mt-2">The tool you're looking for doesn't exist.</p>
+      <p className="text-sm text-muted-foreground mt-2">
+        The tool you're looking for doesn't exist.
+      </p>
     </div>
   );
 }

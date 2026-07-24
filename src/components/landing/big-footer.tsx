@@ -33,7 +33,8 @@ export function BigFooter() {
               </span>
             </Link>
             <p className="mt-4 text-sm text-muted-foreground max-w-xs leading-relaxed">
-              The all-in-one developer toolkit. Minimal, local-first, keyboard-first — built for people who ship.
+              The all-in-one developer toolkit. Minimal, local-first, keyboard-first — built for
+              people who ship.
             </p>
             <div className="mt-5 flex items-center gap-2">
               <a
@@ -66,14 +67,20 @@ export function BigFooter() {
 
           <FooterCol title="Product">
             {productLinks.map((l) => (
-              <FooterLink key={l.to} to={l.to}>{l.label}</FooterLink>
+              <FooterLink key={l.to} to={l.to}>
+                {l.label}
+              </FooterLink>
             ))}
           </FooterCol>
 
           <FooterCol title="Categories">
             {CATEGORIES.slice(0, 4).map((c) => (
               <li key={c.id}>
-                <Link to="/c/$category" params={{ category: c.id }} className="text-sm text-muted-foreground hover:text-foreground transition">
+                <Link
+                  to="/c/$category"
+                  params={{ category: c.id }}
+                  className="text-sm text-muted-foreground hover:text-foreground transition"
+                >
                   {c.label}
                 </Link>
               </li>
@@ -86,7 +93,11 @@ export function BigFooter() {
               if (!t) return null;
               return (
                 <li key={slug}>
-                  <Link to="/t/$slug" params={{ slug }} className="text-sm text-muted-foreground hover:text-foreground transition">
+                  <Link
+                    to="/t/$slug"
+                    params={{ slug }}
+                    className="text-sm text-muted-foreground hover:text-foreground transition"
+                  >
                     {t.name}
                   </Link>
                 </li>
@@ -96,12 +107,18 @@ export function BigFooter() {
 
           <FooterCol title="Resources">
             <li>
-              <a href="/llms.txt" className="text-sm text-muted-foreground hover:text-foreground transition">
+              <a
+                href="/llms.txt"
+                className="text-sm text-muted-foreground hover:text-foreground transition"
+              >
                 llms.txt
               </a>
             </li>
             <li>
-              <a href="/sitemap.xml" className="text-sm text-muted-foreground hover:text-foreground transition">
+              <a
+                href="/sitemap.xml"
+                className="text-sm text-muted-foreground hover:text-foreground transition"
+              >
                 Sitemap
               </a>
             </li>
@@ -121,9 +138,7 @@ export function BigFooter() {
             <Check className="size-3.5" />
             <span className="font-mono">All processing runs locally in your browser.</span>
           </div>
-          <div>
-            © {new Date().getFullYear()} DevHub Toolkit · Built for developers.
-          </div>
+          <div>© {new Date().getFullYear()} DevHub Toolkit · Built for developers.</div>
         </div>
       </div>
 
@@ -148,7 +163,13 @@ function FooterCol({ title, children }: { title: string; children: React.ReactNo
   );
 }
 
-function FooterLink({ to, children }: { to: "/tools" | "/favorites" | "/changelog"; children: React.ReactNode }) {
+function FooterLink({
+  to,
+  children,
+}: {
+  to: "/tools" | "/favorites" | "/changelog";
+  children: React.ReactNode;
+}) {
   return (
     <li>
       <Link to={to} className="text-sm text-muted-foreground hover:text-foreground transition">

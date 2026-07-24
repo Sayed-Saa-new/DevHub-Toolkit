@@ -31,7 +31,8 @@ export function Hero() {
           <span className="text-muted-foreground">one keystroke away.</span>
         </h1>
         <p className="mt-7 max-w-lg mx-auto text-[15px] md:text-base text-muted-foreground leading-relaxed">
-          Format JSON, decode JWTs, generate hashes, craft gradients — {TOOLS.length}+ utilities in one minimal, local-first workspace.
+          Format JSON, decode JWTs, generate hashes, craft gradients — {TOOLS.length}+ utilities in
+          one minimal, local-first workspace.
         </p>
         <div className="mt-10 flex flex-wrap gap-3 justify-center">
           <Link to="/tools" aria-label="Open the toolkit">

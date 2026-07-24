@@ -77,7 +77,8 @@ function diffStruct(
     for (let i = 0; i < len; i++) {
       const p = `${path}[${i}]`;
       if (i >= a.length) out.push({ kind: "add", path: p, right: fmt(b[i]), depth: depth + 1 });
-      else if (i >= b.length) out.push({ kind: "remove", path: p, left: fmt(a[i]), depth: depth + 1 });
+      else if (i >= b.length)
+        out.push({ kind: "remove", path: p, left: fmt(a[i]), depth: depth + 1 });
       else diffStruct(a[i], b[i], p, depth + 1, out, showSame, sortKeys);
     }
     return out;
@@ -194,19 +195,29 @@ export function JsonDiff() {
           <Field label="Mode">
             <Tabs value={mode} onValueChange={(v) => setMode(v as Mode)}>
               <TabsList className="h-8">
-                <TabsTrigger value="structural" className="text-xs">Structural</TabsTrigger>
-                <TabsTrigger value="text" className="text-xs">Text</TabsTrigger>
+                <TabsTrigger value="structural" className="text-xs">
+                  Structural
+                </TabsTrigger>
+                <TabsTrigger value="text" className="text-xs">
+                  Text
+                </TabsTrigger>
               </TabsList>
             </Tabs>
           </Field>
           <Field label="Show unchanged">
-            <div className="flex h-8 items-center"><Switch checked={showSame} onCheckedChange={setShowSame} /></div>
+            <div className="flex h-8 items-center">
+              <Switch checked={showSame} onCheckedChange={setShowSame} />
+            </div>
           </Field>
           <Field label="Sort keys">
-            <div className="flex h-8 items-center"><Switch checked={sortKeys} onCheckedChange={setSortKeys} /></div>
+            <div className="flex h-8 items-center">
+              <Switch checked={sortKeys} onCheckedChange={setSortKeys} />
+            </div>
           </Field>
           <Field label="Ignore array order" hint="canonicalize">
-            <div className="flex h-8 items-center"><Switch checked={ignoreOrder} onCheckedChange={setIgnoreOrder} /></div>
+            <div className="flex h-8 items-center">
+              <Switch checked={ignoreOrder} onCheckedChange={setIgnoreOrder} />
+            </div>
           </Field>
         </div>
       </Panel>
@@ -250,9 +261,13 @@ export function JsonDiff() {
         }
       >
         {!parsedLeft.ok || !parsedRight.ok ? (
-          <div className="p-6 text-center text-sm text-muted-foreground">Fix JSON errors above to see the diff.</div>
+          <div className="p-6 text-center text-sm text-muted-foreground">
+            Fix JSON errors above to see the diff.
+          </div>
         ) : identical ? (
-          <div className="p-6 text-center text-sm text-emerald-300">Both inputs are structurally equal.</div>
+          <div className="p-6 text-center text-sm text-emerald-300">
+            Both inputs are structurally equal.
+          </div>
         ) : mode === "structural" ? (
           <div className="max-h-[520px] overflow-auto font-mono text-xs">
             {result!.map((r, i) => (
@@ -275,7 +290,9 @@ export function JsonDiff() {
             ))}
           </div>
         ) : (
-          <pre className="max-h-[520px] overflow-auto p-3 font-mono text-xs whitespace-pre-wrap">{patchText}</pre>
+          <pre className="max-h-[520px] overflow-auto p-3 font-mono text-xs whitespace-pre-wrap">
+            {patchText}
+          </pre>
         )}
       </Panel>
     </div>

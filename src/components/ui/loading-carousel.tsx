@@ -1,12 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { ChevronRight } from "lucide-react";
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  type Variants,
-} from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, type Variants } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 import {
@@ -156,7 +151,12 @@ export function LoadingCarousel({
       )}
     >
       <div className="w-full overflow-hidden rounded-xl">
-        <Carousel setApi={setApi} plugins={[autoplay]} className="relative w-full" opts={{ loop: true }}>
+        <Carousel
+          setApi={setApi}
+          plugins={[autoplay]}
+          className="relative w-full"
+          opts={{ loop: true }}
+        >
           <CarouselContent>
             <AnimatePresence initial={false} custom={direction}>
               {tips.map((tip, index) => (
@@ -173,8 +173,13 @@ export function LoadingCarousel({
                     animate="center"
                     exit={prefersReducedMotion ? undefined : "exit"}
                     custom={direction}
-                    transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.8, ease: "easeInOut" }}
-                    className={cn("relative w-full overflow-hidden bg-background", aspectRatioClasses[aspectRatio])}
+                    transition={
+                      prefersReducedMotion ? { duration: 0 } : { duration: 0.8, ease: "easeInOut" }
+                    }
+                    className={cn(
+                      "relative w-full overflow-hidden bg-background",
+                      aspectRatioClasses[aspectRatio],
+                    )}
                   >
                     <img
                       src={tip.image}
@@ -218,7 +223,12 @@ export function LoadingCarousel({
             </>
           )}
         </Carousel>
-        <div className={cn("bg-muted p-4 sm:p-5", showIndicators && !backgroundTips ? "lg:px-4 lg:py-3" : "")}>
+        <div
+          className={cn(
+            "bg-muted p-4 sm:p-5",
+            showIndicators && !backgroundTips ? "lg:px-4 lg:py-3" : "",
+          )}
+        >
           <span className="sr-only" aria-live="polite" aria-atomic="true">
             Slide {current + 1} of {tips.length}: {tips[current]?.text}
           </span>

@@ -12,12 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
+import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TSlugRouteImport } from './routes/t.$slug'
 import { Route as ChangelogSlugRouteImport } from './routes/changelog.$slug'
 import { Route as CCategoryRouteImport } from './routes/c.$category'
+import { Route as ApiFeedbackRouteImport } from './routes/api/feedback'
 import { Route as ApiAiRouteImport } from './routes/api/ai'
 
 const ToolsRoute = ToolsRouteImport.update({
@@ -33,6 +35,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const LlmsFullDottxtRoute = LlmsFullDottxtRouteImport.update({
   id: '/llms-full.txt',
   path: '/llms-full.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeedbackRoute = FeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FavoritesRoute = FavoritesRouteImport.update({
@@ -65,6 +72,11 @@ const CCategoryRoute = CCategoryRouteImport.update({
   path: '/c/$category',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiFeedbackRoute = ApiFeedbackRouteImport.update({
+  id: '/api/feedback',
+  path: '/api/feedback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAiRoute = ApiAiRouteImport.update({
   id: '/api/ai',
   path: '/api/ai',
@@ -75,10 +87,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/changelog': typeof ChangelogRouteWithChildren
   '/favorites': typeof FavoritesRoute
+  '/feedback': typeof FeedbackRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tools': typeof ToolsRoute
   '/api/ai': typeof ApiAiRoute
+  '/api/feedback': typeof ApiFeedbackRoute
   '/c/$category': typeof CCategoryRoute
   '/changelog/$slug': typeof ChangelogSlugRoute
   '/t/$slug': typeof TSlugRoute
@@ -87,10 +101,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/changelog': typeof ChangelogRouteWithChildren
   '/favorites': typeof FavoritesRoute
+  '/feedback': typeof FeedbackRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tools': typeof ToolsRoute
   '/api/ai': typeof ApiAiRoute
+  '/api/feedback': typeof ApiFeedbackRoute
   '/c/$category': typeof CCategoryRoute
   '/changelog/$slug': typeof ChangelogSlugRoute
   '/t/$slug': typeof TSlugRoute
@@ -100,10 +116,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/changelog': typeof ChangelogRouteWithChildren
   '/favorites': typeof FavoritesRoute
+  '/feedback': typeof FeedbackRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tools': typeof ToolsRoute
   '/api/ai': typeof ApiAiRoute
+  '/api/feedback': typeof ApiFeedbackRoute
   '/c/$category': typeof CCategoryRoute
   '/changelog/$slug': typeof ChangelogSlugRoute
   '/t/$slug': typeof TSlugRoute
@@ -114,10 +132,12 @@ export interface FileRouteTypes {
     | '/'
     | '/changelog'
     | '/favorites'
+    | '/feedback'
     | '/llms-full.txt'
     | '/sitemap.xml'
     | '/tools'
     | '/api/ai'
+    | '/api/feedback'
     | '/c/$category'
     | '/changelog/$slug'
     | '/t/$slug'
@@ -126,10 +146,12 @@ export interface FileRouteTypes {
     | '/'
     | '/changelog'
     | '/favorites'
+    | '/feedback'
     | '/llms-full.txt'
     | '/sitemap.xml'
     | '/tools'
     | '/api/ai'
+    | '/api/feedback'
     | '/c/$category'
     | '/changelog/$slug'
     | '/t/$slug'
@@ -138,10 +160,12 @@ export interface FileRouteTypes {
     | '/'
     | '/changelog'
     | '/favorites'
+    | '/feedback'
     | '/llms-full.txt'
     | '/sitemap.xml'
     | '/tools'
     | '/api/ai'
+    | '/api/feedback'
     | '/c/$category'
     | '/changelog/$slug'
     | '/t/$slug'
@@ -151,10 +175,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChangelogRoute: typeof ChangelogRouteWithChildren
   FavoritesRoute: typeof FavoritesRoute
+  FeedbackRoute: typeof FeedbackRoute
   LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ToolsRoute: typeof ToolsRoute
   ApiAiRoute: typeof ApiAiRoute
+  ApiFeedbackRoute: typeof ApiFeedbackRoute
   CCategoryRoute: typeof CCategoryRoute
   TSlugRoute: typeof TSlugRoute
 }
@@ -180,6 +206,13 @@ declare module '@tanstack/react-router' {
       path: '/llms-full.txt'
       fullPath: '/llms-full.txt'
       preLoaderRoute: typeof LlmsFullDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feedback': {
+      id: '/feedback'
+      path: '/feedback'
+      fullPath: '/feedback'
+      preLoaderRoute: typeof FeedbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/favorites': {
@@ -224,6 +257,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CCategoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/feedback': {
+      id: '/api/feedback'
+      path: '/api/feedback'
+      fullPath: '/api/feedback'
+      preLoaderRoute: typeof ApiFeedbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/ai': {
       id: '/api/ai'
       path: '/api/ai'
@@ -250,10 +290,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChangelogRoute: ChangelogRouteWithChildren,
   FavoritesRoute: FavoritesRoute,
+  FeedbackRoute: FeedbackRoute,
   LlmsFullDottxtRoute: LlmsFullDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ToolsRoute: ToolsRoute,
   ApiAiRoute: ApiAiRoute,
+  ApiFeedbackRoute: ApiFeedbackRoute,
   CCategoryRoute: CCategoryRoute,
   TSlugRoute: TSlugRoute,
 }

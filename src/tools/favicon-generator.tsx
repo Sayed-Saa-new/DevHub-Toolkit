@@ -87,14 +87,13 @@ function drawFavicon(canvas: HTMLCanvasElement, o: RenderOpts) {
 
   ctx.save();
   const r =
-    o.shape === "circle"
-      ? o.size / 2
-      : o.shape === "rounded"
-        ? (o.radius / 100) * o.size
-        : 0;
+    o.shape === "circle" ? o.size / 2 : o.shape === "rounded" ? (o.radius / 100) * o.size : 0;
   if (r > 0) {
     ctx.beginPath();
-    const x = 0, y = 0, w = o.size, h = o.size;
+    const x = 0,
+      y = 0,
+      w = o.size,
+      h = o.size;
     ctx.moveTo(x + r, y);
     ctx.arcTo(x + w, y, x + w, y + h, r);
     ctx.arcTo(x + w, y + h, x, y + h, r);
@@ -157,8 +156,17 @@ export function FaviconGenerator() {
 
   const opts: Omit<RenderOpts, "size"> = useMemo(
     () => ({
-      mode, shape, bg, fg, padding, radius, text, fontStack, fontWeight,
-      image: img, transparent,
+      mode,
+      shape,
+      bg,
+      fg,
+      padding,
+      radius,
+      text,
+      fontStack,
+      fontWeight,
+      image: img,
+      transparent,
     }),
     [mode, shape, bg, fg, padding, radius, text, fontStack, fontWeight, img, transparent],
   );
@@ -328,9 +336,7 @@ export function FaviconGenerator() {
         </Panel>
 
         <Panel title="HTML snippet" actions={<CopyButton text={htmlSnippet} />}>
-          <pre className="p-3 text-xs font-mono overflow-x-auto whitespace-pre">
-            {htmlSnippet}
-          </pre>
+          <pre className="p-3 text-xs font-mono overflow-x-auto whitespace-pre">{htmlSnippet}</pre>
         </Panel>
       </div>
 
@@ -342,10 +348,18 @@ export function FaviconGenerator() {
               {building ? "Packing…" : "Download favicon pack (.zip)"}
             </Button>
             <div className="grid grid-cols-2 gap-2">
-              <Button variant="outline" size="sm" onClick={downloadIco}>favicon.ico</Button>
-              <Button variant="outline" size="sm" onClick={() => downloadOne(512)}>512×512 PNG</Button>
-              <Button variant="outline" size="sm" onClick={() => downloadOne(180)}>apple-touch-icon</Button>
-              <Button variant="outline" size="sm" onClick={() => downloadOne(32)}>32×32 PNG</Button>
+              <Button variant="outline" size="sm" onClick={downloadIco}>
+                favicon.ico
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => downloadOne(512)}>
+                512×512 PNG
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => downloadOne(180)}>
+                apple-touch-icon
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => downloadOne(32)}>
+                32×32 PNG
+              </Button>
             </div>
           </div>
         </Panel>
@@ -370,7 +384,12 @@ export function FaviconGenerator() {
             {mode === "text" ? (
               <>
                 <Field label="Letters" hint="1–3 chars">
-                  <Input value={text} onChange={(e) => setText(e.target.value)} maxLength={3} className="h-8" />
+                  <Input
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    maxLength={3}
+                    className="h-8"
+                  />
                 </Field>
                 <Field label="Font">
                   <select
@@ -379,12 +398,20 @@ export function FaviconGenerator() {
                     className="w-full h-8 rounded-md border border-input bg-background px-2 text-xs"
                   >
                     {FONT_STACKS.map((f) => (
-                      <option key={f.id} value={f.css}>{f.label}</option>
+                      <option key={f.id} value={f.css}>
+                        {f.label}
+                      </option>
                     ))}
                   </select>
                 </Field>
                 <Field label={`Weight — ${fontWeight}`}>
-                  <Slider min={300} max={900} step={100} value={[fontWeight]} onValueChange={(v) => setFontWeight(v[0])} />
+                  <Slider
+                    min={300}
+                    max={900}
+                    step={100}
+                    value={[fontWeight]}
+                    onValueChange={(v) => setFontWeight(v[0])}
+                  />
                 </Field>
               </>
             ) : (
@@ -400,7 +427,12 @@ export function FaviconGenerator() {
                   />
                 </label>
                 {img && (
-                  <Button variant="ghost" size="sm" className="w-full gap-1.5 text-xs h-7" onClick={clearImage}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="w-full gap-1.5 text-xs h-7"
+                    onClick={clearImage}
+                  >
                     <Trash2 className="size-3" /> Remove image
                   </Button>
                 )}
@@ -426,31 +458,65 @@ export function FaviconGenerator() {
             </Field>
             {shape === "rounded" && (
               <Field label={`Corner radius — ${radius}%`}>
-                <Slider min={0} max={50} step={1} value={[radius]} onValueChange={(v) => setRadius(v[0])} />
+                <Slider
+                  min={0}
+                  max={50}
+                  step={1}
+                  value={[radius]}
+                  onValueChange={(v) => setRadius(v[0])}
+                />
               </Field>
             )}
             <Field label={`Padding — ${padding}%`}>
-              <Slider min={0} max={40} step={1} value={[padding]} onValueChange={(v) => setPadding(v[0])} />
+              <Slider
+                min={0}
+                max={40}
+                step={1}
+                value={[padding]}
+                onValueChange={(v) => setPadding(v[0])}
+              />
             </Field>
             <div className="grid grid-cols-2 gap-2">
               <Field label="Background">
                 <div className="flex items-center gap-2">
-                  <input type="color" value={bg} onChange={(e) => setBg(e.target.value)}
-                    className="h-8 w-10 rounded border border-input bg-transparent" disabled={transparent} />
-                  <Input value={bg} onChange={(e) => setBg(e.target.value)}
-                    className="h-8 font-mono text-xs" disabled={transparent} />
+                  <input
+                    type="color"
+                    value={bg}
+                    onChange={(e) => setBg(e.target.value)}
+                    className="h-8 w-10 rounded border border-input bg-transparent"
+                    disabled={transparent}
+                  />
+                  <Input
+                    value={bg}
+                    onChange={(e) => setBg(e.target.value)}
+                    className="h-8 font-mono text-xs"
+                    disabled={transparent}
+                  />
                 </div>
               </Field>
               <Field label="Foreground">
                 <div className="flex items-center gap-2">
-                  <input type="color" value={fg} onChange={(e) => setFg(e.target.value)}
-                    className="h-8 w-10 rounded border border-input bg-transparent" />
-                  <Input value={fg} onChange={(e) => setFg(e.target.value)} className="h-8 font-mono text-xs" />
+                  <input
+                    type="color"
+                    value={fg}
+                    onChange={(e) => setFg(e.target.value)}
+                    className="h-8 w-10 rounded border border-input bg-transparent"
+                  />
+                  <Input
+                    value={fg}
+                    onChange={(e) => setFg(e.target.value)}
+                    className="h-8 font-mono text-xs"
+                  />
                 </div>
               </Field>
             </div>
             <label className="flex items-center gap-2 text-xs">
-              <input type="checkbox" checked={transparent} onChange={(e) => setTransparent(e.target.checked)} className="size-3.5" />
+              <input
+                type="checkbox"
+                checked={transparent}
+                onChange={(e) => setTransparent(e.target.checked)}
+                className="size-3.5"
+              />
               Transparent background
             </label>
           </div>
@@ -459,14 +525,25 @@ export function FaviconGenerator() {
         <Panel title="Manifest">
           <div className="p-3 space-y-3">
             <Field label="Site name">
-              <Input value={siteName} onChange={(e) => setSiteName(e.target.value)} className="h-8" />
+              <Input
+                value={siteName}
+                onChange={(e) => setSiteName(e.target.value)}
+                className="h-8"
+              />
             </Field>
             <Field label="Theme color">
               <div className="flex items-center gap-2">
-                <input type="color" value={themeColor} onChange={(e) => setThemeColor(e.target.value)}
-                  className="h-8 w-10 rounded border border-input bg-transparent" />
-                <Input value={themeColor} onChange={(e) => setThemeColor(e.target.value)}
-                  className="h-8 font-mono text-xs" />
+                <input
+                  type="color"
+                  value={themeColor}
+                  onChange={(e) => setThemeColor(e.target.value)}
+                  className="h-8 w-10 rounded border border-input bg-transparent"
+                />
+                <Input
+                  value={themeColor}
+                  onChange={(e) => setThemeColor(e.target.value)}
+                  className="h-8 font-mono text-xs"
+                />
               </div>
             </Field>
           </div>

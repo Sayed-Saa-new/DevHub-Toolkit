@@ -63,11 +63,7 @@ function baseName(name: string) {
   return name.replace(/\.docx?$/i, "");
 }
 
-function makeTurndown(opts: {
-  bullet: BulletMarker;
-  heading: HeadingStyle;
-  gfm: boolean;
-}) {
+function makeTurndown(opts: { bullet: BulletMarker; heading: HeadingStyle; gfm: boolean }) {
   const svc = new TurndownService({
     headingStyle: opts.heading,
     bulletListMarker: opts.bullet,
@@ -127,10 +123,7 @@ export function DocxToMarkdown() {
   const dropRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const totalBytes = useMemo(
-    () => jobs.reduce((n, j) => n + j.size, 0),
-    [jobs],
-  );
+  const totalBytes = useMemo(() => jobs.reduce((n, j) => n + j.size, 0), [jobs]);
   const active = jobs.find((j) => j.id === activeId) ?? null;
 
   // Update rendered preview whenever active markdown changes / preview mode toggles
@@ -197,16 +190,17 @@ export function DocxToMarkdown() {
         imageMode === "skip"
           ? mammoth.images.imgElement(() => Promise.resolve({ src: "" }))
           : imageMode === "placeholder"
-          ? mammoth.images.imgElement((img) => {
-              imageCount++;
-              const alt = (img as unknown as { altText?: string }).altText ?? `image-${imageCount}`;
-              return Promise.resolve({ src: `#image-${imageCount}`, alt });
-            })
-          : mammoth.images.imgElement(async (img) => {
-              imageCount++;
-              const data = await img.read("base64");
-              return { src: `data:${img.contentType};base64,${data}` };
-            });
+            ? mammoth.images.imgElement((img) => {
+                imageCount++;
+                const alt =
+                  (img as unknown as { altText?: string }).altText ?? `image-${imageCount}`;
+                return Promise.resolve({ src: `#image-${imageCount}`, alt });
+              })
+            : mammoth.images.imgElement(async (img) => {
+                imageCount++;
+                const data = await img.read("base64");
+                return { src: `data:${img.contentType};base64,${data}` };
+              });
 
       const result = await mammoth.convertToHtml(
         { arrayBuffer: buffer },
@@ -318,7 +312,9 @@ export function DocxToMarkdown() {
       <div className="rounded-xl border border-border bg-card p-3 flex flex-wrap items-end gap-3">
         <Field label="Bullet">
           <Select value={bullet} onValueChange={(v) => setBullet(v as BulletMarker)}>
-            <SelectTrigger className="h-9 w-20"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="h-9 w-20">
+              <SelectValue />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="-">- dash</SelectItem>
               <SelectItem value="*">* star</SelectItem>
@@ -328,7 +324,9 @@ export function DocxToMarkdown() {
         </Field>
         <Field label="Heading style">
           <Select value={heading} onValueChange={(v) => setHeading(v as HeadingStyle)}>
-            <SelectTrigger className="h-9 w-32"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="h-9 w-32">
+              <SelectValue />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="atx"># ATX</SelectItem>
               <SelectItem value="setext">Setext ===</SelectItem>
@@ -337,7 +335,9 @@ export function DocxToMarkdown() {
         </Field>
         <Field label="Images">
           <Select value={imageMode} onValueChange={(v) => setImageMode(v as ImageMode)}>
-            <SelectTrigger className="h-9 w-40"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="h-9 w-40">
+              <SelectValue />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="inline">Inline base64</SelectItem>
               <SelectItem value="placeholder">Placeholder refs</SelectItem>
@@ -358,7 +358,11 @@ export function DocxToMarkdown() {
             size="sm"
             className="h-8 gap-1.5"
           >
-            {running ? <Loader2 className="size-3.5 animate-spin" /> : <CheckCircle2 className="size-3.5" />}
+            {running ? (
+              <Loader2 className="size-3.5 animate-spin" />
+            ) : (
+              <CheckCircle2 className="size-3.5" />
+            )}
             Convert {jobs.filter((j) => j.status !== "done").length || "all"}
           </Button>
           <Button
@@ -412,7 +416,9 @@ export function DocxToMarkdown() {
         </div>
         {jobs.length > 0 && (
           <div className="mt-3 flex items-center justify-center gap-3 text-[11px] font-mono text-muted-foreground">
-            <span>{jobs.length} file{jobs.length > 1 ? "s" : ""}</span>
+            <span>
+              {jobs.length} file{jobs.length > 1 ? "s" : ""}
+            </span>
             <span>{formatBytes(totalBytes)}</span>
             {doneCount > 0 && <span className="text-emerald-500">✓ {doneCount} done</span>}
             {errCount > 0 && <span className="text-red-500">✗ {errCount} failed</span>}
@@ -446,9 +452,15 @@ export function DocxToMarkdown() {
                       )}
                     </div>
                   </div>
-                  {j.status === "running" && <Loader2 className="size-3.5 animate-spin text-muted-foreground shrink-0" />}
-                  {j.status === "done" && <CheckCircle2 className="size-3.5 text-emerald-500 shrink-0" />}
-                  {j.status === "error" && <AlertCircle className="size-3.5 text-red-500 shrink-0" />}
+                  {j.status === "running" && (
+                    <Loader2 className="size-3.5 animate-spin text-muted-foreground shrink-0" />
+                  )}
+                  {j.status === "done" && (
+                    <CheckCircle2 className="size-3.5 text-emerald-500 shrink-0" />
+                  )}
+                  {j.status === "error" && (
+                    <AlertCircle className="size-3.5 text-red-500 shrink-0" />
+                  )}
                   {j.status === "queued" && (
                     <Badge variant="outline" className="text-[9px] px-1.5 py-0 h-4 font-mono">
                       queued
@@ -508,7 +520,11 @@ export function DocxToMarkdown() {
                     variant="ghost"
                     size="sm"
                     onClick={() =>
-                      downloadFile(`${baseName(active.file.name)}.md`, active.markdown!, "text/markdown")
+                      downloadFile(
+                        `${baseName(active.file.name)}.md`,
+                        active.markdown!,
+                        "text/markdown",
+                      )
                     }
                     className="h-7 gap-1.5 text-xs"
                   >
@@ -538,13 +554,17 @@ export function DocxToMarkdown() {
                     <Loader2 className="size-4 animate-spin" /> Converting…
                   </span>
                 ) : (
-                  <>Click <strong>Convert</strong> to process this file.</>
+                  <>
+                    Click <strong>Convert</strong> to process this file.
+                  </>
                 )}
               </div>
             ) : preview === "markdown" ? (
               <pre
                 className="p-4 font-mono text-sm whitespace-pre-wrap break-words min-h-[440px] max-h-[560px] overflow-auto"
-                onDoubleClick={() => active.markdown && navigator.clipboard.writeText(active.markdown)}
+                onDoubleClick={() =>
+                  active.markdown && navigator.clipboard.writeText(active.markdown)
+                }
               >
                 {active.markdown}
               </pre>
@@ -561,7 +581,9 @@ export function DocxToMarkdown() {
                   {active.warnings.length} conversion notice{active.warnings.length > 1 ? "s" : ""}:
                 </div>
                 {active.warnings.slice(0, 12).map((w, i) => (
-                  <div key={i} className="font-mono">· {w}</div>
+                  <div key={i} className="font-mono">
+                    · {w}
+                  </div>
                 ))}
                 {active.warnings.length > 12 && (
                   <div className="italic">…and {active.warnings.length - 12} more</div>
@@ -573,8 +595,9 @@ export function DocxToMarkdown() {
       )}
 
       <div className="text-xs text-muted-foreground text-center">
-        Powered by <span className="font-mono">mammoth.js</span> + <span className="font-mono">turndown</span>.
-        Everything runs in your browser — no uploads, no accounts.
+        Powered by <span className="font-mono">mammoth.js</span> +{" "}
+        <span className="font-mono">turndown</span>. Everything runs in your browser — no uploads,
+        no accounts.
       </div>
 
       <style>{`.md-preview h1{font-size:1.5rem;font-weight:600;margin:.75rem 0}.md-preview h2{font-size:1.2rem;font-weight:600;margin:.75rem 0}.md-preview h3{font-size:1.05rem;font-weight:600;margin:.6rem 0}.md-preview p{margin:.5rem 0;line-height:1.6}.md-preview ul{list-style:disc;margin:.5rem 0 .5rem 1.25rem}.md-preview ol{list-style:decimal;margin:.5rem 0 .5rem 1.25rem}.md-preview code{background:oklch(1 0 0/8%);padding:.1rem .35rem;border-radius:.25rem;font-family:var(--font-mono)}.md-preview pre{background:oklch(1 0 0/6%);padding:.75rem;border-radius:.5rem;overflow:auto;font-family:var(--font-mono);font-size:.85rem;margin:.5rem 0}.md-preview a{text-decoration:underline;text-underline-offset:3px}.md-preview img{max-width:100%;border-radius:.375rem;margin:.5rem 0}.md-preview table{border-collapse:collapse;margin:.5rem 0}.md-preview th,.md-preview td{border:1px solid oklch(1 0 0/12%);padding:.35rem .6rem}.md-preview blockquote{border-left:3px solid oklch(1 0 0/20%);padding-left:.75rem;color:oklch(1 0 0/70%);margin:.5rem 0}`}</style>

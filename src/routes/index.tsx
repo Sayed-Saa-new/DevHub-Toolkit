@@ -31,7 +31,10 @@ export const Route = createFileRoute("/")({
           "developer tools, online developer toolkit, json formatter, base64 decoder, jwt decoder, uuid generator, hash generator, regex tester, qr code generator, ai code explainer, css gradient generator, free developer tools",
       },
       { property: "og:url", content: `${SITE}/` },
-      { property: "og:title", content: `DevHub Toolkit — ${TOOLS.length}+ developer utilities in one keystroke` },
+      {
+        property: "og:title",
+        content: `DevHub Toolkit — ${TOOLS.length}+ developer utilities in one keystroke`,
+      },
       {
         property: "og:description",
         content:
@@ -46,20 +49,39 @@ export const Route = createFileRoute("/")({
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: `DevHub Toolkit — ${TOOLS.length}+ developer utilities in one keystroke` },
+      {
+        name: "twitter:title",
+        content: `DevHub Toolkit — ${TOOLS.length}+ developer utilities in one keystroke`,
+      },
       {
         name: "twitter:description",
-        content: "Every developer utility you actually use — local-first, keyboard-first, monochrome.",
+        content:
+          "Every developer utility you actually use — local-first, keyboard-first, monochrome.",
       },
       { name: "twitter:image", content: `${SITE}/og-image.png` },
     ],
     links: [
       { rel: "canonical", href: `${SITE}/` },
-      { rel: "prefetch", as: "image", href: CATEGORY_ART_ASSETS.catConverters, type: "image/svg+xml" },
-      { rel: "prefetch", as: "image", href: CATEGORY_ART_ASSETS.catGenerators, type: "image/svg+xml" },
+      {
+        rel: "prefetch",
+        as: "image",
+        href: CATEGORY_ART_ASSETS.catConverters,
+        type: "image/svg+xml",
+      },
+      {
+        rel: "prefetch",
+        as: "image",
+        href: CATEGORY_ART_ASSETS.catGenerators,
+        type: "image/svg+xml",
+      },
       { rel: "prefetch", as: "image", href: CATEGORY_ART_ASSETS.catDesign, type: "image/svg+xml" },
       { rel: "prefetch", as: "image", href: CATEGORY_ART_ASSETS.catEditors, type: "image/svg+xml" },
-      { rel: "prefetch", as: "image", href: CATEGORY_ART_ASSETS.catReference, type: "image/svg+xml" },
+      {
+        rel: "prefetch",
+        as: "image",
+        href: CATEGORY_ART_ASSETS.catReference,
+        type: "image/svg+xml",
+      },
       { rel: "prefetch", as: "image", href: CATEGORY_ART_ASSETS.catAi, type: "image/svg+xml" },
     ],
     scripts: [

@@ -18,10 +18,14 @@ export function SectionHead({
           {eyebrow}
         </div>
       )}
-      <h2 className={`${eyebrow ? "mt-3" : ""} text-3xl md:text-[2.75rem] font-semibold tracking-[-0.02em] leading-[1.05]`}>
+      <h2
+        className={`${eyebrow ? "mt-3" : ""} text-3xl md:text-[2.75rem] font-semibold tracking-[-0.02em] leading-[1.05]`}
+      >
         {title}
       </h2>
-      {subtitle && <p className="mt-4 text-[15px] text-muted-foreground leading-relaxed">{subtitle}</p>}
+      {subtitle && (
+        <p className="mt-4 text-[15px] text-muted-foreground leading-relaxed">{subtitle}</p>
+      )}
     </div>
   );
 }

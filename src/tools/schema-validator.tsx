@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { AlertTriangle, CheckCircle2, ChevronRight, XCircle, Loader2, ExternalLink } from "lucide-react";
+import {
+  AlertTriangle,
+  CheckCircle2,
+  ChevronRight,
+  XCircle,
+  Loader2,
+  ExternalLink,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -69,9 +76,17 @@ function typeOf(node: unknown): string | string[] {
 function validateItem(node: Record<string, unknown>): Issue[] {
   const issues: Issue[] = [];
   if (!node["@context"]) {
-    issues.push({ severity: "warning", type: "missing-context", message: "Missing @context (should be https://schema.org)" });
+    issues.push({
+      severity: "warning",
+      type: "missing-context",
+      message: "Missing @context (should be https://schema.org)",
+    });
   } else if (typeof node["@context"] === "string" && !/schema\.org/i.test(node["@context"])) {
-    issues.push({ severity: "warning", type: "context", message: `@context is "${node["@context"]}" — expected schema.org` });
+    issues.push({
+      severity: "warning",
+      type: "context",
+      message: `@context is "${node["@context"]}" — expected schema.org`,
+    });
   }
   const t = node["@type"];
   if (!t) {
@@ -95,8 +110,17 @@ function validateItem(node: Record<string, unknown>): Issue[] {
   }
   // URL sanity
   for (const [k, v] of Object.entries(node)) {
-    if (typeof v === "string" && (k === "url" || k === "image" || k === "logo") && v && !/^https?:\/\//i.test(v)) {
-      issues.push({ severity: "warning", type: "relative-url", message: `"${k}" is not an absolute URL: ${v}` });
+    if (
+      typeof v === "string" &&
+      (k === "url" || k === "image" || k === "logo") &&
+      v &&
+      !/^https?:\/\//i.test(v)
+    ) {
+      issues.push({
+        severity: "warning",
+        type: "relative-url",
+        message: `"${k}" is not an absolute URL: ${v}`,
+      });
     }
   }
   return issues;
@@ -151,7 +175,8 @@ export function SchemaValidator() {
       const raws = extractJsonLdBlocks(html);
       setBlocks(raws.map((r, i) => parseBlock(r, i)));
       setScannedUrl(finalUrl);
-      if (raws.length === 0) setErr("No JSON-LD (<script type=\"application/ld+json\">) blocks found on the page.");
+      if (raws.length === 0)
+        setErr('No JSON-LD (<script type="application/ld+json">) blocks found on the page.');
     } catch (e) {
       setErr((e as Error).message);
     } finally {
@@ -178,7 +203,10 @@ export function SchemaValidator() {
   const totals = {
     items: allItems.length,
     errors: allItems.reduce((s, i) => s + i.issues.filter((x) => x.severity === "error").length, 0),
-    warnings: allItems.reduce((s, i) => s + i.issues.filter((x) => x.severity === "warning").length, 0),
+    warnings: allItems.reduce(
+      (s, i) => s + i.issues.filter((x) => x.severity === "warning").length,
+      0,
+    ),
     parseErrors: blocks.filter((b) => b.parseError).length,
   };
 
@@ -215,7 +243,9 @@ export function SchemaValidator() {
               className="min-h-48 font-mono text-xs"
             />
           </Field>
-          <Button onClick={analyzeSource} disabled={!source.trim()}>Validate</Button>
+          <Button onClick={analyzeSource} disabled={!source.trim()}>
+            Validate
+          </Button>
         </TabsContent>
       </Tabs>
 
@@ -232,13 +262,26 @@ export function SchemaValidator() {
             <div className="p-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
               <Stat label="Detected items" value={totals.items} />
               <Stat label="Errors" value={totals.errors} tone={totals.errors ? "error" : "ok"} />
-              <Stat label="Warnings" value={totals.warnings} tone={totals.warnings ? "warn" : "ok"} />
-              <Stat label="Parse errors" value={totals.parseErrors} tone={totals.parseErrors ? "error" : "ok"} />
+              <Stat
+                label="Warnings"
+                value={totals.warnings}
+                tone={totals.warnings ? "warn" : "ok"}
+              />
+              <Stat
+                label="Parse errors"
+                value={totals.parseErrors}
+                tone={totals.parseErrors ? "error" : "ok"}
+              />
             </div>
             {scannedUrl && (
               <div className="px-4 pb-3 -mt-2 text-xs text-muted-foreground flex items-center gap-1">
                 <ExternalLink className="size-3" />
-                <a href={scannedUrl} target="_blank" rel="noreferrer" className="underline underline-offset-4 truncate">
+                <a
+                  href={scannedUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline underline-offset-4 truncate"
+                >
                   {scannedUrl}
                 </a>
               </div>
@@ -256,7 +299,15 @@ export function SchemaValidator() {
   );
 }
 
-function Stat({ label, value, tone = "ok" }: { label: string; value: number; tone?: "ok" | "warn" | "error" }) {
+function Stat({
+  label,
+  value,
+  tone = "ok",
+}: {
+  label: string;
+  value: number;
+  tone?: "ok" | "warn" | "error";
+}) {
   const toneClass =
     tone === "error" ? "text-destructive" : tone === "warn" ? "text-amber-500" : "text-foreground";
   return (
@@ -302,10 +353,14 @@ function ItemView({ item }: { item: ParsedItem }) {
         onClick={() => setOpen(!open)}
         className="w-full flex items-center gap-3 p-3 hover:bg-muted/30 text-left"
       >
-        <ChevronRight className={cn("size-4 text-muted-foreground transition", open && "rotate-90")} />
+        <ChevronRight
+          className={cn("size-4 text-muted-foreground transition", open && "rotate-90")}
+        />
         <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
           {types.map((t) => (
-            <Badge key={t} variant="outline" className="font-mono text-[10px]">{t}</Badge>
+            <Badge key={t} variant="outline" className="font-mono text-[10px]">
+              {t}
+            </Badge>
           ))}
           {ok ? (
             <span className="inline-flex items-center gap-1 text-xs text-emerald-500">
@@ -341,7 +396,11 @@ function ItemView({ item }: { item: ParsedItem }) {
                       : "border-amber-500/30 bg-amber-500/5 text-amber-600 dark:text-amber-400",
                   )}
                 >
-                  {iss.severity === "error" ? <XCircle className="size-3.5 mt-0.5 shrink-0" /> : <AlertTriangle className="size-3.5 mt-0.5 shrink-0" />}
+                  {iss.severity === "error" ? (
+                    <XCircle className="size-3.5 mt-0.5 shrink-0" />
+                  ) : (
+                    <AlertTriangle className="size-3.5 mt-0.5 shrink-0" />
+                  )}
                   <span>{iss.message}</span>
                 </li>
               ))}

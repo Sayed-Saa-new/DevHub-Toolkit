@@ -8,9 +8,17 @@ export const Route = createFileRoute("/favorites")({
   head: () => ({
     meta: [
       { title: "Favorites — DevHub Toolkit" },
-      { name: "description", content: "Your saved developer tools on DevHub Toolkit — pinned formatters, encoders, generators, and references you use every day." },
+      {
+        name: "description",
+        content:
+          "Your saved developer tools on DevHub Toolkit — pinned formatters, encoders, generators, and references you use every day.",
+      },
       { property: "og:title", content: "Favorites — DevHub Toolkit" },
-      { property: "og:description", content: "Your saved developer tools on DevHub Toolkit — pinned formatters, encoders, generators, and references you use every day." },
+      {
+        property: "og:description",
+        content:
+          "Your saved developer tools on DevHub Toolkit — pinned formatters, encoders, generators, and references you use every day.",
+      },
       { property: "og:url", content: "https://devhub.flinkeo.online/favorites" },
       { name: "robots", content: "noindex" },
     ],
@@ -43,9 +51,13 @@ function FavoritesPage() {
           </div>
           <div className="font-medium">No favorites yet</div>
           <p className="text-sm text-muted-foreground mt-1 max-w-sm mx-auto">
-            Open a tool and hit <span className="font-mono">Save</span> to pin it here for quick access.
+            Open a tool and hit <span className="font-mono">Save</span> to pin it here for quick
+            access.
           </p>
-          <Link to="/" className="inline-block mt-6 text-sm underline underline-offset-4 hover:text-foreground text-muted-foreground">
+          <Link
+            to="/"
+            className="inline-block mt-6 text-sm underline underline-offset-4 hover:text-foreground text-muted-foreground"
+          >
             Browse all tools
           </Link>
         </div>

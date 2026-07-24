@@ -54,10 +54,14 @@ function minify(sql: string): string {
     const ch = sql[i];
     const nx = sql[i + 1];
     if (ch === "'") {
-      out += ch; i++;
+      out += ch;
+      i++;
       while (i < sql.length) {
         out += sql[i];
-        if (sql[i] === "'" && sql[i - 1] !== "\\") { i++; break; }
+        if (sql[i] === "'" && sql[i - 1] !== "\\") {
+          i++;
+          break;
+        }
         i++;
       }
       continue;
@@ -75,12 +79,17 @@ function minify(sql: string): string {
     out += ch;
     i++;
   }
-  return out.replace(/\s+/g, " ").replace(/\s*([,;()])\s*/g, "$1").trim();
+  return out
+    .replace(/\s+/g, " ")
+    .replace(/\s*([,;()])\s*/g, "$1")
+    .trim();
 }
 
 function tokenStats(sql: string) {
   const trimmed = sql.trim();
-  const statements = trimmed ? trimmed.split(/;\s*(?=(?:[^']*'[^']*')*[^']*$)/).filter((s) => s.trim()).length : 0;
+  const statements = trimmed
+    ? trimmed.split(/;\s*(?=(?:[^']*'[^']*')*[^']*$)/).filter((s) => s.trim()).length
+    : 0;
   const lines = trimmed ? trimmed.split(/\n/).length : 0;
   return { chars: sql.length, lines, statements };
 }
@@ -116,7 +125,16 @@ export function SqlFormatter() {
     } catch (e) {
       throw e;
     }
-  }, [input, dialect, indent, keywordCase, linesBetweenQueries, indentStyle, expressionWidth, mode]);
+  }, [
+    input,
+    dialect,
+    indent,
+    keywordCase,
+    linesBetweenQueries,
+    indentStyle,
+    expressionWidth,
+    mode,
+  ]);
 
   useEffect(() => {
     try {
@@ -131,7 +149,10 @@ export function SqlFormatter() {
 
   const inStats = tokenStats(input);
   const outStats = tokenStats(output);
-  const savedPct = input.length && mode === "minify" ? Math.max(0, Math.round((1 - output.length / input.length) * 100)) : 0;
+  const savedPct =
+    input.length && mode === "minify"
+      ? Math.max(0, Math.round((1 - output.length / input.length) * 100))
+      : 0;
 
   return (
     <div className="space-y-4">
@@ -144,7 +165,9 @@ export function SqlFormatter() {
               className="w-full h-9 rounded-md border border-input bg-background px-2 text-sm"
             >
               {DIALECTS.map((d) => (
-                <option key={d.id} value={d.id}>{d.label}</option>
+                <option key={d.id} value={d.id}>
+                  {d.label}
+                </option>
               ))}
             </select>
           </Field>
@@ -155,20 +178,28 @@ export function SqlFormatter() {
               className="w-full h-9 rounded-md border border-input bg-background px-2 text-sm"
             >
               {KEYWORD_CASE.map((k) => (
-                <option key={k.id} value={k.id}>{k.label}</option>
+                <option key={k.id} value={k.id}>
+                  {k.label}
+                </option>
               ))}
             </select>
           </Field>
           <Field label={`Indent (${indent} spaces)`}>
             <input
-              type="range" min={1} max={8} value={indent}
+              type="range"
+              min={1}
+              max={8}
+              value={indent}
               onChange={(e) => setIndent(Number(e.target.value))}
               className="w-full"
             />
           </Field>
           <Field label={`Lines between queries (${linesBetweenQueries})`}>
             <input
-              type="range" min={1} max={4} value={linesBetweenQueries}
+              type="range"
+              min={1}
+              max={4}
+              value={linesBetweenQueries}
               onChange={(e) => setLinesBetweenQueries(Number(e.target.value))}
               className="w-full"
             />
@@ -186,25 +217,48 @@ export function SqlFormatter() {
           </Field>
           <Field label={`Expression width (${expressionWidth})`}>
             <input
-              type="range" min={30} max={120} step={5} value={expressionWidth}
+              type="range"
+              min={30}
+              max={120}
+              step={5}
+              value={expressionWidth}
               onChange={(e) => setExpressionWidth(Number(e.target.value))}
               className="w-full"
             />
           </Field>
           <Field label="Mode">
             <div className="flex gap-1">
-              <Button variant={mode === "format" ? "default" : "outline"} size="sm" className="flex-1 gap-1.5" onClick={() => setMode("format")}>
+              <Button
+                variant={mode === "format" ? "default" : "outline"}
+                size="sm"
+                className="flex-1 gap-1.5"
+                onClick={() => setMode("format")}
+              >
                 <Wand2 className="size-3.5" /> Format
               </Button>
-              <Button variant={mode === "minify" ? "default" : "outline"} size="sm" className="flex-1 gap-1.5" onClick={() => setMode("minify")}>
+              <Button
+                variant={mode === "minify" ? "default" : "outline"}
+                size="sm"
+                className="flex-1 gap-1.5"
+                onClick={() => setMode("minify")}
+              >
                 <Minimize2 className="size-3.5" /> Minify
               </Button>
             </div>
           </Field>
           <Field label="Actions">
             <div className="flex gap-1">
-              <Button variant="outline" size="sm" className="flex-1" onClick={() => setInput(SAMPLE)}>Sample</Button>
-              <Button variant="outline" size="sm" className="flex-1" onClick={() => setInput("")}>Clear</Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1"
+                onClick={() => setInput(SAMPLE)}
+              >
+                Sample
+              </Button>
+              <Button variant="outline" size="sm" className="flex-1" onClick={() => setInput("")}>
+                Clear
+              </Button>
             </div>
           </Field>
         </div>
@@ -238,7 +292,9 @@ export function SqlFormatter() {
           }
         >
           {error && mode === "format" ? (
-            <div className="p-4 text-sm text-destructive font-mono whitespace-pre-wrap">{error}</div>
+            <div className="p-4 text-sm text-destructive font-mono whitespace-pre-wrap">
+              {error}
+            </div>
           ) : (
             <pre className="p-3 min-h-[420px] max-h-[420px] overflow-auto font-mono text-sm whitespace-pre-wrap m-0">
               {output || <span className="text-muted-foreground">Formatted SQL appears here…</span>}

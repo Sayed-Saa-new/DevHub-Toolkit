@@ -100,15 +100,12 @@ function plainTextToMarkdown(input: string): string {
   let md = out.join("\n");
 
   // Auto-link bare URLs (avoid ones already inside () or <>)
-  md = md.replace(
-    /(^|[\s(])((https?:\/\/|www\.)[^\s<>"'`)]+)/g,
-    (_m, pre: string, url: string) => {
-      const clean = url.replace(/[.,;:!?)]+$/, "");
-      const trailing = url.slice(clean.length);
-      const href = clean.startsWith("http") ? clean : `https://${clean}`;
-      return `${pre}<${href}>${trailing}`;
-    },
-  );
+  md = md.replace(/(^|[\s(])((https?:\/\/|www\.)[^\s<>"'`)]+)/g, (_m, pre: string, url: string) => {
+    const clean = url.replace(/[.,;:!?)]+$/, "");
+    const trailing = url.slice(clean.length);
+    const href = clean.startsWith("http") ? clean : `https://${clean}`;
+    return `${pre}<${href}>${trailing}`;
+  });
 
   // Collapse 3+ blank lines
   md = md.replace(/\n{3,}/g, "\n\n");
@@ -141,9 +138,7 @@ function createTurndown(opts: {
       replacement: (content) => `~~${content}~~`,
     });
     svc.addRule("taskListItem", {
-      filter: (node) =>
-        node.nodeName === "LI" &&
-        !!node.querySelector('input[type="checkbox"]'),
+      filter: (node) => node.nodeName === "LI" && !!node.querySelector('input[type="checkbox"]'),
       replacement: (_content, node) => {
         const el = node as HTMLElement;
         const cb = el.querySelector('input[type="checkbox"]') as HTMLInputElement | null;
@@ -249,7 +244,9 @@ export function TextToMarkdown() {
       <div className="rounded-xl border border-border bg-card p-3 flex flex-wrap items-end gap-3">
         <Field label="Input mode">
           <Select value={mode} onValueChange={(v) => setMode(v as Mode)}>
-            <SelectTrigger className="h-9 w-36"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="h-9 w-36">
+              <SelectValue />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="auto">Auto detect</SelectItem>
               <SelectItem value="html">HTML / Rich text</SelectItem>
@@ -259,7 +256,9 @@ export function TextToMarkdown() {
         </Field>
         <Field label="Bullet">
           <Select value={bullet} onValueChange={(v) => setBullet(v as BulletMarker)}>
-            <SelectTrigger className="h-9 w-20"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="h-9 w-20">
+              <SelectValue />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="-">- dash</SelectItem>
               <SelectItem value="*">* star</SelectItem>
@@ -269,7 +268,9 @@ export function TextToMarkdown() {
         </Field>
         <Field label="Heading style">
           <Select value={heading} onValueChange={(v) => setHeading(v as HeadingStyle)}>
-            <SelectTrigger className="h-9 w-32"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="h-9 w-32">
+              <SelectValue />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="atx"># ATX</SelectItem>
               <SelectItem value="setext">Setext ===</SelectItem>
@@ -278,7 +279,9 @@ export function TextToMarkdown() {
         </Field>
         <Field label="Code fence">
           <Select value={fence} onValueChange={(v) => setFence(v as CodeFence)}>
-            <SelectTrigger className="h-9 w-24"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="h-9 w-24">
+              <SelectValue />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="```">```</SelectItem>
               <SelectItem value="~~~">~~~</SelectItem>
@@ -287,7 +290,9 @@ export function TextToMarkdown() {
         </Field>
         <Field label="Links">
           <Select value={link} onValueChange={(v) => setLink(v as LinkStyle)}>
-            <SelectTrigger className="h-9 w-32"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="h-9 w-32">
+              <SelectValue />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="inlined">Inlined [x](url)</SelectItem>
               <SelectItem value="referenced">Referenced [x][1]</SelectItem>
@@ -307,7 +312,12 @@ export function TextToMarkdown() {
           <Button variant="outline" size="sm" onClick={pasteRich} className="h-8 gap-1.5">
             <ClipboardPaste className="size-3.5" /> Paste
           </Button>
-          <Button variant="outline" size="sm" onClick={() => setInput(SAMPLE)} className="h-8 gap-1.5">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setInput(SAMPLE)}
+            className="h-8 gap-1.5"
+          >
             <Wand2 className="size-3.5" /> Sample
           </Button>
         </div>
@@ -370,7 +380,9 @@ export function TextToMarkdown() {
         >
           {preview === "markdown" ? (
             <pre className="p-4 font-mono text-sm whitespace-pre-wrap break-words min-h-[440px] max-h-[540px] overflow-auto">
-              {markdown || <span className="text-muted-foreground">Markdown will appear here…</span>}
+              {markdown || (
+                <span className="text-muted-foreground">Markdown will appear here…</span>
+              )}
             </pre>
           ) : (
             <div
