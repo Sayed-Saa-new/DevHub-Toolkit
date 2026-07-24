@@ -39,7 +39,10 @@ export function ClampCalculator() {
   const css = `clamp(${clamp.min}, ${clamp.pref}, ${clamp.max})`;
 
   const previews = [360, 480, 768, 1024, 1280, 1536].map((vw) => {
-    const size = Math.min(maxSize, Math.max(minSize, minSize + ((maxSize - minSize) * (vw - minVw)) / (maxVw - minVw)));
+    const size = Math.min(
+      maxSize,
+      Math.max(minSize, minSize + ((maxSize - minSize) * (vw - minVw)) / (maxVw - minVw)),
+    );
     return { vw, size: round(size, 2) };
   });
 
@@ -62,8 +65,12 @@ export function ClampCalculator() {
           <Field label="Output unit">
             <Tabs value={unit} onValueChange={(v) => setUnit(v as Unit)}>
               <TabsList className="h-8">
-                <TabsTrigger value="rem" className="text-xs">rem</TabsTrigger>
-                <TabsTrigger value="px" className="text-xs">px</TabsTrigger>
+                <TabsTrigger value="rem" className="text-xs">
+                  rem
+                </TabsTrigger>
+                <TabsTrigger value="px" className="text-xs">
+                  px
+                </TabsTrigger>
               </TabsList>
             </Tabs>
           </Field>
@@ -82,10 +89,19 @@ export function ClampCalculator() {
       <Panel title="Live preview">
         <div className="space-y-3 p-4">
           {previews.map((p) => (
-            <div key={p.vw} className="flex items-baseline gap-4 border-b border-border pb-2 last:border-0">
-              <Label className="w-24 shrink-0 font-mono text-xs text-muted-foreground">{p.vw}px vw</Label>
-              <span className="font-mono text-xs text-muted-foreground w-16 shrink-0">{p.size}px</span>
-              <span style={{ fontSize: `${p.size}px` }} className="truncate">The quick brown fox</span>
+            <div
+              key={p.vw}
+              className="flex items-baseline gap-4 border-b border-border pb-2 last:border-0"
+            >
+              <Label className="w-24 shrink-0 font-mono text-xs text-muted-foreground">
+                {p.vw}px vw
+              </Label>
+              <span className="font-mono text-xs text-muted-foreground w-16 shrink-0">
+                {p.size}px
+              </span>
+              <span style={{ fontSize: `${p.size}px` }} className="truncate">
+                The quick brown fox
+              </span>
             </div>
           ))}
         </div>

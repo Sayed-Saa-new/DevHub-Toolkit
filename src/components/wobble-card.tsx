@@ -76,9 +76,7 @@ export function WobbleCard({
       />
       <motion.div
         style={{
-          transform: hover
-            ? `translate3d(${-pos.x}px, ${-pos.y}px, 0)`
-            : "translate3d(0,0,0)",
+          transform: hover ? `translate3d(${-pos.x}px, ${-pos.y}px, 0)` : "translate3d(0,0,0)",
           transition: "transform 0.15s ease-out",
         }}
         className={cn("relative h-full", className)}

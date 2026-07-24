@@ -39,9 +39,7 @@ export const Route = createFileRoute("/changelog/$slug")({
   notFoundComponent: () => (
     <div className="mx-auto max-w-2xl px-6 py-24 text-center">
       <h1 className="text-2xl font-semibold tracking-tight">Update not found</h1>
-      <p className="text-sm text-muted-foreground mt-2">
-        This changelog entry doesn&apos;t exist.
-      </p>
+      <p className="text-sm text-muted-foreground mt-2">This changelog entry doesn&apos;t exist.</p>
       <Link
         to="/changelog"
         className="mt-6 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
@@ -88,10 +86,7 @@ function ChangelogEntryPage() {
         {entry.title}
       </h1>
 
-      <div
-        className="prose-md max-w-none mt-8"
-        dangerouslySetInnerHTML={{ __html: entry.html }}
-      />
+      <div className="prose-md max-w-none mt-8" dangerouslySetInnerHTML={{ __html: entry.html }} />
 
       {(prev || next) && (
         <nav className="mt-12 grid grid-cols-2 gap-3 border-t border-dashed border-border pt-6 text-sm">

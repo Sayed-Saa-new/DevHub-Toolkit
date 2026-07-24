@@ -7,9 +7,14 @@ export function ToolContent({ slug }: { slug: string }) {
   const c = TOOL_CONTENT[slug];
   if (!c) return null;
   return (
-    <section aria-label="About this tool" className="mt-14 md:mt-20 space-y-16 border-t border-border pt-12">
+    <section
+      aria-label="About this tool"
+      className="mt-14 md:mt-20 space-y-16 border-t border-border pt-12"
+    >
       <div className="max-w-3xl">
-        <div className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground">Overview</div>
+        <div className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground">
+          Overview
+        </div>
         <p className="mt-3 text-base md:text-lg text-foreground/85 leading-relaxed">{c.intro}</p>
       </div>
 
@@ -57,9 +62,13 @@ export function ToolContent({ slug }: { slug: string }) {
                   <span className="text-muted-foreground">Prompt: </span>
                   <span className="font-medium">{ex.prompt}</span>
                 </div>
-                <span className="text-[10px] font-mono uppercase text-muted-foreground">{ex.dialect}</span>
+                <span className="text-[10px] font-mono uppercase text-muted-foreground">
+                  {ex.dialect}
+                </span>
               </div>
-              <pre className="p-4 text-xs md:text-sm overflow-x-auto bg-background/50 font-mono leading-relaxed"><code>{ex.sql}</code></pre>
+              <pre className="p-4 text-xs md:text-sm overflow-x-auto bg-background/50 font-mono leading-relaxed">
+                <code>{ex.sql}</code>
+              </pre>
             </div>
           ))}
         </div>
@@ -78,12 +87,16 @@ export function ToolContent({ slug }: { slug: string }) {
       </div>
 
       <div>
-        <h2 className="text-xl md:text-2xl font-semibold tracking-tight">Frequently asked questions</h2>
+        <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
+          Frequently asked questions
+        </h2>
         <dl className="mt-6 divide-y divide-border border-y border-border">
           {c.faq.map((f) => (
             <div key={f.q} className="py-5">
               <dt className="font-medium">{f.q}</dt>
-              <dd className="text-sm text-muted-foreground mt-2 leading-relaxed max-w-3xl">{f.a}</dd>
+              <dd className="text-sm text-muted-foreground mt-2 leading-relaxed max-w-3xl">
+                {f.a}
+              </dd>
             </div>
           ))}
         </dl>

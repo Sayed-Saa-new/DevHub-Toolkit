@@ -12,6 +12,7 @@ import {
   CornerDownLeft,
   StarOff,
   Rss,
+  MessageSquare,
 } from "lucide-react";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { MotionIconConfig } from "lucide-react-motion";
@@ -30,7 +31,13 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { AnimatedTag } from "@/components/animated-tag";
 import { Sheet, SheetContent, SheetTitle, SheetHeader } from "@/components/ui/sheet";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { CATEGORIES, TOOLS, TOOLS_BY_SLUG, searchTools, type Category } from "@/lib/tools";
 import { useFavorites, useHydrated, useRecents, useSeen } from "@/lib/storage";
@@ -61,9 +68,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       const target = e.target as HTMLElement | null;
       const typing =
         !!target &&
-        (target.tagName === "INPUT" ||
-          target.tagName === "TEXTAREA" ||
-          target.isContentEditable);
+        (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable);
       if (!typing && e.key === "?" && !e.metaKey && !e.ctrlKey && !e.altKey) {
         e.preventDefault();
         setShortcutsOpen((v) => !v);
@@ -120,84 +125,103 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <MotionIconConfig trigger="parent-hover" duration={0.25}>
-    <div className="min-h-svh flex bg-background text-foreground">
-      <div className="scroll-progress" aria-hidden />
-      {/* Sidebar */}
-      <aside className="hidden md:flex w-64 shrink-0 flex-col border-r border-border bg-sidebar sticky top-0 h-svh">
-        {sidebarNav}
-      </aside>
-
-      {/* Mobile drawer */}
-      <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-        <SheetContent side="left" className="p-0 w-72 bg-sidebar border-sidebar-border flex flex-col">
-          <SheetHeader className="sr-only">
-            <SheetTitle>Navigation</SheetTitle>
-          </SheetHeader>
+      <div className="min-h-svh flex bg-background text-foreground">
+        <div className="scroll-progress" aria-hidden />
+        {/* Sidebar */}
+        <aside className="hidden md:flex w-64 shrink-0 flex-col border-r border-border bg-sidebar sticky top-0 h-svh">
           {sidebarNav}
-        </SheetContent>
-      </Sheet>
+        </aside>
 
-      {/* Main */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <header className="sticky top-0 z-20 h-14 border-b border-border glass flex items-center px-4 md:px-6 gap-3">
-          <button
-            onClick={() => setMobileOpen(true)}
-            className="md:hidden -ml-1 grid place-items-center size-9 rounded-md hover:bg-accent text-foreground"
-            aria-label="Open menu"
+        {/* Mobile drawer */}
+        <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+          <SheetContent
+            side="left"
+            className="p-0 w-72 bg-sidebar border-sidebar-border flex flex-col"
           >
-            <Menu className="size-5" />
-          </button>
-          <Link to="/" className="md:hidden" aria-label="DevHub Toolkit — Home">
-            <BrandLockup />
-          </Link>
-          <button
-            onClick={() => setOpen(true)}
-            className="flex-1 md:max-w-md flex items-center gap-2 h-9 px-3 rounded-md border border-border bg-background/40 text-sm text-muted-foreground hover:text-foreground transition"
-          >
-            <Search className="size-3.5" />
-            <span className="hidden sm:inline">Search {TOOLS.length} tools…</span>
-            <span className="sm:hidden">Search…</span>
-            <kbd className="ml-auto font-mono text-[10px] border border-border rounded px-1.5 py-0.5">⌘K</kbd>
-          </button>
-          <Link to="/favorites" className="hidden sm:block">
-            <Button variant="ghost" size="sm" className="gap-2">
-              <Star className="size-3.5" /> Favorites
-            </Button>
-          </Link>
-          <Link to="/changelog" className="hidden sm:block">
-            <Button variant="ghost" size="sm" className="gap-2">
-              <Rss className="size-3.5" /> Changelog
-            </Button>
-          </Link>
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Keyboard shortcuts"
-            className="hidden sm:inline-flex"
-            onClick={() => setShortcutsOpen(true)}
-          >
-            <Keyboard className="size-4" />
-          </Button>
-          <a href="https://github.com" target="_blank" rel="noreferrer" className="hidden sm:block">
-            <Button variant="ghost" size="icon" aria-label="GitHub">
-              <Github className="size-4" />
-            </Button>
-          </a>
-        </header>
+            <SheetHeader className="sr-only">
+              <SheetTitle>Navigation</SheetTitle>
+            </SheetHeader>
+            {sidebarNav}
+          </SheetContent>
+        </Sheet>
 
-        <main className="flex-1 min-w-0">{children}</main>
+        {/* Main */}
+        <div className="flex-1 flex flex-col min-w-0">
+          <header className="sticky top-0 z-20 h-14 border-b border-border glass flex items-center px-4 md:px-6 gap-3">
+            <button
+              onClick={() => setMobileOpen(true)}
+              className="md:hidden -ml-1 grid place-items-center size-9 rounded-md hover:bg-accent text-foreground"
+              aria-label="Open menu"
+            >
+              <Menu className="size-5" />
+            </button>
+            <Link to="/" className="md:hidden" aria-label="DevHub Toolkit — Home">
+              <BrandLockup />
+            </Link>
+            <button
+              onClick={() => setOpen(true)}
+              className="flex-1 md:max-w-md flex items-center gap-2 h-9 px-3 rounded-md border border-border bg-background/40 text-sm text-muted-foreground hover:text-foreground transition"
+            >
+              <Search className="size-3.5" />
+              <span className="hidden sm:inline">Search {TOOLS.length} tools…</span>
+              <span className="sm:hidden">Search…</span>
+              <kbd className="ml-auto font-mono text-[10px] border border-border rounded px-1.5 py-0.5">
+                ⌘K
+              </kbd>
+            </button>
+            <Link to="/favorites" className="hidden sm:block">
+              <Button variant="ghost" size="sm" className="gap-2">
+                <Star className="size-3.5" /> Favorites
+              </Button>
+            </Link>
+            <Link to="/changelog" className="hidden sm:block">
+              <Button variant="ghost" size="sm" className="gap-2">
+                <Rss className="size-3.5" /> Changelog
+              </Button>
+            </Link>
+            <Link to="/feedback" className="hidden sm:block">
+              <Button variant="ghost" size="sm" className="gap-2">
+                <MessageSquare className="size-3.5" /> Feedback
+              </Button>
+            </Link>
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label="Keyboard shortcuts"
+              className="hidden sm:inline-flex"
+              onClick={() => setShortcutsOpen(true)}
+            >
+              <Keyboard className="size-4" />
+            </Button>
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noreferrer"
+              className="hidden sm:block"
+            >
+              <Button variant="ghost" size="icon" aria-label="GitHub">
+                <Github className="size-4" />
+              </Button>
+            </a>
+          </header>
 
-        {pathname !== "/" && (
-          <footer className="border-t border-border px-6 py-6 text-xs text-muted-foreground flex flex-wrap gap-4 justify-between">
-            <span>DevHub Toolkit — Built for developers.</span>
-            <span className="font-mono">All processing runs locally in your browser.</span>
-          </footer>
-        )}
+          <main className="flex-1 min-w-0">{children}</main>
+
+          {pathname !== "/" && (
+            <footer className="border-t border-border px-6 py-6 text-xs text-muted-foreground flex flex-wrap gap-4 justify-between">
+              <span>DevHub Toolkit — Built for developers.</span>
+              <span className="font-mono">All processing runs locally in your browser.</span>
+            </footer>
+          )}
+        </div>
+
+        <GlobalCommand
+          open={open}
+          onOpenChange={setOpen}
+          onShowShortcuts={() => setShortcutsOpen(true)}
+        />
+        <ShortcutsDialog open={shortcutsOpen} onOpenChange={setShortcutsOpen} />
       </div>
-
-      <GlobalCommand open={open} onOpenChange={setOpen} onShowShortcuts={() => setShortcutsOpen(true)} />
-      <ShortcutsDialog open={shortcutsOpen} onOpenChange={setShortcutsOpen} />
-    </div>
     </MotionIconConfig>
   );
 }
@@ -226,11 +250,16 @@ function SidebarNav({
         aria-label="DevHub Toolkit — Home"
         className="group flex items-center gap-2.5 px-5 pr-14 lg:pr-5 h-14 border-b border-sidebar-border transition-colors hover:bg-accent/40"
       >
-        <BrandMark size={28} className="text-foreground transition-transform group-hover:scale-105" />
+        <BrandMark
+          size={28}
+          className="text-foreground transition-transform group-hover:scale-105"
+        />
         <span className="font-semibold tracking-tight text-[15px]">
           Dev<span className="text-muted-foreground">Hub</span>
         </span>
-        <Badge variant="secondary" className="ml-auto text-[10px] font-mono shrink-0">version 1</Badge>
+        <Badge variant="secondary" className="ml-auto text-[10px] font-mono shrink-0">
+          version 1
+        </Badge>
       </Link>
 
       <button
@@ -275,20 +304,13 @@ function SidebarNav({
           const tools = byCategory.get(cat.id) ?? [];
           if (tools.length === 0) return null;
           return (
-            <SidebarGroup
-              key={cat.id}
-              title={cat.label}
-              href={`/c/${cat.id}`}
-            >
+            <SidebarGroup key={cat.id} title={cat.label} href={`/c/${cat.id}`}>
               {tools.map((t) => (
                 <SidebarLink key={t.slug} to={`/t/${t.slug}`} active={pathname === `/t/${t.slug}`}>
                   <t.icon className="size-3.5 opacity-70" />
                   <span className="truncate">{t.name}</span>
                   {t.isNew && hydrated && !seen.includes(t.slug) && (
-                    <AnimatedTag
-                      variant="new"
-                      className="ml-auto text-[9px] px-1.5 py-px"
-                    >
+                    <AnimatedTag variant="new" className="ml-auto text-[9px] px-1.5 py-px">
                       New
                     </AnimatedTag>
                   )}
@@ -304,6 +326,12 @@ function SidebarNav({
         })}
       </ScrollArea>
 
+      <div className="border-t border-sidebar-border p-2">
+        <SidebarLink to="/feedback" active={pathname === "/feedback"}>
+          <MessageSquare className="size-3.5 opacity-70" /> Feedback / Report Bug
+        </SidebarLink>
+      </div>
+
       <div className="border-t border-sidebar-border px-3 py-3 text-xs text-muted-foreground flex items-center gap-2">
         <Command className="size-3" />
         <span>Press ⌘K anywhere</span>
@@ -312,7 +340,13 @@ function SidebarNav({
   );
 }
 
-function ShortcutsDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
+function ShortcutsDialog({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+}) {
   const rows: Array<[string, string[]]> = [
     ["Open command palette", ["⌘", "K"]],
     ["Toggle command palette", ["Ctrl", "K"]],
@@ -350,7 +384,15 @@ function ShortcutsDialog({ open, onOpenChange }: { open: boolean; onOpenChange: 
   );
 }
 
-function SidebarGroup({ title, href, children }: { title: string; href?: string; children: ReactNode }) {
+function SidebarGroup({
+  title,
+  href,
+  children,
+}: {
+  title: string;
+  href?: string;
+  children: ReactNode;
+}) {
   return (
     <div className="mb-3">
       {href ? (
@@ -427,7 +469,11 @@ function GlobalCommand({
     [favorites],
   );
   const recentTools = useMemo(
-    () => recents.map((s) => TOOLS_BY_SLUG[s]).filter(Boolean).slice(0, 5),
+    () =>
+      recents
+        .map((s) => TOOLS_BY_SLUG[s])
+        .filter(Boolean)
+        .slice(0, 5),
     [recents],
   );
   const byCategory = useMemo(() => {
@@ -539,6 +585,18 @@ function GlobalCommand({
             <Star className="size-4 opacity-70" />
             <span>Open Favorites</span>
             <span className="ml-auto text-[10px] text-muted-foreground font-mono">/favorites</span>
+          </CommandItem>
+          <CommandItem
+            value="feedback report bug issue suggestion praise support"
+            onSelect={() => {
+              onOpenChange(false);
+              navigate({ to: "/feedback" });
+            }}
+            className="gap-2"
+          >
+            <MessageSquare className="size-4 opacity-70" />
+            <span>Feedback / Report Bug</span>
+            <span className="ml-auto text-[10px] text-muted-foreground font-mono">/feedback</span>
           </CommandItem>
           <CommandItem
             value="keyboard shortcuts help"

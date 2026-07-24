@@ -68,7 +68,14 @@ export function ImageCompressor() {
         setRows((r) =>
           r.map((x) =>
             x.id === id
-              ? { ...x, status: "processing", error: undefined, outUrl: undefined, outBlob: undefined, outSize: undefined }
+              ? {
+                  ...x,
+                  status: "processing",
+                  error: undefined,
+                  outUrl: undefined,
+                  outBlob: undefined,
+                  outSize: undefined,
+                }
               : x,
           ),
         );
@@ -204,7 +211,13 @@ export function ImageCompressor() {
       >
         <div className="grid gap-4 p-3 md:grid-cols-4">
           <Field label="Quality" hint={`${Math.round(quality * 100)}%`}>
-            <Slider min={0.1} max={1} step={0.05} value={[quality]} onValueChange={(v) => setQuality(v[0])} />
+            <Slider
+              min={0.1}
+              max={1}
+              step={0.05}
+              value={[quality]}
+              onValueChange={(v) => setQuality(v[0])}
+            />
           </Field>
           <Field label="Max width/height (px)">
             <Input
@@ -232,17 +245,26 @@ export function ImageCompressor() {
           <Field label="Output format">
             <Tabs value={format} onValueChange={(v) => setFormat(v as Format)}>
               <TabsList className="h-8">
-                <TabsTrigger value="auto" className="text-xs">Auto</TabsTrigger>
-                <TabsTrigger value="image/jpeg" className="text-xs">JPEG</TabsTrigger>
-                <TabsTrigger value="image/webp" className="text-xs">WebP</TabsTrigger>
-                <TabsTrigger value="image/png" className="text-xs">PNG</TabsTrigger>
+                <TabsTrigger value="auto" className="text-xs">
+                  Auto
+                </TabsTrigger>
+                <TabsTrigger value="image/jpeg" className="text-xs">
+                  JPEG
+                </TabsTrigger>
+                <TabsTrigger value="image/webp" className="text-xs">
+                  WebP
+                </TabsTrigger>
+                <TabsTrigger value="image/png" className="text-xs">
+                  PNG
+                </TabsTrigger>
               </TabsList>
             </Tabs>
           </Field>
         </div>
         {format === "image/png" && (
           <div className="border-t border-border px-3 py-2 text-[11px] text-muted-foreground">
-            PNG output is lossless — the quality slider is ignored. Use JPEG or WebP for stronger compression.
+            PNG output is lossless — the quality slider is ignored. Use JPEG or WebP for stronger
+            compression.
           </div>
         )}
       </Panel>
@@ -255,12 +277,14 @@ export function ImageCompressor() {
         }}
         onClick={() => inputRef.current?.click()}
         className={cn(
-          "flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border bg-card/40 p-8 text-center cursor-pointer transition-colors hover:bg-card"
+          "flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border bg-card/40 p-8 text-center cursor-pointer transition-colors hover:bg-card",
         )}
       >
         <Upload className="size-6 text-muted-foreground" />
         <div className="text-sm font-medium">Drop images here or click to upload</div>
-        <div className="text-xs text-muted-foreground">JPEG · PNG · WebP · GIF · AVIF — batch supported, runs 100% locally</div>
+        <div className="text-xs text-muted-foreground">
+          JPEG · PNG · WebP · GIF · AVIF — batch supported, runs 100% locally
+        </div>
         <input
           ref={inputRef}
           type="file"
@@ -283,10 +307,22 @@ export function ImageCompressor() {
               <div className="text-[11px] text-muted-foreground mr-2">
                 {human(totalIn)} → {human(totalOut)} · saved {saved}%
               </div>
-              <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={downloadAll} disabled={busy}>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="h-7 gap-1.5 text-xs"
+                onClick={downloadAll}
+                disabled={busy}
+              >
                 <Download className="size-3" /> Download all
               </Button>
-              <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={clearAll} disabled={busy}>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="h-7 gap-1.5 text-xs"
+                onClick={clearAll}
+                disabled={busy}
+              >
                 <Trash2 className="size-3" /> Clear
               </Button>
             </>
@@ -303,7 +339,11 @@ export function ImageCompressor() {
                 <li key={row.id} className="flex items-center gap-3 p-3">
                   <div className="size-12 shrink-0 overflow-hidden rounded-md border border-border bg-muted/30 flex items-center justify-center">
                     {row.outUrl || row.originalUrl ? (
-                      <img src={row.outUrl ?? row.originalUrl} alt="" className="h-full w-full object-cover" />
+                      <img
+                        src={row.outUrl ?? row.originalUrl}
+                        alt=""
+                        className="h-full w-full object-cover"
+                      />
                     ) : (
                       <ImageIcon className="size-4 text-muted-foreground" />
                     )}
@@ -316,13 +356,23 @@ export function ImageCompressor() {
                         <>
                           {" → "}
                           <span className="text-foreground">{human(row.outSize)}</span>{" "}
-                          <span className={cn(grew ? "text-amber-500" : pct > 0 ? "text-emerald-500" : "text-muted-foreground")}>
+                          <span
+                            className={cn(
+                              grew
+                                ? "text-amber-500"
+                                : pct > 0
+                                  ? "text-emerald-500"
+                                  : "text-muted-foreground",
+                            )}
+                          >
                             ({grew ? `+${Math.abs(pct)}%` : pct > 0 ? `-${pct}%` : "0%"})
                           </span>
                         </>
                       )}
                       {row.status === "processing" && <span className="ml-1">· compressing…</span>}
-                      {row.status === "error" && <span className="ml-1 text-red-500">· {row.error}</span>}
+                      {row.status === "error" && (
+                        <span className="ml-1 text-red-500">· {row.error}</span>
+                      )}
                     </div>
                     {row.status === "done" && grew && (
                       <div className="text-[10px] text-amber-500/90 mt-0.5">
@@ -339,7 +389,12 @@ export function ImageCompressor() {
                   >
                     <Download className="size-3" /> Save
                   </Button>
-                  <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => remove(row.id)}>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="h-7 w-7"
+                    onClick={() => remove(row.id)}
+                  >
                     <X className="size-3" />
                   </Button>
                 </li>

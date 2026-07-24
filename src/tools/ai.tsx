@@ -8,22 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { CopyButton, Field, Panel } from "./primitives";
 
-type Mode =
-  | "explain"
-  | "optimize"
-  | "commit"
-  | "sql"
-  | "convert"
-  | "error"
-  | "regex"
-  | "tests";
+type Mode = "explain" | "optimize" | "commit" | "sql" | "convert" | "error" | "regex" | "tests";
 
 function extractText(messages: UIMessage[]): string {
   const last = [...messages].reverse().find((m) => m.role === "assistant");
   if (!last) return "";
-  return last.parts
-    .map((p) => (p.type === "text" ? p.text : ""))
-    .join("");
+  return last.parts.map((p) => (p.type === "text" ? p.text : "")).join("");
 }
 
 function AiWorkbench({
@@ -119,10 +109,7 @@ function AiWorkbench({
         )}
       </div>
 
-      <Panel
-        title={outputTitle}
-        actions={output ? <CopyButton text={output} /> : null}
-      >
+      <Panel title={outputTitle} actions={output ? <CopyButton text={output} /> : null}>
         <div className="p-4 min-h-64 max-h-[600px] overflow-auto">
           {output ? (
             isCommit ? (
@@ -130,10 +117,7 @@ function AiWorkbench({
                 {output}
               </pre>
             ) : (
-              <div
-                className="prose-md"
-                dangerouslySetInnerHTML={{ __html: html }}
-              />
+              <div className="prose-md" dangerouslySetInnerHTML={{ __html: html }} />
             )
           ) : (
             <div className="text-sm text-muted-foreground flex items-center gap-2 h-full">
@@ -152,7 +136,9 @@ export function AiExplainer() {
     <AiWorkbench
       mode="explain"
       inputTitle="Paste code"
-      placeholder={"function memo(fn) {\n  const cache = new Map();\n  return (x) => cache.get(x) ?? cache.set(x, fn(x)).get(x);\n}"}
+      placeholder={
+        "function memo(fn) {\n  const cache = new Map();\n  return (x) => cache.get(x) ?? cache.set(x, fn(x)).get(x);\n}"
+      }
       submitLabel="Explain code"
       outputTitle="Explanation"
     />
@@ -164,7 +150,9 @@ export function AiOptimizer() {
     <AiWorkbench
       mode="optimize"
       inputTitle="Paste code to optimize"
-      placeholder={"// e.g. a slow loop, nested map, or unbatched fetch\nfor (const id of ids) {\n  const u = await fetch('/api/user/' + id).then(r => r.json());\n  users.push(u);\n}"}
+      placeholder={
+        "// e.g. a slow loop, nested map, or unbatched fetch\nfor (const id of ids) {\n  const u = await fetch('/api/user/' + id).then(r => r.json());\n  users.push(u);\n}"
+      }
       submitLabel="Optimize"
       outputTitle="Optimized version"
     />
@@ -176,7 +164,9 @@ export function AiCommit() {
     <AiWorkbench
       mode="commit"
       inputTitle="Paste git diff or describe changes"
-      placeholder={"git diff output, or:\n- added dark mode toggle in header\n- fixed race condition in useAuth"}
+      placeholder={
+        "git diff output, or:\n- added dark mode toggle in header\n- fixed race condition in useAuth"
+      }
       submitLabel="Generate commit"
       outputTitle="Commit message"
       inputRows={10}
@@ -189,7 +179,9 @@ export function AiSql() {
     <AiWorkbench
       mode="sql"
       inputTitle="Describe the query"
-      placeholder={"Top 10 users by total order value in the last 30 days, joined with their country."}
+      placeholder={
+        "Top 10 users by total order value in the last 30 days, joined with their country."
+      }
       submitLabel="Generate SQL"
       outputTitle="SQL query"
       inputRows={8}
@@ -202,7 +194,9 @@ export function AiConvert() {
     <AiWorkbench
       mode="convert"
       inputTitle="Paste code + target language"
-      placeholder={"// from: python to: typescript\ndef fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a"}
+      placeholder={
+        "// from: python to: typescript\ndef fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a"
+      }
       submitLabel="Convert"
       outputTitle="Translated code"
     />
@@ -214,7 +208,9 @@ export function AiErrorExplainer() {
     <AiWorkbench
       mode="error"
       inputTitle="Paste error message or stack trace"
-      placeholder={"TypeError: Cannot read properties of undefined (reading 'map')\n    at UserList (UserList.tsx:14:22)\n    ..."}
+      placeholder={
+        "TypeError: Cannot read properties of undefined (reading 'map')\n    at UserList (UserList.tsx:14:22)\n    ..."
+      }
       submitLabel="Explain error"
       outputTitle="Diagnosis & fix"
     />
@@ -226,7 +222,9 @@ export function AiRegex() {
     <AiWorkbench
       mode="regex"
       inputTitle="Describe the pattern"
-      placeholder={"Match a valid international phone number starting with + followed by 8 to 15 digits."}
+      placeholder={
+        "Match a valid international phone number starting with + followed by 8 to 15 digits."
+      }
       submitLabel="Generate regex"
       outputTitle="Regex pattern"
       inputRows={6}
@@ -239,7 +237,9 @@ export function AiTests() {
     <AiWorkbench
       mode="tests"
       inputTitle="Paste function or module"
-      placeholder={"export function slugify(input: string): string {\n  return input.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');\n}"}
+      placeholder={
+        "export function slugify(input: string): string {\n  return input.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');\n}"
+      }
       submitLabel="Generate tests"
       outputTitle="Test file (Vitest)"
     />

@@ -14,11 +14,23 @@ export const Route = createFileRoute("/tools")({
   head: () => ({
     meta: [
       { title: "All Tools — DevHub Toolkit" },
-      { name: "description", content: "Free online JSON formatter, Base64 decoder, JWT decoder, UUID & hash generators, regex tester, QR codes, AI SQL & regex generators — 57 developer tools in one keystroke." },
-      { name: "keywords", content: "developer tools online, free developer tools, all in one developer tools, json formatter online, base64 decoder online, jwt decoder, uuid generator, hash generator, regex tester online, qr code generator, ai sql generator, ai regex generator, ai code explainer, css gradient generator, box shadow generator, yaml to json, csv to json" },
+      {
+        name: "description",
+        content:
+          "Free online JSON formatter, Base64 decoder, JWT decoder, UUID & hash generators, regex tester, QR codes, AI SQL & regex generators — 57 developer tools in one keystroke.",
+      },
+      {
+        name: "keywords",
+        content:
+          "developer tools online, free developer tools, all in one developer tools, json formatter online, base64 decoder online, jwt decoder, uuid generator, hash generator, regex tester online, qr code generator, ai sql generator, ai regex generator, ai code explainer, css gradient generator, box shadow generator, yaml to json, csv to json",
+      },
       { property: "og:url", content: "https://devhub.flinkeo.online/tools" },
       { property: "og:title", content: "All Tools — DevHub Toolkit" },
-      { property: "og:description", content: "Every developer utility you actually use — JSON, Base64, JWT, UUID, hashes, regex, QR, AI SQL and 45+ more. Fast, minimal, no signup." },
+      {
+        property: "og:description",
+        content:
+          "Every developer utility you actually use — JSON, Base64, JWT, UUID, hashes, regex, QR, AI SQL and 45+ more. Fast, minimal, no signup.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "DevHub Toolkit" },
       { property: "og:image", content: "https://devhub.flinkeo.online/og-image.png" },
@@ -28,7 +40,11 @@ export const Route = createFileRoute("/tools")({
       { property: "og:image:alt", content: "DevHub Toolkit — 57 free developer tools" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "All Tools — DevHub Toolkit" },
-      { name: "twitter:description", content: "Every developer utility you actually use — JSON, Base64, JWT, UUID, hashes, regex, QR, AI SQL and 45+ more." },
+      {
+        name: "twitter:description",
+        content:
+          "Every developer utility you actually use — JSON, Base64, JWT, UUID, hashes, regex, QR, AI SQL and 45+ more.",
+      },
       { name: "twitter:image", content: "https://devhub.flinkeo.online/og-image.png" },
     ],
     links: [{ rel: "canonical", href: "https://devhub.flinkeo.online/tools" }],
@@ -70,9 +86,8 @@ function Home() {
             <span className="text-muted-foreground">in one keystroke.</span>
           </h1>
           <p className="mt-5 max-w-xl text-muted-foreground">
-            A minimal, fast toolkit for the tasks you do every day. Format JSON,
-            decode JWTs, generate hashes, tweak gradients — all from a single
-            clean interface.
+            A minimal, fast toolkit for the tasks you do every day. Format JSON, decode JWTs,
+            generate hashes, tweak gradients — all from a single clean interface.
           </p>
 
           <div className="mt-8 flex items-center gap-2 max-w-lg h-11 px-3 rounded-lg border border-border bg-card/60 focus-within:border-foreground/40 transition">
@@ -85,11 +100,15 @@ function Home() {
               placeholder="Search JSON, base64, hash, regex…"
               className="border-0 bg-transparent px-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 h-9"
             />
-            <kbd className="font-mono text-[10px] text-muted-foreground border border-border rounded px-1.5 py-0.5">⌘K</kbd>
+            <kbd className="font-mono text-[10px] text-muted-foreground border border-border rounded px-1.5 py-0.5">
+              ⌘K
+            </kbd>
           </div>
 
           <div className="mt-6 flex flex-wrap gap-2">
-            <CatChip active={cat === "all"} onClick={() => setCat("all")}>All</CatChip>
+            <CatChip active={cat === "all"} onClick={() => setCat("all")}>
+              All
+            </CatChip>
             {CATEGORIES.map((c) => (
               <CatChip key={c.id} active={cat === c.id} onClick={() => setCat(c.id)}>
                 {c.label}
@@ -126,14 +145,22 @@ function Home() {
           </Section>
         )}
 
-        <Section title={q || cat !== "all" ? `${filtered.length} tool${filtered.length === 1 ? "" : "s"}` : "All tools"}>
+        <Section
+          title={
+            q || cat !== "all"
+              ? `${filtered.length} tool${filtered.length === 1 ? "" : "s"}`
+              : "All tools"
+          }
+        >
           {filtered.length === 0 ? (
             <div className="rounded-lg border border-dashed border-border p-12 text-center">
               <div className="mx-auto size-10 rounded-full border border-border grid place-items-center mb-3">
                 <Search className="size-4 text-muted-foreground" />
               </div>
               <div className="font-medium">No tools match "{q}"</div>
-              <p className="text-sm text-muted-foreground mt-1">Try a different keyword or clear the filter.</p>
+              <p className="text-sm text-muted-foreground mt-1">
+                Try a different keyword or clear the filter.
+              </p>
             </div>
           ) : (
             <Grid tools={filtered} isFav={isFav} hydrated={hydrated} />
@@ -144,19 +171,37 @@ function Home() {
   );
 }
 
-function Section({ title, icon, children }: { title: string; icon?: React.ReactNode; children: React.ReactNode }) {
+function Section({
+  title,
+  icon,
+  children,
+}: {
+  title: string;
+  icon?: React.ReactNode;
+  children: React.ReactNode;
+}) {
   return (
     <section>
       <div className="flex items-center gap-2 mb-4">
         {icon}
-        <h2 className="text-sm font-medium tracking-wide uppercase text-muted-foreground">{title}</h2>
+        <h2 className="text-sm font-medium tracking-wide uppercase text-muted-foreground">
+          {title}
+        </h2>
       </div>
       {children}
     </section>
   );
 }
 
-function CatChip({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+function CatChip({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
   return (
     <button
       onClick={onClick}
@@ -172,7 +217,15 @@ function CatChip({ active, onClick, children }: { active: boolean; onClick: () =
   );
 }
 
-function Grid({ tools, isFav, hydrated }: { tools: ReturnType<typeof searchTools>; isFav: (s: string) => boolean; hydrated?: boolean }) {
+function Grid({
+  tools,
+  isFav,
+  hydrated,
+}: {
+  tools: ReturnType<typeof searchTools>;
+  isFav: (s: string) => boolean;
+  hydrated?: boolean;
+}) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
       {tools.map((t) => (
@@ -189,9 +242,16 @@ function Grid({ tools, isFav, hydrated }: { tools: ReturnType<typeof searchTools
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
                 <div className="font-medium truncate">{t.name}</div>
-                {hydrated && isFav(t.slug) && <Star className="size-3 fill-foreground text-foreground" />}
+                {hydrated && isFav(t.slug) && (
+                  <Star className="size-3 fill-foreground text-foreground" />
+                )}
                 {t.status === "soon" && (
-                  <Badge variant="secondary" className="text-[9px] uppercase tracking-wider ml-auto">soon</Badge>
+                  <Badge
+                    variant="secondary"
+                    className="text-[9px] uppercase tracking-wider ml-auto"
+                  >
+                    soon
+                  </Badge>
                 )}
               </div>
               <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{t.description}</p>

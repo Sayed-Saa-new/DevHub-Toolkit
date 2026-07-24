@@ -11,15 +11,15 @@ import { downloadFile } from "@/lib/utils";
 type Point = { id: string; x: number; y: number; color: string; size: number };
 
 type Fx = {
-  blur: number;        // px, 0-80
-  grain: number;       // 0-100 opacity
-  grainScale: number;  // 0.3 - 2 baseFrequency
+  blur: number; // px, 0-80
+  grain: number; // 0-100 opacity
+  grainScale: number; // 0.3 - 2 baseFrequency
   grainBlend: "overlay" | "soft-light" | "multiply" | "screen" | "normal";
-  vignette: number;    // 0-100
-  brightness: number;  // 50-150
-  contrast: number;    // 50-200
-  saturate: number;    // 0-200
-  hue: number;         // -180..180
+  vignette: number; // 0-100
+  brightness: number; // 50-150
+  contrast: number; // 50-200
+  saturate: number; // 0-200
+  hue: number; // -180..180
   aspect: "16/9" | "1/1" | "4/3" | "21/9" | "9/16" | "3/4";
 };
 
@@ -244,7 +244,11 @@ PRESETS.push(
 
 const uid = () => Math.random().toString(36).slice(2, 9);
 const rand = (min: number, max: number) => Math.random() * (max - min) + min;
-const randHex = () => "#" + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, "0");
+const randHex = () =>
+  "#" +
+  Math.floor(Math.random() * 0xffffff)
+    .toString(16)
+    .padStart(6, "0");
 
 function buildCss(points: Point[], base: string) {
   const layers = points
@@ -326,28 +330,41 @@ export function MeshGradient() {
           `  <radialGradient id="g${i}" cx="${p.x}%" cy="${p.y}%" r="${p.size}%"><stop offset="0%" stop-color="${p.color}"/><stop offset="100%" stop-color="${p.color}" stop-opacity="0"/></radialGradient>`,
       )
       .join("\n");
-    const rects = points.map((_, i) => `  <rect width="100%" height="100%" fill="url(#g${i})"/>`).join("\n");
-    const grainDef = fx.grain > 0
-      ? `\n  <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="${fx.grainScale}" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0"/></filter>`
-      : "";
-    const blurDef = fx.blur > 0
-      ? `\n  <filter id="blur"><feGaussianBlur stdDeviation="${fx.blur}"/></filter>`
-      : "";
+    const rects = points
+      .map((_, i) => `  <rect width="100%" height="100%" fill="url(#g${i})"/>`)
+      .join("\n");
+    const grainDef =
+      fx.grain > 0
+        ? `\n  <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="${fx.grainScale}" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0"/></filter>`
+        : "";
+    const blurDef =
+      fx.blur > 0
+        ? `\n  <filter id="blur"><feGaussianBlur stdDeviation="${fx.blur}"/></filter>`
+        : "";
     const groupOpen = fx.blur > 0 ? `<g filter="url(#blur)">` : "";
     const groupClose = fx.blur > 0 ? `</g>` : "";
-    const grainRect = fx.grain > 0
-      ? `\n  <rect width="100%" height="100%" fill="#fff" filter="url(#grain)" opacity="${fx.grain / 100}" style="mix-blend-mode:${fx.grainBlend}"/>`
-      : "";
-    const vignetteDef = fx.vignette > 0
-      ? `\n  <radialGradient id="vig" cx="50%" cy="50%" r="75%"><stop offset="60%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="${fx.vignette / 100}"/></radialGradient>`
-      : "";
-    const vignetteRect = fx.vignette > 0 ? `\n  <rect width="100%" height="100%" fill="url(#vig)"/>` : "";
+    const grainRect =
+      fx.grain > 0
+        ? `\n  <rect width="100%" height="100%" fill="#fff" filter="url(#grain)" opacity="${fx.grain / 100}" style="mix-blend-mode:${fx.grainBlend}"/>`
+        : "";
+    const vignetteDef =
+      fx.vignette > 0
+        ? `\n  <radialGradient id="vig" cx="50%" cy="50%" r="75%"><stop offset="60%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="${fx.vignette / 100}"/></radialGradient>`
+        : "";
+    const vignetteRect =
+      fx.vignette > 0 ? `\n  <rect width="100%" height="100%" fill="url(#vig)"/>` : "";
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">\n<defs>\n${stops}${grainDef}${blurDef}${vignetteDef}\n</defs>\n  ${groupOpen}<rect width="100%" height="100%" fill="${base}"/>\n${rects}\n${groupClose}${grainRect}${vignetteRect}\n</svg>`;
   }, [css, points, base, format, filterCss, fx]);
 
   const addPoint = () => {
     if (points.length >= 8) return;
-    const p: Point = { id: uid(), x: Math.round(rand(20, 80)), y: Math.round(rand(20, 80)), color: randHex(), size: 60 };
+    const p: Point = {
+      id: uid(),
+      x: Math.round(rand(20, 80)),
+      y: Math.round(rand(20, 80)),
+      color: randHex(),
+      size: 60,
+    };
     setPoints((s) => [...s, p]);
     setSelected(p.id);
   };
@@ -386,7 +403,9 @@ export function MeshGradient() {
     const r = stageRef.current.getBoundingClientRect();
     const x = Math.max(0, Math.min(100, ((e.clientX - r.left) / r.width) * 100));
     const y = Math.max(0, Math.min(100, ((e.clientY - r.top) / r.height) * 100));
-    setPoints((s) => s.map((p) => (p.id === id ? { ...p, x: Math.round(x), y: Math.round(y) } : p)));
+    setPoints((s) =>
+      s.map((p) => (p.id === id ? { ...p, x: Math.round(x), y: Math.round(y) } : p)),
+    );
   }, []);
 
   const onPointerUp = () => {
@@ -400,13 +419,23 @@ export function MeshGradient() {
         (p, i) =>
           `<radialGradient id="g${i}" cx="${p.x}%" cy="${p.y}%" r="${p.size}%"><stop offset="0%" stop-color="${p.color}"/><stop offset="100%" stop-color="${p.color}" stop-opacity="0"/></radialGradient>`,
       )
-      .join("")}${fx.blur > 0 ? `<filter id="blur" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="${(fx.blur * w) / 1600}"/></filter>` : ""}${fx.grain > 0 ? `<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="${fx.grainScale}" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0"/></filter>` : ""}${fx.vignette > 0 ? `<radialGradient id="vig" cx="50%" cy="50%" r="75%"><stop offset="60%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="${fx.vignette / 100}"/></radialGradient>` : ""}`;
-    const filterAttr = filterCss ? ` style="filter:${filterCss.replace(/blur\([^)]+\)\s*/, "")}"` : "";
+      .join(
+        "",
+      )}${fx.blur > 0 ? `<filter id="blur" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="${(fx.blur * w) / 1600}"/></filter>` : ""}${fx.grain > 0 ? `<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="${fx.grainScale}" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0"/></filter>` : ""}${fx.vignette > 0 ? `<radialGradient id="vig" cx="50%" cy="50%" r="75%"><stop offset="60%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="${fx.vignette / 100}"/></radialGradient>` : ""}`;
+    const filterAttr = filterCss
+      ? ` style="filter:${filterCss.replace(/blur\([^)]+\)\s*/, "")}"`
+      : "";
     const groupOpen = fx.blur > 0 ? `<g filter="url(#blur)">` : "";
     const groupClose = fx.blur > 0 ? `</g>` : "";
-    const layers = points.map((_, i) => `<rect width="100%" height="100%" fill="url(#g${i})"/>`).join("");
-    const grainRect = fx.grain > 0 ? `<rect width="100%" height="100%" fill="#fff" filter="url(#grain)" opacity="${fx.grain / 100}" style="mix-blend-mode:${fx.grainBlend}"/>` : "";
-    const vignetteRect = fx.vignette > 0 ? `<rect width="100%" height="100%" fill="url(#vig)"/>` : "";
+    const layers = points
+      .map((_, i) => `<rect width="100%" height="100%" fill="url(#g${i})"/>`)
+      .join("");
+    const grainRect =
+      fx.grain > 0
+        ? `<rect width="100%" height="100%" fill="#fff" filter="url(#grain)" opacity="${fx.grain / 100}" style="mix-blend-mode:${fx.grainBlend}"/>`
+        : "";
+    const vignetteRect =
+      fx.vignette > 0 ? `<rect width="100%" height="100%" fill="url(#vig)"/>` : "";
     const baseRect = transparent ? "" : `<rect width="100%" height="100%" fill="${base}"/>`;
     return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"${filterAttr}><defs>${defs}</defs>${groupOpen}${baseRect}${layers}${groupClose}${grainRect}${vignetteRect}</svg>`;
   };
@@ -434,7 +463,12 @@ export function MeshGradient() {
     ctx.drawImage(img, 0, 0, w, h);
     URL.revokeObjectURL(url);
     canvas.toBlob((b) => {
-      if (b) downloadFile(`mesh-gradient-${w}x${h}${transparentBg ? "-transparent" : ""}.png`, b, "image/png");
+      if (b)
+        downloadFile(
+          `mesh-gradient-${w}x${h}${transparentBg ? "-transparent" : ""}.png`,
+          b,
+          "image/png",
+        );
     }, "image/png");
   };
 
@@ -471,7 +505,13 @@ export function MeshGradient() {
               <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={randomize}>
                 <Shuffle className="size-3" /> Random
               </Button>
-              <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={addPoint} disabled={points.length >= 8}>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="h-7 gap-1.5 text-xs"
+                onClick={addPoint}
+                disabled={points.length >= 8}
+              >
                 <Plus className="size-3" /> Add point
               </Button>
             </>
@@ -480,48 +520,54 @@ export function MeshGradient() {
           <div className="p-3">
             <div className="mx-auto w-full max-h-[70vh] flex items-center justify-center">
               <div
-          ref={stageRef}
-          onPointerMove={onPointerMove}
-          onPointerUp={onPointerUp}
-          onPointerLeave={onPointerUp}
-          onClick={() => setSelected(null)}
+                ref={stageRef}
+                onPointerMove={onPointerMove}
+                onPointerUp={onPointerUp}
+                onPointerLeave={onPointerUp}
+                onClick={() => setSelected(null)}
                 className={`relative ${ASPECTS[fx.aspect].cls} w-full max-h-[70vh] cursor-crosshair overflow-hidden bg-black rounded-md border border-border`}
-                style={{ aspectRatio: fx.aspect.replace("/", " / "), maxWidth: `calc(70vh * (${ASPECTS[fx.aspect].w} / ${ASPECTS[fx.aspect].h}))` }}
+                style={{
+                  aspectRatio: fx.aspect.replace("/", " / "),
+                  maxWidth: `calc(70vh * (${ASPECTS[fx.aspect].w} / ${ASPECTS[fx.aspect].h}))`,
+                }}
               >
-          <div className="pointer-events-none absolute inset-0" style={{ ...style, filter: filterCss || undefined }} />
-          {fx.grain > 0 && (
-            <div
-              className="pointer-events-none absolute inset-0"
-              style={{
-                opacity: fx.grain / 100,
-                mixBlendMode: fx.grainBlend,
-                backgroundImage: grainSvgUrl,
-              }}
-            />
-          )}
-          {fx.vignette > 0 && (
-            <div
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background: `radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,${fx.vignette / 100}) 100%)`,
-              }}
-            />
-          )}
-          {points.map((p) => (
-            <button
-              key={p.id}
-              onPointerDown={onPointerDown(p.id)}
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelected(p.id);
-              }}
-              className={`absolute z-10 -translate-x-1/2 -translate-y-1/2 size-6 rounded-full ring-2 shadow-lg transition-transform hover:scale-110 ${
-                selected === p.id ? "ring-white scale-110" : "ring-white/60"
-              }`}
-              style={{ left: `${p.x}%`, top: `${p.y}%`, background: p.color }}
-              aria-label={`Gradient point at ${p.x}%, ${p.y}%`}
-            />
-          ))}
+                <div
+                  className="pointer-events-none absolute inset-0"
+                  style={{ ...style, filter: filterCss || undefined }}
+                />
+                {fx.grain > 0 && (
+                  <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      opacity: fx.grain / 100,
+                      mixBlendMode: fx.grainBlend,
+                      backgroundImage: grainSvgUrl,
+                    }}
+                  />
+                )}
+                {fx.vignette > 0 && (
+                  <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background: `radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,${fx.vignette / 100}) 100%)`,
+                    }}
+                  />
+                )}
+                {points.map((p) => (
+                  <button
+                    key={p.id}
+                    onPointerDown={onPointerDown(p.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelected(p.id);
+                    }}
+                    className={`absolute z-10 -translate-x-1/2 -translate-y-1/2 size-6 rounded-full ring-2 shadow-lg transition-transform hover:scale-110 ${
+                      selected === p.id ? "ring-white scale-110" : "ring-white/60"
+                    }`}
+                    style={{ left: `${p.x}%`, top: `${p.y}%`, background: p.color }}
+                    aria-label={`Gradient point at ${p.x}%, ${p.y}%`}
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -531,7 +577,12 @@ export function MeshGradient() {
           <Panel
             title="Stage & Effects"
             actions={
-              <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs" onClick={() => setFx(DEFAULT_FX)}>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="h-7 gap-1.5 text-xs"
+                onClick={() => setFx(DEFAULT_FX)}
+              >
                 <RotateCcw className="size-3" /> Reset
               </Button>
             }
@@ -539,8 +590,17 @@ export function MeshGradient() {
             <div className="p-3 grid gap-3">
               <Field label="Base color">
                 <div className="flex gap-2">
-                  <input type="color" value={base} onChange={(e) => setBase(e.target.value)} className="h-9 w-12 rounded-md border border-border bg-transparent" />
-                  <Input value={base} onChange={(e) => setBase(e.target.value)} className="h-9 font-mono text-xs" />
+                  <input
+                    type="color"
+                    value={base}
+                    onChange={(e) => setBase(e.target.value)}
+                    className="h-9 w-12 rounded-md border border-border bg-transparent"
+                  />
+                  <Input
+                    value={base}
+                    onChange={(e) => setBase(e.target.value)}
+                    className="h-9 font-mono text-xs"
+                  />
                 </div>
               </Field>
               <Field label="Aspect ratio">
@@ -550,7 +610,9 @@ export function MeshGradient() {
                       key={a}
                       onClick={() => setFxField("aspect", a)}
                       className={`h-8 rounded-md border text-[10px] font-mono transition ${
-                        fx.aspect === a ? "border-foreground bg-foreground/10" : "border-border hover:border-foreground/40"
+                        fx.aspect === a
+                          ? "border-foreground bg-foreground/10"
+                          : "border-border hover:border-foreground/40"
                       }`}
                     >
                       {a}
@@ -559,24 +621,50 @@ export function MeshGradient() {
                 </div>
               </Field>
               <Field label={`Blur (${fx.blur}px)`}>
-                <Slider value={[fx.blur]} onValueChange={(v) => setFxField("blur", v[0])} max={80} step={1} />
+                <Slider
+                  value={[fx.blur]}
+                  onValueChange={(v) => setFxField("blur", v[0])}
+                  max={80}
+                  step={1}
+                />
               </Field>
               <Field label={`Noise (${fx.grain}%)`}>
-                <Slider value={[fx.grain]} onValueChange={(v) => setFxField("grain", v[0])} max={100} step={1} />
+                <Slider
+                  value={[fx.grain]}
+                  onValueChange={(v) => setFxField("grain", v[0])}
+                  max={100}
+                  step={1}
+                />
               </Field>
               {fx.grain > 0 && (
                 <>
                   <Field label={`Noise scale (${fx.grainScale.toFixed(2)})`}>
-                    <Slider value={[fx.grainScale * 100]} onValueChange={(v) => setFxField("grainScale", v[0] / 100)} min={20} max={200} step={1} />
+                    <Slider
+                      value={[fx.grainScale * 100]}
+                      onValueChange={(v) => setFxField("grainScale", v[0] / 100)}
+                      min={20}
+                      max={200}
+                      step={1}
+                    />
                   </Field>
                   <Field label="Noise blend">
                     <div className="grid grid-cols-5 gap-1">
-                      {(["overlay","soft-light","multiply","screen","normal"] as Fx["grainBlend"][]).map((b) => (
+                      {(
+                        [
+                          "overlay",
+                          "soft-light",
+                          "multiply",
+                          "screen",
+                          "normal",
+                        ] as Fx["grainBlend"][]
+                      ).map((b) => (
                         <button
                           key={b}
                           onClick={() => setFxField("grainBlend", b)}
                           className={`h-8 rounded-md border text-[9px] transition ${
-                            fx.grainBlend === b ? "border-foreground bg-foreground/10" : "border-border hover:border-foreground/40"
+                            fx.grainBlend === b
+                              ? "border-foreground bg-foreground/10"
+                              : "border-border hover:border-foreground/40"
                           }`}
                           title={b}
                         >
@@ -588,20 +676,49 @@ export function MeshGradient() {
                 </>
               )}
               <Field label={`Vignette (${fx.vignette}%)`}>
-                <Slider value={[fx.vignette]} onValueChange={(v) => setFxField("vignette", v[0])} max={100} step={1} />
+                <Slider
+                  value={[fx.vignette]}
+                  onValueChange={(v) => setFxField("vignette", v[0])}
+                  max={100}
+                  step={1}
+                />
               </Field>
               <div className="pt-2 border-t border-border grid gap-3">
                 <Field label={`Brightness (${fx.brightness}%)`}>
-                  <Slider value={[fx.brightness]} onValueChange={(v) => setFxField("brightness", v[0])} min={50} max={150} step={1} />
+                  <Slider
+                    value={[fx.brightness]}
+                    onValueChange={(v) => setFxField("brightness", v[0])}
+                    min={50}
+                    max={150}
+                    step={1}
+                  />
                 </Field>
                 <Field label={`Contrast (${fx.contrast}%)`}>
-                  <Slider value={[fx.contrast]} onValueChange={(v) => setFxField("contrast", v[0])} min={50} max={200} step={1} />
+                  <Slider
+                    value={[fx.contrast]}
+                    onValueChange={(v) => setFxField("contrast", v[0])}
+                    min={50}
+                    max={200}
+                    step={1}
+                  />
                 </Field>
                 <Field label={`Saturation (${fx.saturate}%)`}>
-                  <Slider value={[fx.saturate]} onValueChange={(v) => setFxField("saturate", v[0])} min={0} max={200} step={1} />
+                  <Slider
+                    value={[fx.saturate]}
+                    onValueChange={(v) => setFxField("saturate", v[0])}
+                    min={0}
+                    max={200}
+                    step={1}
+                  />
                 </Field>
                 <Field label={`Hue (${fx.hue}°)`}>
-                  <Slider value={[fx.hue + 180]} onValueChange={(v) => setFxField("hue", v[0] - 180)} min={0} max={360} step={1} />
+                  <Slider
+                    value={[fx.hue + 180]}
+                    onValueChange={(v) => setFxField("hue", v[0] - 180)}
+                    min={0}
+                    max={360}
+                    step={1}
+                  />
                 </Field>
               </div>
             </div>
@@ -619,7 +736,9 @@ export function MeshGradient() {
                       key={String(o.v)}
                       onClick={() => setTransparentBg(o.v)}
                       className={`h-8 rounded-md border text-[11px] transition ${
-                        transparentBg === o.v ? "border-foreground bg-foreground/10" : "border-border hover:border-foreground/40"
+                        transparentBg === o.v
+                          ? "border-foreground bg-foreground/10"
+                          : "border-border hover:border-foreground/40"
                       }`}
                     >
                       {o.label}
@@ -627,7 +746,10 @@ export function MeshGradient() {
                   ))}
                 </div>
               </Field>
-              <Field label={`Resolution scale (${scale}×)`} hint={`${exportDims.w} × ${exportDims.h}`}>
+              <Field
+                label={`Resolution scale (${scale}×)`}
+                hint={`${exportDims.w} × ${exportDims.h}`}
+              >
                 <div className="grid grid-cols-4 gap-1">
                   {([1, 2, 3, 4] as const).map((s) => (
                     <button
@@ -639,7 +761,9 @@ export function MeshGradient() {
                       }}
                       disabled={exportDims.custom ? false : false}
                       className={`h-8 rounded-md border text-[11px] font-mono transition ${
-                        !exportDims.custom && scale === s ? "border-foreground bg-foreground/10" : "border-border hover:border-foreground/40"
+                        !exportDims.custom && scale === s
+                          ? "border-foreground bg-foreground/10"
+                          : "border-border hover:border-foreground/40"
                       }`}
                     >
                       {s}×
@@ -667,16 +791,27 @@ export function MeshGradient() {
                 </div>
               </Field>
               <div className="grid grid-cols-2 gap-2 pt-1">
-                <Button size="sm" variant="secondary" onClick={exportPng} className="h-9 gap-1.5 text-xs">
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  onClick={exportPng}
+                  className="h-9 gap-1.5 text-xs"
+                >
                   <Download className="size-3.5" /> PNG
                 </Button>
-                <Button size="sm" variant="secondary" onClick={exportSvg} className="h-9 gap-1.5 text-xs">
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  onClick={exportSvg}
+                  className="h-9 gap-1.5 text-xs"
+                >
                   <Download className="size-3.5" /> SVG
                 </Button>
               </div>
               {transparentBg && (
                 <p className="text-[10px] text-muted-foreground leading-relaxed">
-                  Base color is omitted. Points render on a transparent canvas — perfect for overlays.
+                  Base color is omitted. Points render on a transparent canvas — perfect for
+                  overlays.
                 </p>
               )}
             </div>
@@ -689,9 +824,14 @@ export function MeshGradient() {
                   key={p.name}
                   onClick={() => applyPreset(i)}
                   className="group relative aspect-[3/2] rounded-md overflow-hidden border border-border hover:border-foreground/40 transition"
-                  style={buildStyle(p.points.map((x) => ({ ...x, id: "" })), p.base)}
+                  style={buildStyle(
+                    p.points.map((x) => ({ ...x, id: "" })),
+                    p.base,
+                  )}
                 >
-                  <span className="absolute bottom-1 left-1.5 text-[10px] font-medium text-white drop-shadow-md">{p.name}</span>
+                  <span className="absolute bottom-1 left-1.5 text-[10px] font-medium text-white drop-shadow-md">
+                    {p.name}
+                  </span>
                 </button>
               ))}
             </div>
@@ -701,7 +841,12 @@ export function MeshGradient() {
             title={sel ? `Point #${points.indexOf(sel) + 1}` : "Points"}
             actions={
               sel && (
-                <Button size="sm" variant="ghost" className="h-7 gap-1.5 text-xs text-destructive" onClick={() => removePoint(sel.id)}>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="h-7 gap-1.5 text-xs text-destructive"
+                  onClick={() => removePoint(sel.id)}
+                >
                   <Trash2 className="size-3" /> Delete
                 </Button>
               )
@@ -712,27 +857,55 @@ export function MeshGradient() {
                 <>
                   <Field label="Color">
                     <div className="flex gap-2">
-                      <input type="color" value={sel.color} onChange={(e) => updatePoint(sel.id, { color: e.target.value })} className="h-9 w-12 rounded-md border border-border bg-transparent" />
-                      <Input value={sel.color} onChange={(e) => updatePoint(sel.id, { color: e.target.value })} className="h-9 font-mono text-xs" />
+                      <input
+                        type="color"
+                        value={sel.color}
+                        onChange={(e) => updatePoint(sel.id, { color: e.target.value })}
+                        className="h-9 w-12 rounded-md border border-border bg-transparent"
+                      />
+                      <Input
+                        value={sel.color}
+                        onChange={(e) => updatePoint(sel.id, { color: e.target.value })}
+                        className="h-9 font-mono text-xs"
+                      />
                     </div>
                   </Field>
                   <Field label={`X: ${sel.x}%`}>
-                    <Slider value={[sel.x]} onValueChange={(v) => updatePoint(sel.id, { x: v[0] })} max={100} step={1} />
+                    <Slider
+                      value={[sel.x]}
+                      onValueChange={(v) => updatePoint(sel.id, { x: v[0] })}
+                      max={100}
+                      step={1}
+                    />
                   </Field>
                   <Field label={`Y: ${sel.y}%`}>
-                    <Slider value={[sel.y]} onValueChange={(v) => updatePoint(sel.id, { y: v[0] })} max={100} step={1} />
+                    <Slider
+                      value={[sel.y]}
+                      onValueChange={(v) => updatePoint(sel.id, { y: v[0] })}
+                      max={100}
+                      step={1}
+                    />
                   </Field>
                   <Field label={`Size: ${sel.size}%`}>
-                    <Slider value={[sel.size]} onValueChange={(v) => updatePoint(sel.id, { size: v[0] })} min={10} max={100} step={1} />
+                    <Slider
+                      value={[sel.size]}
+                      onValueChange={(v) => updatePoint(sel.id, { size: v[0] })}
+                      min={10}
+                      max={100}
+                      step={1}
+                    />
                   </Field>
                 </>
               ) : (
                 <div className="text-xs text-muted-foreground flex items-center gap-2">
-                  <Eye className="size-3.5" /> Click a point on the canvas to edit — or drag to move.
+                  <Eye className="size-3.5" /> Click a point on the canvas to edit — or drag to
+                  move.
                 </div>
               )}
               <div className="pt-2 border-t border-border">
-                <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">All points ({points.length}/8)</Label>
+                <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                  All points ({points.length}/8)
+                </Label>
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {points.map((p, i) => (
                     <button
@@ -754,12 +927,20 @@ export function MeshGradient() {
         <div className="p-3 space-y-3">
           <Tabs value={format} onValueChange={(v) => setFormat(v as typeof format)}>
             <TabsList className="h-8">
-              <TabsTrigger value="css" className="text-xs">CSS</TabsTrigger>
-              <TabsTrigger value="tailwind" className="text-xs">React / JSX</TabsTrigger>
-              <TabsTrigger value="svg" className="text-xs">SVG</TabsTrigger>
+              <TabsTrigger value="css" className="text-xs">
+                CSS
+              </TabsTrigger>
+              <TabsTrigger value="tailwind" className="text-xs">
+                React / JSX
+              </TabsTrigger>
+              <TabsTrigger value="svg" className="text-xs">
+                SVG
+              </TabsTrigger>
             </TabsList>
           </Tabs>
-          <pre className="text-xs font-mono bg-muted/40 rounded-md p-3 overflow-x-auto max-h-72 border border-border">{output}</pre>
+          <pre className="text-xs font-mono bg-muted/40 rounded-md p-3 overflow-x-auto max-h-72 border border-border">
+            {output}
+          </pre>
         </div>
       </Panel>
     </div>

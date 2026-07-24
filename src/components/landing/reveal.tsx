@@ -46,11 +46,7 @@ export function Reveal({
       initial={from}
       whileInView={to}
       viewport={{ once, amount, margin: "0px 0px -8% 0px" }}
-      transition={
-        reduce
-          ? { duration: 0 }
-          : { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }
-      }
+      transition={reduce ? { duration: 0 } : { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </Component>
@@ -109,13 +105,7 @@ export function Stagger({
   );
 }
 
-export function StaggerItem({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function StaggerItem({ children, className }: { children: ReactNode; className?: string }) {
   const reduce = useReducedMotion();
   if (reduce) return <div className={className}>{children}</div>;
   return (

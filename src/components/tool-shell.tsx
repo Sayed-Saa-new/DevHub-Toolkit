@@ -22,7 +22,11 @@ export function ToolShell({ tool, children }: { tool: Tool; children: ReactNode 
   return (
     <div className="mx-auto max-w-5xl px-4 md:px-8 py-6 md:py-10">
       <div className="flex items-start gap-4 mb-6">
-        <Link to="/" aria-label="Back to all tools" className="mt-1 text-muted-foreground hover:text-foreground transition">
+        <Link
+          to="/"
+          aria-label="Back to all tools"
+          className="mt-1 text-muted-foreground hover:text-foreground transition"
+        >
           <ChevronLeft className="size-4" />
         </Link>
         <div className="size-11 rounded-xl border border-border grid place-items-center bg-card">

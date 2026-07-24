@@ -81,18 +81,34 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "DevHub Toolkit — 57 Free Online Developer Tools" },
-      { name: "description", content: "Free online JSON formatter, Base64 decoder, JWT decoder, UUID & hash generator, regex tester, QR codes, AI SQL & regex generators — 57 developer tools, no signup." },
-      { name: "keywords", content: "developer tools online, free developer tools, json formatter, base64 decode, jwt decoder, uuid generator, regex tester, hash generator, qr code generator, ai sql generator, ai regex generator" },
+      {
+        name: "description",
+        content:
+          "Free online JSON formatter, Base64 decoder, JWT decoder, UUID & hash generator, regex tester, QR codes, AI SQL & regex generators — 57 developer tools, no signup.",
+      },
+      {
+        name: "keywords",
+        content:
+          "developer tools online, free developer tools, json formatter, base64 decode, jwt decoder, uuid generator, regex tester, hash generator, qr code generator, ai sql generator, ai regex generator",
+      },
       { name: "author", content: "DevHub" },
       { name: "theme-color", content: "#0a0a0a" },
       { name: "google-site-verification", content: "4GW5hFWsbJa_98tGQoSUIX-OAfhGOfhh7ZLsxEoHqc0" },
       { property: "og:title", content: "DevHub Toolkit — 57 Free Online Developer Tools" },
-      { property: "og:description", content: "JSON, Base64, JWT, UUID, hashes, regex, QR codes, AI SQL, AI regex and 45+ more. Fast, minimal, keyboard-first — no signup." },
+      {
+        property: "og:description",
+        content:
+          "JSON, Base64, JWT, UUID, hashes, regex, QR codes, AI SQL, AI regex and 45+ more. Fast, minimal, keyboard-first — no signup.",
+      },
       { property: "og:site_name", content: "DevHub Toolkit" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "DevHub Toolkit — 57 Free Online Developer Tools" },
-      { name: "twitter:description", content: "JSON, Base64, JWT, UUID, hashes, regex, QR codes, AI SQL, AI regex and 45+ more. Fast, minimal, keyboard-first — no signup." },
+      {
+        name: "twitter:description",
+        content:
+          "JSON, Base64, JWT, UUID, hashes, regex, QR codes, AI SQL, AI regex and 45+ more. Fast, minimal, keyboard-first — no signup.",
+      },
     ],
     links: [
       {
@@ -106,7 +122,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "manifest", href: "/site.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap",
+      },
     ],
     scripts: [
       {
@@ -167,7 +186,13 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {isLanding ? <Outlet /> : <AppShell><Outlet /></AppShell>}
+      {isLanding ? (
+        <Outlet />
+      ) : (
+        <AppShell>
+          <Outlet />
+        </AppShell>
+      )}
       <Toaster position="bottom-right" theme="dark" />
     </QueryClientProvider>
   );

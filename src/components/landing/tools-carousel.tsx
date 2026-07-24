@@ -79,7 +79,10 @@ export function ToolsCarousel() {
         </Reveal>
 
         {/* Double-bezel shell */}
-        <Reveal delay={0.1} className="rounded-[1.75rem] border border-border bg-background/60 p-1.5 shadow-[0_20px_60px_-30px_oklch(0_0_0/_0.5)] backdrop-blur-sm">
+        <Reveal
+          delay={0.1}
+          className="rounded-[1.75rem] border border-border bg-background/60 p-1.5 shadow-[0_20px_60px_-30px_oklch(0_0_0/_0.5)] backdrop-blur-sm"
+        >
           <div className="rounded-[calc(1.75rem-0.375rem)] overflow-hidden border border-border/70 bg-background">
             {/* Meta strip */}
             <div className="flex items-center justify-between px-5 py-3 border-b border-border/70 bg-card/40">

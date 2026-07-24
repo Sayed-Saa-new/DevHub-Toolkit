@@ -1,12 +1,4 @@
-import {
-  Braces,
-  KeyRound,
-  Terminal,
-  Hash,
-  Regex,
-  QrCode,
-  Blend,
-} from "lucide-react-motion";
+import { Braces, KeyRound, Terminal, Hash, Regex, QrCode, Blend } from "lucide-react-motion";
 import { Fingerprint } from "lucide-react";
 import type { ComponentType } from "react";
 import catConverters from "@/assets/cat-converters.svg";
@@ -19,12 +11,27 @@ import catAi from "@/assets/cat-ai.svg";
 export const SITE = "https://devhub.flinkeo.online";
 
 export const CATEGORY_ART: Record<string, { image: string; blurb: string }> = {
-  converters: { image: catConverters, blurb: "Transform data between formats — JSON, Base64, YAML, CSV, cURL." },
-  generators: { image: catGenerators, blurb: "Create UUIDs, hashes, QR codes, JWTs, passwords and mock data." },
+  converters: {
+    image: catConverters,
+    blurb: "Transform data between formats — JSON, Base64, YAML, CSV, cURL.",
+  },
+  generators: {
+    image: catGenerators,
+    blurb: "Create UUIDs, hashes, QR codes, JWTs, passwords and mock data.",
+  },
   design: { image: catDesign, blurb: "Craft gradients, shadows, colors and fluid CSS values." },
-  editors: { image: catEditors, blurb: "Live editors for JSON, Markdown, Regex, SQL and playgrounds." },
-  reference: { image: catReference, blurb: "HTTP codes, Git, Linux, VS Code and cron — searchable." },
-  ai: { image: catAi, blurb: "AI helpers: explain, optimize, convert code and craft SQL or tests." },
+  editors: {
+    image: catEditors,
+    blurb: "Live editors for JSON, Markdown, Regex, SQL and playgrounds.",
+  },
+  reference: {
+    image: catReference,
+    blurb: "HTTP codes, Git, Linux, VS Code and cron — searchable.",
+  },
+  ai: {
+    image: catAi,
+    blurb: "AI helpers: explain, optimize, convert code and craft SQL or tests.",
+  },
 };
 
 export const CATEGORY_ART_ASSETS = {

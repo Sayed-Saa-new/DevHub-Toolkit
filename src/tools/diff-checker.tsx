@@ -67,16 +67,20 @@ type StoreShape = {
 
 function preprocess(
   text: string,
-  { ignoreCase, ignoreWhitespace, trimLines, ignoreBlank }: Pick<
-    StoreShape,
-    "ignoreCase" | "ignoreWhitespace" | "trimLines" | "ignoreBlank"
-  >,
+  {
+    ignoreCase,
+    ignoreWhitespace,
+    trimLines,
+    ignoreBlank,
+  }: Pick<StoreShape, "ignoreCase" | "ignoreWhitespace" | "trimLines" | "ignoreBlank">,
 ) {
   let out = text.replace(/\r\n/g, "\n");
   if (ignoreCase) out = out.toLowerCase();
   if (trimLines || ignoreBlank) {
     const lines = out.split("\n");
-    const mapped = trimLines ? lines.map((l) => l.replace(/\s+$/g, "").replace(/^\s+/g, "")) : lines;
+    const mapped = trimLines
+      ? lines.map((l) => l.replace(/\s+$/g, "").replace(/^\s+/g, ""))
+      : lines;
     out = (ignoreBlank ? mapped.filter((l) => l.trim() !== "") : mapped).join("\n");
   }
   if (ignoreWhitespace) {
@@ -119,7 +123,13 @@ function runDiff(left: string, right: string, granularity: Granularity) {
 
 /** Build aligned side-by-side line rows from a diffLines result. */
 function buildSplitRows(changes: Change[]) {
-  type Row = { left?: string; right?: string; leftNo?: number; rightNo?: number; kind: "same" | "add" | "remove" | "change" };
+  type Row = {
+    left?: string;
+    right?: string;
+    leftNo?: number;
+    rightNo?: number;
+    kind: "same" | "add" | "remove" | "change";
+  };
   const rows: Row[] = [];
   let leftNo = 1;
   let rightNo = 1;
@@ -148,7 +158,8 @@ function buildSplitRows(changes: Change[]) {
     for (const line of lines) {
       if (c.added) rows.push({ right: line, rightNo: rightNo++, kind: "add" });
       else if (c.removed) rows.push({ left: line, leftNo: leftNo++, kind: "remove" });
-      else rows.push({ left: line, right: line, leftNo: leftNo++, rightNo: rightNo++, kind: "same" });
+      else
+        rows.push({ left: line, right: line, leftNo: leftNo++, rightNo: rightNo++, kind: "same" });
     }
   }
   return rows;
@@ -220,15 +231,30 @@ export function DiffChecker() {
 
   // Persist
   useEffect(() => {
-    const s: StoreShape = { left, right, granularity, view, ignoreCase, ignoreWhitespace, trimLines, ignoreBlank };
+    const s: StoreShape = {
+      left,
+      right,
+      granularity,
+      view,
+      ignoreCase,
+      ignoreWhitespace,
+      trimLines,
+      ignoreBlank,
+    };
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
     } catch {}
   }, [left, right, granularity, view, ignoreCase, ignoreWhitespace, trimLines, ignoreBlank]);
 
   const opts = { ignoreCase, ignoreWhitespace, trimLines, ignoreBlank };
-  const processedLeft = useMemo(() => preprocess(left, opts), [left, ignoreCase, ignoreWhitespace, trimLines, ignoreBlank]);
-  const processedRight = useMemo(() => preprocess(right, opts), [right, ignoreCase, ignoreWhitespace, trimLines, ignoreBlank]);
+  const processedLeft = useMemo(
+    () => preprocess(left, opts),
+    [left, ignoreCase, ignoreWhitespace, trimLines, ignoreBlank],
+  );
+  const processedRight = useMemo(
+    () => preprocess(right, opts),
+    [right, ignoreCase, ignoreWhitespace, trimLines, ignoreBlank],
+  );
 
   const changes = useMemo(
     () => runDiff(processedLeft, processedRight, granularity),
@@ -301,9 +327,16 @@ export function DiffChecker() {
       const tag = (e.target as HTMLElement)?.tagName;
       const inField = tag === "TEXTAREA" || tag === "INPUT";
       if (inField) return;
-      if (e.key === "n" || e.key === "j") { e.preventDefault(); jumpTo(1); }
-      else if (e.key === "p" || e.key === "k") { e.preventDefault(); jumpTo(-1); }
-      else if (e.key === "s" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); swap(); }
+      if (e.key === "n" || e.key === "j") {
+        e.preventDefault();
+        jumpTo(1);
+      } else if (e.key === "p" || e.key === "k") {
+        e.preventDefault();
+        jumpTo(-1);
+      } else if (e.key === "s" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        swap();
+      }
     };
     window.addEventListener("keydown", on);
     return () => window.removeEventListener("keydown", on);
@@ -316,176 +349,265 @@ export function DiffChecker() {
       return;
     }
     const text = await file.text();
-    if (side === "left") { setLeft(text); setLeftName(file.name); }
-    else { setRight(text); setRightName(file.name); }
+    if (side === "left") {
+      setLeft(text);
+      setLeftName(file.name);
+    } else {
+      setRight(text);
+      setRightName(file.name);
+    }
   };
 
   return (
     <div className="space-y-4">
-        {/* Toolbar */}
-        <div className="rounded-xl border border-border bg-card p-3 flex flex-wrap items-center gap-2">
-          <Tabs value={granularity} onValueChange={(v) => setGranularity(v as Granularity)}>
-            <TabsList className="h-8">
-              <TabsTrigger value="line" className="text-xs">Line</TabsTrigger>
-              <TabsTrigger value="word" className="text-xs">Word</TabsTrigger>
-              <TabsTrigger value="char" className="text-xs">Char</TabsTrigger>
-              <TabsTrigger value="sentence" className="text-xs">Sentence</TabsTrigger>
-            </TabsList>
-          </Tabs>
+      {/* Toolbar */}
+      <div className="rounded-xl border border-border bg-card p-3 flex flex-wrap items-center gap-2">
+        <Tabs value={granularity} onValueChange={(v) => setGranularity(v as Granularity)}>
+          <TabsList className="h-8">
+            <TabsTrigger value="line" className="text-xs">
+              Line
+            </TabsTrigger>
+            <TabsTrigger value="word" className="text-xs">
+              Word
+            </TabsTrigger>
+            <TabsTrigger value="char" className="text-xs">
+              Char
+            </TabsTrigger>
+            <TabsTrigger value="sentence" className="text-xs">
+              Sentence
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
 
-          <div className="h-6 w-px bg-border mx-1" />
+        <div className="h-6 w-px bg-border mx-1" />
 
-          <Tabs value={view} onValueChange={(v) => setView(v as ViewMode)}>
-            <TabsList className="h-8">
-              <TabsTrigger value="split" className="text-xs gap-1.5">
-                <Columns className="size-3.5" /> Split
-              </TabsTrigger>
-              <TabsTrigger value="unified" className="text-xs gap-1.5">
-                <Rows className="size-3.5" /> Unified
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
+        <Tabs value={view} onValueChange={(v) => setView(v as ViewMode)}>
+          <TabsList className="h-8">
+            <TabsTrigger value="split" className="text-xs gap-1.5">
+              <Columns className="size-3.5" /> Split
+            </TabsTrigger>
+            <TabsTrigger value="unified" className="text-xs gap-1.5">
+              <Rows className="size-3.5" /> Unified
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
 
-          <div className="ml-auto flex flex-wrap items-center gap-2">
-            <Button variant="ghost" size="sm" onClick={swap} className="h-8 gap-1.5 text-xs">
-              <ArrowLeftRight className="size-3.5" /> Swap
-            </Button>
-            <Button variant="ghost" size="sm" onClick={loadSample} className="h-8 gap-1.5 text-xs">
-              <RefreshCw className="size-3.5" /> Sample
-            </Button>
-            <Button variant="ghost" size="sm" onClick={clear} className="h-8 gap-1.5 text-xs">
-              <Trash2 className="size-3.5" /> Clear
-            </Button>
+        <div className="ml-auto flex flex-wrap items-center gap-2">
+          <Button variant="ghost" size="sm" onClick={swap} className="h-8 gap-1.5 text-xs">
+            <ArrowLeftRight className="size-3.5" /> Swap
+          </Button>
+          <Button variant="ghost" size="sm" onClick={loadSample} className="h-8 gap-1.5 text-xs">
+            <RefreshCw className="size-3.5" /> Sample
+          </Button>
+          <Button variant="ghost" size="sm" onClick={clear} className="h-8 gap-1.5 text-xs">
+            <Trash2 className="size-3.5" /> Clear
+          </Button>
+        </div>
+      </div>
+
+      {/* Options */}
+      <div className="rounded-xl border border-border bg-card p-3 grid grid-cols-2 md:grid-cols-6 gap-x-4 gap-y-2">
+        <ToggleOpt
+          id="opt-case"
+          label="Ignore case"
+          checked={ignoreCase}
+          onChange={setIgnoreCase}
+        />
+        <ToggleOpt
+          id="opt-ws"
+          label="Ignore whitespace"
+          checked={ignoreWhitespace}
+          onChange={setIgnoreWhitespace}
+        />
+        <ToggleOpt id="opt-trim" label="Trim lines" checked={trimLines} onChange={setTrimLines} />
+        <ToggleOpt
+          id="opt-blank"
+          label="Ignore blank lines"
+          checked={ignoreBlank}
+          onChange={setIgnoreBlank}
+        />
+        <ToggleOpt id="opt-wrap" label="Wrap lines" checked={wrap} onChange={setWrap} />
+        <ToggleOpt
+          id="opt-only"
+          label="Changes only"
+          checked={showOnlyChanges}
+          onChange={setShowOnlyChanges}
+        />
+      </div>
+
+      {/* Stats bar */}
+      <div className="rounded-xl border border-border bg-card px-4 py-3 flex flex-wrap items-center gap-3 text-sm">
+        <Stat label="Added" value={`+${stats.added}`} className="text-emerald-500" />
+        <Stat label="Removed" value={`−${stats.removed}`} className="text-red-500" />
+        <Stat label="Unchanged" value={String(stats.unchanged)} />
+        <Stat label="Similarity" value={`${stats.similarity}%`} />
+        <div className="ml-auto flex items-center gap-1">
+          <span className="text-xs text-muted-foreground mr-1 font-mono">
+            {changeRowIndexes.length ? `${cursor + 1} / ${changeRowIndexes.length}` : "0 / 0"}
+          </span>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-7 w-7"
+            onClick={() => jumpTo(-1)}
+            aria-label="Previous change"
+          >
+            <ChevronUp className="size-3.5" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-7 w-7"
+            onClick={() => jumpTo(1)}
+            aria-label="Next change"
+          >
+            <ChevronDown className="size-3.5" />
+          </Button>
+        </div>
+      </div>
+
+      {/* Inputs */}
+      <div className="grid gap-4 md:grid-cols-2">
+        <InputPane
+          side="left"
+          name={leftName}
+          onNameChange={setLeftName}
+          value={left}
+          onChange={setLeft}
+          onFile={(f) => handleFile("left", f)}
+        />
+        <InputPane
+          side="right"
+          name={rightName}
+          onNameChange={setRightName}
+          value={right}
+          onChange={setRight}
+          onFile={(f) => handleFile("right", f)}
+        />
+      </div>
+
+      {/* Diff view */}
+      {view === "split" ? (
+        <Panel title="Side-by-side diff">
+          <div className="grid grid-cols-2 divide-x divide-border font-mono text-[12.5px] leading-relaxed">
+            <ScrollShell ref={leftScrollRef}>
+              {splitRows.map((r, i) =>
+                showOnlyChanges && r.kind === "same" ? null : (
+                  <DiffLine
+                    key={`l-${i}`}
+                    no={r.leftNo}
+                    text={r.left}
+                    kind={
+                      r.kind === "add"
+                        ? "same-empty"
+                        : r.kind === "remove"
+                          ? "remove"
+                          : r.kind === "change"
+                            ? "remove"
+                            : "same"
+                    }
+                    wrap={wrap}
+                    rowIndex={i}
+                    focused={changeRowIndexes[cursor] === i}
+                  />
+                ),
+              )}
+            </ScrollShell>
+            <ScrollShell ref={rightScrollRef}>
+              {splitRows.map((r, i) =>
+                showOnlyChanges && r.kind === "same" ? null : (
+                  <DiffLine
+                    key={`r-${i}`}
+                    no={r.rightNo}
+                    text={r.right}
+                    kind={
+                      r.kind === "remove"
+                        ? "same-empty"
+                        : r.kind === "add"
+                          ? "add"
+                          : r.kind === "change"
+                            ? "add"
+                            : "same"
+                    }
+                    wrap={wrap}
+                    rowIndex={i}
+                    focused={changeRowIndexes[cursor] === i}
+                  />
+                ),
+              )}
+            </ScrollShell>
           </div>
-        </div>
-
-        {/* Options */}
-        <div className="rounded-xl border border-border bg-card p-3 grid grid-cols-2 md:grid-cols-6 gap-x-4 gap-y-2">
-          <ToggleOpt id="opt-case" label="Ignore case" checked={ignoreCase} onChange={setIgnoreCase} />
-          <ToggleOpt id="opt-ws" label="Ignore whitespace" checked={ignoreWhitespace} onChange={setIgnoreWhitespace} />
-          <ToggleOpt id="opt-trim" label="Trim lines" checked={trimLines} onChange={setTrimLines} />
-          <ToggleOpt id="opt-blank" label="Ignore blank lines" checked={ignoreBlank} onChange={setIgnoreBlank} />
-          <ToggleOpt id="opt-wrap" label="Wrap lines" checked={wrap} onChange={setWrap} />
-          <ToggleOpt id="opt-only" label="Changes only" checked={showOnlyChanges} onChange={setShowOnlyChanges} />
-        </div>
-
-        {/* Stats bar */}
-        <div className="rounded-xl border border-border bg-card px-4 py-3 flex flex-wrap items-center gap-3 text-sm">
-          <Stat label="Added" value={`+${stats.added}`} className="text-emerald-500" />
-          <Stat label="Removed" value={`−${stats.removed}`} className="text-red-500" />
-          <Stat label="Unchanged" value={String(stats.unchanged)} />
-          <Stat label="Similarity" value={`${stats.similarity}%`} />
-          <div className="ml-auto flex items-center gap-1">
-            <span className="text-xs text-muted-foreground mr-1 font-mono">
-              {changeRowIndexes.length ? `${cursor + 1} / ${changeRowIndexes.length}` : "0 / 0"}
-            </span>
-            <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => jumpTo(-1)} aria-label="Previous change">
-              <ChevronUp className="size-3.5" />
-            </Button>
-            <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => jumpTo(1)} aria-label="Next change">
-              <ChevronDown className="size-3.5" />
-            </Button>
-          </div>
-        </div>
-
-        {/* Inputs */}
-        <div className="grid gap-4 md:grid-cols-2">
-          <InputPane
-            side="left"
-            name={leftName}
-            onNameChange={setLeftName}
-            value={left}
-            onChange={setLeft}
-            onFile={(f) => handleFile("left", f)}
-          />
-          <InputPane
-            side="right"
-            name={rightName}
-            onNameChange={setRightName}
-            value={right}
-            onChange={setRight}
-            onFile={(f) => handleFile("right", f)}
-          />
-        </div>
-
-        {/* Diff view */}
-        {view === "split" ? (
-          <Panel title="Side-by-side diff">
-            <div className="grid grid-cols-2 divide-x divide-border font-mono text-[12.5px] leading-relaxed">
-              <ScrollShell ref={leftScrollRef}>
-                {splitRows.map((r, i) =>
-                  showOnlyChanges && r.kind === "same" ? null : (
-                    <DiffLine
-                      key={`l-${i}`}
-                      no={r.leftNo}
-                      text={r.left}
-                      kind={r.kind === "add" ? "same-empty" : r.kind === "remove" ? "remove" : r.kind === "change" ? "remove" : "same"}
-                      wrap={wrap}
-                      rowIndex={i}
-                      focused={changeRowIndexes[cursor] === i}
-                    />
-                  ),
-                )}
-              </ScrollShell>
-              <ScrollShell ref={rightScrollRef}>
-                {splitRows.map((r, i) =>
-                  showOnlyChanges && r.kind === "same" ? null : (
-                    <DiffLine
-                      key={`r-${i}`}
-                      no={r.rightNo}
-                      text={r.right}
-                      kind={r.kind === "remove" ? "same-empty" : r.kind === "add" ? "add" : r.kind === "change" ? "add" : "same"}
-                      wrap={wrap}
-                      rowIndex={i}
-                      focused={changeRowIndexes[cursor] === i}
-                    />
-                  ),
-                )}
-              </ScrollShell>
-            </div>
-          </Panel>
-        ) : (
-          <Panel title="Unified diff">
-            <UnifiedView changes={changes} granularity={granularity} wrap={wrap} showOnlyChanges={showOnlyChanges} />
-          </Panel>
-        )}
-
-        {/* Patch export */}
-        <Panel
-          title="Unified patch (.diff)"
-          actions={
-            <>
-              <Button variant="ghost" size="sm" className="h-7 gap-1.5 text-xs" onClick={() => copyToClipboard(patch)} disabled={!patch}>
-                <Copy className="size-3" /> Copy
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-7 gap-1.5 text-xs"
-                onClick={() => downloadFile(`${leftName || "a"}-vs-${rightName || "b"}.diff`, patch, "text/plain")}
-                disabled={!patch}
-              >
-                <FileDown className="size-3" /> Download
-              </Button>
-            </>
-          }
-        >
-          <pre className="p-3 text-[12.5px] leading-relaxed font-mono max-h-72 overflow-auto whitespace-pre">{patch || "// no changes"}</pre>
         </Panel>
+      ) : (
+        <Panel title="Unified diff">
+          <UnifiedView
+            changes={changes}
+            granularity={granularity}
+            wrap={wrap}
+            showOnlyChanges={showOnlyChanges}
+          />
+        </Panel>
+      )}
 
-        <p className="text-xs text-muted-foreground px-1">
-          Shortcuts: <kbd className="px-1 border rounded">J</kbd>/<kbd className="px-1 border rounded">N</kbd> next change ·{" "}
-          <kbd className="px-1 border rounded">K</kbd>/<kbd className="px-1 border rounded">P</kbd> previous ·{" "}
-          <kbd className="px-1 border rounded">⌘S</kbd> swap sides
-        </p>
+      {/* Patch export */}
+      <Panel
+        title="Unified patch (.diff)"
+        actions={
+          <>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 gap-1.5 text-xs"
+              onClick={() => copyToClipboard(patch)}
+              disabled={!patch}
+            >
+              <Copy className="size-3" /> Copy
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 gap-1.5 text-xs"
+              onClick={() =>
+                downloadFile(`${leftName || "a"}-vs-${rightName || "b"}.diff`, patch, "text/plain")
+              }
+              disabled={!patch}
+            >
+              <FileDown className="size-3" /> Download
+            </Button>
+          </>
+        }
+      >
+        <pre className="p-3 text-[12.5px] leading-relaxed font-mono max-h-72 overflow-auto whitespace-pre">
+          {patch || "// no changes"}
+        </pre>
+      </Panel>
+
+      <p className="text-xs text-muted-foreground px-1">
+        Shortcuts: <kbd className="px-1 border rounded">J</kbd>/
+        <kbd className="px-1 border rounded">N</kbd> next change ·{" "}
+        <kbd className="px-1 border rounded">K</kbd>/<kbd className="px-1 border rounded">P</kbd>{" "}
+        previous · <kbd className="px-1 border rounded">⌘S</kbd> swap sides
+      </p>
     </div>
   );
 }
 
-function ToggleOpt({ id, label, checked, onChange }: { id: string; label: string; checked: boolean; onChange: (v: boolean) => void }) {
+function ToggleOpt({
+  id,
+  label,
+  checked,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  checked: boolean;
+  onChange: (v: boolean) => void;
+}) {
   return (
     <div className="flex items-center justify-between gap-2">
-      <Label htmlFor={id} className="text-xs text-muted-foreground cursor-pointer">{label}</Label>
+      <Label htmlFor={id} className="text-xs text-muted-foreground cursor-pointer">
+        {label}
+      </Label>
       <Switch id={id} checked={checked} onCheckedChange={onChange} />
     </div>
   );
@@ -541,7 +663,9 @@ function InputPane({
               onChange={(e) => onFile(e.target.files?.[0])}
             />
             <Button variant="ghost" size="sm" className="h-7 gap-1.5 text-xs" asChild>
-              <span><Upload className="size-3" /> Upload</span>
+              <span>
+                <Upload className="size-3" /> Upload
+              </span>
             </Button>
           </label>
         </>
@@ -613,8 +737,15 @@ function DiffLine({
       <span className="w-10 shrink-0 select-none text-right pr-2 text-muted-foreground/70 tabular-nums text-[11px] pt-0.5">
         {no ?? ""}
       </span>
-      <span className="w-4 shrink-0 select-none text-center text-muted-foreground pt-0.5">{marker}</span>
-      <span className={cn("flex-1 pr-2 pt-0.5", wrap ? "whitespace-pre-wrap break-all" : "whitespace-pre overflow-x-auto")}>
+      <span className="w-4 shrink-0 select-none text-center text-muted-foreground pt-0.5">
+        {marker}
+      </span>
+      <span
+        className={cn(
+          "flex-1 pr-2 pt-0.5",
+          wrap ? "whitespace-pre-wrap break-all" : "whitespace-pre overflow-x-auto",
+        )}
+      >
         {text ?? ""}
       </span>
     </div>
@@ -636,7 +767,7 @@ function UnifiedView({
   if (granularity === "line") {
     let leftNo = 1;
     let rightNo = 1;
-  const rows: ReactNode[] = [];
+    const rows: ReactNode[] = [];
     let key = 0;
     for (const c of changes) {
       const lines = c.value.replace(/\n$/, "").split("\n");
@@ -646,7 +777,14 @@ function UnifiedView({
             <div key={key++} className="flex bg-emerald-500/10">
               <Gutter left="" right={rightNo++} />
               <span className="w-4 text-center text-emerald-600">+</span>
-              <span className={cn("flex-1 pr-2", wrap ? "whitespace-pre-wrap break-all" : "whitespace-pre overflow-x-auto")}>{line}</span>
+              <span
+                className={cn(
+                  "flex-1 pr-2",
+                  wrap ? "whitespace-pre-wrap break-all" : "whitespace-pre overflow-x-auto",
+                )}
+              >
+                {line}
+              </span>
             </div>,
           );
         } else if (c.removed) {
@@ -654,7 +792,14 @@ function UnifiedView({
             <div key={key++} className="flex bg-red-500/10">
               <Gutter left={leftNo++} right="" />
               <span className="w-4 text-center text-red-600">−</span>
-              <span className={cn("flex-1 pr-2", wrap ? "whitespace-pre-wrap break-all" : "whitespace-pre overflow-x-auto")}>{line}</span>
+              <span
+                className={cn(
+                  "flex-1 pr-2",
+                  wrap ? "whitespace-pre-wrap break-all" : "whitespace-pre overflow-x-auto",
+                )}
+              >
+                {line}
+              </span>
             </div>,
           );
         } else {
@@ -663,7 +808,14 @@ function UnifiedView({
               <div key={key++} className="flex">
                 <Gutter left={leftNo} right={rightNo} />
                 <span className="w-4 text-center text-muted-foreground">&nbsp;</span>
-                <span className={cn("flex-1 pr-2", wrap ? "whitespace-pre-wrap break-all" : "whitespace-pre overflow-x-auto")}>{line}</span>
+                <span
+                  className={cn(
+                    "flex-1 pr-2",
+                    wrap ? "whitespace-pre-wrap break-all" : "whitespace-pre overflow-x-auto",
+                  )}
+                >
+                  {line}
+                </span>
               </div>,
             );
           }
@@ -672,7 +824,11 @@ function UnifiedView({
         }
       }
     }
-    return <div className="max-h-[560px] overflow-auto font-mono text-[12.5px] leading-relaxed">{rows}</div>;
+    return (
+      <div className="max-h-[560px] overflow-auto font-mono text-[12.5px] leading-relaxed">
+        {rows}
+      </div>
+    );
   }
 
   return (
@@ -687,7 +843,8 @@ function UnifiedView({
           key={i}
           className={cn(
             c.added && "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300",
-            c.removed && "bg-red-500/20 text-red-700 dark:text-red-300 line-through decoration-red-500/50",
+            c.removed &&
+              "bg-red-500/20 text-red-700 dark:text-red-300 line-through decoration-red-500/50",
           )}
         >
           {c.value}

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { X, ArrowUpRight } from "lucide-react-motion";
 
-const PH_URL =
-  "https://www.producthunt.com/products/devhub-toolkit?launch=devhub-toolkit";
+const PH_URL = "https://www.producthunt.com/products/devhub-toolkit?launch=devhub-toolkit";
 const STORAGE_KEY = "devhub:ph-banner-dismissed:v1";
 
 export function PHBanner() {

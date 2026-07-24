@@ -1,12 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import {
-  ArrowRight,
-  Sparkles,
-  Rss,
-  Star,
-  Menu,
-  X,
-} from "lucide-react-motion";
+import { ArrowRight, Sparkles, Rss, Star, Menu, X } from "lucide-react-motion";
 import { Briefcase, Rocket, BookOpen } from "lucide-react-motion";
 import { Github } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -179,9 +172,24 @@ function MegaMenuBody({ onClose }: { onClose: () => void }) {
   const colB = CATEGORIES.slice(half);
 
   const inspiration = [
-    { icon: Briefcase, label: "All tools", desc: "Browse every utility in one grid.", to: "/tools" as const },
-    { icon: Rocket, label: "Favorites", desc: "Your pinned tools, one shortcut away.", to: "/favorites" as const },
-    { icon: BookOpen, label: "Changelog", desc: "New releases, fixes and improvements.", to: "/changelog" as const },
+    {
+      icon: Briefcase,
+      label: "All tools",
+      desc: "Browse every utility in one grid.",
+      to: "/tools" as const,
+    },
+    {
+      icon: Rocket,
+      label: "Favorites",
+      desc: "Your pinned tools, one shortcut away.",
+      to: "/favorites" as const,
+    },
+    {
+      icon: BookOpen,
+      label: "Changelog",
+      desc: "New releases, fixes and improvements.",
+      to: "/changelog" as const,
+    },
   ];
 
   return (
@@ -201,14 +209,14 @@ function MegaMenuBody({ onClose }: { onClose: () => void }) {
                 data-motion-icon-group
                 className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
               >
-                <div
-                  className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors"
-                >
+                <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
                   <i.icon className="size-4" />
                 </div>
                 <div className="min-w-0">
                   <div className="text-sm font-medium text-foreground">{i.label}</div>
-                  <div className="text-xs text-muted-foreground leading-snug line-clamp-2">{i.desc}</div>
+                  <div className="text-xs text-muted-foreground leading-snug line-clamp-2">
+                    {i.desc}
+                  </div>
                 </div>
               </Link>
             </li>
@@ -244,9 +252,7 @@ function MegaColumn({
                 data-motion-icon-group
                 className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
               >
-                <div
-                  className="relative shrink-0 w-[92px] aspect-[16/10] rounded-md overflow-hidden border border-border bg-gradient-to-br from-neutral-900 to-black flex items-center justify-center p-2"
-                >
+                <div className="relative shrink-0 w-[92px] aspect-[16/10] rounded-md overflow-hidden border border-border bg-gradient-to-br from-neutral-900 to-black flex items-center justify-center p-2">
                   <img
                     src={art.image}
                     alt=""
@@ -279,10 +285,22 @@ function ToolsMenuBody({ close }: { close: () => void }) {
   const featured = FEATURED_TOOL_SLUGS.map((s) => TOOLS.find((t) => t.slug === s)).filter(
     Boolean,
   ) as typeof TOOLS;
-  const fresh = TOOLS.filter((t) => t.isNew).slice(-6).reverse();
+  const fresh = TOOLS.filter((t) => t.isNew)
+    .slice(-6)
+    .reverse();
 
-  const jumps: { icon: ComponentType<{ className?: string }>; label: string; desc: string; to: "/tools" | "/favorites" }[] = [
-    { icon: Briefcase, label: "All tools", desc: `Browse all ${TOOLS.length} utilities.`, to: "/tools" },
+  const jumps: {
+    icon: ComponentType<{ className?: string }>;
+    label: string;
+    desc: string;
+    to: "/tools" | "/favorites";
+  }[] = [
+    {
+      icon: Briefcase,
+      label: "All tools",
+      desc: `Browse all ${TOOLS.length} utilities.`,
+      to: "/tools",
+    },
     { icon: Star, label: "Favorites", desc: "Your pinned tools.", to: "/favorites" },
   ];
 
@@ -300,9 +318,7 @@ function ToolsMenuBody({ close }: { close: () => void }) {
                 data-motion-icon-group
                 className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
               >
-                <div
-                  className="mt-0.5 size-8 shrink-0 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition"
-                >
+                <div className="mt-0.5 size-8 shrink-0 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition">
                   <t.icon className="size-4 shrink-0" />
                 </div>
                 <div className="min-w-0">
@@ -331,9 +347,7 @@ function ToolsMenuBody({ close }: { close: () => void }) {
                 data-motion-icon-group
                 className="group flex items-start gap-3 rounded-lg p-2 -mx-2 hover:bg-accent/60 transition"
               >
-                <div
-                  className="mt-0.5 size-8 shrink-0 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition"
-                >
+                <div className="mt-0.5 size-8 shrink-0 grid place-items-center rounded-md border border-border bg-muted/40 text-foreground/80 group-hover:border-foreground/40 transition">
                   <t.icon className="size-4 shrink-0" />
                 </div>
                 <div className="min-w-0">
@@ -363,9 +377,7 @@ function ToolsMenuBody({ close }: { close: () => void }) {
                 data-motion-icon-group
                 className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
               >
-                <div
-                  className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors"
-                >
+                <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
                   <j.icon className="size-4" />
                 </div>
                 <div className="min-w-0">
@@ -385,9 +397,7 @@ function ToolsMenuBody({ close }: { close: () => void }) {
               data-motion-icon-group
               className="group flex items-start gap-3 rounded-lg p-2.5 -mx-2.5 hover:bg-accent/60 transition"
             >
-              <div
-                className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors"
-              >
+              <div className="mt-0.5 size-5 grid place-items-center text-muted-foreground group-hover:text-foreground transition-colors">
                 <Sparkles className="size-4" />
               </div>
               <div className="min-w-0">
@@ -512,8 +522,8 @@ function ChangelogMenuBody({ close }: { close: () => void }) {
         </ul>
         <div className="mt-auto pt-4 border-t border-border/60">
           <div className="text-xs text-muted-foreground">
-            <span className="text-foreground font-medium">Tip:</span> star tools you use most —
-            they surface in <span className="text-foreground">Favorites</span>.
+            <span className="text-foreground font-medium">Tip:</span> star tools you use most — they
+            surface in <span className="text-foreground">Favorites</span>.
           </div>
         </div>
       </div>

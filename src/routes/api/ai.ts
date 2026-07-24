@@ -3,15 +3,7 @@ import { streamText, convertToModelMessages, type UIMessage } from "ai";
 
 import { createGeminiProvider } from "@/lib/ai-gateway.server";
 
-type Mode =
-  | "explain"
-  | "optimize"
-  | "commit"
-  | "sql"
-  | "convert"
-  | "error"
-  | "regex"
-  | "tests";
+type Mode = "explain" | "optimize" | "commit" | "sql" | "convert" | "error" | "regex" | "tests";
 
 const SYSTEM: Record<Mode, string> = {
   explain:
@@ -20,8 +12,7 @@ const SYSTEM: Record<Mode, string> = {
     "You are a performance-focused senior engineer. Analyze the given code and return an optimized version. Structure: 1) Key issues found (bullets). 2) Optimized code in a single fenced code block. 3) Why it's faster/cleaner. Preserve behavior. Use markdown.",
   commit:
     "You generate Conventional Commit messages from a git diff or change description. Output ONLY the commit message — no explanation, no code fences. Format: `type(scope): subject` on line 1 (<=72 chars), blank line, optional body with bullets. Types: feat, fix, refactor, perf, docs, test, chore, style, build, ci.",
-  sql:
-    "You convert natural-language requests into SQL. Structure: 1) A single fenced ```sql code block with a clean, standards-compliant query (PostgreSQL dialect unless the user specifies another). 2) A short bullet list explaining the query, assumed schema, and any caveats. Use markdown.",
+  sql: "You convert natural-language requests into SQL. Structure: 1) A single fenced ```sql code block with a clean, standards-compliant query (PostgreSQL dialect unless the user specifies another). 2) A short bullet list explaining the query, assumed schema, and any caveats. Use markdown.",
   convert:
     "You are a polyglot code translator. The user pastes source code (optionally prefixed with `// from: X to: Y`). Detect source language if unspecified and translate to the target language, preserving behavior and idioms. Output: 1) One fenced code block with the translated code (correct language tag). 2) Short bullet list of notable idiomatic changes. Use markdown.",
   error:

@@ -29,11 +29,7 @@ function toolSection(slug: string) {
 function categorySection(cat: Category, label: string) {
   const tools = TOOLS.filter((t) => t.category === cat);
   if (!tools.length) return "";
-  return [
-    `## ${label}`,
-    "",
-    ...tools.map((t) => toolSection(t.slug)),
-  ].join("\n");
+  return [`## ${label}`, "", ...tools.map((t) => toolSection(t.slug))].join("\n");
 }
 
 export const Route = createFileRoute("/llms-full.txt")({
@@ -64,8 +60,7 @@ export const Route = createFileRoute("/llms-full.txt")({
           `## Categories`,
           "",
           ...CATEGORIES.map(
-            (c) =>
-              `- **${c.label}** — ${TOOLS.filter((t) => t.category === c.id).length} tools`,
+            (c) => `- **${c.label}** — ${TOOLS.filter((t) => t.category === c.id).length} tools`,
           ),
           "",
           `## Tools`,

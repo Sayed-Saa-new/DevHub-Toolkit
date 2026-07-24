@@ -58,13 +58,11 @@ export function AnimatedTag({
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-md p-px"
         style={{
-          background:
-            "linear-gradient(-75deg, transparent 30%, var(--shine) 50%, transparent 70%)",
+          background: "linear-gradient(-75deg, transparent 30%, var(--shine) 50%, transparent 70%)",
           backgroundSize: "200% 100%",
           mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
           maskComposite: "exclude",
-          WebkitMask:
-            "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+          WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
           WebkitMaskComposite: "xor",
         }}
         initial={{ backgroundPosition: "100% 0", opacity: 0 }}
