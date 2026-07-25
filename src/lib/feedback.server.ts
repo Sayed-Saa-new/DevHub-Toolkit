@@ -60,14 +60,7 @@ function createParagraphBlocks(text: string, title?: string): Record<string, unk
       object: "block",
       type: "heading_2",
       heading_2: {
-        rich_text: [
-          {
-            type: "text",
-            text: {
-              content: title,
-            },
-          },
-        ],
+        rich_text: [{ type: "text", text: { content: title } }],
       },
     });
   }
@@ -78,14 +71,7 @@ function createParagraphBlocks(text: string, title?: string): Record<string, unk
       object: "block",
       type: "paragraph",
       paragraph: {
-        rich_text: [
-          {
-            type: "text",
-            text: {
-              content: chunk,
-            },
-          },
-        ],
+        rich_text: [{ type: "text", text: { content: chunk } }],
       },
     });
   }
@@ -134,8 +120,45 @@ export async function submitFeedbackToNotion(
     };
   }
 
-  // 3. Load secrets from bindings/process.env
+  // 3. Load secrets from Cloudflare bindings / process.env (done once, reused below)
   const env = getCloudflareEnv();
+
+  // 4. Verify Cloudflare Turnstile token
+  // If TURNSTILE_SECRET_KEY is configured, the token is required and must pass verification.
+  const turnstileSecretKey = env.TURNSTILE_SECRET_KEY;
+  if (turnstileSecretKey) {
+    const token = data.turnstileToken ?? "";
+    if (!token) {
+      return {
+        success: false,
+        error: "Bot verification token missing. Please refresh the page and try again.",
+      };
+    }
+    try {
+      const formData = new FormData();
+      formData.append("secret", turnstileSecretKey);
+      formData.append("response", token);
+      formData.append("remoteip", clientIp);
+      const tsRes = await fetch(
+        "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+        { method: "POST", body: formData },
+      );
+      const tsJson = (await tsRes.json()) as { success: boolean };
+      if (!tsJson.success) {
+        console.warn(`[Turnstile Failed] IP: ${clientIp}`);
+        return {
+          success: false,
+          error: "Bot verification failed. Please try again.",
+        };
+      }
+    } catch (err) {
+      // Fail open: if the Turnstile endpoint is unreachable, allow the submission
+      // rather than blocking legitimate users during a CF outage.
+      console.error("Turnstile verification error (failing open):", err);
+    }
+  }
+
+  // 5. Validate that Notion secrets are present
   const notionToken = env.NOTION_TOKEN;
   const notionDbId = env.NOTION_DATA_SOURCE_ID;
 
@@ -149,7 +172,7 @@ export async function submitFeedbackToNotion(
     };
   }
 
-  // 4. Validate conditional inputs if Type is Bug
+  // 6. Validate conditional inputs if Type is Bug
   if (data.type === "Bug") {
     if (!data.browser || !data.deviceOrOs || !data.stepsToReproduce) {
       return {
@@ -159,13 +182,13 @@ export async function submitFeedbackToNotion(
     }
   }
 
-  // 5. Sanitize string inputs
+  // 7. Sanitize string inputs
   const cleanFeedback = sanitizeString(data.feedback);
   const cleanTool = data.tool ? sanitizeString(data.tool) : "";
   const cleanBrowser = data.browser ? sanitizeString(data.browser) : "";
   const cleanDevice = data.deviceOrOs ? sanitizeString(data.deviceOrOs) : "";
 
-  // 6. Build Notion properties
+  // 8. Build Notion properties
   // The database primary key title (Feedback) is truncated to 100 characters for list views.
   const truncatedTitle =
     cleanFeedback.length > 100 ? cleanFeedback.substring(0, 97) + "..." : cleanFeedback;
@@ -175,57 +198,23 @@ export async function submitFeedbackToNotion(
 
   const properties: Record<string, unknown> = {
     Feedback: {
-      title: [
-        {
-          text: {
-            content: truncatedTitle,
-          },
-        },
-      ],
+      title: [{ text: { content: truncatedTitle } }],
     },
-    Type: {
-      select: {
-        name: data.type,
-      },
-    },
-    Source: {
-      select: {
-        name: data.source || "Beta",
-      },
-    },
-    Status: {
-      status: {
-        name: "New",
-      },
-    },
-    Date: {
-      date: {
-        start: isoDate,
-      },
-    },
-    Priority: {
-      select: {
-        name: priority,
-      },
-    },
-    "Request Count": {
-      number: 1,
-    },
+    Type: { select: { name: data.type } },
+    Source: { select: { name: data.source || "Beta" } },
+    Status: { status: { name: "New" } },
+    Date: { date: { start: isoDate } },
+    Priority: { select: { name: priority } },
+    "Request Count": { number: 1 },
   };
 
   if (cleanTool) {
     properties.Tool = {
-      rich_text: [
-        {
-          text: {
-            content: cleanTool,
-          },
-        },
-      ],
+      rich_text: [{ text: { content: cleanTool } }],
     };
   }
 
-  // 7. Build Notion page body (children blocks) with Unicode-safe chunk splitting
+  // 9. Build Notion page body (children blocks) with Unicode-safe chunk splitting
   const children: Record<string, unknown>[] = [];
 
   // Append full feedback message (split into chunks of 1900 chars under the 2000 Notion limit)
@@ -237,43 +226,20 @@ export async function submitFeedbackToNotion(
       {
         object: "block",
         type: "heading_2",
-        heading_2: {
-          rich_text: [
-            {
-              type: "text",
-              text: {
-                content: "Bug Diagnostics",
-              },
-            },
-          ],
+        heading_2: { rich_text: [{ type: "text", text: { content: "Bug Diagnostics" } }] },
+      },
+      {
+        object: "block",
+        type: "paragraph",
+        paragraph: {
+          rich_text: [{ type: "text", text: { content: `Browser: ${cleanBrowser}` } }],
         },
       },
       {
         object: "block",
         type: "paragraph",
         paragraph: {
-          rich_text: [
-            {
-              type: "text",
-              text: {
-                content: `Browser: ${cleanBrowser}`,
-              },
-            },
-          ],
-        },
-      },
-      {
-        object: "block",
-        type: "paragraph",
-        paragraph: {
-          rich_text: [
-            {
-              type: "text",
-              text: {
-                content: `Device/OS: ${cleanDevice}`,
-              },
-            },
-          ],
+          rich_text: [{ type: "text", text: { content: `Device/OS: ${cleanDevice}` } }],
         },
       },
     );
@@ -283,7 +249,7 @@ export async function submitFeedbackToNotion(
     }
   }
 
-  // 8. Submit fetch to Notion API
+  // 10. Submit to Notion API
   try {
     const response = await fetch("https://api.notion.com/v1/pages", {
       method: "POST",
@@ -293,9 +259,7 @@ export async function submitFeedbackToNotion(
         "Notion-Version": "2022-06-28",
       },
       body: JSON.stringify({
-        parent: {
-          database_id: notionDbId,
-        },
+        parent: { database_id: notionDbId },
         properties,
         children,
       }),
@@ -312,23 +276,15 @@ export async function submitFeedbackToNotion(
       } catch {
         errorMessage = errorDetails.substring(0, 200);
       }
-
-      // Strictly log only HTTP status, Notion error code, and error message (no secrets)
       console.error(
         `Notion API Error — Status: ${response.status}, Code: ${errorCode}, Message: ${errorMessage}`,
       );
-      return {
-        success: false,
-        error: "Unable to submit feedback. Please try again later.",
-      };
+      return { success: false, error: "Unable to submit feedback. Please try again later." };
     }
 
     return { success: true };
   } catch (err) {
     console.error("Exception during feedback submission to Notion API:", err);
-    return {
-      success: false,
-      error: "Internal server error. Please try again later.",
-    };
+    return { success: false, error: "Internal server error. Please try again later." };
   }
 }
