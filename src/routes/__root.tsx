@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AppShell } from "@/components/app-shell";
 import { Toaster } from "@/components/ui/sonner";
+import { TOOLS } from "@/lib/tools";
 
 function NotFoundComponent() {
   return (
@@ -80,11 +81,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "DevHub Toolkit — 58 Free Online Developer Tools" },
+      { title: `DevHub Toolkit — ${TOOLS.length} Free Online Developer Tools` },
       {
         name: "description",
-        content:
-          "Free online JSON formatter, Base64 decoder, JWT decoder, UUID & hash generator, regex tester, QR codes, AI SQL & regex generators — 58 developer tools, no signup.",
+        content: `Free online JSON formatter, Base64 decoder, JWT decoder, UUID & hash generator, regex tester, QR codes, AI SQL & regex generators — ${TOOLS.length} developer tools, no signup.`,
       },
       {
         name: "keywords",
@@ -94,11 +94,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "author", content: "DevHub" },
       { name: "theme-color", content: "#0a0a0a" },
       { name: "google-site-verification", content: "4GW5hFWsbJa_98tGQoSUIX-OAfhGOfhh7ZLsxEoHqc0" },
-      { property: "og:title", content: "DevHub Toolkit — 58 Free Online Developer Tools" },
+      { property: "og:title", content: `DevHub Toolkit — ${TOOLS.length} Free Online Developer Tools` },
       {
         property: "og:description",
         content:
-          "JSON, Base64, JWT, UUID, hashes, regex, QR codes, AI SQL, AI regex and 50+ more. Fast, minimal, keyboard-first — no signup.",
+          "JSON, Base64, JWT, UUID, hashes, regex, QR codes, AI SQL, AI regex and more. Fast, minimal, keyboard-first — no signup.",
       },
       { property: "og:site_name", content: "DevHub Toolkit" },
       { property: "og:type", content: "website" },
@@ -109,11 +109,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: "DevHub Toolkit — free developer tools" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "DevHub Toolkit — 58 Free Online Developer Tools" },
+      { name: "twitter:title", content: `DevHub Toolkit — ${TOOLS.length} Free Online Developer Tools` },
       {
         name: "twitter:description",
         content:
-          "JSON, Base64, JWT, UUID, hashes, regex, QR codes, AI SQL, AI regex and 50+ more. Fast, minimal, keyboard-first — no signup.",
+          "JSON, Base64, JWT, UUID, hashes, regex, QR codes, AI SQL, AI regex and more. Fast, minimal, keyboard-first — no signup.",
       },
       { name: "twitter:image", content: "https://devhub.flinkeo.online/og-image.png" },
     ],

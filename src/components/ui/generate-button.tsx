@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 
 export interface GenerateButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -16,7 +16,7 @@ export interface GenerateButtonProps extends React.ButtonHTMLAttributes<HTMLButt
 
 export function GenerateButton({
   isGenerating: controlledIsGenerating,
-  label = "57 Utilities",
+  label = "Utilities",
   activeLabel = "Exploring",
   className,
   onClick,

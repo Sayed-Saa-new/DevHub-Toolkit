@@ -24,9 +24,9 @@ export function Features() {
                   Local-first, private by default
                 </h3>
                 <p className="mt-3 text-sm md:text-base text-muted-foreground leading-relaxed">
-                  Your data never leaves the browser. No tracking, no telemetry, no server
-                  round-trips for the tools you run — encoding, hashing, formatting, all
-                  client-side.
+                  Most utilities run locally in your browser with no tracking or telemetry. AI
+                  helpers, URL fetching/schema validation, and feedback use server-side services
+                  only when you invoke those features.
                 </p>
               </div>
             </WobbleCard>
