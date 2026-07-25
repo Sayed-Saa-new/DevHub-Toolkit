@@ -6,6 +6,9 @@ import { getChangelogEntries } from "@/lib/changelog";
 
 const BASE_URL = "https://devhub.flinkeo.online";
 
+// Static lastmod date — update this when you deploy a significant content change.
+const LASTMOD = "2026-07-25";
+
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
@@ -20,7 +23,7 @@ export const Route = createFileRoute("/sitemap.xml")({
         ];
         const urls = paths.map(
           (p) =>
-            `  <url>\n    <loc>${BASE_URL}${p}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>${p === "/" ? "1.0" : "0.7"}</priority>\n  </url>`,
+            `  <url>\n    <loc>${BASE_URL}${p}</loc>\n    <lastmod>${LASTMOD}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${p === "/" ? "1.0" : "0.7"}</priority>\n  </url>`,
         );
         const xml = [
           `<?xml version="1.0" encoding="UTF-8"?>`,
