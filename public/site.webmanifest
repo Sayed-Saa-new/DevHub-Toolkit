@@ -1,7 +1,7 @@
 {
   "name": "DevHub Toolkit",
   "short_name": "DevHub",
-  "description": "44 free developer tools — JSON, Base64, JWT, UUID, hashes, regex, QR, AI SQL & regex generators.",
+  "description": "58+ free developer tools — JSON, Base64, JWT, UUID, hashes, regex, QR, AI SQL & regex generators and more.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
