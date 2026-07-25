@@ -22,8 +22,7 @@ export const Route = createFileRoute("/")({
       { title: `DevHub Toolkit — ${TOOLS.length}+ Developer Utilities, One Keystroke` },
       {
         name: "description",
-        content:
-          "The all-in-one developer toolkit. Format JSON, decode JWTs, generate hashes, tweak gradients, run AI helpers — 57+ premium utilities, local-first, zero signup.",
+        content: `The all-in-one developer toolkit. Format JSON, decode JWTs, generate hashes, tweak gradients, run AI helpers — ${TOOLS.length}+ premium utilities, local-first, zero signup.`,
       },
       {
         name: "keywords",
@@ -45,7 +44,7 @@ export const Route = createFileRoute("/")({
       { property: "og:image", content: `${SITE}/og-image.png` },
       { property: "og:image:secure_url", content: `${SITE}/og-image.png` },
       { property: "og:image:type", content: "image/png" },
-      { property: "og:image:alt", content: "DevHub Toolkit — 55 developer tools, one ⌘K away" },
+      { property: "og:image:alt", content: `DevHub Toolkit — ${TOOLS.length} developer tools, one ⌘K away` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -93,8 +92,7 @@ export const Route = createFileRoute("/")({
           "@id": `${SITE}/#website`,
           name: "DevHub Toolkit",
           url: `${SITE}/`,
-          description:
-            "All-in-one developer toolkit — 57+ utilities: JSON, Base64, JWT, UUID, hashes, regex, QR, AI helpers and more.",
+          description: `All-in-one developer toolkit — ${TOOLS.length}+ utilities: JSON, Base64, JWT, UUID, hashes, regex, QR, AI helpers and more.`,
           inLanguage: "en",
           publisher: { "@id": `${SITE}/#org` },
           potentialAction: {
@@ -112,7 +110,7 @@ export const Route = createFileRoute("/")({
           "@id": `${SITE}/#org`,
           name: "DevHub Toolkit",
           url: `${SITE}/`,
-          logo: { "@type": "ImageObject", url: `${SITE}/favicon.svg` },
+          logo: { "@type": "ImageObject", url: `${SITE}/icon-512.png` },
         }),
       },
     ],

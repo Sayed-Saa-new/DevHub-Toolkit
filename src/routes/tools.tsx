@@ -16,8 +16,7 @@ export const Route = createFileRoute("/tools")({
       { title: "All Tools — DevHub Toolkit" },
       {
         name: "description",
-        content:
-          "Free online JSON formatter, Base64 decoder, JWT decoder, UUID & hash generators, regex tester, QR codes, AI SQL & regex generators — 57 developer tools in one keystroke.",
+        content: `Free online JSON formatter, Base64 decoder, JWT decoder, UUID & hash generators, regex tester, QR codes, AI SQL & regex generators — ${TOOLS.length} developer tools in one keystroke.`,
       },
       {
         name: "keywords",
@@ -28,8 +27,7 @@ export const Route = createFileRoute("/tools")({
       { property: "og:title", content: "All Tools — DevHub Toolkit" },
       {
         property: "og:description",
-        content:
-          "Every developer utility you actually use — JSON, Base64, JWT, UUID, hashes, regex, QR, AI SQL and 45+ more. Fast, minimal, no signup.",
+        content: `Every developer utility you actually use — JSON, Base64, JWT, UUID, hashes, regex, QR, AI SQL and more. ${TOOLS.length} tools, fast, minimal, no signup.`,
       },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "DevHub Toolkit" },
@@ -37,13 +35,12 @@ export const Route = createFileRoute("/tools")({
       { property: "og:image:type", content: "image/png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "DevHub Toolkit — 57 free developer tools" },
+      { property: "og:image:alt", content: `DevHub Toolkit — ${TOOLS.length} free developer tools` },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "All Tools — DevHub Toolkit" },
       {
         name: "twitter:description",
-        content:
-          "Every developer utility you actually use — JSON, Base64, JWT, UUID, hashes, regex, QR, AI SQL and 45+ more.",
+        content: `Every developer utility you actually use — JSON, Base64, JWT, UUID, hashes, regex, QR, AI SQL and more. ${TOOLS.length} tools.`,
       },
       { name: "twitter:image", content: "https://devhub.flinkeo.online/og-image.png" },
     ],

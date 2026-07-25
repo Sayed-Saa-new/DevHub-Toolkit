@@ -7,6 +7,7 @@ import catDesign from "@/assets/cat-design.svg";
 import catEditors from "@/assets/cat-editors.svg";
 import catReference from "@/assets/cat-reference.svg";
 import catAi from "@/assets/cat-ai.svg";
+import { TOOLS } from "@/lib/tools";
 
 export const SITE = "https://devhub.flinkeo.online";
 
@@ -95,19 +96,19 @@ export const TESTIMONIALS = [
 export const FAQ_ITEMS = [
   {
     q: "Is DevHub Toolkit free?",
-    a: "Yes. Every tool is free forever, with no signup, no ads, and no rate limits on client-side utilities.",
+    a: "Yes. Every tool is free forever, with no signup, no ads, and no rate limits on local utilities.",
   },
   {
     q: "Does my data leave the browser?",
-    a: "No — all tools run locally in your browser. AI helpers send only the text you provide, on demand, and never store it.",
+    a: "Most utilities run locally in your browser. AI helpers, URL fetching/schema validation, and feedback use server-side services only when you invoke those features.",
   },
   {
     q: "Can I use it offline?",
-    a: "Yes. After the first load, the toolkit works without an internet connection (except AI tools, which need a network).",
+    a: "Yes. After the first load, the toolkit works without an internet connection except for server-backed features like AI helpers, URL fetching/schema validation, and feedback.",
   },
   {
     q: "How is this different from other online tools?",
-    a: "One clean interface for 55+ tools, keyboard-first navigation, favorites/recents, and a monochrome premium UI — no ads, no cross-site tracking.",
+    a: `One clean interface for ${TOOLS.length} tools, keyboard-first navigation, favorites/recents, and a monochrome premium UI — no ads, no cross-site tracking.`,
   },
   {
     q: "Can I request a tool?",

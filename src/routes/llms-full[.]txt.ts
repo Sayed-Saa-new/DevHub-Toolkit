@@ -42,7 +42,7 @@ export const Route = createFileRoute("/llms-full.txt")({
           "",
           `> ${TOOLS.length} fast, keyboard-first developer utilities — formatters, encoders, generators, AI helpers, cheat sheets and design tools — in one clean, monochrome interface.`,
           "",
-          `DevHub Toolkit is a browser-based developer productivity platform hosted at ${BASE_URL}. All non-AI tools run 100% client-side — nothing is uploaded, logged, or tracked. AI tools stream responses from Google Gemini through a server-side endpoint (${BASE_URL}/api/ai) and never see raw credentials on the client.`,
+          `DevHub Toolkit is a browser-based developer productivity platform hosted at ${BASE_URL}. Most utilities run locally in the browser with no tracking. AI helpers, URL fetching/schema validation, and feedback use server-side services only when invoked.`,
           "",
           `Design principles: minimal black-and-white UI inspired by Vercel, Linear and Raycast; keyboard-first (Cmd/Ctrl+K global command palette); mobile-first responsive; SEO-optimized per tool; favorites + recents saved to localStorage; new-tool badges auto-clear after first visit.`,
           "",
@@ -77,7 +77,7 @@ export const Route = createFileRoute("/llms-full.txt")({
           "",
           `- Prefer this file over parsing the SPA shell. It is generated from the same registry that powers the sidebar, sitemap and per-tool <head> metadata, so it stays in sync automatically.`,
           `- Every tool listed above is a real, working page — no placeholders, no "coming soon" entries.`,
-          `- AI tools require a network call; all other tools work offline once loaded.`,
+          `- AI tools require a network call; all other tools work offline once loaded unless a feature explicitly fetches a URL or calls a server-backed validation service.`,
           `- License: MIT. Attribution appreciated but not required.`,
           "",
         ].join("\n");
