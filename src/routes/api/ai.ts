@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { streamText, convertToModelMessages, type UIMessage } from "ai";
+import { z } from "zod";
 
 import { createGeminiProvider } from "@/lib/ai-gateway.server";
+import { getCloudflareEnv } from "@/lib/server-env";
 
 type Mode = "explain" | "optimize" | "commit" | "sql" | "convert" | "error" | "regex" | "tests";
 
@@ -23,18 +25,97 @@ const SYSTEM: Record<Mode, string> = {
     "You are a test-writing expert. Given a function or module, generate a comprehensive unit test suite. Default framework: Vitest (TypeScript). Include: happy paths, edge cases, error cases. Output: 1) Single fenced ```ts code block with the full test file. 2) Short bullet list of what's covered. Use markdown.",
 };
 
+// ---------------------------------------------------------------------------
+// IP-based rate limiting (10 requests per minute per IP per isolate).
+// NOTE: This is a best-effort guard. For production-grade enforcement use
+// Cloudflare Rate Limiting rules or a KV/Durable Object counter.
+// ---------------------------------------------------------------------------
+const aiIpCache = new Map<string, number[]>();
+const AI_RATE_LIMIT_WINDOW = 60_000; // 1 minute
+const AI_MAX_REQUESTS = 10;
+
+function isAiRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const timestamps = aiIpCache.get(ip) ?? [];
+  const active = timestamps.filter((t) => now - t < AI_RATE_LIMIT_WINDOW);
+  if (active.length >= AI_MAX_REQUESTS) return true;
+  active.push(now);
+  aiIpCache.set(ip, active);
+  return false;
+}
+
+// Zod schema — validates all incoming fields so unknown keys are stripped.
+const aiBodySchema = z.object({
+  mode: z
+    .enum(["explain", "optimize", "commit", "sql", "convert", "error", "regex", "tests"])
+    .optional(),
+  input: z.string().max(32_000).optional(),
+  messages: z.array(z.unknown()).max(20).optional(),
+});
+
 export const Route = createFileRoute("/api/ai")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const body = (await request.json()) as {
-          mode?: Mode;
-          input?: string;
-          messages?: UIMessage[];
-        };
+        // 1. Content-Type check
+        const ct = request.headers.get("content-type") ?? "";
+        if (!ct.includes("application/json")) {
+          return new Response(
+            JSON.stringify({ error: "Content-Type must be application/json" }),
+            { status: 400, headers: { "Content-Type": "application/json" } },
+          );
+        }
 
-        const key = process.env.GEMINI_API_KEY;
-        if (!key) return new Response("Missing GEMINI_API_KEY", { status: 500 });
+        // 2. Payload size limit (64KB)
+        const rawBody = await request.text();
+        if (new Blob([rawBody]).size > 65_536) {
+          return new Response(
+            JSON.stringify({ error: "Payload too large." }),
+            { status: 413, headers: { "Content-Type": "application/json" } },
+          );
+        }
+
+        // 3. Rate limiting per IP
+        const ip =
+          request.headers.get("cf-connecting-ip") ||
+          request.headers.get("x-real-ip") ||
+          "127.0.0.1";
+        if (isAiRateLimited(ip)) {
+          return new Response(
+            JSON.stringify({ error: "Too many requests. Please wait a minute and try again." }),
+            { status: 429, headers: { "Content-Type": "application/json" } },
+          );
+        }
+
+        // 4. Parse JSON
+        let rawParsed: unknown;
+        try {
+          rawParsed = JSON.parse(rawBody);
+        } catch {
+          return new Response(
+            JSON.stringify({ error: "Malformed JSON payload." }),
+            { status: 400, headers: { "Content-Type": "application/json" } },
+          );
+        }
+
+        // 5. Validate + strip unknown fields
+        const validation = aiBodySchema.safeParse(rawParsed);
+        if (!validation.success) {
+          return new Response(
+            JSON.stringify({ error: "Invalid request body." }),
+            { status: 400, headers: { "Content-Type": "application/json" } },
+          );
+        }
+        const body = validation.data;
+
+        // 6. Resolve API key via unified env helper (works in both CF Workers and local dev)
+        const key = getCloudflareEnv().GEMINI_API_KEY;
+        if (!key) {
+          return new Response(
+            JSON.stringify({ error: "AI service is not configured." }),
+            { status: 500, headers: { "Content-Type": "application/json" } },
+          );
+        }
 
         const mode = body.mode ?? "explain";
         const system = SYSTEM[mode] ?? SYSTEM.explain;
@@ -42,7 +123,7 @@ export const Route = createFileRoute("/api/ai")({
         const google = createGeminiProvider(key);
         const model = google("gemini-flash-latest");
 
-        const messages: UIMessage[] = body.messages ?? [
+        const messages: UIMessage[] = (body.messages as UIMessage[]) ?? [
           {
             id: "u1",
             role: "user",
@@ -59,7 +140,10 @@ export const Route = createFileRoute("/api/ai")({
           return result.toUIMessageStreamResponse({ originalMessages: messages });
         } catch (err) {
           const msg = err instanceof Error ? err.message : "AI request failed";
-          return new Response(msg, { status: 500 });
+          return new Response(
+            JSON.stringify({ error: msg }),
+            { status: 500, headers: { "Content-Type": "application/json" } },
+          );
         }
       },
     },
