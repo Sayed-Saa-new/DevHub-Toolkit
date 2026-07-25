@@ -300,7 +300,7 @@ staging:
       },
       {
         q: "Does it support YAML 1.2, anchors and multi-document streams?",
-        a: "Yes. The converter handles YAML 1.2 syntax including anchors (&), aliases (*), merge keys (<<), block scalars (| and >), flow style, and multi-document streams separated by ---." ,
+        a: "Yes. The converter handles YAML 1.2 syntax including anchors (&), aliases (*), merge keys (<<), block scalars (| and >), flow style, and multi-document streams separated by ---.",
       },
       {
         q: "Why do I get 'duplicate key' or 'bad indentation' errors?",
