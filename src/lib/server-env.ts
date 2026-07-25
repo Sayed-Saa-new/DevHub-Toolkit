@@ -11,22 +11,25 @@ export function setCloudflareEnv(env: unknown) {
 }
 
 /**
- * Retrieves the Notion secrets and configuration from the bound environment.
+ * Retrieves secrets and configuration from the bound environment.
  * Falls back to process.env during local Vite development.
  */
 export function getCloudflareEnv(): {
+  GEMINI_API_KEY?: string;
   NOTION_TOKEN?: string;
   NOTION_DATA_SOURCE_ID?: string;
   TURNSTILE_SECRET_KEY?: string;
 } {
   if (cloudflareEnv) {
     return cloudflareEnv as {
+      GEMINI_API_KEY?: string;
       NOTION_TOKEN?: string;
       NOTION_DATA_SOURCE_ID?: string;
       TURNSTILE_SECRET_KEY?: string;
     };
   }
   return (process.env || {}) as {
+    GEMINI_API_KEY?: string;
     NOTION_TOKEN?: string;
     NOTION_DATA_SOURCE_ID?: string;
     TURNSTILE_SECRET_KEY?: string;
