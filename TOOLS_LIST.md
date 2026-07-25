@@ -1,6 +1,6 @@
 # DevHub Toolkit — Full Tool List
 
-Total: **57 tools** across 6 categories.
+Total: **58 tools** across 6 categories.
 Live: [https://devhub.flinkeo.online](https://devhub.flinkeo.online)
 
 | #   | Tool                       | Category   | Description                                                                                              | Link                                                                    |
@@ -62,6 +62,7 @@ Live: [https://devhub.flinkeo.online](https://devhub.flinkeo.online)
 | 55  | **DOCX → Markdown**        | converters | Convert Word .docx files to clean Markdown in your browser — batch, images, tables, 100% client-side.    | [/t/docx-to-markdown](https://devhub.flinkeo.online/t/docx-to-markdown) |
 | 56  | **Diff Checker**           | editors    | Compare text, code or files side-by-side or unified — line, word or char diff, patch export, 100% local. | [/t/diff-checker](https://devhub.flinkeo.online/t/diff-checker)         |
 | 57  | **Mesh Gradient**          | design     | Design vibrant mesh gradients — drag color points, presets, export CSS, SVG or PNG.                      | [/t/mesh-gradient](https://devhub.flinkeo.online/t/mesh-gradient)       |
+| 58  | **Favicon Generator**      | generators | Generate a full favicon pack — ICO, PNGs, apple-touch-icon and webmanifest from text or an image.        | [/t/favicon-generator](https://devhub.flinkeo.online/t/favicon-generator) |
 
 ---
 
@@ -88,7 +89,7 @@ Live: [https://devhub.flinkeo.online](https://devhub.flinkeo.online)
 - **[Text → Markdown](https://devhub.flinkeo.online/t/text-to-markdown)** — Convert plain text, HTML, or rich pasted content into clean GFM Markdown — with live preview.
 - **[DOCX → Markdown](https://devhub.flinkeo.online/t/docx-to-markdown)** — Convert Word .docx files to clean Markdown in your browser — batch, images, tables, 100% client-side.
 
-### Generators (9)
+### Generators (10)
 
 - **[UUID Generator](https://devhub.flinkeo.online/t/uuid)** — Generate v4 UUIDs in bulk.
 - **[Hash Generator](https://devhub.flinkeo.online/t/hash)** — MD5, SHA-1, SHA-256, SHA-512 hashes.
@@ -99,16 +100,18 @@ Live: [https://devhub.flinkeo.online](https://devhub.flinkeo.online)
 - **[Emoji Favicon](https://devhub.flinkeo.online/t/favicon)** — Turn any emoji into a favicon SVG.
 - **[Mock Data Generator](https://devhub.flinkeo.online/t/mock-data)** — Design a schema and generate JSON, CSV, SQL, TS or XML mock data.
 - **[JWT Generator](https://devhub.flinkeo.online/t/jwt-generator)** — Sign HS256/384/512 JSON Web Tokens with claim helpers, random secret and live cURL — 100% client-side.
+- **[Favicon Generator](https://devhub.flinkeo.online/t/favicon-generator)** — Generate a full favicon pack — ICO, PNGs, apple-touch-icon and webmanifest from text or an image.
 
-### Design (5)
+### Design (6)
 
 - **[Color Converter](https://devhub.flinkeo.online/t/color)** — Pick colors and convert HEX / RGB / HSL.
 - **[Gradient Generator](https://devhub.flinkeo.online/t/gradient)** — Design smooth CSS gradients.
 - **[Box Shadow](https://devhub.flinkeo.online/t/box-shadow)** — Craft layered CSS box-shadows.
 - **[Border Radius](https://devhub.flinkeo.online/t/border-radius)** — Visualize corner radius values.
 - **[CSS Clamp Calculator](https://devhub.flinkeo.online/t/clamp-calculator)** — Fluid typography and spacing with CSS clamp() — px/rem output and live preview.
+- **[Mesh Gradient](https://devhub.flinkeo.online/t/mesh-gradient)** — Design vibrant mesh gradients — drag color points, presets, export CSS, SVG or PNG.
 
-### Editors (10)
+### Editors (11)
 
 - **[JSON Formatter](https://devhub.flinkeo.online/t/json-formatter)** — Format, validate, and minify JSON.
 - **[Regex Tester](https://devhub.flinkeo.online/t/regex)** — Test regular expressions with live matches.
@@ -120,6 +123,7 @@ Live: [https://devhub.flinkeo.online](https://devhub.flinkeo.online)
 - **[Schema.org Validator](https://devhub.flinkeo.online/t/schema-validator)** — Test JSON-LD structured data like Google Rich Results.
 - **[SQL Formatter](https://devhub.flinkeo.online/t/sql-formatter)** — Beautify, minify and lint SQL for 17 dialects — Postgres, MySQL, BigQuery, Snowflake, T-SQL & more.
 - **[JSON Diff](https://devhub.flinkeo.online/t/json-diff)** — Compare two JSON documents structurally — see added, removed and changed keys with paths.
+- **[Diff Checker](https://devhub.flinkeo.online/t/diff-checker)** — Compare text, code or files side-by-side or unified — line, word or char diff, patch export, 100% local.
 
 ### Reference (5)
 
