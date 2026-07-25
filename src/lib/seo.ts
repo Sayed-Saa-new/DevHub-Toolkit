@@ -1,4 +1,4 @@
-// Per-tool SEO overrides — grounded in Semrush keyword research (Nov 2026).
+// Per-tool SEO overrides — tuned for search intent and concise metadata.
 // Volumes / KDIs recorded inline as comments so future edits stay evidence-based.
 // Format goal: primary keyword in <title>, primary + supporting keywords in
 // description, long-tail + intent modifiers in keywords list.
