@@ -22,7 +22,7 @@ function NotFoundComponent() {
         <h1 className="text-7xl font-bold text-foreground">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+          The page you\'re looking for doesn\'t exist or has been moved.
         </p>
         <div className="mt-6">
           <Link
@@ -48,7 +48,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
+          This page didn\'t load
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Something went wrong on our end. You can try refreshing or head back home.
@@ -80,11 +80,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "DevHub Toolkit — 57 Free Online Developer Tools" },
+      { title: "DevHub Toolkit — 58 Free Online Developer Tools" },
       {
         name: "description",
         content:
-          "Free online JSON formatter, Base64 decoder, JWT decoder, UUID & hash generator, regex tester, QR codes, AI SQL & regex generators — 57 developer tools, no signup.",
+          "Free online JSON formatter, Base64 decoder, JWT decoder, UUID & hash generator, regex tester, QR codes, AI SQL & regex generators — 58 developer tools, no signup.",
       },
       {
         name: "keywords",
@@ -94,21 +94,28 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "author", content: "DevHub" },
       { name: "theme-color", content: "#0a0a0a" },
       { name: "google-site-verification", content: "4GW5hFWsbJa_98tGQoSUIX-OAfhGOfhh7ZLsxEoHqc0" },
-      { property: "og:title", content: "DevHub Toolkit — 57 Free Online Developer Tools" },
+      { property: "og:title", content: "DevHub Toolkit — 58 Free Online Developer Tools" },
       {
         property: "og:description",
         content:
-          "JSON, Base64, JWT, UUID, hashes, regex, QR codes, AI SQL, AI regex and 45+ more. Fast, minimal, keyboard-first — no signup.",
+          "JSON, Base64, JWT, UUID, hashes, regex, QR codes, AI SQL, AI regex and 50+ more. Fast, minimal, keyboard-first — no signup.",
       },
       { property: "og:site_name", content: "DevHub Toolkit" },
       { property: "og:type", content: "website" },
+      // Fallback og:image for pages that don't define their own (changelog, favorites, etc.)
+      { property: "og:image", content: "https://devhub.flinkeo.online/og-image.png" },
+      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "DevHub Toolkit — free developer tools" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "DevHub Toolkit — 57 Free Online Developer Tools" },
+      { name: "twitter:title", content: "DevHub Toolkit — 58 Free Online Developer Tools" },
       {
         name: "twitter:description",
         content:
-          "JSON, Base64, JWT, UUID, hashes, regex, QR codes, AI SQL, AI regex and 45+ more. Fast, minimal, keyboard-first — no signup.",
+          "JSON, Base64, JWT, UUID, hashes, regex, QR codes, AI SQL, AI regex and 50+ more. Fast, minimal, keyboard-first — no signup.",
       },
+      { name: "twitter:image", content: "https://devhub.flinkeo.online/og-image.png" },
     ],
     links: [
       {
@@ -127,37 +134,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap",
       },
     ],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: "DevHub Toolkit",
-          alternateName: ["DevHub", "DevHub Tools"],
-          url: "https://devhub.flinkeo.online/",
-          potentialAction: {
-            "@type": "SearchAction",
-            target: {
-              "@type": "EntryPoint",
-              urlTemplate: "https://devhub.flinkeo.online/tools?q={search_term_string}",
-            },
-            "query-input": "required name=search_term_string",
-          },
-        }),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "DevHub Toolkit",
-          alternateName: "DevHub",
-          url: "https://devhub.flinkeo.online/",
-          logo: "https://devhub.flinkeo.online/favicon-512.png",
-        }),
-      },
-    ],
+    // WebSite and Organization JSON-LD are defined in src/routes/index.tsx with proper @id anchors.
+    // They are intentionally omitted here to avoid duplicate structured data on the homepage.
   }),
   shellComponent: RootShell,
   component: RootComponent,

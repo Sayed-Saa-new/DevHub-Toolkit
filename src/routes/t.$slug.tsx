@@ -7,6 +7,9 @@ import { TOOL_COMPONENTS } from "@/tools/registry";
 import { TOOL_CONTENT } from "@/lib/tool-content";
 import { ToolContent } from "@/components/tool-content";
 
+// Single shared OG image for all tool pages — hosted locally to prevent broken previews
+const ogImage = "https://devhub.flinkeo.online/og-image.png";
+
 export const Route = createFileRoute("/t/$slug")({
   head: ({ params }) => {
     const t = TOOLS_BY_SLUG[params.slug];
@@ -20,13 +23,13 @@ export const Route = createFileRoute("/t/$slug")({
           {
             name: "description",
             content:
-              "The developer tool you're looking for doesn't exist on DevHub Toolkit. Browse the full catalog of formatters, encoders, generators, and references.",
+              "The developer tool you\'re looking for doesn\'t exist on DevHub Toolkit. Browse the full catalog of formatters, encoders, generators, and references.",
           },
           { property: "og:title", content: "Tool not found — DevHub Toolkit" },
           {
             property: "og:description",
             content:
-              "The developer tool you're looking for doesn't exist on DevHub Toolkit. Browse the full catalog of formatters, encoders, generators, and references.",
+              "The developer tool you\'re looking for doesn\'t exist on DevHub Toolkit. Browse the full catalog of formatters, encoders, generators, and references.",
           },
           { name: "robots", content: "noindex" },
         ],
@@ -44,8 +47,6 @@ export const Route = createFileRoute("/t/$slug")({
       `${t.name.toLowerCase()} online`,
       `free ${t.name.toLowerCase()}`,
     ]);
-    const ogImage =
-      "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d73bcc09-2f60-409d-b833-91c82c156e5e/id-preview-aa9e0d77--6b271a1b-d2e8-44e0-909f-190eae9de463.lovable.app-1784378017742.png";
     const categoryLabel = t.category.charAt(0).toUpperCase() + t.category.slice(1);
     const softwareApp = {
       "@context": "https://schema.org",
@@ -78,7 +79,7 @@ export const Route = createFileRoute("/t/$slug")({
         "@id": `${base}/#org`,
         name: "DevHub Toolkit",
         url: base,
-        logo: { "@type": "ImageObject", url: `${base}/favicon.svg` },
+        logo: { "@type": "ImageObject", url: `${base}/icon-512.png` },
       },
     };
     const breadcrumbs = {
@@ -90,12 +91,12 @@ export const Route = createFileRoute("/t/$slug")({
           "@type": "ListItem",
           position: 2,
           name: categoryLabel,
-          item: `${base}/?category=${t.category}`,
+          // Fixed: was /?category=X, corrected to /c/X
+          item: `${base}/c/${t.category}`,
         },
         { "@type": "ListItem", position: 3, name: t.name, item: url },
       ],
     };
-    const nowIso = new Date().toISOString();
     const webPage = {
       "@context": "https://schema.org",
       "@type": "WebPage",
@@ -109,7 +110,8 @@ export const Route = createFileRoute("/t/$slug")({
       about: { "@id": `${url}#software` },
       breadcrumb: { "@id": `${url}#breadcrumbs` },
       datePublished: "2026-07-01T00:00:00.000Z",
-      dateModified: nowIso,
+      // Static date — avoids misleading Google with a per-request timestamp
+      dateModified: "2026-07-25T00:00:00.000Z",
     };
     const content = TOOL_CONTENT[params.slug];
     const extraScripts = content
@@ -178,8 +180,6 @@ export const Route = createFileRoute("/t/$slug")({
   loader: ({ params }) => {
     const tool = TOOLS_BY_SLUG[params.slug];
     if (!tool) throw notFound();
-    // Return only the serializable slug — the full Tool object contains a
-    // React component (icon) which cannot be dehydrated for client hydration.
     return { slug: params.slug };
   },
   notFoundComponent: ToolNotFound,
@@ -203,7 +203,7 @@ function ComingSoon() {
     <div className="rounded-xl border border-dashed border-border p-12 text-center">
       <div className="font-medium">Coming soon</div>
       <p className="text-sm text-muted-foreground mt-1">
-        This tool requires an AI backend. Ask to enable Lovable Cloud to activate it.
+        This tool is under construction — check back soon!
       </p>
     </div>
   );
@@ -214,7 +214,7 @@ function ToolNotFound() {
     <div className="mx-auto max-w-2xl px-6 py-24 text-center">
       <h1 className="text-2xl font-semibold tracking-tight">Tool not found</h1>
       <p className="text-sm text-muted-foreground mt-2">
-        The tool you're looking for doesn't exist.
+        The tool you\'re looking for doesn\'t exist.
       </p>
     </div>
   );

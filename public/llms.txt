@@ -1,6 +1,6 @@
 # DevHub Toolkit
 
-> 57 fast, keyboard-first developer utilities — formatters, encoders, generators, AI helpers, and references — in one clean interface.
+> 58 fast, keyboard-first developer utilities — formatters, encoders, generators, AI helpers, and references — in one clean interface.
 
 DevHub Toolkit is a browser-based developer productivity platform. All non-AI tools run client-side with no tracking. AI tools call Google Gemini via a server endpoint.
 
@@ -46,6 +46,7 @@ https://devhub.flinkeo.online/llms-full.txt
 - [Emoji Favicon](https://devhub.flinkeo.online/t/favicon)
 - [Mock Data Generator](https://devhub.flinkeo.online/t/mock-data)
 - [JWT Generator](https://devhub.flinkeo.online/t/jwt-generator)
+- [Favicon Generator](https://devhub.flinkeo.online/t/favicon-generator)
 
 ## Design
 
@@ -54,6 +55,7 @@ https://devhub.flinkeo.online/llms-full.txt
 - [Box Shadow](https://devhub.flinkeo.online/t/box-shadow)
 - [Border Radius](https://devhub.flinkeo.online/t/border-radius)
 - [CSS Clamp Calculator](https://devhub.flinkeo.online/t/clamp-calculator)
+- [Mesh Gradient](https://devhub.flinkeo.online/t/mesh-gradient)
 
 ## Editors
 
@@ -67,6 +69,7 @@ https://devhub.flinkeo.online/llms-full.txt
 - [Schema.org Validator](https://devhub.flinkeo.online/t/schema-validator)
 - [SQL Formatter](https://devhub.flinkeo.online/t/sql-formatter)
 - [JSON Diff](https://devhub.flinkeo.online/t/json-diff)
+- [Diff Checker](https://devhub.flinkeo.online/t/diff-checker)
 
 ## Reference
 
@@ -86,4 +89,3 @@ https://devhub.flinkeo.online/llms-full.txt
 - [AI Error Explainer](https://devhub.flinkeo.online/t/ai-error)
 - [AI Regex Generator](https://devhub.flinkeo.online/t/ai-regex)
 - [AI Unit Test Generator](https://devhub.flinkeo.online/t/ai-tests)
-
