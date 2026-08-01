@@ -32,13 +32,6 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Form,
   FormControl,
   FormDescription,
@@ -199,7 +192,6 @@ function FeedbackPage() {
   const selectedTool = watch("tool") || "";
   const feedbackValue = watch("feedback") || "";
   const stepsValue = watch("stepsToReproduce") || "";
-  const currentTypeMeta = FEEDBACK_TYPE_OPTIONS.find((option) => option.value === currentType);
 
   const onSubmit = async (values: FeedbackFormValues) => {
     setIsSubmitting(true);
@@ -696,39 +688,6 @@ function FeedbackPage() {
 
           <aside className="space-y-4 lg:sticky lg:top-24">
             <div className="rounded-2xl border border-border/70 bg-card p-4 sm:p-5">
-              <h2 className="text-sm font-semibold tracking-tight">Feedback types</h2>
-              <div className="mt-4 space-y-3">
-                {FEEDBACK_TYPE_OPTIONS.map((option) => {
-                  const Icon = option.icon;
-                  const isActive = currentType === option.value;
-
-                  return (
-                    <div
-                      key={option.value}
-                      className={`rounded-xl border p-3 transition-colors ${
-                        isActive
-                          ? "border-foreground/30 bg-muted/30"
-                          : "border-border/70 bg-background/60"
-                      }`}
-                    >
-                      <div className="flex items-start gap-3">
-                        <div className="grid size-8 shrink-0 place-items-center rounded-lg border border-border bg-background">
-                          <Icon className="size-4" />
-                        </div>
-                        <div className="min-w-0">
-                          <div className="text-sm font-medium">{option.label}</div>
-                          <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                            {option.description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-border/70 bg-card p-4 sm:p-5">
               <h2 className="text-sm font-semibold tracking-tight">Need a solid bug report?</h2>
               <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
                 <li className="flex gap-2 leading-5">
@@ -744,6 +703,17 @@ function FeedbackPage() {
                   Tell us what you expected versus what actually happened.
                 </li>
               </ul>
+            </div>
+
+            <div className="rounded-2xl border border-border/70 bg-card p-4 sm:p-5">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="size-4 text-foreground" />
+                <h2 className="text-sm font-semibold tracking-tight">Privacy</h2>
+              </div>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                We only store what you type here. No accounts, no tracking pixels, and nothing is
+                shared with third parties.
+              </p>
             </div>
           </aside>
         </div>
