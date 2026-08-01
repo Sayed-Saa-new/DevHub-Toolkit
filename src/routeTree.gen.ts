@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as FavoritesRouteImport } from './routes/favorites'
@@ -30,6 +31,11 @@ const ToolsRoute = ToolsRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RssDotxmlRoute = RssDotxmlRouteImport.update({
+  id: '/rss.xml',
+  path: '/rss.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LlmsFullDottxtRoute = LlmsFullDottxtRouteImport.update({
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/favorites': typeof FavoritesRoute
   '/feedback': typeof FeedbackRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
+  '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tools': typeof ToolsRoute
   '/api/ai': typeof ApiAiRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/favorites': typeof FavoritesRoute
   '/feedback': typeof FeedbackRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
+  '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tools': typeof ToolsRoute
   '/api/ai': typeof ApiAiRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/favorites': typeof FavoritesRoute
   '/feedback': typeof FeedbackRoute
   '/llms-full.txt': typeof LlmsFullDottxtRoute
+  '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tools': typeof ToolsRoute
   '/api/ai': typeof ApiAiRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/favorites'
     | '/feedback'
     | '/llms-full.txt'
+    | '/rss.xml'
     | '/sitemap.xml'
     | '/tools'
     | '/api/ai'
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/favorites'
     | '/feedback'
     | '/llms-full.txt'
+    | '/rss.xml'
     | '/sitemap.xml'
     | '/tools'
     | '/api/ai'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/favorites'
     | '/feedback'
     | '/llms-full.txt'
+    | '/rss.xml'
     | '/sitemap.xml'
     | '/tools'
     | '/api/ai'
@@ -177,6 +189,7 @@ export interface RootRouteChildren {
   FavoritesRoute: typeof FavoritesRoute
   FeedbackRoute: typeof FeedbackRoute
   LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
+  RssDotxmlRoute: typeof RssDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ToolsRoute: typeof ToolsRoute
   ApiAiRoute: typeof ApiAiRoute
@@ -199,6 +212,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rss.xml': {
+      id: '/rss.xml'
+      path: '/rss.xml'
+      fullPath: '/rss.xml'
+      preLoaderRoute: typeof RssDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/llms-full.txt': {
@@ -292,6 +312,7 @@ const rootRouteChildren: RootRouteChildren = {
   FavoritesRoute: FavoritesRoute,
   FeedbackRoute: FeedbackRoute,
   LlmsFullDottxtRoute: LlmsFullDottxtRoute,
+  RssDotxmlRoute: RssDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ToolsRoute: ToolsRoute,
   ApiAiRoute: ApiAiRoute,
@@ -302,3 +323,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
