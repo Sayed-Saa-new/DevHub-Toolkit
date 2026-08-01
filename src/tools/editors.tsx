@@ -105,37 +105,6 @@ export function RegexTester() {
   );
 }
 
-export function MarkdownEditor() {
-  const [src, setSrc] = useState(
-    `# Hello DevHub\n\n**Markdown** with a *live* preview.\n\n- lists\n- \`code\`\n- [links](https://example.com)\n\n\`\`\`js\nconsole.log("hi");\n\`\`\`\n`,
-  );
-  const [html, setHtml] = useState("");
-  useEffect(() => {
-    (async () => setHtml(String(await marked.parse(src))))();
-  }, [src]);
-  return (
-    <div className="grid md:grid-cols-2 gap-4">
-      <Panel title="Markdown" actions={<CopyButton text={src} />}>
-        <Textarea
-          value={src}
-          onChange={(e) => setSrc(e.target.value)}
-          className="min-h-[520px] border-0 rounded-none focus-visible:ring-0 resize-none font-mono text-sm"
-        />
-      </Panel>
-      <Panel
-        title="Preview"
-        actions={<DownloadButton filename="preview.html" content={html} mime="text/html" />}
-      >
-        <div
-          className="p-4 md-preview min-h-[520px] max-h-[640px] overflow-auto text-sm"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-      </Panel>
-      <style>{`.md-preview h1{font-size:1.5rem;font-weight:600;margin:.75rem 0}.md-preview h2{font-size:1.2rem;font-weight:600;margin:.75rem 0}.md-preview p{margin:.5rem 0;line-height:1.6}.md-preview ul{list-style:disc;margin:.5rem 0 .5rem 1.25rem}.md-preview code{background:oklch(1 0 0/8%);padding:.1rem .35rem;border-radius:.25rem;font-family:var(--font-mono)}.md-preview pre{background:oklch(1 0 0/6%);padding:.75rem;border-radius:.5rem;overflow:auto;font-family:var(--font-mono);font-size:.85rem;margin:.5rem 0}.md-preview a{text-decoration:underline;text-underline-offset:3px}`}</style>
-    </div>
-  );
-}
-
 export function Playground() {
   const [html, setHtml] = useState(`<h1>Hello</h1>\n<button id="b">Click me</button>`);
   const [css, setCss] = useState(
