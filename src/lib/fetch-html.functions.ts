@@ -7,17 +7,17 @@ import { z } from "zod";
 // ---------------------------------------------------------------------------
 const BLOCKED_HOST_PATTERNS: RegExp[] = [
   /^localhost$/i,
-  /^127\.\d+\.\d+\.\d+$/,       // 127.0.0.0/8 loopback
+  /^127\.\d+\.\d+\.\d+$/, // 127.0.0.0/8 loopback
   /^0\.0\.0\.0$/,
-  /^::1$/,                         // IPv6 loopback
-  /^10\.\d+\.\d+\.\d+$/,         // RFC-1918 10.0.0.0/8
+  /^::1$/, // IPv6 loopback
+  /^10\.\d+\.\d+\.\d+$/, // RFC-1918 10.0.0.0/8
   /^172\.(1[6-9]|2\d|3[01])\.\d+\.\d+$/, // RFC-1918 172.16-31.x.x
-  /^192\.168\.\d+\.\d+$/,        // RFC-1918 192.168.0.0/16
-  /^169\.254\.\d+\.\d+$/,        // link-local / AWS instance metadata
+  /^192\.168\.\d+\.\d+$/, // RFC-1918 192.168.0.0/16
+  /^169\.254\.\d+\.\d+$/, // link-local / AWS instance metadata
   /^100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.\d+\.\d+$/, // CGNAT 100.64/10
-  /^fc[0-9a-f]{2}:/i,              // IPv6 ULA fc00::/7
+  /^fc[0-9a-f]{2}:/i, // IPv6 ULA fc00::/7
   /^fd[0-9a-f]{2}:/i,
-  /^fe80:/i,                        // IPv6 link-local
+  /^fe80:/i, // IPv6 link-local
   /^metadata\.google\.internal$/i, // GCP metadata
   /^metadata$/i,
   /^kubernetes\.default$/i,
@@ -29,7 +29,7 @@ function isBlockedHost(hostname: string): boolean {
 }
 
 const MAX_RESPONSE_BYTES = 2 * 1024 * 1024; // 2 MB response cap
-const FETCH_TIMEOUT_MS = 10_000;            // 10 s timeout
+const FETCH_TIMEOUT_MS = 10_000; // 10 s timeout
 
 export const fetchHtml = createServerFn({ method: "POST" })
   .inputValidator((data) => z.object({ url: z.string().url() }).parse(data))
@@ -71,10 +71,7 @@ export const fetchHtml = createServerFn({ method: "POST" })
 
       const redirectTarget = new URL(location, data.url);
 
-      if (
-        redirectTarget.protocol !== "http:" &&
-        redirectTarget.protocol !== "https:"
-      ) {
+      if (redirectTarget.protocol !== "http:" && redirectTarget.protocol !== "https:") {
         throw new Error("Redirect to non-http(s) URL blocked.");
       }
       if (isBlockedHost(redirectTarget.hostname)) {
@@ -83,10 +80,7 @@ export const fetchHtml = createServerFn({ method: "POST" })
 
       // Follow the validated redirect
       const redirectController = new AbortController();
-      const redirectTimer = setTimeout(
-        () => redirectController.abort(),
-        FETCH_TIMEOUT_MS,
-      );
+      const redirectTimer = setTimeout(() => redirectController.abort(), FETCH_TIMEOUT_MS);
       try {
         res = await fetch(redirectTarget.toString(), {
           headers: {

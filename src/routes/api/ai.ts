@@ -76,19 +76,19 @@ export const Route = createFileRoute("/api/ai")({
         // 1. Content-Type check
         const ct = request.headers.get("content-type") ?? "";
         if (!ct.includes("application/json")) {
-          return new Response(
-            JSON.stringify({ error: "Content-Type must be application/json" }),
-            { status: 400, headers: { "Content-Type": "application/json" } },
-          );
+          return new Response(JSON.stringify({ error: "Content-Type must be application/json" }), {
+            status: 400,
+            headers: { "Content-Type": "application/json" },
+          });
         }
 
         // 2. Payload size limit (64KB)
         const rawBody = await request.text();
         if (new Blob([rawBody]).size > 65_536) {
-          return new Response(
-            JSON.stringify({ error: "Payload too large." }),
-            { status: 413, headers: { "Content-Type": "application/json" } },
-          );
+          return new Response(JSON.stringify({ error: "Payload too large." }), {
+            status: 413,
+            headers: { "Content-Type": "application/json" },
+          });
         }
 
         // 3. Rate limiting per IP
@@ -114,29 +114,29 @@ export const Route = createFileRoute("/api/ai")({
         try {
           rawParsed = JSON.parse(rawBody);
         } catch {
-          return new Response(
-            JSON.stringify({ error: "Malformed JSON payload." }),
-            { status: 400, headers: { "Content-Type": "application/json" } },
-          );
+          return new Response(JSON.stringify({ error: "Malformed JSON payload." }), {
+            status: 400,
+            headers: { "Content-Type": "application/json" },
+          });
         }
 
         // 5. Validate + strip unknown fields
         const validation = aiBodySchema.safeParse(rawParsed);
         if (!validation.success) {
-          return new Response(
-            JSON.stringify({ error: "Invalid request body." }),
-            { status: 400, headers: { "Content-Type": "application/json" } },
-          );
+          return new Response(JSON.stringify({ error: "Invalid request body." }), {
+            status: 400,
+            headers: { "Content-Type": "application/json" },
+          });
         }
         const body = validation.data;
 
         // 6. Resolve API key via unified env helper (works in both CF Workers and local dev)
         const key = getCloudflareEnv().GEMINI_API_KEY;
         if (!key) {
-          return new Response(
-            JSON.stringify({ error: "AI service is not configured." }),
-            { status: 500, headers: { "Content-Type": "application/json" } },
-          );
+          return new Response(JSON.stringify({ error: "AI service is not configured." }), {
+            status: 500,
+            headers: { "Content-Type": "application/json" },
+          });
         }
 
         const mode = body.mode ?? "explain";
@@ -162,10 +162,10 @@ export const Route = createFileRoute("/api/ai")({
           return result.toUIMessageStreamResponse({ originalMessages: messages });
         } catch (err) {
           const msg = err instanceof Error ? err.message : "AI request failed";
-          return new Response(
-            JSON.stringify({ error: msg }),
-            { status: 500, headers: { "Content-Type": "application/json" } },
-          );
+          return new Response(JSON.stringify({ error: msg }), {
+            status: 500,
+            headers: { "Content-Type": "application/json" },
+          });
         }
       },
     },

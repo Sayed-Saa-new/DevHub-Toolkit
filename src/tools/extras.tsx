@@ -140,7 +140,6 @@ export function LoremIpsum() {
       out.push(s);
     }
     return out.join("\n\n");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paras, wpp, startLorem]);
 
   return (
@@ -187,7 +186,7 @@ export function LoremIpsum() {
 function splitWords(s: string) {
   return s
     .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-    .replace(/[_\-\.\/]+/g, " ")
+    .replace(/[_\-./]+/g, " ")
     .replace(/\s+/g, " ")
     .trim()
     .toLowerCase()

@@ -107,24 +107,20 @@ export function SqlFormatter() {
 
   const output = useMemo(() => {
     if (!input.trim()) return "";
-    try {
-      if (mode === "minify") return minify(input);
-      const res = formatSql(input, {
-        language: dialect,
-        tabWidth: indent,
-        useTabs: false,
-        keywordCase,
-        linesBetweenQueries,
-        indentStyle,
-        logicalOperatorNewline: "before",
-        expressionWidth,
-        denseOperators: false,
-        newlineBeforeSemicolon: false,
-      });
-      return res;
-    } catch (e) {
-      throw e;
-    }
+    if (mode === "minify") return minify(input);
+    const res = formatSql(input, {
+      language: dialect,
+      tabWidth: indent,
+      useTabs: false,
+      keywordCase,
+      linesBetweenQueries,
+      indentStyle,
+      logicalOperatorNewline: "before",
+      expressionWidth,
+      denseOperators: false,
+      newlineBeforeSemicolon: false,
+    });
+    return res;
   }, [
     input,
     dialect,

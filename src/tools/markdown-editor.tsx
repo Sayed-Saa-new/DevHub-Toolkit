@@ -61,19 +61,88 @@ interface Wrap {
 }
 
 const ACTIONS: { id: string; label: string; icon: typeof Bold; key?: string; wrap: Wrap }[] = [
-  { id: "bold", label: "Bold", icon: Bold, key: "b", wrap: { before: "**", after: "**", placeholder: "bold text" } },
-  { id: "italic", label: "Italic", icon: Italic, key: "i", wrap: { before: "*", after: "*", placeholder: "italic text" } },
-  { id: "strike", label: "Strikethrough", icon: Strikethrough, wrap: { before: "~~", after: "~~", placeholder: "struck" } },
-  { id: "code", label: "Inline code", icon: Code, key: "e", wrap: { before: "`", after: "`", placeholder: "code" } },
-  { id: "h1", label: "Heading 1", icon: Heading1, wrap: { before: "# ", block: true, placeholder: "Heading" } },
-  { id: "h2", label: "Heading 2", icon: Heading2, wrap: { before: "## ", block: true, placeholder: "Heading" } },
-  { id: "h3", label: "Heading 3", icon: Heading3, wrap: { before: "### ", block: true, placeholder: "Heading" } },
-  { id: "quote", label: "Quote", icon: Quote, wrap: { before: "> ", block: true, placeholder: "Quote" } },
-  { id: "ul", label: "Bullet list", icon: List, wrap: { before: "- ", block: true, placeholder: "Item" } },
-  { id: "ol", label: "Numbered list", icon: ListOrdered, wrap: { before: "1. ", block: true, placeholder: "Item" } },
-  { id: "task", label: "Task list", icon: ListTodo, wrap: { before: "- [ ] ", block: true, placeholder: "Task" } },
-  { id: "link", label: "Link", icon: Link2, key: "k", wrap: { before: "[", after: "](https://)", placeholder: "label" } },
-  { id: "image", label: "Image", icon: ImageIcon, wrap: { before: "![", after: "](https://)", placeholder: "alt" } },
+  {
+    id: "bold",
+    label: "Bold",
+    icon: Bold,
+    key: "b",
+    wrap: { before: "**", after: "**", placeholder: "bold text" },
+  },
+  {
+    id: "italic",
+    label: "Italic",
+    icon: Italic,
+    key: "i",
+    wrap: { before: "*", after: "*", placeholder: "italic text" },
+  },
+  {
+    id: "strike",
+    label: "Strikethrough",
+    icon: Strikethrough,
+    wrap: { before: "~~", after: "~~", placeholder: "struck" },
+  },
+  {
+    id: "code",
+    label: "Inline code",
+    icon: Code,
+    key: "e",
+    wrap: { before: "`", after: "`", placeholder: "code" },
+  },
+  {
+    id: "h1",
+    label: "Heading 1",
+    icon: Heading1,
+    wrap: { before: "# ", block: true, placeholder: "Heading" },
+  },
+  {
+    id: "h2",
+    label: "Heading 2",
+    icon: Heading2,
+    wrap: { before: "## ", block: true, placeholder: "Heading" },
+  },
+  {
+    id: "h3",
+    label: "Heading 3",
+    icon: Heading3,
+    wrap: { before: "### ", block: true, placeholder: "Heading" },
+  },
+  {
+    id: "quote",
+    label: "Quote",
+    icon: Quote,
+    wrap: { before: "> ", block: true, placeholder: "Quote" },
+  },
+  {
+    id: "ul",
+    label: "Bullet list",
+    icon: List,
+    wrap: { before: "- ", block: true, placeholder: "Item" },
+  },
+  {
+    id: "ol",
+    label: "Numbered list",
+    icon: ListOrdered,
+    wrap: { before: "1. ", block: true, placeholder: "Item" },
+  },
+  {
+    id: "task",
+    label: "Task list",
+    icon: ListTodo,
+    wrap: { before: "- [ ] ", block: true, placeholder: "Task" },
+  },
+  {
+    id: "link",
+    label: "Link",
+    icon: Link2,
+    key: "k",
+    wrap: { before: "[", after: "](https://)", placeholder: "label" },
+  },
+  {
+    id: "image",
+    label: "Image",
+    icon: ImageIcon,
+    wrap: { before: "![", after: "](https://)", placeholder: "alt" },
+  },
   {
     id: "table",
     label: "Table",
@@ -215,7 +284,8 @@ export function MarkdownEditor() {
       const k = e.key.toLowerCase();
       if (k === "z") {
         e.preventDefault();
-        e.shiftKey ? redo() : undo();
+        if (e.shiftKey) redo();
+        else undo();
         return;
       }
       const action = ACTIONS.find((a) => a.key === k);
@@ -266,10 +336,24 @@ export function MarkdownEditor() {
           </Button>
         ))}
         <div className="mx-1 h-5 w-px bg-border" />
-        <Button variant="ghost" size="icon" className="size-8" title="Undo (⌘Z)" aria-label="Undo" onClick={undo}>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-8"
+          title="Undo (⌘Z)"
+          aria-label="Undo"
+          onClick={undo}
+        >
           <Undo2 className="size-4" />
         </Button>
-        <Button variant="ghost" size="icon" className="size-8" title="Redo (⇧⌘Z)" aria-label="Redo" onClick={redo}>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-8"
+          title="Redo (⇧⌘Z)"
+          aria-label="Redo"
+          onClick={redo}
+        >
           <Redo2 className="size-4" />
         </Button>
         <div className="ml-auto flex items-center gap-1 rounded-lg border border-border p-0.5">
@@ -318,8 +402,18 @@ export function MarkdownEditor() {
             actions={
               <>
                 <CopyButton text={html} label="Copy HTML" />
-                <DownloadButton filename="document.md" content={src} mime="text/markdown" label=".md" />
-                <DownloadButton filename="preview.html" content={html} mime="text/html" label=".html" />
+                <DownloadButton
+                  filename="document.md"
+                  content={src}
+                  mime="text/markdown"
+                  label=".md"
+                />
+                <DownloadButton
+                  filename="preview.html"
+                  content={html}
+                  mime="text/html"
+                  label=".html"
+                />
               </>
             }
           >

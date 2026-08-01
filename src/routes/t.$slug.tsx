@@ -23,13 +23,13 @@ export const Route = createFileRoute("/t/$slug")({
           {
             name: "description",
             content:
-              "The developer tool you\'re looking for doesn\'t exist on DevHub Toolkit. Browse the full catalog of formatters, encoders, generators, and references.",
+              "The developer tool you're looking for doesn't exist on DevHub Toolkit. Browse the full catalog of formatters, encoders, generators, and references.",
           },
           { property: "og:title", content: "Tool not found — DevHub Toolkit" },
           {
             property: "og:description",
             content:
-              "The developer tool you\'re looking for doesn\'t exist on DevHub Toolkit. Browse the full catalog of formatters, encoders, generators, and references.",
+              "The developer tool you're looking for doesn't exist on DevHub Toolkit. Browse the full catalog of formatters, encoders, generators, and references.",
           },
           { name: "robots", content: "noindex" },
         ],
@@ -214,7 +214,7 @@ function ToolNotFound() {
     <div className="mx-auto max-w-2xl px-6 py-24 text-center">
       <h1 className="text-2xl font-semibold tracking-tight">Tool not found</h1>
       <p className="text-sm text-muted-foreground mt-2">
-        The tool you\'re looking for doesn\'t exist.
+        The tool you're looking for doesn't exist.
       </p>
     </div>
   );
