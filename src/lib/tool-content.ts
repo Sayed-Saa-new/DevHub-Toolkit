@@ -1,3 +1,5 @@
+import { TOOLS } from "@/lib/tools";
+
 // Long-form, SEO-optimized page content for high-priority tools.
 // Rendered below the tool UI and mirrored to structured data (FAQ / HowTo).
 
@@ -158,7 +160,7 @@ ORDER BY event_date;`,
       },
       {
         q: "How is this different from ChatGPT for SQL?",
-        a: "It's a focused, single-purpose workspace: no chat setup, no system-prompt tuning, dialect-aware output, and it's grouped with 55+ other developer tools you already use — formatters, converters, generators — on the same site.",
+        a: `It's a focused, single-purpose workspace: no chat setup, no system-prompt tuning, dialect-aware output, and it's grouped with the full ${TOOLS.length}-tool DevHub toolkit — formatters, converters, generators — on the same site.`,
       },
     ],
     related: [
@@ -502,7 +504,7 @@ export interface Root {
     },
     {
       q: "How is this different from quicktype?",
-      a: "Same underlying idea, but focused on developer speed: paste-and-copy in one screen, no schema wizard, and grouped with 55+ other tools (JSON formatter, JSON diff, YAML converter, mock data) you already use daily.",
+      a: `Same underlying idea, but focused on developer speed: paste-and-copy in one screen, no schema wizard, and grouped with the full ${TOOLS.length}-tool DevHub toolkit (JSON formatter, JSON diff, YAML converter, mock data) you already use daily.`,
     },
   ],
   related: [
