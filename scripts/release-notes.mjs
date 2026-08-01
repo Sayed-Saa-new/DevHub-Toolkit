@@ -40,9 +40,7 @@ function previousTagDate() {
       encoding: "utf8",
     }).trim();
     if (!prev) return null;
-    return new Date(
-      execSync(`git log -1 --format=%cI ${prev}`, { encoding: "utf8" }).trim(),
-    );
+    return new Date(execSync(`git log -1 --format=%cI ${prev}`, { encoding: "utf8" }).trim());
   } catch {
     return null;
   }
@@ -90,8 +88,6 @@ if (out.length === 0) {
   out.push(`Release \`${tag}\` of DevHub Toolkit.`, "");
 }
 
-out.push(
-  `**Live site:** ${site} · **Changelog:** ${site}/changelog · **RSS:** ${site}/rss.xml`,
-);
+out.push(`**Live site:** ${site} · **Changelog:** ${site}/changelog · **RSS:** ${site}/rss.xml`);
 
 process.stdout.write(out.join("\n") + "\n");

@@ -556,7 +556,9 @@ function FeedbackPage() {
                             name="deviceOrOs"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel className="text-xs font-semibold">Device or OS</FormLabel>
+                                <FormLabel className="text-xs font-semibold">
+                                  Device or OS
+                                </FormLabel>
                                 <FormControl>
                                   <Input
                                     {...field}

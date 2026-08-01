@@ -81,7 +81,10 @@ function ChangelogPage() {
       return (
         e.title.toLowerCase().includes(q) ||
         (e.tag ?? "").toLowerCase().includes(q) ||
-        e.html.replace(/<[^>]+>/g, " ").toLowerCase().includes(q)
+        e.html
+          .replace(/<[^>]+>/g, " ")
+          .toLowerCase()
+          .includes(q)
       );
     });
   }, [entries, query, filter]);

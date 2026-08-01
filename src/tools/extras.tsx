@@ -140,7 +140,6 @@ export function LoremIpsum() {
       out.push(s);
     }
     return out.join("\n\n");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paras, wpp, startLorem]);
 
   return (
