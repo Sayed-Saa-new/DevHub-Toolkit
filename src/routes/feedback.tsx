@@ -72,27 +72,11 @@ const FEEDBACK_TYPE_OPTIONS = [
   },
 ];
 
-const SIDEBAR_CARDS = [
-  {
-    title: "What helps most",
-    icon: Sparkles,
-    items: [
-      "What you were trying to do",
-      "What you expected to happen",
-      "What happened instead",
-      "Which tool or page was involved",
-    ],
-  },
-  {
-    title: "What happens next",
-    icon: ShieldCheck,
-    items: [
-      "Every submission lands in our internal dashboard",
-      "Bug reports get grouped with similar issues",
-      "Feature ideas help shape what we build next",
-      "Short, specific notes are easiest to action quickly",
-    ],
-  },
+const WHAT_HELPS = [
+  "What you were trying to do",
+  "What you expected to happen",
+  "What happened instead",
+  "Which tool or page was involved",
 ];
 
 // Client-side Zod validation schema matching server-side rules
