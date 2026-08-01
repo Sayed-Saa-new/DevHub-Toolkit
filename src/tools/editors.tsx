@@ -113,7 +113,7 @@ export function Playground() {
   const [js, setJs] = useState(
     `document.getElementById('b').onclick = () => alert('Hi from DevHub!');`,
   );
-  const doc = `<!doctype html><html><head><style>${css}</style></head><body>${html}<script>${js}<\/script></body></html>`;
+  const doc = `<!doctype html><html><head><style>${css}</style></head><body>${html}<script>${js}</scr${""}ipt></body></html>`;
   return (
     <div className="grid lg:grid-cols-2 gap-4">
       <div className="space-y-3">
