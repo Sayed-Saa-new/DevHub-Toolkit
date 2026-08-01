@@ -44,6 +44,22 @@ function isAiRateLimited(ip: string): boolean {
   return false;
 }
 
+// Daily per-caller quota to bound total token spend per IP.
+const aiDailyCache = new Map<string, { day: number; count: number }>();
+const AI_MAX_REQUESTS_PER_DAY = 200;
+
+function isAiDailyQuotaExceeded(ip: string): boolean {
+  const day = Math.floor(Date.now() / 86_400_000);
+  const entry = aiDailyCache.get(ip);
+  if (!entry || entry.day !== day) {
+    aiDailyCache.set(ip, { day, count: 1 });
+    return false;
+  }
+  if (entry.count >= AI_MAX_REQUESTS_PER_DAY) return true;
+  entry.count += 1;
+  return false;
+}
+
 // Zod schema — validates all incoming fields so unknown keys are stripped.
 const aiBodySchema = z.object({
   mode: z
@@ -83,6 +99,12 @@ export const Route = createFileRoute("/api/ai")({
         if (isAiRateLimited(ip)) {
           return new Response(
             JSON.stringify({ error: "Too many requests. Please wait a minute and try again." }),
+            { status: 429, headers: { "Content-Type": "application/json" } },
+          );
+        }
+        if (isAiDailyQuotaExceeded(ip)) {
+          return new Response(
+            JSON.stringify({ error: "Daily AI usage limit reached. Please try again tomorrow." }),
             { status: 429, headers: { "Content-Type": "application/json" } },
           );
         }
