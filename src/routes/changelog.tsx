@@ -27,8 +27,15 @@ export const Route = createFileRoute("/changelog")({
       { property: "og:type", content: "website" },
       { property: "og:url", content: `${BASE}/changelog` },
     ],
-    links: [{ rel: "canonical", href: `${BASE}/changelog` }],
-    // Feed autodiscovery
+    links: [
+      { rel: "canonical", href: `${BASE}/changelog` },
+      {
+        rel: "alternate",
+        type: "application/rss+xml",
+        title: "DevHub Toolkit — Changelog",
+        href: `${BASE}/rss.xml`,
+      },
+    ],
   }),
   loader: () => ({ entries: getChangelogEntries() }),
   component: ChangelogPage,
