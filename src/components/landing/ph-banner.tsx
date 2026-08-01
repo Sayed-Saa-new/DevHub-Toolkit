@@ -20,7 +20,9 @@ export function PHBanner() {
   const dismiss = () => {
     try {
       localStorage.setItem(STORAGE_KEY, "1");
-    } catch {}
+    } catch {
+      /* ignore */
+    }
     setVisible(false);
   };
 

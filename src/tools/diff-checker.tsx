@@ -226,7 +226,9 @@ export function DiffChecker() {
       if (typeof s.ignoreWhitespace === "boolean") setIgnoreWhitespace(s.ignoreWhitespace);
       if (typeof s.trimLines === "boolean") setTrimLines(s.trimLines);
       if (typeof s.ignoreBlank === "boolean") setIgnoreBlank(s.ignoreBlank);
-    } catch {}
+    } catch {
+      /* ignore */
+    }
   }, []);
 
   // Persist
@@ -243,7 +245,9 @@ export function DiffChecker() {
     };
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
-    } catch {}
+    } catch {
+      /* ignore */
+    }
   }, [left, right, granularity, view, ignoreCase, ignoreWhitespace, trimLines, ignoreBlank]);
 
   const opts = { ignoreCase, ignoreWhitespace, trimLines, ignoreBlank };

@@ -139,10 +139,10 @@ export async function submitFeedbackToNotion(
       formData.append("secret", turnstileSecretKey);
       formData.append("response", token);
       formData.append("remoteip", clientIp);
-      const tsRes = await fetch(
-        "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-        { method: "POST", body: formData },
-      );
+      const tsRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+        method: "POST",
+        body: formData,
+      });
       const tsJson = (await tsRes.json()) as { success: boolean };
       if (!tsJson.success) {
         console.warn(`[Turnstile Failed] IP: ${clientIp}`);
