@@ -3,17 +3,16 @@ import {
   Command,
   Search,
   Star,
-  Github,
   Menu,
   Keyboard,
   ArrowRight,
   Clock,
-  Home,
   CornerDownLeft,
   StarOff,
   Rss,
   MessageSquare,
-} from "lucide-react";
+} from "lucide-react-motion";
+import { Github, Home } from "lucide-react";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { MotionIconConfig } from "lucide-react-motion";
 
