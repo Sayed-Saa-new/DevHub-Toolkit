@@ -3,7 +3,8 @@ import type { ComponentType } from "react";
 import { JsonFormatter, Base64Tool, UrlCodec, JwtDecoder, TimestampConverter } from "./converters";
 import { UuidGenerator, HashGenerator, QrCodeTool } from "./generators";
 import { ColorTool, GradientTool, BoxShadowTool, BorderRadiusTool } from "./design";
-import { RegexTester, MarkdownEditor, Playground, SvgOptimizer } from "./editors";
+import { RegexTester, Playground, SvgOptimizer } from "./editors";
+import { MarkdownEditor } from "./markdown-editor";
 import { HttpStatus, GitCheatsheet, LinuxCheatsheet, VscodeShortcuts } from "./reference";
 import {
   PasswordGenerator,
