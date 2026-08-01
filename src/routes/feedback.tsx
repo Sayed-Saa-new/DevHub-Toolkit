@@ -110,10 +110,10 @@ const feedbackFormSchema = z
       .min(10, "Please provide at least 10 characters of feedback.")
       .max(10000, "Feedback cannot exceed 10,000 characters."),
     type: z.enum(["Bug", "Feature", "UX", "Praise"], {
-      errorMap: () => ({ message: "Please select a feedback type." }),
+      message: "Please select a feedback type.",
     }),
     tool: z.string().optional(),
-    source: z.string().default("Beta"),
+    source: z.string().optional(),
     website: z.string().optional(), // Honeypot
     browser: z.string().optional(),
     deviceOrOs: z.string().optional(),
