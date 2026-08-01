@@ -207,323 +207,332 @@ function FeedbackPage() {
     }
   };
 
-  return (
-    <div className="relative w-full overflow-hidden">
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[26rem] bg-[radial-gradient(circle_at_top,theme(colors.primary/.12),transparent_55%)]" />
-      <div className="pointer-events-none absolute right-0 top-24 -z-10 hidden h-72 w-72 rounded-full bg-primary/10 blur-3xl md:block" />
+  const steps = [
+    { n: "01", label: "Choose a type", done: Boolean(currentType) },
+    { n: "02", label: "Add context", done: Boolean(selectedTool) || Boolean(currentType) },
+    { n: "03", label: "Write it out", done: feedbackValue.trim().length >= 10 },
+  ];
 
-      {/* Hero Section */}
-      <section className="border-b border-border/60 px-4 py-8 md:px-8 md:py-12">
-        <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)] lg:gap-8">
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.24em] text-muted-foreground backdrop-blur">
-              <MessageSquare className="size-3" /> Feedback
+  return (
+    <div className="relative w-full">
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[24rem] bg-[radial-gradient(ellipse_at_top,theme(colors.foreground/.07),transparent_60%)]" />
+
+      {/* Masthead */}
+      <header className="border-b border-border/60">
+        <div className="mx-auto max-w-6xl px-4 py-10 md:px-8 md:py-14">
+          <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
+            <MessageSquare className="size-3" />
+            Feedback
+            <span className="h-px flex-1 bg-border" />
+            <span className="hidden sm:inline">Direct to the maker</span>
+          </div>
+          <h1 className="mt-6 max-w-3xl text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl">
+            Tell us what&apos;s broken,
+            <span className="text-muted-foreground"> missing, or worth keeping.</span>
+          </h1>
+          <p className="mt-5 max-w-xl text-[15px] leading-7 text-muted-foreground">
+            No account, no ticket queue. Every note is read by the person who ships the fix.
+          </p>
+          <dl className="mt-8 grid max-w-2xl grid-cols-2 gap-px overflow-hidden rounded-xl border border-border/70 bg-border/70 sm:grid-cols-3">
+            {[
+              { k: "Review", v: "Human, not a bot", icon: ShieldCheck },
+              { k: "Time", v: "~60 seconds", icon: Clock3 },
+              { k: "Works on", v: "Any device", icon: MonitorSmartphone },
+            ].map((s) => (
+              <div key={s.k} className="bg-background px-4 py-3">
+                <dt className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  <s.icon className="size-3" />
+                  {s.k}
+                </dt>
+                <dd className="mt-1 text-sm font-medium">{s.v}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </header>
+
+      <div className="mx-auto max-w-6xl px-4 py-10 md:px-8 md:py-14">
+        <div className="grid items-start gap-10 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-14">
+          {/* Rail */}
+          <aside className="hidden lg:sticky lg:top-24 lg:block">
+            <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
+              Progress
+            </p>
+            <ol className="mt-4 space-y-3 border-l border-border pl-4">
+              {steps.map((step) => (
+                <li key={step.n} className="relative">
+                  <span
+                    className={cn(
+                      "absolute -left-[21px] top-1.5 size-2 rounded-full ring-4 ring-background transition-colors",
+                      step.done ? "bg-foreground" : "bg-border",
+                    )}
+                  />
+                  <div className="font-mono text-[10px] text-muted-foreground">{step.n}</div>
+                  <div
+                    className={cn(
+                      "text-sm transition-colors",
+                      step.done ? "font-medium text-foreground" : "text-muted-foreground",
+                    )}
+                  >
+                    {step.label}
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            <div className="mt-8 border-t border-border/70 pt-5">
+              <p className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
+                <Sparkles className="size-3" /> What helps
+              </p>
+              <ul className="mt-3 space-y-1.5 text-[13px] leading-5 text-muted-foreground">
+                {WHAT_HELPS.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </div>
-            <div className="space-y-3">
-              <h1 className="max-w-2xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                Help us shape a better DevHub Toolkit
-              </h1>
-              <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-[15px]">
-                Share bugs, feature ideas, UX friction, or quick wins you&apos;d love to see. Every
-                response goes straight to our internal dashboard for review.
+
+            <div className="mt-8 border-t border-border/70 pt-5">
+              <p className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
+                <ShieldCheck className="size-3" /> Privacy
+              </p>
+              <p className="mt-3 text-[13px] leading-5 text-muted-foreground">
+                Only what you type is stored. No accounts, no tracking pixels, no third parties.
               </p>
             </div>
-            <div className="flex flex-wrap gap-2 pt-1">
-              <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/80 px-3 py-1.5 text-xs text-muted-foreground">
-                <ShieldCheck className="size-3.5 text-foreground" />
-                Direct team review
-              </div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/80 px-3 py-1.5 text-xs text-muted-foreground">
-                <Clock3 className="size-3.5 text-foreground" />
-                Quick to submit
-              </div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/80 px-3 py-1.5 text-xs text-muted-foreground">
-                <MonitorSmartphone className="size-3.5 text-foreground" />
-                Mobile-friendly form
-              </div>
-            </div>
-          </div>
+          </aside>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-            {SIDEBAR_CARDS.map((card) => {
-              const Icon = card.icon;
-
-              return (
-                <div
-                  key={card.title}
-                  className="rounded-2xl border border-border/70 bg-card/80 p-4 shadow-sm backdrop-blur-sm"
-                >
-                  <div className="mb-3 flex items-center gap-2">
-                    <div className="grid size-8 place-items-center rounded-lg border border-border bg-background/80">
-                      <Icon className="size-4" />
-                    </div>
-                    <h2 className="text-sm font-semibold tracking-tight">{card.title}</h2>
-                  </div>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    {card.items.map((item) => (
-                      <li key={item} className="flex gap-2 leading-5">
-                        <span className="mt-1 size-1.5 shrink-0 rounded-full bg-primary/60" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Form Section */}
-      <div className="mx-auto max-w-6xl px-4 py-8 md:px-8 md:py-10">
-        <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
-          <div className="relative overflow-hidden rounded-3xl border border-border/70 bg-card/95 shadow-[0_20px_70px_-40px_oklch(0_0_0_/_0.45)] backdrop-blur-sm">
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-foreground/25 to-transparent" />
+          {/* Form */}
+          <div>
             {submitSuccess ? (
-              <div className="flex flex-col items-center px-6 py-12 text-center sm:px-8 sm:py-14">
-                <div className="mb-5 rounded-full border border-emerald-500/20 bg-emerald-500/10 p-4">
-                  <CheckCircle2 className="size-12 text-emerald-500 animate-in fade-in zoom-in-50 duration-300" />
+              <div className="rounded-2xl border border-border/70 bg-card/80 px-6 py-14 text-center sm:px-10">
+                <div className="mx-auto mb-5 grid size-14 place-items-center rounded-full border border-emerald-500/20 bg-emerald-500/10">
+                  <CheckCircle2 className="size-7 text-emerald-500 animate-in fade-in zoom-in-50 duration-300" />
                 </div>
                 <h2 className="text-balance text-2xl font-semibold tracking-tight">
-                  Thanks! Your feedback has been submitted.
+                  Received. Thank you.
                 </h2>
-                <p className="mt-3 max-w-md text-sm leading-6 text-muted-foreground">
-                  We read every submission and use your input to prioritize what we build and fix
-                  next.
+                <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-muted-foreground">
+                  We read every submission and use it to prioritize what gets built and fixed next.
                 </p>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => setSubmitSuccess(false)}
-                  className="mt-6"
+                  className="mt-7"
                 >
                   Submit another response
                 </Button>
               </div>
             ) : (
-              <div className="p-5 sm:p-6 md:p-8">
-                <div className="mb-6 space-y-2 border-b border-border/60 pb-6">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.24em] text-muted-foreground">
-                    <SendHorizonal className="size-3" />
-                    Submission Form
-                  </div>
-                  <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
-                    Tell us what happened
-                  </h2>
-                  <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
-                    A little context goes a long way. Include the tool, the issue, and what you
-                    expected so we can act on it faster.
-                  </p>
-                </div>
-
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7">
-                    {submitError && (
-                      <div className="flex items-start gap-3 rounded-2xl border border-destructive/20 bg-destructive/10 p-4 text-sm text-destructive">
-                        <AlertCircle className="mt-0.5 size-4 shrink-0" />
-                        <div>
-                          <h4 className="font-semibold">Submission failed</h4>
-                          <p className="mt-1 text-xs opacity-90">{submitError}</p>
-                        </div>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-12">
+                  {submitError && (
+                    <div className="flex items-start gap-3 rounded-xl border border-destructive/20 bg-destructive/10 p-4 text-sm text-destructive">
+                      <AlertCircle className="mt-0.5 size-4 shrink-0" />
+                      <div>
+                        <h4 className="font-semibold">Submission failed</h4>
+                        <p className="mt-1 text-xs opacity-90">{submitError}</p>
                       </div>
-                    )}
+                    </div>
+                  )}
 
-                    {/* Honeypot field (hidden off-screen for spam protection) */}
-                    <div className="absolute -z-50 h-0 w-0 overflow-hidden" aria-hidden="true">
-                      <FormField
-                        control={form.control}
-                        name="website"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Website</FormLabel>
-                            <FormControl>
-                              <Input
-                                {...field}
-                                tabIndex={-1}
-                                autoComplete="off"
-                                placeholder="Leave this empty"
-                              />
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
+                  {/* Honeypot */}
+                  <div className="absolute -z-50 h-0 w-0 overflow-hidden" aria-hidden="true">
+                    <FormField
+                      control={form.control}
+                      name="website"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Website</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              tabIndex={-1}
+                              autoComplete="off"
+                              placeholder="Leave this empty"
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  {/* 01 — Type */}
+                  <section className="space-y-5">
+                    <div className="flex items-baseline gap-4 border-b border-border/60 pb-3">
+                      <span className="font-mono text-xs text-muted-foreground">01</span>
+                      <h2 className="text-base font-semibold tracking-tight">
+                        What kind of feedback is this?
+                      </h2>
                     </div>
 
-                    <div className="space-y-6">
-                      {/* Feedback Type — inline card picker */}
-                      <FormField
-                        control={form.control}
-                        name="type"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-sm font-semibold">
-                              Feedback Type <span className="text-destructive">*</span>
-                            </FormLabel>
-                            <FormDescription className="text-xs text-muted-foreground">
-                              Pick the closest match — it changes which details we ask for.
-                            </FormDescription>
-                            <FormControl>
-                              <div
-                                role="radiogroup"
-                                aria-label="Feedback type"
-                                className="grid gap-2.5 pt-1 sm:grid-cols-2"
-                              >
-                                {FEEDBACK_TYPE_OPTIONS.map((option) => {
-                                  const Icon = option.icon;
-                                  const isActive = field.value === option.value;
+                    <FormField
+                      control={form.control}
+                      name="type"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <div
+                              role="radiogroup"
+                              aria-label="Feedback type"
+                              className="grid gap-px overflow-hidden rounded-xl border border-border/70 bg-border/70 sm:grid-cols-2"
+                            >
+                              {FEEDBACK_TYPE_OPTIONS.map((option) => {
+                                const Icon = option.icon;
+                                const isActive = field.value === option.value;
 
-                                  return (
-                                    <button
-                                      key={option.value}
-                                      type="button"
-                                      role="radio"
-                                      aria-checked={isActive}
-                                      onClick={() => field.onChange(option.value)}
-                                      className={cn(
-                                        "group cursor-pointer rounded-xl border p-3.5 text-left transition-all duration-200",
-                                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                                        isActive
-                                          ? "border-foreground/40 bg-muted/40 shadow-sm"
-                                          : "border-border/70 bg-background/60 hover:border-border hover:bg-muted/20",
-                                      )}
-                                    >
-                                      <div className="flex items-start gap-3">
-                                        <div
-                                          className={cn(
-                                            "grid size-9 shrink-0 place-items-center rounded-lg border transition-colors",
-                                            isActive
-                                              ? "border-foreground/30 bg-foreground text-background"
-                                              : "border-border bg-background text-foreground",
-                                          )}
-                                        >
-                                          <Icon className="size-4" />
-                                        </div>
-                                        <div className="min-w-0 flex-1">
-                                          <div className="flex items-center gap-2">
-                                            <span className="text-sm font-medium">
-                                              {option.label}
-                                            </span>
-                                            {isActive && (
-                                              <Check className="size-3.5 shrink-0 text-foreground" />
-                                            )}
-                                          </div>
-                                          <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                                            {option.description}
-                                          </p>
-                                        </div>
-                                      </div>
-                                    </button>
-                                  );
-                                })}
-                              </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      {/* Optional Affected Tool / Page */}
-                      <FormField
-                        control={form.control}
-                        name="tool"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-sm font-semibold">
-                              Affected Tool or Page
-                            </FormLabel>
-                            <Popover open={toolPopoverOpen} onOpenChange={setToolPopoverOpen}>
-                              <PopoverTrigger asChild>
-                                <FormControl>
-                                  <Button
+                                return (
+                                  <button
+                                    key={option.value}
                                     type="button"
-                                    variant="outline"
-                                    role="combobox"
-                                    aria-expanded={toolPopoverOpen}
+                                    role="radio"
+                                    aria-checked={isActive}
+                                    onClick={() => field.onChange(option.value)}
                                     className={cn(
-                                      "h-10 w-full justify-between px-3 font-normal",
-                                      !field.value && "text-muted-foreground",
+                                      "group relative cursor-pointer p-4 text-left transition-colors duration-200",
+                                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring",
+                                      isActive
+                                        ? "bg-foreground text-background"
+                                        : "bg-background hover:bg-muted/50",
                                     )}
                                   >
-                                    <span className="truncate">
-                                      {field.value || "General / No specific tool"}
-                                    </span>
-                                    <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
-                                  </Button>
-                                </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent
-                                className="w-[var(--radix-popover-trigger-width)] p-0"
-                                align="start"
-                              >
-                                <Command>
-                                  <CommandInput placeholder="Search tools or pages..." />
-                                  <CommandList>
-                                    <CommandEmpty>No matching tool found.</CommandEmpty>
+                                    <div className="flex items-start gap-3">
+                                      <Icon
+                                        className={cn(
+                                          "mt-0.5 size-4 shrink-0 transition-transform duration-200 group-hover:scale-110",
+                                        )}
+                                      />
+                                      <div className="min-w-0 flex-1">
+                                        <div className="flex items-center gap-2">
+                                          <span className="text-sm font-medium">
+                                            {option.label}
+                                          </span>
+                                          {isActive && <Check className="size-3.5 shrink-0" />}
+                                        </div>
+                                        <p
+                                          className={cn(
+                                            "mt-1 text-xs leading-5",
+                                            isActive
+                                              ? "text-background/70"
+                                              : "text-muted-foreground",
+                                          )}
+                                        >
+                                          {option.description}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </section>
+
+                  {/* 02 — Context */}
+                  <section className="space-y-5">
+                    <div className="flex items-baseline gap-4 border-b border-border/60 pb-3">
+                      <span className="font-mono text-xs text-muted-foreground">02</span>
+                      <h2 className="text-base font-semibold tracking-tight">Add context</h2>
+                    </div>
+
+                    <FormField
+                      control={form.control}
+                      name="tool"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-sm font-semibold">
+                            Affected tool or page
+                          </FormLabel>
+                          <Popover open={toolPopoverOpen} onOpenChange={setToolPopoverOpen}>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  type="button"
+                                  variant="outline"
+                                  role="combobox"
+                                  aria-expanded={toolPopoverOpen}
+                                  className={cn(
+                                    "h-11 w-full justify-between px-3 font-normal",
+                                    !field.value && "text-muted-foreground",
+                                  )}
+                                >
+                                  <span className="truncate">
+                                    {field.value || "General / No specific tool"}
+                                  </span>
+                                  <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              className="w-[var(--radix-popover-trigger-width)] p-0"
+                              align="start"
+                            >
+                              <Command>
+                                <CommandInput placeholder="Search tools or pages..." />
+                                <CommandList>
+                                  <CommandEmpty>No matching tool found.</CommandEmpty>
+                                  <CommandItem
+                                    value="General / No specific tool"
+                                    onSelect={() => {
+                                      field.onChange("");
+                                      setToolPopoverOpen(false);
+                                    }}
+                                  >
+                                    <Check
+                                      className={cn(
+                                        "size-4",
+                                        !selectedTool ? "opacity-100" : "opacity-0",
+                                      )}
+                                    />
+                                    <span>General / No specific tool</span>
+                                  </CommandItem>
+                                  {availableTools.map((tool) => (
                                     <CommandItem
-                                      value="General / No specific tool"
-                                      onSelect={() => {
-                                        field.onChange("");
+                                      key={tool.slug}
+                                      value={tool.name}
+                                      onSelect={(value) => {
+                                        field.onChange(value);
                                         setToolPopoverOpen(false);
                                       }}
                                     >
                                       <Check
                                         className={cn(
                                           "size-4",
-                                          !selectedTool ? "opacity-100" : "opacity-0",
+                                          selectedTool === tool.name ? "opacity-100" : "opacity-0",
                                         )}
                                       />
-                                      <span>General / No specific tool</span>
+                                      <span className="truncate">{tool.name}</span>
                                     </CommandItem>
-                                    {availableTools.map((tool) => (
-                                      <CommandItem
-                                        key={tool.slug}
-                                        value={tool.name}
-                                        onSelect={(value) => {
-                                          field.onChange(value);
-                                          setToolPopoverOpen(false);
-                                        }}
-                                      >
-                                        <Check
-                                          className={cn(
-                                            "size-4",
-                                            selectedTool === tool.name
-                                              ? "opacity-100"
-                                              : "opacity-0",
-                                          )}
-                                        />
-                                        <span className="truncate">{tool.name}</span>
-                                      </CommandItem>
-                                    ))}
-                                  </CommandList>
-                                </Command>
-                              </PopoverContent>
-                            </Popover>
-                            <FormDescription className="text-xs text-muted-foreground">
-                              Optional, but helpful when the issue is tied to a specific utility or
-                              page. You can search by name.
-                            </FormDescription>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+                                  ))}
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
+                          <FormDescription className="text-xs text-muted-foreground">
+                            Optional — helpful when the issue is tied to a specific utility.
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                    {/* Conditional Fields for Bugs */}
                     {currentType === "Bug" && (
-                      <div className="space-y-5 rounded-2xl border border-border/80 bg-muted/10 p-4 sm:p-5 animate-in fade-in slide-in-from-top-2 duration-200">
-                        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="grid size-9 place-items-center rounded-xl border border-border bg-background/80">
-                              <Bug className="size-4" />
-                            </div>
-                            <div>
-                              <h3 className="text-sm font-semibold tracking-tight">
-                                Bug diagnostic information
-                              </h3>
-                              <p className="text-xs leading-5 text-muted-foreground">
-                                These details help us reproduce issues much faster.
-                              </p>
-                            </div>
+                      <div className="space-y-5 rounded-xl border border-border/70 bg-muted/20 p-4 sm:p-5 animate-in fade-in slide-in-from-top-2 duration-200">
+                        <div className="flex items-center gap-3">
+                          <div className="grid size-9 place-items-center rounded-lg border border-border bg-background">
+                            <Bug className="size-4" />
+                          </div>
+                          <div>
+                            <h3 className="text-sm font-semibold tracking-tight">
+                              Bug diagnostics
+                            </h3>
+                            <p className="text-xs leading-5 text-muted-foreground">
+                              These details help us reproduce the issue much faster.
+                            </p>
                           </div>
                         </div>
 
@@ -547,9 +556,7 @@ function FeedbackPage() {
                             name="deviceOrOs"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel className="text-xs font-semibold">
-                                  Device or OS
-                                </FormLabel>
+                                <FormLabel className="text-xs font-semibold">Device or OS</FormLabel>
                                 <FormControl>
                                   <Input
                                     {...field}
@@ -569,14 +576,15 @@ function FeedbackPage() {
                             <FormItem>
                               <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
                                 <FormLabel className="text-xs font-semibold">
-                                  Steps to Reproduce
+                                  Steps to reproduce
                                 </FormLabel>
                                 <span
-                                  className={`text-[10px] font-mono ${
+                                  className={cn(
+                                    "font-mono text-[10px]",
                                     stepsValue.length > 9500
                                       ? "font-semibold text-destructive"
-                                      : "text-muted-foreground"
-                                  }`}
+                                      : "text-muted-foreground",
+                                  )}
                                 >
                                   {stepsValue.length.toLocaleString()} / 10,000
                                 </span>
@@ -584,7 +592,7 @@ function FeedbackPage() {
                               <FormControl>
                                 <Textarea
                                   {...field}
-                                  placeholder="1. Go to JSON Formatter&#10;2. Paste invalid JSON&#10;3. Click format - the app crashes..."
+                                  placeholder="1. Go to JSON Formatter&#10;2. Paste invalid JSON&#10;3. Click format — the app crashes..."
                                   className="min-h-[120px] resize-y"
                                 />
                               </FormControl>
@@ -594,8 +602,15 @@ function FeedbackPage() {
                         />
                       </div>
                     )}
+                  </section>
 
-                    {/* Feedback content */}
+                  {/* 03 — Message */}
+                  <section className="space-y-5">
+                    <div className="flex items-baseline gap-4 border-b border-border/60 pb-3">
+                      <span className="font-mono text-xs text-muted-foreground">03</span>
+                      <h2 className="text-base font-semibold tracking-tight">Your message</h2>
+                    </div>
+
                     <FormField
                       control={form.control}
                       name="feedback"
@@ -603,14 +618,15 @@ function FeedbackPage() {
                         <FormItem>
                           <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
                             <FormLabel className="text-sm font-semibold">
-                              Feedback Message
+                              Feedback message <span className="text-destructive">*</span>
                             </FormLabel>
                             <span
-                              className={`text-[10px] font-mono ${
+                              className={cn(
+                                "font-mono text-[10px]",
                                 feedbackValue.length > 9500
                                   ? "font-semibold text-destructive"
-                                  : "text-muted-foreground"
-                              }`}
+                                  : "text-muted-foreground",
+                              )}
                             >
                               {feedbackValue.length.toLocaleString()} / 10,000
                             </span>
@@ -622,84 +638,52 @@ function FeedbackPage() {
                                 currentType === "Bug"
                                   ? "Describe the issue, the impact, and anything unusual you noticed..."
                                   : currentType === "Feature"
-                                    ? "Describe the feature you'd like to see, how it should work, and the problem it solves..."
+                                    ? "Describe the feature you'd like, how it should work, and the problem it solves..."
                                     : currentType === "UX"
                                       ? "Tell us what felt confusing, slow, crowded, or could be easier to use..."
                                       : "Type your feedback here..."
                               }
-                              className="min-h-[160px] resize-y"
+                              className="min-h-[180px] resize-y"
                             />
                           </FormControl>
                           <FormDescription className="text-xs text-muted-foreground">
-                            Short and specific is great. Include examples when they make your point
-                            clearer.
+                            Short and specific is great. Examples make your point land faster.
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
+                  </section>
 
-                    {/* Hidden source field */}
-                    <input type="hidden" {...form.register("source")} value="Beta" />
+                  <input type="hidden" {...form.register("source")} value="Beta" />
 
-                    <div className="flex flex-col gap-3 rounded-2xl border border-border/70 bg-background/60 p-4 sm:flex-row sm:items-center sm:justify-between">
-                      <p className="text-sm leading-6 text-muted-foreground">
-                        We use these notes to prioritize fixes, design polish, and future tools.
-                      </p>
-                      <Button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="inline-flex w-full items-center justify-center gap-2 font-medium sm:w-auto"
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <Loader2 className="size-4 animate-spin" />
-                            Submitting feedback...
-                          </>
-                        ) : (
-                          <>
-                            <SendHorizonal className="size-4" />
-                            Submit Feedback
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  </form>
-                </Form>
-              </div>
+                  <div className="flex flex-col gap-3 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="text-xs leading-5 text-muted-foreground">
+                      Submissions are private and used only to prioritize fixes and new tools.
+                    </p>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      size="lg"
+                      className="group inline-flex w-full items-center justify-center gap-2 font-medium sm:w-auto"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="size-4 animate-spin" />
+                          Submitting...
+                        </>
+                      ) : (
+                        <>
+                          Submit feedback
+                          <SendHorizonal className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </form>
+              </Form>
             )}
           </div>
-
-          <aside className="space-y-4 lg:sticky lg:top-24">
-            <div className="rounded-2xl border border-border/70 bg-card p-4 sm:p-5">
-              <h2 className="text-sm font-semibold tracking-tight">Need a solid bug report?</h2>
-              <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                <li className="flex gap-2 leading-5">
-                  <span className="mt-1 size-1.5 shrink-0 rounded-full bg-primary/60" />
-                  Mention the browser, device, and tool involved.
-                </li>
-                <li className="flex gap-2 leading-5">
-                  <span className="mt-1 size-1.5 shrink-0 rounded-full bg-primary/60" />
-                  List the exact steps that triggered the problem.
-                </li>
-                <li className="flex gap-2 leading-5">
-                  <span className="mt-1 size-1.5 shrink-0 rounded-full bg-primary/60" />
-                  Tell us what you expected versus what actually happened.
-                </li>
-              </ul>
-            </div>
-
-            <div className="rounded-2xl border border-border/70 bg-card p-4 sm:p-5">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="size-4 text-foreground" />
-                <h2 className="text-sm font-semibold tracking-tight">Privacy</h2>
-              </div>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                We only store what you type here. No accounts, no tracking pixels, and nothing is
-                shared with third parties.
-              </p>
-            </div>
-          </aside>
         </div>
       </div>
     </div>
