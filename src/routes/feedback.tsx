@@ -373,28 +373,74 @@ function FeedbackPage() {
                       />
                     </div>
 
-                    <div className="grid gap-4 md:grid-cols-2">
-                      {/* Feedback Type */}
+                    <div className="space-y-6">
+                      {/* Feedback Type — inline card picker */}
                       <FormField
                         control={form.control}
                         name="type"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-sm font-semibold">Feedback Type</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                              <FormControl>
-                                <SelectTrigger className="h-10 w-full cursor-pointer">
-                                  <SelectValue placeholder="Select type of feedback" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {FEEDBACK_TYPE_OPTIONS.map((option) => (
-                                  <SelectItem key={option.value} value={option.value}>
-                                    {option.label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
+                            <FormLabel className="text-sm font-semibold">
+                              Feedback Type <span className="text-destructive">*</span>
+                            </FormLabel>
+                            <FormDescription className="text-xs text-muted-foreground">
+                              Pick the closest match — it changes which details we ask for.
+                            </FormDescription>
+                            <FormControl>
+                              <div
+                                role="radiogroup"
+                                aria-label="Feedback type"
+                                className="grid gap-2.5 pt-1 sm:grid-cols-2"
+                              >
+                                {FEEDBACK_TYPE_OPTIONS.map((option) => {
+                                  const Icon = option.icon;
+                                  const isActive = field.value === option.value;
+
+                                  return (
+                                    <button
+                                      key={option.value}
+                                      type="button"
+                                      role="radio"
+                                      aria-checked={isActive}
+                                      onClick={() => field.onChange(option.value)}
+                                      className={cn(
+                                        "group cursor-pointer rounded-xl border p-3.5 text-left transition-all duration-200",
+                                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                                        isActive
+                                          ? "border-foreground/40 bg-muted/40 shadow-sm"
+                                          : "border-border/70 bg-background/60 hover:border-border hover:bg-muted/20",
+                                      )}
+                                    >
+                                      <div className="flex items-start gap-3">
+                                        <div
+                                          className={cn(
+                                            "grid size-9 shrink-0 place-items-center rounded-lg border transition-colors",
+                                            isActive
+                                              ? "border-foreground/30 bg-foreground text-background"
+                                              : "border-border bg-background text-foreground",
+                                          )}
+                                        >
+                                          <Icon className="size-4" />
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                          <div className="flex items-center gap-2">
+                                            <span className="text-sm font-medium">
+                                              {option.label}
+                                            </span>
+                                            {isActive && (
+                                              <Check className="size-3.5 shrink-0 text-foreground" />
+                                            )}
+                                          </div>
+                                          <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                                            {option.description}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -485,22 +531,6 @@ function FeedbackPage() {
                         )}
                       />
                     </div>
-
-                    {currentTypeMeta && (
-                      <div className="flex gap-3 rounded-2xl border border-border/70 bg-muted/20 p-4">
-                        <div className="grid size-10 shrink-0 place-items-center rounded-xl border border-border bg-background">
-                          <currentTypeMeta.icon className="size-4" />
-                        </div>
-                        <div className="min-w-0">
-                          <h3 className="text-sm font-semibold tracking-tight">
-                            {currentTypeMeta.label}
-                          </h3>
-                          <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                            {currentTypeMeta.description}
-                          </p>
-                        </div>
-                      </div>
-                    )}
 
                     {/* Conditional Fields for Bugs */}
                     {currentType === "Bug" && (
