@@ -13,7 +13,7 @@ import {
   StarOff,
   Rss,
   MessageSquare,
-} from "lucide-react";
+} from "lucide-react-motion";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { MotionIconConfig } from "lucide-react-motion";
 
