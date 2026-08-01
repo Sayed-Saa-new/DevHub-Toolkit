@@ -284,7 +284,8 @@ export function MarkdownEditor() {
       const k = e.key.toLowerCase();
       if (k === "z") {
         e.preventDefault();
-        e.shiftKey ? redo() : undo();
+        if (e.shiftKey) redo();
+        else undo();
         return;
       }
       const action = ACTIONS.find((a) => a.key === k);

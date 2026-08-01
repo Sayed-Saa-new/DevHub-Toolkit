@@ -186,7 +186,7 @@ export function LoremIpsum() {
 function splitWords(s: string) {
   return s
     .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-    .replace(/[_\-\.\/]+/g, " ")
+    .replace(/[_\-.\/]+/g, " ")
     .replace(/\s+/g, " ")
     .trim()
     .toLowerCase()

@@ -122,9 +122,6 @@ export function SqlFormatter() {
         newlineBeforeSemicolon: false,
       });
       return res;
-    } catch (e) {
-      throw e;
-    }
   }, [
     input,
     dialect,
