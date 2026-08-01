@@ -32,13 +32,6 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Form,
   FormControl,
   FormDescription,
@@ -199,7 +192,6 @@ function FeedbackPage() {
   const selectedTool = watch("tool") || "";
   const feedbackValue = watch("feedback") || "";
   const stepsValue = watch("stepsToReproduce") || "";
-  const currentTypeMeta = FEEDBACK_TYPE_OPTIONS.find((option) => option.value === currentType);
 
   const onSubmit = async (values: FeedbackFormValues) => {
     setIsSubmitting(true);
@@ -326,28 +318,18 @@ function FeedbackPage() {
               </div>
             ) : (
               <div className="p-5 sm:p-6 md:p-8">
-                <div className="mb-6 flex flex-col gap-4 border-b border-border/60 pb-6 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="space-y-2">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.24em] text-muted-foreground">
-                      <SendHorizonal className="size-3" />
-                      Submission Form
-                    </div>
-                    <div>
-                      <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
-                        Tell us what happened
-                      </h2>
-                      <p className="mt-1 max-w-2xl text-sm leading-6 text-muted-foreground">
-                        A little context goes a long way. Include the tool, the issue, and what you
-                        expected so we can act on it faster.
-                      </p>
-                    </div>
+                <div className="mb-6 space-y-2 border-b border-border/60 pb-6">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.24em] text-muted-foreground">
+                    <SendHorizonal className="size-3" />
+                    Submission Form
                   </div>
-                  <div className="rounded-2xl border border-border/70 bg-background/70 px-4 py-3 text-sm text-muted-foreground sm:max-w-56">
-                    <div className="font-medium text-foreground">Best for quick reports</div>
-                    <div className="mt-1 text-xs leading-5">
-                      This form is optimized for fast mobile and desktop submissions.
-                    </div>
-                  </div>
+                  <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
+                    Tell us what happened
+                  </h2>
+                  <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
+                    A little context goes a long way. Include the tool, the issue, and what you
+                    expected so we can act on it faster.
+                  </p>
                 </div>
 
                 <Form {...form}>
@@ -383,28 +365,74 @@ function FeedbackPage() {
                       />
                     </div>
 
-                    <div className="grid gap-4 md:grid-cols-2">
-                      {/* Feedback Type */}
+                    <div className="space-y-6">
+                      {/* Feedback Type — inline card picker */}
                       <FormField
                         control={form.control}
                         name="type"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-sm font-semibold">Feedback Type</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                              <FormControl>
-                                <SelectTrigger className="h-10 w-full cursor-pointer">
-                                  <SelectValue placeholder="Select type of feedback" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {FEEDBACK_TYPE_OPTIONS.map((option) => (
-                                  <SelectItem key={option.value} value={option.value}>
-                                    {option.label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
+                            <FormLabel className="text-sm font-semibold">
+                              Feedback Type <span className="text-destructive">*</span>
+                            </FormLabel>
+                            <FormDescription className="text-xs text-muted-foreground">
+                              Pick the closest match — it changes which details we ask for.
+                            </FormDescription>
+                            <FormControl>
+                              <div
+                                role="radiogroup"
+                                aria-label="Feedback type"
+                                className="grid gap-2.5 pt-1 sm:grid-cols-2"
+                              >
+                                {FEEDBACK_TYPE_OPTIONS.map((option) => {
+                                  const Icon = option.icon;
+                                  const isActive = field.value === option.value;
+
+                                  return (
+                                    <button
+                                      key={option.value}
+                                      type="button"
+                                      role="radio"
+                                      aria-checked={isActive}
+                                      onClick={() => field.onChange(option.value)}
+                                      className={cn(
+                                        "group cursor-pointer rounded-xl border p-3.5 text-left transition-all duration-200",
+                                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                                        isActive
+                                          ? "border-foreground/40 bg-muted/40 shadow-sm"
+                                          : "border-border/70 bg-background/60 hover:border-border hover:bg-muted/20",
+                                      )}
+                                    >
+                                      <div className="flex items-start gap-3">
+                                        <div
+                                          className={cn(
+                                            "grid size-9 shrink-0 place-items-center rounded-lg border transition-colors",
+                                            isActive
+                                              ? "border-foreground/30 bg-foreground text-background"
+                                              : "border-border bg-background text-foreground",
+                                          )}
+                                        >
+                                          <Icon className="size-4" />
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                          <div className="flex items-center gap-2">
+                                            <span className="text-sm font-medium">
+                                              {option.label}
+                                            </span>
+                                            {isActive && (
+                                              <Check className="size-3.5 shrink-0 text-foreground" />
+                                            )}
+                                          </div>
+                                          <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                                            {option.description}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -495,22 +523,6 @@ function FeedbackPage() {
                         )}
                       />
                     </div>
-
-                    {currentTypeMeta && (
-                      <div className="flex gap-3 rounded-2xl border border-border/70 bg-muted/20 p-4">
-                        <div className="grid size-10 shrink-0 place-items-center rounded-xl border border-border bg-background">
-                          <currentTypeMeta.icon className="size-4" />
-                        </div>
-                        <div className="min-w-0">
-                          <h3 className="text-sm font-semibold tracking-tight">
-                            {currentTypeMeta.label}
-                          </h3>
-                          <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                            {currentTypeMeta.description}
-                          </p>
-                        </div>
-                      </div>
-                    )}
 
                     {/* Conditional Fields for Bugs */}
                     {currentType === "Bug" && (
@@ -676,39 +688,6 @@ function FeedbackPage() {
 
           <aside className="space-y-4 lg:sticky lg:top-24">
             <div className="rounded-2xl border border-border/70 bg-card p-4 sm:p-5">
-              <h2 className="text-sm font-semibold tracking-tight">Feedback types</h2>
-              <div className="mt-4 space-y-3">
-                {FEEDBACK_TYPE_OPTIONS.map((option) => {
-                  const Icon = option.icon;
-                  const isActive = currentType === option.value;
-
-                  return (
-                    <div
-                      key={option.value}
-                      className={`rounded-xl border p-3 transition-colors ${
-                        isActive
-                          ? "border-foreground/30 bg-muted/30"
-                          : "border-border/70 bg-background/60"
-                      }`}
-                    >
-                      <div className="flex items-start gap-3">
-                        <div className="grid size-8 shrink-0 place-items-center rounded-lg border border-border bg-background">
-                          <Icon className="size-4" />
-                        </div>
-                        <div className="min-w-0">
-                          <div className="text-sm font-medium">{option.label}</div>
-                          <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                            {option.description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-border/70 bg-card p-4 sm:p-5">
               <h2 className="text-sm font-semibold tracking-tight">Need a solid bug report?</h2>
               <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
                 <li className="flex gap-2 leading-5">
@@ -724,6 +703,17 @@ function FeedbackPage() {
                   Tell us what you expected versus what actually happened.
                 </li>
               </ul>
+            </div>
+
+            <div className="rounded-2xl border border-border/70 bg-card p-4 sm:p-5">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="size-4 text-foreground" />
+                <h2 className="text-sm font-semibold tracking-tight">Privacy</h2>
+              </div>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                We only store what you type here. No accounts, no tracking pixels, and nothing is
+                shared with third parties.
+              </p>
             </div>
           </aside>
         </div>
