@@ -107,7 +107,6 @@ export function SqlFormatter() {
 
   const output = useMemo(() => {
     if (!input.trim()) return "";
-    try {
       if (mode === "minify") return minify(input);
       const res = formatSql(input, {
         language: dialect,
