@@ -326,28 +326,18 @@ function FeedbackPage() {
               </div>
             ) : (
               <div className="p-5 sm:p-6 md:p-8">
-                <div className="mb-6 flex flex-col gap-4 border-b border-border/60 pb-6 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="space-y-2">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.24em] text-muted-foreground">
-                      <SendHorizonal className="size-3" />
-                      Submission Form
-                    </div>
-                    <div>
-                      <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
-                        Tell us what happened
-                      </h2>
-                      <p className="mt-1 max-w-2xl text-sm leading-6 text-muted-foreground">
-                        A little context goes a long way. Include the tool, the issue, and what you
-                        expected so we can act on it faster.
-                      </p>
-                    </div>
+                <div className="mb-6 space-y-2 border-b border-border/60 pb-6">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.24em] text-muted-foreground">
+                    <SendHorizonal className="size-3" />
+                    Submission Form
                   </div>
-                  <div className="rounded-2xl border border-border/70 bg-background/70 px-4 py-3 text-sm text-muted-foreground sm:max-w-56">
-                    <div className="font-medium text-foreground">Best for quick reports</div>
-                    <div className="mt-1 text-xs leading-5">
-                      This form is optimized for fast mobile and desktop submissions.
-                    </div>
-                  </div>
+                  <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
+                    Tell us what happened
+                  </h2>
+                  <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
+                    A little context goes a long way. Include the tool, the issue, and what you
+                    expected so we can act on it faster.
+                  </p>
                 </div>
 
                 <Form {...form}>
