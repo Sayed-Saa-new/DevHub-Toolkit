@@ -7,6 +7,8 @@ export type ToolSeo = {
   title: string; // <60 chars ideal, primary keyword first
   description: string; // <160 chars, natural sentence, primary + 1-2 supporting kws
   keywords: string[]; // long-tail phrases users actually search
+  h1?: string; // on-page H1 override — keyword-exact, no symbols/arrows
+  tagline?: string; // sub-headline under the H1, supporting keywords
 };
 
 export const TOOL_SEO: Record<string, ToolSeo> = {
