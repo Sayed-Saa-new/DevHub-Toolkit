@@ -343,6 +343,10 @@ TOOL_CONTENT["json-to-ts"] = {
       body: "Choose `interface` or `type` output to match your project's style guide. Root name is configurable.",
     },
     {
+      title: "Zod schema output",
+      body: "Switch the output to a Zod schema and get runtime validation plus `z.infer` types from the same JSON — ideal for API boundaries, forms and tRPC.",
+    },
+    {
       title: "Optional & nullable handling",
       body: "Fields missing from some objects become optional (?:). Explicit nulls become union types like `string | null`.",
     },
