@@ -66,7 +66,8 @@ function FavoritesPage() {
           {tools.map((t) => (
             <Link
               key={t.slug}
-              to={`/t/${t.slug}`}
+              to="/t/$slug"
+              params={{ slug: t.slug }}
               data-motion-icon-group
               className="rounded-xl border border-border bg-card p-4 hover:border-foreground/40 transition flex items-start gap-3"
             >
