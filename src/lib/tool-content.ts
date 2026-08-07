@@ -474,8 +474,39 @@ export interface Root {
   events: Event[];
 }`,
     },
+    {
+      dialect: "Zod schema",
+      prompt: "Runtime validation from the same JSON",
+      sql: `{
+  "id": 42,
+  "email": "ada@example.com",
+  "tags": ["admin", "beta"],
+  "deletedAt": null
+}
+
+// →
+
+import { z } from "zod";
+
+export const UserSchema = z.object({
+  id: z.number(),
+  email: z.string(),
+  tags: z.array(z.string()),
+  deletedAt: z.string().nullable(),
+});
+
+export type User = z.infer<typeof UserSchema>;`,
+    },
   ],
   faq: [
+    {
+      q: "Can it convert JSON to a Zod schema?",
+      a: "Yes. Switch the output mode to Zod and you get a `z.object({ ... })` schema plus a `z.infer` type alias, so one JSON sample gives you both compile-time types and runtime validation.",
+    },
+    {
+      q: "How do I turn an API response into TypeScript types?",
+      a: "Copy a real response from your network tab or `curl`, paste it here, name the root type (e.g. `StripeCharge`), and copy the generated interfaces into a `types.ts` or `.d.ts` file. Because inference runs locally, it's safe to paste authenticated responses.",
+    },
     {
       q: "Is the JSON to TypeScript converter free?",
       a: "Yes — 100% free, no signup, no rate limits. Runs entirely in your browser.",
