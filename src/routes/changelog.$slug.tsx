@@ -52,8 +52,9 @@ export const Route = createFileRoute("/changelog/$slug")({
 });
 
 function ChangelogEntryPage() {
-  const { entry } = Route.useLoaderData();
+  const { slug } = Route.useParams();
   const all = getChangelogEntries();
+  const entry = all.find((e) => e.slug === slug)!;
   const idx = all.findIndex((e) => e.slug === entry.slug);
   const prev = idx >= 0 ? all[idx + 1] : undefined;
   const next = idx > 0 ? all[idx - 1] : undefined;
