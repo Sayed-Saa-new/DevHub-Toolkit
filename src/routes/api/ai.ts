@@ -2,8 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { streamText, convertToModelMessages, type UIMessage } from "ai";
 import { z } from "zod";
 
-import { createGeminiProvider } from "@/lib/ai-gateway.server";
-import { getCloudflareEnv } from "@/lib/server-env";
+import { createByokModel, DEFAULT_MODELS, type ByokProviderId } from "@/lib/ai-gateway.server";
 
 type Mode = "explain" | "optimize" | "commit" | "sql" | "convert" | "error" | "regex" | "tests";
 
@@ -130,20 +129,30 @@ export const Route = createFileRoute("/api/ai")({
         }
         const body = validation.data;
 
-        // 6. Resolve API key via unified env helper (works in both CF Workers and local dev)
-        const key = getCloudflareEnv().GEMINI_API_KEY;
-        if (!key) {
-          return new Response(JSON.stringify({ error: "AI service is not configured." }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
-          });
+        // 6. BYOK — the caller supplies their own provider key, stored only in their browser.
+        const providerHeader = (request.headers.get("x-byok-provider") ?? "google").toLowerCase();
+        const provider = (
+          ["google", "openai", "openrouter", "groq"].includes(providerHeader)
+            ? providerHeader
+            : "google"
+        ) as ByokProviderId;
+        const key = (request.headers.get("x-byok-key") ?? "").trim();
+        const modelId = (request.headers.get("x-byok-model") ?? "").trim().slice(0, 100);
+
+        if (!key || key.length > 500) {
+          return new Response(
+            JSON.stringify({
+              error:
+                "No API key found. Add your own provider API key (stored in your browser) to use the AI tools.",
+            }),
+            { status: 401, headers: { "Content-Type": "application/json" } },
+          );
         }
 
         const mode = body.mode ?? "explain";
         const system = SYSTEM[mode] ?? SYSTEM.explain;
 
-        const google = createGeminiProvider(key);
-        const model = google("gemini-flash-latest");
+        const model = createByokModel(provider, key, modelId || DEFAULT_MODELS[provider]);
 
         const messages: UIMessage[] = (body.messages as UIMessage[]) ?? [
           {
