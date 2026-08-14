@@ -336,6 +336,13 @@ staging:
 TOOL_CONTENT["json-to-ts"] = {
   intro:
     "DevHub's JSON to TypeScript converter turns any JSON payload — an API response, a config file, a Firestore document — into accurate TypeScript interfaces and types in one click. It infers unions, optional properties, nested objects, arrays of mixed shapes and tuple types, and gives you clean, ready-to-paste code. Free, client-side, no signup.",
+  headings: {
+    features: "What the JSON to TypeScript converter does",
+    examples: "JSON to TypeScript examples (interface, union & Zod)",
+    useCases: "When to convert JSON to TypeScript types",
+    faq: "JSON to TypeScript — frequently asked questions",
+    related: "Related JSON and TypeScript tools",
+  },
   features: [
     {
       title: "Accurate type inference",
