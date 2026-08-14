@@ -570,12 +570,12 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
     ],
   },
   "json-to-ts": {
-    title: "JSON to TypeScript — Interface, Type & Zod Generator",
+    title: "JSON to TypeScript Converter — Free Interface & Zod Generator",
     description:
-      "Convert JSON to TypeScript interfaces, type aliases or Zod schemas instantly. Handles nested objects, arrays, unions and nullables — free, in-browser.",
+      "Convert JSON to TypeScript interfaces, types or Zod schemas online, free. Handles nested objects, arrays, unions, optional and nullable fields — runs in your browser.",
     h1: "JSON to TypeScript Converter",
     tagline:
-      "Paste JSON, get TypeScript interfaces, type aliases or Zod schemas — nested objects, unions and nullables handled automatically. Free and 100% in-browser.",
+      "Paste JSON, get TypeScript interfaces, type aliases or Zod schemas instantly — nested objects, unions, optional and nullable fields handled automatically. Free, no signup, 100% in-browser.",
     keywords: [
       "json to typescript",
       "json to ts",
@@ -589,6 +589,12 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "json to typescript interface generator free",
       "api response to typescript types",
       "json to d.ts",
+      "json to typescript converter",
+      "json to typescript online",
+      "generate typescript types from json",
+      "json object to typescript interface",
+      "json array to typescript type",
+      "json to typescript type generator online free",
     ],
   },
   "mock-data": {

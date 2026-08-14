@@ -19,14 +19,16 @@ export function ToolContent({ slug }: { slug: string }) {
       </div>
 
       <div>
-        <h2 className="text-xl md:text-2xl font-semibold tracking-tight">Features</h2>
+        <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
+          {c.headings?.features ?? "Features"}
+        </h2>
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-px bg-border rounded-xl overflow-hidden border border-border">
           {c.features.map((f) => (
             <div key={f.title} className="bg-card p-5">
               <div className="flex items-start gap-2">
                 <Check className="size-4 mt-0.5 shrink-0" />
                 <div>
-                  <div className="font-medium">{f.title}</div>
+                  <h3 className="font-medium">{f.title}</h3>
                   <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{f.body}</p>
                 </div>
               </div>
@@ -44,7 +46,7 @@ export function ToolContent({ slug }: { slug: string }) {
                 {String(i + 1).padStart(2, "0")}
               </div>
               <div>
-                <div className="font-medium">{s.name}</div>
+                <h3 className="font-medium">{s.name}</h3>
                 <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{s.text}</p>
               </div>
             </li>
@@ -53,7 +55,9 @@ export function ToolContent({ slug }: { slug: string }) {
       </div>
 
       <div>
-        <h2 className="text-xl md:text-2xl font-semibold tracking-tight">Examples</h2>
+        <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
+          {c.headings?.examples ?? "Examples"}
+        </h2>
         <div className="mt-6 space-y-6">
           {c.examples.map((ex, i) => (
             <div key={i} className="rounded-xl border border-border overflow-hidden">
@@ -75,11 +79,13 @@ export function ToolContent({ slug }: { slug: string }) {
       </div>
 
       <div>
-        <h2 className="text-xl md:text-2xl font-semibold tracking-tight">Use cases</h2>
+        <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
+          {c.headings?.useCases ?? "Use cases"}
+        </h2>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           {c.useCases.map((u) => (
             <div key={u.title} className="rounded-xl border border-border p-5 bg-card">
-              <div className="font-medium">{u.title}</div>
+              <h3 className="font-medium">{u.title}</h3>
               <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">{u.body}</p>
             </div>
           ))}
@@ -88,12 +94,14 @@ export function ToolContent({ slug }: { slug: string }) {
 
       <div>
         <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
-          Frequently asked questions
+          {c.headings?.faq ?? "Frequently asked questions"}
         </h2>
         <dl className="mt-6 divide-y divide-border border-y border-border">
           {c.faq.map((f) => (
             <div key={f.q} className="py-5">
-              <dt className="font-medium">{f.q}</dt>
+              <dt>
+                <h3 className="font-medium">{f.q}</h3>
+              </dt>
               <dd className="text-sm text-muted-foreground mt-2 leading-relaxed max-w-3xl">
                 {f.a}
               </dd>
@@ -104,7 +112,9 @@ export function ToolContent({ slug }: { slug: string }) {
 
       {c.related && c.related.length > 0 && (
         <div>
-          <h2 className="text-xl md:text-2xl font-semibold tracking-tight">Related tools</h2>
+          <h2 className="text-xl md:text-2xl font-semibold tracking-tight">
+            {c.headings?.related ?? "Related tools"}
+          </h2>
           <div className="mt-6 flex flex-wrap gap-2">
             {c.related.map((r) => (
               <Link
