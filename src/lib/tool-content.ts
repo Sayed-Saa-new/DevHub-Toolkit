@@ -3,6 +3,9 @@
 
 export type ToolContent = {
   intro: string;
+  headings?: Partial<
+    Record<"features" | "examples" | "useCases" | "faq" | "related", string>
+  >;
   features: { title: string; body: string }[];
   howTo: { name: string; steps: { name: string; text: string }[] };
   useCases: { title: string; body: string }[];
