@@ -549,6 +549,30 @@ export type User = z.infer<typeof UserSchema>;`,
       q: "How is this different from quicktype?",
       a: "Same underlying idea, but focused on developer speed: paste-and-copy in one screen, no schema wizard, and grouped with 55+ other tools (JSON formatter, JSON diff, YAML converter, mock data) you already use daily.",
     },
+    {
+      q: "How do I convert JSON to a TypeScript interface online?",
+      a: "Paste your JSON into the input pane above, set a root name such as `User`, keep the output mode on `interface`, and copy the generated TypeScript. Nothing is uploaded — the whole JSON to TypeScript conversion runs in your browser.",
+    },
+    {
+      q: "Can I generate a .d.ts declaration file from JSON?",
+      a: "Yes. Generate the interfaces, then paste them into a `types.d.ts` file and add `export` (or `declare`) as needed. The output is plain TypeScript, so it works in `.ts`, `.tsx` and `.d.ts` files alike.",
+    },
+    {
+      q: "Does it convert JSON Schema to TypeScript too?",
+      a: "This tool infers types from a JSON *sample* (an actual payload), which is what most developers have on hand. For a JSON Schema document, paste a representative example instance instead — you'll get the same interfaces without writing a schema config.",
+    },
+    {
+      q: "Can I convert an array of JSON objects into one type?",
+      a: "Yes. Paste the whole array and the converter merges every element into a single interface: shared fields stay required, fields that appear in only some items become optional, and conflicting primitive types become unions.",
+    },
+    {
+      q: "Does it support snake_case keys and invalid identifiers?",
+      a: "Yes. Keys like `created_at`, `user-id` or `2fa_enabled` are preserved and quoted where TypeScript requires it, so the generated types match your API exactly instead of silently renaming fields.",
+    },
+    {
+      q: "Is there a limit on JSON size?",
+      a: "No hard limit. Payloads of a few megabytes convert in well under a second because inference is local; very large files are only bounded by your browser's memory.",
+    },
   ],
   related: [
     { slug: "json-formatter", label: "JSON Formatter" },
