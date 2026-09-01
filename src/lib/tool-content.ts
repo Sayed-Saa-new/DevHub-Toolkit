@@ -714,3 +714,704 @@ graphql-vs-rest-the-real-story`,
     { slug: "json-formatter", label: "JSON Formatter" },
   ],
 };
+
+TOOL_CONTENT["clamp-calculator"] = {
+  intro:
+    "The CSS clamp() calculator builds fluid typography and spacing in one step: give it a minimum size, a maximum size and the viewport range they should scale between, and it returns a ready-to-paste clamp() value with correct rem math. No media queries, no magic numbers, and a live preview so you can see the scaling before you ship it.",
+  headings: {
+    features: "What the CSS clamp calculator does",
+    examples: "CSS clamp() examples for fluid type and spacing",
+    useCases: "When to use clamp() instead of media queries",
+    faq: "CSS clamp() — frequently asked questions",
+    related: "Related CSS and design tools",
+  },
+  features: [
+    {
+      title: "Accurate rem math",
+      body: "Slope and intercept are computed from your min/max viewport widths, so the value hits your exact sizes at both ends of the range.",
+    },
+    {
+      title: "px or rem output",
+      body: "Switch units without recalculating. rem output respects a 16px root by default and stays accessible when users zoom.",
+    },
+    {
+      title: "Live preview",
+      body: "Resize the preview to watch the text or spacing interpolate — no need to guess how it behaves at 768px.",
+    },
+    {
+      title: "Copy-ready CSS",
+      body: "One click copies font-size: clamp(...) or any property you are scaling, ready for Tailwind arbitrary values too.",
+    },
+  ],
+  howTo: {
+    name: "How to calculate a CSS clamp() value",
+    steps: [
+      {
+        name: "Set min and max size",
+        text: "Enter the smallest size for mobile and the largest size for desktop, e.g. 16px and 24px.",
+      },
+      {
+        name: "Set the viewport range",
+        text: "Pick the viewport widths the scaling happens between — 320px to 1280px covers most sites.",
+      },
+      {
+        name: "Choose the unit",
+        text: "Use rem for typography so browser zoom and user font-size settings still work.",
+      },
+      {
+        name: "Copy the clamp() value",
+        text: "Paste the generated clamp() into your CSS, Tailwind config or arbitrary class.",
+      },
+    ],
+  },
+  useCases: [
+    {
+      title: "Fluid typography",
+      body: "Scale headings smoothly from mobile to desktop without three breakpoints per heading level.",
+    },
+    {
+      title: "Fluid spacing",
+      body: "Use clamp() on padding, margin and gap so section rhythm compresses gracefully on small screens.",
+    },
+    {
+      title: "Design systems",
+      body: "Generate a full type scale once and store the clamp values as CSS custom properties or design tokens.",
+    },
+  ],
+  examples: [
+    {
+      prompt: "Fluid heading: 28px at 320px viewport, 56px at 1280px",
+      dialect: "CSS",
+      sql: "h1 {\n  font-size: clamp(1.75rem, 1.167rem + 2.917vw, 3.5rem);\n}",
+    },
+    {
+      prompt: "Fluid section padding: 24px to 96px",
+      dialect: "CSS",
+      sql: ".section {\n  padding-block: clamp(1.5rem, 0.75rem + 3.75vw, 6rem);\n}",
+    },
+  ],
+  faq: [
+    {
+      q: "How does clamp() work in CSS?",
+      a: "clamp(MIN, PREFERRED, MAX) returns the preferred value but never below MIN or above MAX. The preferred value usually mixes a rem base with a vw slope so it scales with the viewport.",
+    },
+    {
+      q: "How do I calculate the middle value for clamp?",
+      a: "Slope = (maxSize - minSize) / (maxViewport - minViewport); the vw part is slope x 100 and the rem part is minSize - slope x minViewport. This calculator does that math for you.",
+    },
+    {
+      q: "Should I use px or rem in clamp()?",
+      a: "Use rem for the min and max so the value respects the user's browser font size. Keeping px there can break accessibility when someone increases default text size.",
+    },
+    {
+      q: "Does clamp() replace media queries?",
+      a: "For sizing, mostly yes. Media queries are still better for layout changes such as switching a grid from one column to three.",
+    },
+    {
+      q: "Is clamp() supported in all browsers?",
+      a: "Yes — Chrome, Edge, Firefox and Safari have supported clamp() since 2020, so it is safe for production.",
+    },
+  ],
+  related: [
+    { slug: "box-shadow", label: "Box Shadow Generator" },
+    { slug: "border-radius", label: "Border Radius" },
+    { slug: "mesh-gradient", label: "Mesh Gradient" },
+    { slug: "color", label: "Color Converter" },
+  ],
+};
+
+TOOL_CONTENT["image-base64"] = {
+  intro:
+    "Convert any image to a Base64 data URL right in your browser. Drop a PNG, JPG, SVG, WebP or GIF and get an inline data:image string you can paste into CSS, HTML, JSON or an email template. Nothing is uploaded — the encoding happens locally with the FileReader API.",
+  headings: {
+    features: "What the image to Base64 converter does",
+    examples: "Base64 image examples for HTML and CSS",
+    useCases: "When to inline images as Base64",
+    faq: "Image to Base64 — frequently asked questions",
+    related: "Related encoding tools",
+  },
+  features: [
+    {
+      title: "Any common format",
+      body: "PNG, JPEG, WebP, GIF, SVG and ICO are all encoded to a valid data URL with the correct MIME type.",
+    },
+    {
+      title: "100% client-side",
+      body: "Your image never leaves the browser, so it is safe for private assets, logos and screenshots.",
+    },
+    {
+      title: "Ready-made snippets",
+      body: "Copy the raw Base64, a full data URL, an <img> tag or a CSS background-image rule.",
+    },
+    {
+      title: "Size feedback",
+      body: "See the encoded size before you paste — Base64 adds roughly 33% overhead to the original file.",
+    },
+  ],
+  howTo: {
+    name: "How to convert an image to Base64",
+    steps: [
+      {
+        name: "Select the image",
+        text: "Drag and drop a file or click to browse. Small icons and logos work best.",
+      },
+      {
+        name: "Let it encode",
+        text: "The data URL appears instantly; nothing is uploaded to a server.",
+      },
+      { name: "Pick the output", text: "Choose raw Base64, a data URL, an img tag or a CSS rule." },
+      {
+        name: "Copy and paste",
+        text: "Drop the snippet into your HTML, CSS, JSON payload or email template.",
+      },
+    ],
+  },
+  useCases: [
+    {
+      title: "Inline icons in CSS",
+      body: "Avoid an extra HTTP request for tiny icons, spinners and pattern backgrounds.",
+    },
+    {
+      title: "Email templates",
+      body: "Some email clients need inline images; a data URL keeps the asset inside the HTML.",
+    },
+    {
+      title: "Single-file demos",
+      body: "Ship a self-contained HTML file, CodePen or bug report with the image embedded.",
+    },
+  ],
+  examples: [
+    {
+      prompt: "Inline an image in HTML",
+      dialect: "HTML",
+      sql: '<img src="data:image/png;base64,iVBORw0KGgoAAAANS..." alt="Logo" />',
+    },
+    {
+      prompt: "Use a data URL as a CSS background",
+      dialect: "CSS",
+      sql: ".hero {\n  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0...');\n}",
+    },
+  ],
+  faq: [
+    {
+      q: "How do I convert an image to Base64?",
+      a: "Upload it here and copy the generated data URL, or in JavaScript use FileReader.readAsDataURL(file) — this tool is that API with a UI around it.",
+    },
+    {
+      q: "How do I add a Base64 image to HTML?",
+      a: 'Put the whole data URL in the src attribute: <img src="data:image/png;base64,..." alt="..." />. Same string works in CSS url().',
+    },
+    {
+      q: "Does Base64 make images bigger?",
+      a: "Yes, about 33% larger than the binary file. Inline only small assets — anything above ~10KB is usually better served as a normal file.",
+    },
+    {
+      q: "Is my image uploaded anywhere?",
+      a: "No. Encoding runs in your browser with the FileReader API, so the file never touches a server.",
+    },
+    {
+      q: "How do I convert Base64 back to an image?",
+      a: "Paste the data URL into your browser address bar, or decode the Base64 string to a Blob with atob() and createObjectURL().",
+    },
+  ],
+  related: [
+    { slug: "base64", label: "Base64 Encoder" },
+    { slug: "image-compressor", label: "Image Compressor" },
+    { slug: "svg-optimizer", label: "SVG Optimizer" },
+    { slug: "favicon-generator", label: "Favicon Generator" },
+  ],
+};
+
+TOOL_CONTENT["jwt-decoder"] = {
+  intro:
+    "Paste a JSON Web Token and instantly see its header, payload and signature, with expiry and issued-at timestamps rendered as readable dates. Decoding runs entirely in your browser, so you can safely inspect tokens from staging and production without pasting secrets into a remote service.",
+  headings: {
+    features: "What the JWT decoder shows you",
+    examples: "JWT structure examples",
+    useCases: "When to decode a JWT",
+    faq: "JWT decoding — frequently asked questions",
+    related: "Related auth and encoding tools",
+  },
+  features: [
+    {
+      title: "Header, payload, signature",
+      body: "Each of the three Base64URL segments is decoded and pretty-printed as JSON.",
+    },
+    {
+      title: "Human-readable claims",
+      body: "exp, iat and nbf are converted to local dates so you can see at a glance whether a token is expired.",
+    },
+    {
+      title: "Algorithm detection",
+      body: "Shows the alg and typ from the header — handy when debugging HS256 vs RS256 mismatches.",
+    },
+    {
+      title: "Offline and private",
+      body: "No network request. Tokens from your own systems stay on your machine.",
+    },
+  ],
+  howTo: {
+    name: "How to decode a JWT",
+    steps: [
+      {
+        name: "Copy the token",
+        text: "Grab it from an Authorization: Bearer header, a cookie or your auth provider dashboard.",
+      },
+      {
+        name: "Paste it in",
+        text: "Drop the full token — the three dot-separated segments — into the input.",
+      },
+      {
+        name: "Read the claims",
+        text: "Inspect sub, role, exp and any custom claims in the decoded payload.",
+      },
+      {
+        name: "Check the expiry",
+        text: "Compare exp with the current time to confirm whether the token is still valid.",
+      },
+    ],
+  },
+  useCases: [
+    {
+      title: "Debugging 401s",
+      body: "Confirm whether the token is expired, issued by the wrong issuer or missing a required claim.",
+    },
+    {
+      title: "Checking roles and scopes",
+      body: "Verify that your backend is embedding the role, tenant or permission claims your API expects.",
+    },
+    {
+      title: "Learning how JWTs work",
+      body: "See exactly how the header and payload are Base64URL-encoded and why the signature matters.",
+    },
+  ],
+  examples: [
+    { prompt: "Decoded header", dialect: "JSON", sql: '{\n  "alg": "HS256",\n  "typ": "JWT"\n}' },
+    {
+      prompt: "Decoded payload",
+      dialect: "JSON",
+      sql: '{\n  "sub": "user_123",\n  "role": "admin",\n  "iat": 1735689600,\n  "exp": 1735776000\n}',
+    },
+  ],
+  faq: [
+    {
+      q: "Is decoding a JWT the same as verifying it?",
+      a: "No. Decoding only reads the Base64URL payload — anyone can do that. Verification checks the signature with the secret or public key and must happen server-side.",
+    },
+    {
+      q: "Is it safe to paste a token here?",
+      a: "Decoding happens fully in your browser and nothing is sent to a server. Still, treat live production tokens as credentials.",
+    },
+    {
+      q: "Why is my JWT payload unreadable?",
+      a: "It is probably a JWE (encrypted token) rather than a signed JWS, or the token was truncated when copied.",
+    },
+    {
+      q: "What do exp, iat and nbf mean?",
+      a: "exp is expiry, iat is issued-at and nbf is not-before — all Unix timestamps in seconds. The decoder renders them as dates.",
+    },
+    {
+      q: "Can I create a token here too?",
+      a: "Yes — use the JWT Generator tool to sign HS256 tokens with your own secret and custom claims.",
+    },
+  ],
+  related: [
+    { slug: "jwt-generator", label: "JWT Generator" },
+    { slug: "base64", label: "Base64 Encoder" },
+    { slug: "hash", label: "Hash Generator" },
+    { slug: "uuid", label: "UUID Generator" },
+  ],
+};
+
+TOOL_CONTENT["hash"] = {
+  intro:
+    "Generate MD5, SHA-1, SHA-256 and SHA-512 hashes from any text in your browser. Useful for verifying checksums, comparing file fingerprints, building cache keys or testing how a hashing algorithm behaves. Everything runs locally with the Web Crypto API.",
+  headings: {
+    features: "What the hash generator supports",
+    examples: "Hash output examples",
+    useCases: "When to generate a hash",
+    faq: "Hashing — frequently asked questions",
+    related: "Related security tools",
+  },
+  features: [
+    {
+      title: "Four algorithms",
+      body: "MD5, SHA-1, SHA-256 and SHA-512 computed side by side so you can compare digests instantly.",
+    },
+    {
+      title: "Web Crypto powered",
+      body: "SHA hashes use the browser's native SubtleCrypto implementation — fast and standards-compliant.",
+    },
+    {
+      title: "Hex output, one-click copy",
+      body: "Lowercase hex digests ready to paste into a checksum file, test fixture or config.",
+    },
+    {
+      title: "Nothing leaves the page",
+      body: "Input is never sent anywhere, so you can hash internal identifiers safely.",
+    },
+  ],
+  howTo: {
+    name: "How to generate a hash",
+    steps: [
+      {
+        name: "Paste your text",
+        text: "Enter the string, token or file contents you want to fingerprint.",
+      },
+      {
+        name: "Read the digests",
+        text: "MD5, SHA-1, SHA-256 and SHA-512 are all computed as you type.",
+      },
+      {
+        name: "Compare or copy",
+        text: "Copy the digest and compare it with the checksum you were given.",
+      },
+    ],
+  },
+  useCases: [
+    {
+      title: "Checksum verification",
+      body: "Confirm that a downloaded file or config string matches the published SHA-256 digest.",
+    },
+    {
+      title: "Cache keys and IDs",
+      body: "Derive a stable, short key from a longer input for caching or deduplication.",
+    },
+    {
+      title: "Learning and testing",
+      body: "See how a one-character change completely alters the digest — the avalanche effect in action.",
+    },
+  ],
+  examples: [
+    {
+      prompt: 'SHA-256 of "hello"',
+      dialect: "SHA-256",
+      sql: "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+    },
+    { prompt: 'MD5 of "hello"', dialect: "MD5", sql: "5d41402abc4b2a76b9719d911017c592" },
+  ],
+  faq: [
+    {
+      q: "Is MD5 still safe to use?",
+      a: "Not for security. MD5 and SHA-1 are broken against collision attacks — use them only for non-security checks like cache keys, and prefer SHA-256 everywhere else.",
+    },
+    {
+      q: "Can a hash be reversed?",
+      a: "No. Hashing is one-way. Short or common inputs can still be found in rainbow tables, which is why passwords need a salted, slow algorithm like bcrypt or Argon2.",
+    },
+    {
+      q: "Should I hash passwords with SHA-256?",
+      a: "No. Use bcrypt, scrypt or Argon2 with a per-user salt. Fast hashes like SHA-256 are trivially brute-forced on GPUs.",
+    },
+    {
+      q: "Is my input sent to a server?",
+      a: "No — hashing happens in your browser using the Web Crypto API.",
+    },
+    {
+      q: "What is the difference between SHA-256 and SHA-512?",
+      a: "Both are from the SHA-2 family; SHA-512 produces a longer 512-bit digest and can be faster on 64-bit hardware. SHA-256 is the common default.",
+    },
+  ],
+  related: [
+    { slug: "password", label: "Password Generator" },
+    { slug: "uuid", label: "UUID Generator" },
+    { slug: "jwt-decoder", label: "JWT Decoder" },
+    { slug: "base64", label: "Base64 Encoder" },
+  ],
+};
+
+TOOL_CONTENT["password"] = {
+  intro:
+    "Create strong, random passwords with a live entropy meter. Choose length and character sets, exclude lookalike characters, and generate as many as you need — all with the browser's cryptographically secure random number generator. Nothing is logged or transmitted.",
+  headings: {
+    features: "What the password generator offers",
+    examples: "Password strength examples",
+    useCases: "When to use a generated password",
+    faq: "Password security — frequently asked questions",
+    related: "Related security tools",
+  },
+  features: [
+    {
+      title: "Crypto-secure randomness",
+      body: "Uses crypto.getRandomValues(), not Math.random(), so the output is unpredictable.",
+    },
+    {
+      title: "Entropy meter",
+      body: "See the bit-strength of each password so you know whether it resists offline cracking.",
+    },
+    {
+      title: "Character set control",
+      body: "Toggle uppercase, lowercase, numbers and symbols, and exclude ambiguous characters like 0/O and l/1.",
+    },
+    {
+      title: "Bulk generation",
+      body: "Produce a batch of passwords at once for seeding accounts or test environments.",
+    },
+  ],
+  howTo: {
+    name: "How to generate a strong password",
+    steps: [
+      {
+        name: "Pick a length",
+        text: "16 characters or more is a good baseline; 20+ for anything critical.",
+      },
+      {
+        name: "Choose character sets",
+        text: "Include symbols and numbers unless the target system rejects them.",
+      },
+      { name: "Check the entropy", text: "Aim for 80 bits or higher for accounts that matter." },
+      {
+        name: "Copy and store it",
+        text: "Save it straight into a password manager instead of reusing it anywhere.",
+      },
+    ],
+  },
+  useCases: [
+    {
+      title: "New account signups",
+      body: "Generate a unique password per service so one breach cannot cascade.",
+    },
+    {
+      title: "Service credentials",
+      body: "Create database passwords, API secrets and admin logins for servers and CI.",
+    },
+    {
+      title: "Test data",
+      body: "Seed staging environments with realistic but throwaway credentials.",
+    },
+  ],
+  examples: [
+    { prompt: "16 chars, all sets (~104 bits)", dialect: "Strong", sql: "T7#qLm2!vZx9$Rb4" },
+    {
+      prompt: "24 chars, no ambiguous chars (~142 bits)",
+      dialect: "Very strong",
+      sql: "hK9wZq3xTm7Rb2Vn8Ldy4Pcs",
+    },
+  ],
+  faq: [
+    {
+      q: "How long should a password be?",
+      a: "At least 16 characters for normal accounts and 20+ for email, banking and infrastructure. Length beats complexity rules.",
+    },
+    {
+      q: "Is this password generator safe?",
+      a: "Yes — passwords are generated locally with the Web Crypto API and never sent over the network or stored.",
+    },
+    {
+      q: "What is password entropy?",
+      a: "A measure in bits of how unpredictable a password is. 80 bits is solid, 100+ bits is effectively uncrackable with current hardware.",
+    },
+    {
+      q: "Should I use a passphrase instead?",
+      a: "A long random passphrase is fine and easier to type. What matters is that it is random and unique per site.",
+    },
+    {
+      q: "Do I still need 2FA?",
+      a: "Yes. A strong password protects against guessing; 2FA protects you if the password leaks in a breach or phishing attack.",
+    },
+  ],
+  related: [
+    { slug: "hash", label: "Hash Generator" },
+    { slug: "uuid", label: "UUID Generator" },
+    { slug: "jwt-generator", label: "JWT Generator" },
+    { slug: "lorem", label: "Lorem Ipsum" },
+  ],
+};
+
+TOOL_CONTENT["number-base"] = {
+  intro:
+    "Convert numbers between binary, octal, decimal, hexadecimal, base32 and base36 in one view. Type in any base and every other representation updates live — handy for bitmasks, colour values, permissions, file formats and low-level debugging.",
+  headings: {
+    features: "What the number base converter does",
+    examples: "Number base conversion examples",
+    useCases: "When you need base conversion",
+    faq: "Number bases — frequently asked questions",
+    related: "Related converter tools",
+  },
+  features: [
+    {
+      title: "Six bases at once",
+      body: "Binary, octal, decimal, hex, base32 and base36 stay in sync as you type.",
+    },
+    {
+      title: "Big number safe",
+      body: "Conversions use BigInt where needed, so large values do not lose precision.",
+    },
+    {
+      title: "Input validation",
+      body: "Invalid digits for the chosen base are flagged instead of silently producing wrong output.",
+    },
+    {
+      title: "Copy any representation",
+      body: "One click copies the value in whichever base you need.",
+    },
+  ],
+  howTo: {
+    name: "How to convert between number bases",
+    steps: [
+      {
+        name: "Choose an input base",
+        text: "Pick the base your value is currently in — for example hex for a colour code.",
+      },
+      {
+        name: "Enter the value",
+        text: "Type or paste the number; prefixes like 0x and 0b are handled.",
+      },
+      { name: "Read the conversions", text: "All other bases update instantly." },
+      {
+        name: "Copy what you need",
+        text: "Grab the binary for a bitmask or the decimal for a config file.",
+      },
+    ],
+  },
+  useCases: [
+    {
+      title: "Bitmasks and flags",
+      body: "Translate permission flags between decimal and binary to see which bits are set.",
+    },
+    {
+      title: "Colour and byte values",
+      body: "Move between hex and decimal when working with CSS colours or raw bytes.",
+    },
+    {
+      title: "Unix file permissions",
+      body: "Read octal modes like 0755 and see the exact bit pattern behind them.",
+    },
+  ],
+  examples: [
+    {
+      prompt: "Decimal 255",
+      dialect: "Conversions",
+      sql: "binary  11111111\noctal   377\nhex     FF\nbase36  73",
+    },
+    {
+      prompt: "Hex 1F4",
+      dialect: "Conversions",
+      sql: "decimal 500\nbinary  111110100\noctal   764",
+    },
+  ],
+  faq: [
+    {
+      q: "How do I convert decimal to binary?",
+      a: "Divide by 2 repeatedly and read the remainders bottom-up — or just type the decimal value here and read the binary field.",
+    },
+    {
+      q: "Why is hexadecimal used in programming?",
+      a: "One hex digit maps exactly to four bits, so bytes and colours stay compact and readable compared with long binary strings.",
+    },
+    {
+      q: "What is base36 used for?",
+      a: "Base36 uses 0-9 and a-z to encode numbers compactly — common for short IDs and URL slugs.",
+    },
+    {
+      q: "Does the converter handle very large numbers?",
+      a: "Yes, BigInt-based conversion keeps precision well beyond JavaScript's safe integer limit.",
+    },
+    {
+      q: "Can I paste 0x or 0b prefixes?",
+      a: "Yes — standard prefixes are recognised and stripped automatically.",
+    },
+  ],
+  related: [
+    { slug: "base64", label: "Base64 Encoder" },
+    { slug: "color", label: "Color Converter" },
+    { slug: "hash", label: "Hash Generator" },
+    { slug: "timestamp", label: "Timestamp Converter" },
+  ],
+};
+
+TOOL_CONTENT["html-entities"] = {
+  intro:
+    "Encode text to HTML entities or decode entities back to plain characters. Escape &, <, >, quotes and Unicode symbols so user content renders safely, or clean up a scraped page full of &amp;amp; noise. Runs entirely in your browser.",
+  headings: {
+    features: "What the HTML entity encoder does",
+    examples: "HTML entity examples",
+    useCases: "When to escape HTML entities",
+    faq: "HTML entities — frequently asked questions",
+    related: "Related text tools",
+  },
+  features: [
+    {
+      title: "Encode and decode",
+      body: "Switch direction instantly — escape raw text or unescape an entity-heavy string.",
+    },
+    {
+      title: "Named and numeric",
+      body: "Choose readable named entities (&amp;) or numeric references (&#38;) for maximum compatibility.",
+    },
+    {
+      title: "Unicode aware",
+      body: "Emoji, accented characters and non-Latin scripts convert correctly in both directions.",
+    },
+    {
+      title: "Handles double-encoding",
+      body: "Decode repeatedly to clean up strings that were escaped more than once.",
+    },
+  ],
+  howTo: {
+    name: "How to encode or decode HTML entities",
+    steps: [
+      { name: "Paste your text", text: "Drop in raw text or a string full of entity references." },
+      {
+        name: "Pick a direction",
+        text: "Encode to escape special characters, decode to turn entities back into characters.",
+      },
+      {
+        name: "Choose the entity style",
+        text: "Named entities are readable; numeric ones work everywhere.",
+      },
+      { name: "Copy the result", text: "Paste the safe string into your template, CMS or email." },
+    ],
+  },
+  useCases: [
+    {
+      title: "Preventing XSS in templates",
+      body: "Escape user-generated content before it is injected into HTML markup.",
+    },
+    {
+      title: "Cleaning scraped content",
+      body: "Decode &amp;amp;lt; noise from feeds, exports and legacy CMS data.",
+    },
+    {
+      title: "Showing code samples",
+      body: "Escape angle brackets so HTML snippets display as text instead of rendering.",
+    },
+  ],
+  examples: [
+    {
+      prompt: "Encode a code snippet",
+      dialect: "Encode",
+      sql: 'input:  <div class="a">Tom & Jerry</div>\noutput: &lt;div class=&quot;a&quot;&gt;Tom &amp; Jerry&lt;/div&gt;',
+    },
+    {
+      prompt: "Decode entity noise",
+      dialect: "Decode",
+      sql: "input:  Caf&eacute; &amp; Bar\noutput: Café & Bar",
+    },
+  ],
+  faq: [
+    {
+      q: "Which characters must be escaped in HTML?",
+      a: "At minimum &, <, > and, inside attributes, single and double quotes. Escaping those prevents markup injection.",
+    },
+    {
+      q: "Named or numeric entities — which is better?",
+      a: "Named entities are easier to read; numeric references are safer for obscure characters and non-HTML contexts like XML.",
+    },
+    {
+      q: "Why does my text show &amp;amp;?",
+      a: "It was encoded twice. Decode it a second time to get the original string.",
+    },
+    {
+      q: "Does escaping fully prevent XSS?",
+      a: "It is essential but context-dependent. HTML, attribute, JavaScript and URL contexts each need the right escaping strategy.",
+    },
+    { q: "Is my text uploaded?", a: "No — encoding and decoding happen locally in your browser." },
+  ],
+  related: [
+    { slug: "url-codec", label: "URL Encoder" },
+    { slug: "string-escape", label: "String Escape" },
+    { slug: "base64", label: "Base64 Encoder" },
+    { slug: "markdown", label: "Markdown Editor" },
+  ],
+};
