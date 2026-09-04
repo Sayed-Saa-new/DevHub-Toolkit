@@ -800,3 +800,192 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
     ],
   }, // favicon generator — 60,500/mo, KDI 71 (long-tail winnable)
 };
+
+// ── Batch: high-intent generator & converter tools previously missing overrides ──
+TOOL_SEO["hash"] = {
+  title: "Hash Generator — MD5, SHA-1, SHA-256, SHA-512 Online",
+  description:
+    "Generate MD5, SHA-1, SHA-256 and SHA-512 hashes from text instantly. Free, in-browser hash calculator with hex output and one-click copy — no upload, no signup.",
+  keywords: [
+    "hash generator",
+    "sha256 generator online",
+    "md5 hash generator",
+    "sha512 hash online",
+    "checksum calculator",
+    "text to sha256",
+    "online hash calculator free",
+  ],
+  h1: "Hash Generator",
+  tagline: "MD5, SHA-1, SHA-256 and SHA-512 digests computed in your browser.",
+};
+
+TOOL_SEO["password"] = {
+  title: "Strong Password Generator — Secure & Random, Free",
+  description:
+    "Generate strong random passwords with a live entropy meter. Pick length, symbols and numbers, exclude lookalike characters — generated locally, never stored.",
+  keywords: [
+    "password generator",
+    "strong password generator",
+    "random password generator online",
+    "secure password generator free",
+    "16 character password generator",
+    "password entropy calculator",
+  ],
+  h1: "Strong Password Generator",
+  tagline: "Cryptographically secure passwords with a live entropy meter.",
+};
+
+TOOL_SEO["uuid"] = {
+  title: "UUID Generator — v4 & v7 UUIDs Online, Free",
+  description:
+    "Generate UUID v4 and v7 identifiers in bulk. Uppercase, hyphen-free and bracketed formats with one-click copy — runs entirely in your browser.",
+  keywords: [
+    "uuid generator",
+    "uuid v4 generator online",
+    "guid generator",
+    "bulk uuid generator",
+    "random uuid online free",
+  ],
+  h1: "UUID Generator",
+  tagline: "Bulk UUID v4 and v7 generation with copy-ready formats.",
+};
+
+TOOL_SEO["base64"] = {
+  title: "Base64 Encoder & Decoder — Online, Free",
+  description:
+    "Encode text to Base64 or decode Base64 back to plain text instantly. UTF-8 safe, URL-safe variant supported, 100% client-side — nothing is uploaded.",
+  keywords: [
+    "base64 encode",
+    "base64 decode online",
+    "base64 encoder free",
+    "base64 converter",
+    "url safe base64 encoder",
+    "utf-8 base64 encode online",
+  ],
+  h1: "Base64 Encoder and Decoder",
+  tagline: "UTF-8 safe Base64 encoding and decoding in your browser.",
+};
+
+TOOL_SEO["color"] = {
+  title: "Color Converter — HEX, RGB, HSL, OKLCH",
+  description:
+    "Convert colors between HEX, RGB, HSL and OKLCH with a live preview and contrast info. Free browser-based color converter for CSS and design systems.",
+  keywords: [
+    "color converter",
+    "hex to rgb converter",
+    "rgb to hsl online",
+    "hex to hsl",
+    "oklch color converter",
+    "css color converter free",
+  ],
+  h1: "Color Converter",
+  tagline: "HEX, RGB, HSL and OKLCH conversions with a live preview.",
+};
+
+TOOL_SEO["timestamp"] = {
+  title: "Unix Timestamp Converter — Epoch to Date, Free",
+  description:
+    "Convert Unix timestamps to human-readable dates and back, in seconds or milliseconds, with UTC and local time output. Free, instant, no signup.",
+  keywords: [
+    "unix timestamp converter",
+    "epoch converter online",
+    "timestamp to date",
+    "date to unix timestamp",
+    "epoch to human readable date",
+    "milliseconds timestamp converter",
+  ],
+  h1: "Unix Timestamp Converter",
+  tagline: "Epoch to date and back, in seconds or milliseconds, UTC and local.",
+};
+
+TOOL_SEO["regex"] = {
+  title: "Regex Tester — Live Match Highlighting, Free",
+  description:
+    "Test regular expressions against sample text with live match highlighting, capture groups and flags. Free in-browser regex tester for JavaScript patterns.",
+  keywords: [
+    "regex tester",
+    "regex tester online free",
+    "javascript regex tester",
+    "regular expression tester",
+    "regex match highlighter",
+    "regex capture groups tester",
+  ],
+  h1: "Regex Tester",
+  tagline: "Live match highlighting, capture groups and flag toggles.",
+};
+
+TOOL_SEO["lorem"] = {
+  title: "Lorem Ipsum Generator — Paragraphs, Words, Lists",
+  description:
+    "Generate lorem ipsum placeholder text by paragraphs, sentences, words or list items. Copy-ready dummy text for mockups and design systems — free, instant.",
+  keywords: [
+    "lorem ipsum generator",
+    "dummy text generator",
+    "placeholder text generator online",
+    "lorem ipsum paragraphs",
+    "filler text generator free",
+  ],
+  h1: "Lorem Ipsum Generator",
+  tagline: "Placeholder text by paragraph, sentence, word or list item.",
+};
+
+TOOL_SEO["cron"] = {
+  title: "Cron Expression Parser — Explain & Preview Runs",
+  description:
+    "Parse a cron expression into plain English and preview the next scheduled runs. Free cron generator and validator for crontab, CI jobs and schedulers.",
+  keywords: [
+    "cron expression parser",
+    "cron generator online",
+    "crontab explained",
+    "cron expression to english",
+    "next cron run calculator",
+    "cron validator free",
+  ],
+  h1: "Cron Expression Parser",
+  tagline: "Plain-English cron explanations plus the next scheduled runs.",
+};
+
+TOOL_SEO["qrcode"] = {
+  title: "QR Code Generator — PNG & SVG Download, Free",
+  description:
+    "Create QR codes for links, text, Wi-Fi and contact details. Adjustable size and error correction, PNG and SVG download — generated in your browser, free.",
+  keywords: [
+    "qr code generator",
+    "free qr code generator no signup",
+    "qr code generator svg",
+    "url to qr code",
+    "wifi qr code generator",
+  ],
+  h1: "QR Code Generator",
+  tagline: "Links, text and Wi-Fi QR codes with PNG and SVG export.",
+};
+
+TOOL_SEO["slugify"] = {
+  title: "Slugify — Text to URL Slug Converter, Free",
+  description:
+    "Turn any title into a clean, URL-safe slug with Unicode transliteration, custom separators and bulk mode. Free slug generator that runs in your browser.",
+  keywords: [
+    "slugify online",
+    "url slug generator",
+    "text to slug converter",
+    "seo slug generator free",
+    "bulk slug generator",
+  ],
+  h1: "Slugify",
+  tagline: "Clean, URL-safe slugs with Unicode transliteration and bulk mode.",
+};
+
+TOOL_SEO["markdown"] = {
+  title: "Markdown Editor — Live Preview & Export, Free",
+  description:
+    "Write Markdown with a live split preview, formatting toolbar, word count and .md or .html export. Free online Markdown editor with local autosave.",
+  keywords: [
+    "markdown editor online",
+    "markdown live preview",
+    "markdown to html editor",
+    "free markdown editor no signup",
+    "markdown editor with export",
+  ],
+  h1: "Markdown Editor",
+  tagline: "Split-view live preview, toolbar shortcuts and .md / .html export.",
+};
