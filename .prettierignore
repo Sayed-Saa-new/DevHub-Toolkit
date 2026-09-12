@@ -2,6 +2,9 @@ node_modules
 dist
 .output
 .vinxi
+.workspace
+.lovable
+.tanstack
 pnpm-lock.yaml
 package-lock.json
 bun.lock

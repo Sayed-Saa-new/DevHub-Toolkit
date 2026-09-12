@@ -187,7 +187,7 @@ export const Route = createFileRoute("/t/$slug")({
 });
 
 function ToolRoute() {
-  const { slug } = Route.useLoaderData();
+  const { slug } = Route.useParams();
   const tool = TOOLS_BY_SLUG[slug]!;
   const Component = TOOL_COMPONENTS[tool.slug] ?? ComingSoon;
   return (

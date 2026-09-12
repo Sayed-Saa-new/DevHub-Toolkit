@@ -7,12 +7,16 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useFavorites, useRecents, useSeen } from "@/lib/storage";
 import type { Tool } from "@/lib/tools";
+import { TOOL_SEO } from "@/lib/seo";
 
 export function ToolShell({ tool, children }: { tool: Tool; children: ReactNode }) {
   const { isFav, toggle } = useFavorites();
   const { push } = useRecents();
   const { markSeen } = useSeen();
   const favored = isFav(tool.slug);
+  const seo = TOOL_SEO[tool.slug];
+  const heading = seo?.h1 ?? tool.name;
+  const tagline = seo?.tagline ?? tool.description;
 
   useEffect(() => {
     push(tool.slug);
@@ -34,12 +38,12 @@ export function ToolShell({ tool, children }: { tool: Tool; children: ReactNode 
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <h1 className="text-xl md:text-2xl font-semibold tracking-tight">{tool.name}</h1>
+            <h1 className="text-xl md:text-2xl font-semibold tracking-tight">{heading}</h1>
             <Badge variant="outline" className="text-[10px] font-mono uppercase">
               {tool.category}
             </Badge>
           </div>
-          <p className="text-sm text-muted-foreground mt-1">{tool.description}</p>
+          <p className="text-sm text-muted-foreground mt-1 max-w-2xl">{tagline}</p>
         </div>
         <Button
           variant="outline"

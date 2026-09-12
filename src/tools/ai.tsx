@@ -1,11 +1,13 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
-import { Loader2, Send, Sparkles, StopCircle } from "lucide-react";
+import { KeyRound, Loader2, Send, Sparkles, StopCircle } from "lucide-react";
 import { useMemo, useState } from "react";
 import { marked } from "marked";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { ByokDialog } from "@/components/byok-dialog";
+import { maskKey, providerMeta, useByok } from "@/lib/byok";
 import { CopyButton, Field, Panel } from "./primitives";
 
 type Mode = "explain" | "optimize" | "commit" | "sql" | "convert" | "error" | "regex" | "tests";
@@ -31,15 +33,22 @@ function AiWorkbench({
   inputTitle?: string;
   inputRows?: number;
 }) {
+  const { settings, hasKey } = useByok();
+
   const transport = useMemo(
     () =>
       new DefaultChatTransport({
         api: "/api/ai",
+        headers: {
+          "x-byok-provider": settings.provider,
+          "x-byok-model": settings.model,
+          "x-byok-key": settings.apiKey,
+        },
         prepareSendMessagesRequest: ({ messages }) => ({
           body: { mode, messages },
         }),
       }),
-    [mode],
+    [mode, settings.provider, settings.model, settings.apiKey],
   );
 
   const { messages, sendMessage, status, stop, error, setMessages } = useChat({
@@ -62,7 +71,7 @@ function AiWorkbench({
 
   const onRun = () => {
     const text = input.trim();
-    if (!text || busy) return;
+    if (!text || busy || !hasKey) return;
     sendMessage({ text });
   };
 
@@ -74,6 +83,24 @@ function AiWorkbench({
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       <div className="space-y-3">
+        <div className="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-muted/30 px-3 py-2">
+          <KeyRound className="size-3.5 text-muted-foreground" />
+          <span className="text-xs text-muted-foreground">
+            {hasKey ? (
+              <>
+                Using your <strong>{providerMeta(settings.provider).label}</strong> key{" "}
+                <span className="font-mono">{maskKey(settings.apiKey)}</span> ·{" "}
+                <span className="font-mono">{settings.model}</span>
+              </>
+            ) : (
+              "Add your own API key to use the AI tools — it stays in your browser."
+            )}
+          </span>
+          <span className="ml-auto">
+            <ByokDialog />
+          </span>
+        </div>
+
         <Field label={inputTitle}>
           <Textarea
             value={input}
@@ -84,7 +111,7 @@ function AiWorkbench({
           />
         </Field>
         <div className="flex items-center gap-2">
-          <Button onClick={onRun} disabled={busy || !input.trim()} className="gap-2">
+          <Button onClick={onRun} disabled={busy || !input.trim() || !hasKey} className="gap-2">
             {busy ? <Loader2 className="size-3.5 animate-spin" /> : <Send className="size-3.5" />}
             {busy ? "Generating…" : submitLabel}
           </Button>
@@ -99,7 +126,7 @@ function AiWorkbench({
             </Button>
           )}
           <span className="ml-auto text-[10px] text-muted-foreground flex items-center gap-1">
-            <Sparkles className="size-3" /> Powered by Lovable AI
+            <Sparkles className="size-3" /> Runs on your own API key
           </span>
         </div>
         {error && (
