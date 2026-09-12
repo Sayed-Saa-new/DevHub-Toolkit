@@ -989,3 +989,20 @@ TOOL_SEO["markdown"] = {
   h1: "Markdown Editor",
   tagline: "Split-view live preview, toolbar shortcuts and .md / .html export.",
 };
+
+TOOL_SEO["ai-convert"] = {
+  title: "AI Code Translator — Convert Code Between Languages",
+  description:
+    "Translate code between Python, TypeScript, JavaScript, Go, Rust, Java, C# and PHP with AI. Keeps logic and idioms intact — bring your own API key, free.",
+  keywords: [
+    "ai code translate",
+    "ai code converter",
+    "code translator online",
+    "python to typescript converter",
+    "javascript to python converter",
+    "translate code between languages ai",
+    "convert code to go online",
+  ],
+  h1: "AI Code Translator",
+  tagline: "Convert code between languages while keeping logic and idioms intact.",
+};
