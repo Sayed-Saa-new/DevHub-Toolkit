@@ -1415,3 +1415,229 @@ TOOL_CONTENT["html-entities"] = {
     { slug: "markdown", label: "Markdown Editor" },
   ],
 };
+
+TOOL_CONTENT["ai-convert"] = {
+  intro:
+    "Paste code in one language and get an idiomatic translation in another. The AI code translator converts between Python, JavaScript, TypeScript, Go, Rust, Java, C#, PHP and more — preserving control flow, error handling and naming conventions instead of doing a literal token swap. You bring your own API key, so your code goes straight from your browser to your chosen model provider.",
+  headings: {
+    features: "What the AI code translator does",
+    examples: "Code translation examples",
+    useCases: "When to translate code between languages",
+    faq: "AI code translation — frequently asked questions",
+    related: "Related AI developer tools",
+  },
+  features: [
+    {
+      title: "Idiomatic, not literal",
+      body: "List comprehensions become map/filter, Go errors become exceptions, and naming follows each language's conventions.",
+    },
+    {
+      title: "12+ languages",
+      body: "Python, JavaScript, TypeScript, Go, Rust, Java, Kotlin, C#, C++, PHP, Ruby and SQL in any direction.",
+    },
+    {
+      title: "Keeps structure intact",
+      body: "Functions, classes, types and comments are carried across so the translated file stays reviewable.",
+    },
+    {
+      title: "Bring your own key",
+      body: "Use your own Gemini, OpenAI, OpenRouter or Groq key — stored locally in your browser, never on our servers.",
+    },
+  ],
+  howTo: {
+    name: "How to translate code between languages with AI",
+    steps: [
+      {
+        name: "Paste your code",
+        text: "Drop in a function, class or whole file from the source language.",
+      },
+      {
+        name: "Pick source and target",
+        text: "Choose what you are converting from and what you want out.",
+      },
+      {
+        name: "Run the translation",
+        text: "The model rewrites the code idiomatically in the target language.",
+      },
+      {
+        name: "Review and copy",
+        text: "Read the output, adjust imports for your project, then copy it across.",
+      },
+    ],
+  },
+  useCases: [
+    {
+      title: "Porting a script to another stack",
+      body: "Move a Python data script to TypeScript so it can run inside an existing Node service.",
+    },
+    {
+      title: "Learning a new language",
+      body: "See how code you already understand looks in Rust or Go, written the way that community writes it.",
+    },
+    {
+      title: "Migrating a legacy service",
+      body: "Translate PHP or Java modules file by file as a starting point for a modern rewrite.",
+    },
+    {
+      title: "Sharing snippets across teams",
+      body: "Give backend and frontend engineers the same algorithm in the language each one works in.",
+    },
+  ],
+  examples: [
+    {
+      prompt: "Python to TypeScript",
+      dialect: "Python → TypeScript",
+      sql: "def total(items):\n    return sum(i['price'] for i in items)\n\n// →\nconst total = (items: { price: number }[]) =>\n  items.reduce((sum, i) => sum + i.price, 0);",
+    },
+    {
+      prompt: "JavaScript to Go",
+      dialect: "JavaScript → Go",
+      sql: 'const greet = (name) => `Hi ${name}`;\n\n// →\nfunc Greet(name string) string {\n\treturn fmt.Sprintf("Hi %s", name)\n}',
+    },
+  ],
+  faq: [
+    {
+      q: "Can AI translate code between programming languages accurately?",
+      a: "For self-contained logic — algorithms, data transforms, utility functions — accuracy is high. Code that depends on framework internals or native libraries needs manual review, because the target language may have no direct equivalent.",
+    },
+    {
+      q: "Which languages are supported?",
+      a: "Python, JavaScript, TypeScript, Go, Rust, Java, Kotlin, C#, C++, PHP, Ruby and SQL, in any source-to-target combination.",
+    },
+    {
+      q: "Is the translated code production ready?",
+      a: "Treat it as a strong first draft. Compile it, run your tests and check dependencies before shipping.",
+    },
+    {
+      q: "Do I need to pay for anything?",
+      a: "The tool is free. You supply your own model API key, so you only pay your provider for the tokens you use.",
+    },
+    {
+      q: "Is my code stored or used for training?",
+      a: "We never store it. Your key and request go directly to the provider you selected; nothing is retained by DevHub.",
+    },
+    {
+      q: "What is the size limit for a translation?",
+      a: "It depends on your model's context window. For large files, translate one class or module at a time for the best results.",
+    },
+  ],
+  related: [
+    { slug: "ai-sql", label: "AI SQL Generator" },
+    { slug: "ai-error", label: "AI Error Explainer" },
+    { slug: "json-to-ts", label: "JSON to TypeScript" },
+    { slug: "curl-to-code", label: "cURL to Code" },
+  ],
+};
+
+TOOL_CONTENT["qrcode"] = {
+  intro:
+    "Create a QR code for a link, plain text, Wi-Fi network or contact card and download it as a crisp PNG or infinitely scalable SVG. Adjust size, margin and error-correction level, then export artwork that stays sharp from a business card to a shop window. Everything is generated in your browser — no signup, no tracking, no expiring codes.",
+  headings: {
+    features: "What the QR code generator does",
+    examples: "QR code examples",
+    useCases: "When to generate a QR code",
+    faq: "QR codes — frequently asked questions",
+    related: "Related generator tools",
+  },
+  features: [
+    {
+      title: "PNG and SVG download",
+      body: "Export a raster PNG for the web or a vector SVG that scales to print and large-format signage without blurring.",
+    },
+    {
+      title: "Error correction levels",
+      body: "Pick L, M, Q or H — higher levels keep the code scannable even when part of it is damaged or covered by a logo.",
+    },
+    {
+      title: "Size and margin control",
+      body: "Set the pixel size and the quiet zone so scanners lock on reliably at any distance.",
+    },
+    {
+      title: "Permanent, static codes",
+      body: "The data is encoded in the image itself. No redirect service, so the code never expires and is never rate-limited.",
+    },
+  ],
+  howTo: {
+    name: "How to create and download a QR code",
+    steps: [
+      {
+        name: "Enter your content",
+        text: "Paste a URL or type the text you want the code to carry.",
+      },
+      {
+        name: "Set size and correction",
+        text: "Choose the pixel size and an error-correction level to suit where it will be used.",
+      },
+      {
+        name: "Check the preview",
+        text: "Scan the live preview with your phone to confirm it resolves correctly.",
+      },
+      {
+        name: "Download PNG or SVG",
+        text: "Save the PNG for screens, or the SVG for print and vector editing.",
+      },
+    ],
+  },
+  useCases: [
+    {
+      title: "Print and packaging",
+      body: "Use the SVG so the code prints razor-sharp on labels, posters and packaging at any size.",
+    },
+    {
+      title: "Menus and signage",
+      body: "Point guests at a digital menu or booking page with a high-correction code that survives wear.",
+    },
+    {
+      title: "Events and tickets",
+      body: "Encode ticket links or check-in URLs into PNGs you can drop straight into an email template.",
+    },
+    {
+      title: "Docs and slides",
+      body: "Add a scannable link to a deck or PDF so readers can jump to a repo or demo instantly.",
+    },
+  ],
+  examples: [
+    {
+      prompt: "Encode a website link",
+      dialect: "URL",
+      sql: "https://devhub.flinkeo.online/tools",
+    },
+    {
+      prompt: "Encode Wi-Fi credentials",
+      dialect: "Wi-Fi",
+      sql: "WIFI:T:WPA;S:CafeGuest;P:latte2026;;",
+    },
+  ],
+  faq: [
+    {
+      q: "Can I download a QR code as PNG and SVG?",
+      a: "Yes. PNG suits screens and email; SVG is vector, so it scales to any print size without losing sharpness. If your printer asks for EPS, open the SVG in Illustrator, Inkscape or a free converter and export EPS from there.",
+    },
+    {
+      q: "Do these QR codes expire?",
+      a: "No. The content is encoded directly into the image, so there is no redirect in the middle and nothing to stop working later.",
+    },
+    {
+      q: "What error correction level should I choose?",
+      a: "M is a good default. Use Q or H when the code will be printed small, placed outdoors, or overlaid with a logo.",
+    },
+    {
+      q: "What size should a printed QR code be?",
+      a: "A rough rule is one centimetre of code per ten centimetres of scanning distance, with a minimum of about two centimetres square.",
+    },
+    {
+      q: "Is there a scan limit or signup?",
+      a: "Neither. The code is a static image you own outright — scan it as often as you like.",
+    },
+    {
+      q: "Is my data sent anywhere?",
+      a: "No. The QR code is rendered locally in your browser, so the encoded content never leaves your device.",
+    },
+  ],
+  related: [
+    { slug: "uuid", label: "UUID Generator" },
+    { slug: "password", label: "Password Generator" },
+    { slug: "favicon-generator", label: "Favicon Generator" },
+    { slug: "image-base64", label: "Image to Base64" },
+  ],
+};
