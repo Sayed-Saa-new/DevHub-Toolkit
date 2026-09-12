@@ -1447,10 +1447,22 @@ TOOL_CONTENT["ai-convert"] = {
   howTo: {
     name: "How to translate code between languages with AI",
     steps: [
-      { name: "Paste your code", text: "Drop in a function, class or whole file from the source language." },
-      { name: "Pick source and target", text: "Choose what you are converting from and what you want out." },
-      { name: "Run the translation", text: "The model rewrites the code idiomatically in the target language." },
-      { name: "Review and copy", text: "Read the output, adjust imports for your project, then copy it across." },
+      {
+        name: "Paste your code",
+        text: "Drop in a function, class or whole file from the source language.",
+      },
+      {
+        name: "Pick source and target",
+        text: "Choose what you are converting from and what you want out.",
+      },
+      {
+        name: "Run the translation",
+        text: "The model rewrites the code idiomatically in the target language.",
+      },
+      {
+        name: "Review and copy",
+        text: "Read the output, adjust imports for your project, then copy it across.",
+      },
     ],
   },
   useCases: [
@@ -1548,10 +1560,22 @@ TOOL_CONTENT["qrcode"] = {
   howTo: {
     name: "How to create and download a QR code",
     steps: [
-      { name: "Enter your content", text: "Paste a URL or type the text you want the code to carry." },
-      { name: "Set size and correction", text: "Choose the pixel size and an error-correction level to suit where it will be used." },
-      { name: "Check the preview", text: "Scan the live preview with your phone to confirm it resolves correctly." },
-      { name: "Download PNG or SVG", text: "Save the PNG for screens, or the SVG for print and vector editing." },
+      {
+        name: "Enter your content",
+        text: "Paste a URL or type the text you want the code to carry.",
+      },
+      {
+        name: "Set size and correction",
+        text: "Choose the pixel size and an error-correction level to suit where it will be used.",
+      },
+      {
+        name: "Check the preview",
+        text: "Scan the live preview with your phone to confirm it resolves correctly.",
+      },
+      {
+        name: "Download PNG or SVG",
+        text: "Save the PNG for screens, or the SVG for print and vector editing.",
+      },
     ],
   },
   useCases: [
