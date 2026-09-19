@@ -1641,3 +1641,239 @@ TOOL_CONTENT["qrcode"] = {
     { slug: "image-base64", label: "Image to Base64" },
   ],
 };
+
+TOOL_CONTENT["base64"] = {
+  intro:
+    "Encode any text to Base64 or decode a Base64 string back to readable text, instantly and entirely in your browser. Full UTF-8 support means emoji, accented characters and non-Latin scripts survive the round trip unchanged, and the URL-safe variant lets you drop the result straight into a query string or JWT segment. Nothing is uploaded — the conversion happens locally, so tokens, credentials and customer data never leave your machine.",
+  headings: {
+    features: "What the Base64 encoder and decoder does",
+    examples: "Base64 encoding examples",
+    useCases: "When to encode or decode Base64",
+    faq: "Base64 — frequently asked questions",
+    related: "Related encoding tools",
+  },
+  features: [
+    {
+      title: "Encode and decode in one place",
+      body: "Paste text to get Base64, or paste Base64 to get the original text back. The direction switches with a single click.",
+    },
+    {
+      title: "UTF-8 safe",
+      body: "Unicode is encoded correctly, so emoji, Bangla, Arabic, Chinese and accented Latin characters decode back byte-for-byte.",
+    },
+    {
+      title: "URL-safe variant",
+      body: "Swap + and / for - and _ and trim padding when the value has to travel inside a URL, cookie or JWT segment.",
+    },
+    {
+      title: "Runs offline in your browser",
+      body: "No request is made to a server, so API keys, session tokens and personal data stay on your device.",
+    },
+  ],
+  howTo: {
+    name: "How to encode or decode Base64 online",
+    steps: [
+      {
+        name: "Paste your input",
+        text: "Drop plain text into the input box to encode, or paste an existing Base64 string to decode it.",
+      },
+      {
+        name: "Pick the direction",
+        text: "Choose Encode or Decode. The output updates as you type — there is no convert button to wait on.",
+      },
+      {
+        name: "Enable URL-safe if needed",
+        text: "Turn on the URL-safe option when the result will be used in a link, header or JWT payload.",
+      },
+      {
+        name: "Copy the result",
+        text: "Copy the output to your clipboard and paste it into your code, config file or API client.",
+      },
+    ],
+  },
+  examples: [
+    {
+      prompt: "Encode plain text",
+      dialect: "encode",
+      sql: "Input:  Hello, DevHub!\nOutput: SGVsbG8sIERldkh1YiE=",
+    },
+    {
+      prompt: "Decode a Base64 string",
+      dialect: "decode",
+      sql: 'Input:  eyJyb2xlIjoiYWRtaW4ifQ==\nOutput: {"role":"admin"}',
+    },
+    {
+      prompt: "URL-safe output for a token",
+      dialect: "url-safe",
+      sql: "Standard:  a+b/c==\nURL-safe:  a-b_c",
+    },
+  ],
+  useCases: [
+    {
+      title: "Basic auth headers",
+      body: "Encode user:password to build an Authorization: Basic header while testing an API.",
+    },
+    {
+      title: "Inspecting JWT payloads",
+      body: "Decode the middle segment of a JWT to read its claims without pasting the token into a third-party service.",
+    },
+    {
+      title: "Embedding small assets",
+      body: "Encode tiny SVGs or fonts so they can be inlined in CSS or HTML instead of costing an extra request.",
+    },
+    {
+      title: "Transporting binary-ish data",
+      body: "Safely move text with newlines, quotes or control characters through JSON, YAML and environment variables.",
+    },
+  ],
+  faq: [
+    {
+      q: "Is Base64 encryption?",
+      a: "No. Base64 is an encoding, not encryption — anyone can decode it. Never use it to protect passwords or secrets; use it only to make data safe to transport.",
+    },
+    {
+      q: "Why does my decoded text look like gibberish?",
+      a: "The input was probably not valid Base64, was truncated, or was URL-safe Base64 decoded as standard. Check that the length is a multiple of four once padding is added.",
+    },
+    {
+      q: "What is URL-safe Base64?",
+      a: "A variant that replaces + with - and / with _ and usually drops the = padding, so the value can appear in URLs, filenames and JWTs without being escaped.",
+    },
+    {
+      q: "Does Base64 make my data bigger?",
+      a: "Yes — the output is roughly 33% larger than the input, because every three bytes become four characters.",
+    },
+    {
+      q: "Is my data uploaded anywhere?",
+      a: "No. Encoding and decoding run entirely in your browser with no network request, so the text never leaves your device.",
+    },
+    {
+      q: "Can I decode a Base64 image?",
+      a: "For images, use the Image to Base64 tool instead — it handles data URL prefixes and previews the result.",
+    },
+  ],
+  related: [
+    { slug: "image-base64", label: "Image to Base64" },
+    { slug: "jwt-decoder", label: "JWT Decoder" },
+    { slug: "url-codec", label: "URL Encoder / Decoder" },
+    { slug: "hash", label: "Hash Generator" },
+  ],
+};
+
+TOOL_CONTENT["csv-json"] = {
+  intro:
+    "Convert CSV to JSON or JSON back to CSV in one place, with header detection, custom delimiters and quoted fields handled properly. Paste a spreadsheet export and get clean, typed JSON records you can drop straight into an API fixture, seed script or test suite — or go the other way and turn an array of objects into a CSV your team can open in Excel or Google Sheets. All parsing happens in your browser, so customer exports and internal reports stay private.",
+  headings: {
+    features: "What the CSV ↔ JSON converter does",
+    examples: "CSV to JSON examples",
+    useCases: "When to convert CSV and JSON",
+    faq: "CSV and JSON — frequently asked questions",
+    related: "Related converter tools",
+  },
+  features: [
+    {
+      title: "Both directions",
+      body: "CSV to JSON and JSON to CSV with a single toggle — no need to find a second tool for the return trip.",
+    },
+    {
+      title: "Header row detection",
+      body: "The first row becomes object keys automatically, or you can turn headers off to get plain arrays of values.",
+    },
+    {
+      title: "Custom delimiters",
+      body: "Comma, semicolon, tab or pipe — handle European exports and TSV files without editing them first.",
+    },
+    {
+      title: "Quotes and commas handled",
+      body: "Quoted fields containing commas, newlines or escaped quotes are parsed correctly instead of splitting the row.",
+    },
+  ],
+  howTo: {
+    name: "How to convert CSV to JSON online",
+    steps: [
+      {
+        name: "Paste your CSV",
+        text: "Paste the contents of your .csv export, or paste a JSON array if you want CSV out.",
+      },
+      {
+        name: "Set delimiter and headers",
+        text: "Pick the separator your file uses and tell the tool whether the first row is a header.",
+      },
+      {
+        name: "Review the output",
+        text: "The converted result appears instantly. Check a couple of rows for type and quoting issues.",
+      },
+      {
+        name: "Copy or download",
+        text: "Copy the JSON into your project, or save the CSV for a spreadsheet.",
+      },
+    ],
+  },
+  examples: [
+    {
+      prompt: "CSV with a header row",
+      dialect: "csv → json",
+      sql: 'id,name,active\n1,Ada,true\n2,Linus,false\n\n[\n  { "id": "1", "name": "Ada", "active": "true" },\n  { "id": "2", "name": "Linus", "active": "false" }\n]',
+    },
+    {
+      prompt: "Quoted field containing a comma",
+      dialect: "csv → json",
+      sql: 'name,role\n"Doe, Jane",Engineer\n\n[{ "name": "Doe, Jane", "role": "Engineer" }]',
+    },
+    {
+      prompt: "JSON array back to CSV",
+      dialect: "json → csv",
+      sql: '[{ "sku": "A1", "qty": 3 }, { "sku": "B2", "qty": 7 }]\n\nsku,qty\nA1,3\nB2,7',
+    },
+  ],
+  useCases: [
+    {
+      title: "Seeding a database",
+      body: "Turn a spreadsheet of sample records into JSON your seed script or fixture loader can read.",
+    },
+    {
+      title: "Mocking an API response",
+      body: "Convert an analytics export into JSON to stub an endpoint while the backend is still being built.",
+    },
+    {
+      title: "Sharing data with non-developers",
+      body: "Export JSON from your app as CSV so colleagues can open it in Excel, Numbers or Google Sheets.",
+    },
+    {
+      title: "Cleaning up client exports",
+      body: "Normalise semicolon-separated or tab-separated files into consistent JSON before importing them.",
+    },
+  ],
+  faq: [
+    {
+      q: "Does the converter keep numbers and booleans as types?",
+      a: "CSV has no type information, so values come through as strings by default. Cast them in your code, or generate typed interfaces with the JSON to TypeScript tool.",
+    },
+    {
+      q: "How are commas inside a field handled?",
+      a: "Fields wrapped in double quotes are parsed as one value, including commas, newlines and escaped double quotes.",
+    },
+    {
+      q: "Can I use a semicolon or tab delimiter?",
+      a: "Yes. Choose the delimiter that matches your file — comma, semicolon, tab or pipe are all supported.",
+    },
+    {
+      q: "What happens to empty cells?",
+      a: "Empty cells become empty strings so every record keeps the same set of keys, which keeps the JSON predictable.",
+    },
+    {
+      q: "Is there a file size limit?",
+      a: "There is no server limit because parsing runs in your browser. Very large files are limited only by your device's memory.",
+    },
+    {
+      q: "Is my data uploaded?",
+      a: "No. Nothing is sent anywhere — the conversion is fully client-side, which makes it safe for customer exports.",
+    },
+  ],
+  related: [
+    { slug: "json-formatter", label: "JSON Formatter" },
+    { slug: "json-to-ts", label: "JSON to TypeScript" },
+    { slug: "yaml-json", label: "YAML ↔ JSON" },
+    { slug: "mock-data", label: "Mock Data Generator" },
+  ],
+};
