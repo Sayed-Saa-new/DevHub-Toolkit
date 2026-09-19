@@ -1006,3 +1006,20 @@ TOOL_SEO["ai-convert"] = {
   h1: "AI Code Translator",
   tagline: "Convert code between languages while keeping logic and idioms intact.",
 };
+
+TOOL_SEO["csv-json"] = {
+  title: "CSV to JSON Converter — Free Online, Both Ways",
+  description:
+    "Convert CSV to JSON and JSON to CSV instantly. Header detection, custom delimiters, quoted fields. 100% client-side — your data is never uploaded.",
+  keywords: [
+    "csv to json",
+    "csv to json converter",
+    "json to csv",
+    "convert csv to json online",
+    "csv json converter free",
+    "tsv to json",
+    "base64 to csv",
+  ],
+  h1: "CSV to JSON Converter",
+  tagline: "Convert CSV to JSON and back — headers, delimiters and quoted fields handled.",
+};
