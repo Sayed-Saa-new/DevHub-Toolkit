@@ -352,15 +352,17 @@ export function DocxToMarkdown() {
     const queue = jobs.filter((j) => j.status === "queued" || j.status === "error");
     if (!queue.length) return;
     setRunning(true);
-    for (const j of queue) {
-      setJobs((prev) =>
-        prev.map((p) => (p.id === j.id ? { ...p, status: "running", progress: 20 } : p)),
-      );
-      await new Promise((r) => setTimeout(r, 30));
-      const done = await convertOne(j);
-      setJobs((prev) => prev.map((p) => (p.id === j.id ? done : p)));
-      if (!activeId || activeId === j.id) setActiveId(done.id);
-    }
+    const queueIds = new Set(queue.map((j) => j.id));
+    setJobs((prev) =>
+      prev.map((p) => (queueIds.has(p.id) ? { ...p, status: "running", progress: 20 } : p)),
+    );
+    await Promise.all(
+      queue.map(async (j) => {
+        const done = await convertOne(j);
+        setJobs((prev) => prev.map((p) => (p.id === j.id ? done : p)));
+        setActiveId((prev) => (!prev || prev === j.id ? done.id : prev));
+      }),
+    );
     setRunning(false);
     toast.success("All files converted");
   }
