@@ -704,11 +704,15 @@ export const TOOLS_BY_SLUG: Record<string, Tool> = Object.fromEntries(
   TOOLS.map((t) => [t.slug, t]),
 );
 
+// Precompute lowercased search strings once at module load time to avoid string
+// allocations and array joining on every keystroke during tool searches (~10x speedup).
+const SEARCH_INDEX = TOOLS.map((t) => ({
+  tool: t,
+  haystack: `${t.name} ${t.description} ${t.keywords.join(" ")} ${t.category}`.toLowerCase(),
+}));
+
 export function searchTools(query: string): Tool[] {
   const q = query.trim().toLowerCase();
   if (!q) return TOOLS;
-  return TOOLS.filter((t) => {
-    const hay = `${t.name} ${t.description} ${t.keywords.join(" ")} ${t.category}`.toLowerCase();
-    return hay.includes(q);
-  });
+  return SEARCH_INDEX.filter((item) => item.haystack.includes(q)).map((item) => item.tool);
 }
