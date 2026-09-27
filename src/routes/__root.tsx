@@ -94,7 +94,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "author", content: "DevHub" },
       { name: "theme-color", content: "#0a0a0a" },
       { name: "google-site-verification", content: "4GW5hFWsbJa_98tGQoSUIX-OAfhGOfhh7ZLsxEoHqc0" },
-      { property: "og:title", content: `DevHub Toolkit — ${TOOLS.length} Free Online Developer Tools` },
+      {
+        property: "og:title",
+        content: `DevHub Toolkit — ${TOOLS.length} Free Online Developer Tools`,
+      },
       {
         property: "og:description",
         content:
@@ -109,7 +112,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: "DevHub Toolkit — free developer tools" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: `DevHub Toolkit — ${TOOLS.length} Free Online Developer Tools` },
+      {
+        name: "twitter:title",
+        content: `DevHub Toolkit — ${TOOLS.length} Free Online Developer Tools`,
+      },
       {
         name: "twitter:description",
         content:

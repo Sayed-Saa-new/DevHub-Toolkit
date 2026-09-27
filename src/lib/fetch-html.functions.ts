@@ -24,74 +24,76 @@ const BLOCKED_HOST_PATTERNS: RegExp[] = [
   /^kubernetes\.default\.svc$/i,
 ];
 
-function isBlockedHost(hostname: string): boolean {
-  return BLOCKED_HOST_PATTERNS.some((p) => p.test(hostname));
+export function isBlockedHost(hostname: string): boolean {
+  // Strip IPv6 bracket notation if present
+  let cleanHost = hostname.replace(/^\[|\]$/g, "").toLowerCase();
+
+  // Handle IPv4-mapped IPv6 address (e.g., ::ffff:127.0.0.1 or ::ffff:7f00:1)
+  if (cleanHost.startsWith("::ffff:")) {
+    cleanHost = cleanHost.slice(7);
+    if (cleanHost.includes(":")) {
+      const parts = cleanHost.split(":").map((p) => parseInt(p, 16));
+      if (parts.length === 2 && !parts.some(isNaN)) {
+        cleanHost = `${(parts[0] >> 8) & 0xff}.${parts[0] & 0xff}.${(parts[1] >> 8) & 0xff}.${parts[1] & 0xff}`;
+      }
+    }
+  }
+
+  return BLOCKED_HOST_PATTERNS.some((p) => p.test(cleanHost));
 }
 
 const MAX_RESPONSE_BYTES = 2 * 1024 * 1024; // 2 MB response cap
 const FETCH_TIMEOUT_MS = 10_000; // 10 s timeout
+const MAX_REDIRECTS = 5;
 
 export const fetchHtml = createServerFn({ method: "POST" })
   .inputValidator((data) => z.object({ url: z.string().url() }).parse(data))
   .handler(async ({ data }) => {
-    const parsed = new URL(data.url);
-
-    // 1. Allow only http and https schemes
-    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
-      throw new Error("Only http and https URLs are allowed.");
-    }
-
-    // 2. Block private/internal hosts
-    if (isBlockedHost(parsed.hostname)) {
-      throw new Error("Requests to internal hosts are not allowed.");
-    }
-
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-
+    let currentUrl = data.url;
+    let redirectCount = 0;
     let res: Response;
-    try {
-      res = await fetch(data.url, {
-        headers: {
-          "User-Agent": "DevHubToolkit-SchemaValidator/1.0 (+https://devhub.flinkeo.online)",
-          Accept: "text/html,application/xhtml+xml",
-        },
-        // 3. Handle redirects manually so we can re-validate the redirect target
-        redirect: "manual",
-        signal: controller.signal,
-      });
-    } finally {
-      clearTimeout(timer);
-    }
 
-    // 4. Re-validate redirect targets to prevent SSRF via open redirects
-    if (res.status >= 300 && res.status < 400) {
-      const location = res.headers.get("location");
-      if (!location) throw new Error("Redirect with no Location header.");
+    while (true) {
+      const parsed = new URL(currentUrl);
 
-      const redirectTarget = new URL(location, data.url);
-
-      if (redirectTarget.protocol !== "http:" && redirectTarget.protocol !== "https:") {
-        throw new Error("Redirect to non-http(s) URL blocked.");
-      }
-      if (isBlockedHost(redirectTarget.hostname)) {
-        throw new Error("Redirect to internal host blocked.");
+      // 1. Allow only http and https schemes
+      if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+        throw new Error("Only http and https URLs are allowed.");
       }
 
-      // Follow the validated redirect
-      const redirectController = new AbortController();
-      const redirectTimer = setTimeout(() => redirectController.abort(), FETCH_TIMEOUT_MS);
+      // 2. Block private/internal hosts
+      if (isBlockedHost(parsed.hostname)) {
+        throw new Error("Requests to internal hosts are not allowed.");
+      }
+
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
       try {
-        res = await fetch(redirectTarget.toString(), {
+        res = await fetch(currentUrl, {
           headers: {
             "User-Agent": "DevHubToolkit-SchemaValidator/1.0 (+https://devhub.flinkeo.online)",
             Accept: "text/html,application/xhtml+xml",
           },
-          redirect: "follow",
-          signal: redirectController.signal,
+          // Handle redirects manually so every hop is validated against SSRF rules
+          redirect: "manual",
+          signal: controller.signal,
         });
       } finally {
-        clearTimeout(redirectTimer);
+        clearTimeout(timer);
+      }
+
+      // Check if redirect response (300..399)
+      if (res.status >= 300 && res.status < 400) {
+        redirectCount++;
+        if (redirectCount > MAX_REDIRECTS) {
+          throw new Error("Too many redirects.");
+        }
+        const location = res.headers.get("location");
+        if (!location) throw new Error("Redirect with no Location header.");
+        currentUrl = new URL(location, currentUrl).toString();
+      } else {
+        break;
       }
     }
 
@@ -125,5 +127,5 @@ export const fetchHtml = createServerFn({ method: "POST" })
     }
     const html = new TextDecoder().decode(combined);
 
-    return { html, finalUrl: res.url, status: res.status };
+    return { html, finalUrl: currentUrl, status: res.status };
   });

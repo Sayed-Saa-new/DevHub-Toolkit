@@ -44,7 +44,10 @@ export const Route = createFileRoute("/")({
       { property: "og:image", content: `${SITE}/og-image.png` },
       { property: "og:image:secure_url", content: `${SITE}/og-image.png` },
       { property: "og:image:type", content: "image/png" },
-      { property: "og:image:alt", content: `DevHub Toolkit — ${TOOLS.length} developer tools, one ⌘K away` },
+      {
+        property: "og:image:alt",
+        content: `DevHub Toolkit — ${TOOLS.length} developer tools, one ⌘K away`,
+      },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
