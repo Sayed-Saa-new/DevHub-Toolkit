@@ -1,0 +1,3 @@
+## 2026-03-30 - Copy Action Visual Feedback and ARIA Labels
+**Learning:** Shared UI primitives like `CopyButton` across multi-tool toolkits benefit significantly from instant, temporary visual feedback (e.g., green Check icon and "Copied" text state transition) alongside active `aria-label` dynamic updates, providing both visual and screen-reader accessibility confirmation without relying solely on toast notifications.
+**Action:** When creating reusable utility action components in developer toolkits, always embed localized temporary feedback state and dynamic ARIA attributes directly into the action button component.

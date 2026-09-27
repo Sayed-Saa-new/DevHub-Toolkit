@@ -1,5 +1,5 @@
-import { Copy, Download } from "lucide-react";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
+import { Check, Copy, Download } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn, copyToClipboard, downloadFile } from "@/lib/utils";
@@ -31,15 +31,25 @@ export function Panel({
 }
 
 export function CopyButton({ text, label = "Copy" }: { text: string; label?: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    copyToClipboard(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <Button
       variant="ghost"
       size="sm"
-      onClick={() => copyToClipboard(text)}
+      onClick={handleCopy}
       disabled={!text}
+      aria-label={copied ? "Copied" : label}
       className="h-7 gap-1.5 text-xs"
     >
-      <Copy className="size-3" /> {label}
+      {copied ? <Check className="size-3 text-green-500" /> : <Copy className="size-3" />}
+      {copied ? "Copied" : label}
     </Button>
   );
 }
