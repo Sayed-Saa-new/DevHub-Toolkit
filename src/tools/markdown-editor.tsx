@@ -27,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { CopyButton, DownloadButton, Panel } from "./primitives";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 const STORAGE_KEY = "devhub:markdown-editor:draft";
 
@@ -421,7 +422,7 @@ export function MarkdownEditor() {
               ref={previewRef}
               onScroll={() => syncFrom("preview")}
               className="p-4 md-preview min-h-[520px] max-h-[640px] overflow-auto text-sm"
-              dangerouslySetInnerHTML={{ __html: html }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(html) }}
             />
           </Panel>
         )}

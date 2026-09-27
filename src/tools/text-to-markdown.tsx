@@ -17,6 +17,7 @@ import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 
 import { CopyButton, DownloadButton, Field, Panel } from "./primitives";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 type BulletMarker = "-" | "*" | "+";
 type HeadingStyle = "atx" | "setext";
@@ -387,7 +388,7 @@ export function TextToMarkdown() {
           ) : (
             <div
               className="p-4 md-preview min-h-[440px] max-h-[540px] overflow-auto text-sm"
-              dangerouslySetInnerHTML={{ __html: previewHtml }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(previewHtml) }}
             />
           )}
         </Panel>

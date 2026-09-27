@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ByokDialog } from "@/components/byok-dialog";
 import { maskKey, providerMeta, useByok } from "@/lib/byok";
 import { CopyButton, Field, Panel } from "./primitives";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 type Mode = "explain" | "optimize" | "commit" | "sql" | "convert" | "error" | "regex" | "tests";
 
@@ -144,7 +145,7 @@ function AiWorkbench({
                 {output}
               </pre>
             ) : (
-              <div className="prose-md" dangerouslySetInnerHTML={{ __html: html }} />
+              <div className="prose-md" dangerouslySetInnerHTML={{ __html: sanitizeHtml(html) }} />
             )
           ) : (
             <div className="text-sm text-muted-foreground flex items-center gap-2 h-full">

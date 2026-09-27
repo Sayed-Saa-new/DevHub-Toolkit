@@ -27,6 +27,7 @@ import {
 import { toast } from "sonner";
 
 import { CopyButton, Field, Panel } from "./primitives";
+import { sanitizeHtml } from "@/lib/sanitize";
 import { downloadFile } from "@/lib/utils";
 
 type BulletMarker = "-" | "*" | "+";
@@ -571,7 +572,7 @@ export function DocxToMarkdown() {
             ) : (
               <div
                 className="p-4 md-preview min-h-[440px] max-h-[560px] overflow-auto text-sm"
-                dangerouslySetInnerHTML={{ __html: previewHtml }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(previewHtml) }}
               />
             )}
 
