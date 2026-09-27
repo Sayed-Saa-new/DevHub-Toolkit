@@ -53,6 +53,8 @@ type Job = {
 const MAX_FILE_BYTES = 50 * 1024 * 1024; // 50 MB per file
 const MAX_TOTAL_BYTES = 150 * 1024 * 1024; // 150 MB combined
 
+const SUPPORTED_EXTENSIONS = [".docx", ".txt", ".html", ".htm", ".md", ".rtf"];
+
 function formatBytes(n: number) {
   if (n < 1024) return `${n} B`;
   if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
@@ -60,7 +62,81 @@ function formatBytes(n: number) {
 }
 
 function baseName(name: string) {
-  return name.replace(/\.docx?$/i, "");
+  return name.replace(/\.(docx?|txt|html?|md|rtf)$/i, "");
+}
+
+function stripRtf(rtf: string): string {
+  // Simple regex-based RTF text extraction
+  return rtf
+    .replace(/\\par[d]?/g, "\n")
+    .replace(/\\tab/g, "\t")
+    .replace(/\\'[0-9a-fA-F]{2}/g, (match) => {
+      try {
+        return String.fromCharCode(parseInt(match.slice(2), 16));
+      } catch {
+        return "";
+      }
+    })
+    .replace(/\\[a-zA-Z]+\d*\s?/g, "")
+    .replace(/[{}]/g, "")
+    .replace(/\r\n?/g, "\n");
+}
+
+function plainTextToMarkdown(input: string): string {
+  const lines = input.replace(/\r\n?/g, "\n").split("\n");
+  const out: string[] = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const next = lines[i + 1] ?? "";
+    if (/^\s*$/.test(line)) {
+      out.push("");
+      continue;
+    }
+
+    if (/^\s*={3,}\s*$/.test(next) && line.trim()) {
+      out.push(`# ${line.trim()}`);
+      i++;
+      continue;
+    }
+    if (/^\s*-{3,}\s*$/.test(next) && line.trim()) {
+      out.push(`## ${line.trim()}`);
+      i++;
+      continue;
+    }
+
+    const prev = out[out.length - 1] ?? "";
+    const looksTitle =
+      line.length <= 80 &&
+      /^[A-Z0-9]/.test(line.trim()) &&
+      !/[.!?:;,]$/.test(line.trim()) &&
+      /^\s*$/.test(next) &&
+      (prev === "" || /^\s*$/.test(prev)) &&
+      line.trim().split(/\s+/).length <= 10;
+    if (looksTitle && !/^[-*+]\s/.test(line) && !/^\d+\.\s/.test(line)) {
+      out.push(`## ${line.trim()}`);
+      continue;
+    }
+
+    const bullet = line.match(/^(\s*)[•●▪◦·]\s+(.*)$/);
+    if (bullet) {
+      out.push(`${bullet[1]}- ${bullet[2]}`);
+      continue;
+    }
+
+    out.push(line);
+  }
+
+  let md = out.join("\n");
+  md = md.replace(/(^|[\s(])((https?:\/\/|www\.)[^\s<>"'`)]+)/g, (_m, pre: string, url: string) => {
+    const clean = url.replace(/[.,;:!?)]+$/, "");
+    const trailing = url.slice(clean.length);
+    const href = clean.startsWith("http") ? clean : `https://${clean}`;
+    return `${pre}<${href}>${trailing}`;
+  });
+
+  md = md.replace(/\n{3,}/g, "\n\n");
+  return md.trim() + "\n";
 }
 
 function makeTurndown(opts: { bullet: BulletMarker; heading: HeadingStyle; gfm: boolean }) {
@@ -126,7 +202,6 @@ export function DocxToMarkdown() {
   const totalBytes = useMemo(() => jobs.reduce((n, j) => n + j.size, 0), [jobs]);
   const active = jobs.find((j) => j.id === activeId) ?? null;
 
-  // Update rendered preview whenever active markdown changes / preview mode toggles
   useMemo(() => {
     if (!active?.markdown) {
       setPreviewHtml("");
@@ -141,9 +216,9 @@ export function DocxToMarkdown() {
       const accepted: Job[] = [];
       let currentTotal = totalBytes;
       for (const f of list) {
-        const isDocx = /\.docx$/i.test(f.name);
-        if (!isDocx) {
-          toast.error(`${f.name}: not a .docx file (legacy .doc not supported)`);
+        const ext = f.name.slice(f.name.lastIndexOf(".")).toLowerCase();
+        if (!SUPPORTED_EXTENSIONS.includes(ext)) {
+          toast.error(`${f.name}: Unsupported file type (supported: .docx, .txt, .html, .md, .rtf)`);
           continue;
         }
         if (f.size > MAX_FILE_BYTES) {
@@ -184,49 +259,70 @@ export function DocxToMarkdown() {
   async function convertOne(job: Job): Promise<Job> {
     const start = performance.now();
     try {
-      const buffer = await job.file.arrayBuffer();
+      const ext = job.file.name.slice(job.file.name.lastIndexOf(".")).toLowerCase();
+      let markdown = "";
+      let html = "";
       let imageCount = 0;
-      const convertImage =
-        imageMode === "skip"
-          ? mammoth.images.imgElement(() => Promise.resolve({ src: "" }))
-          : imageMode === "placeholder"
-            ? mammoth.images.imgElement((img) => {
-                imageCount++;
-                const alt =
-                  (img as unknown as { altText?: string }).altText ?? `image-${imageCount}`;
-                return Promise.resolve({ src: `#image-${imageCount}`, alt });
-              })
-            : mammoth.images.imgElement(async (img) => {
-                imageCount++;
-                const data = await img.read("base64");
-                return { src: `data:${img.contentType};base64,${data}` };
-              });
+      let warnings: string[] = [];
 
-      const result = await mammoth.convertToHtml(
-        { arrayBuffer: buffer },
-        {
-          convertImage,
-          styleMap: preserveStyles
-            ? [
-                "p[style-name='Title'] => h1:fresh",
-                "p[style-name='Subtitle'] => h2:fresh",
-                "p[style-name='Quote'] => blockquote:fresh",
-                "p[style-name='Intense Quote'] => blockquote:fresh",
-                "p[style-name='Code'] => pre:fresh",
-                "r[style-name='Code Char'] => code",
-              ]
-            : undefined,
-        },
-      );
+      if (ext === ".docx") {
+        const buffer = await job.file.arrayBuffer();
+        const convertImage =
+          imageMode === "skip"
+            ? mammoth.images.imgElement(() => Promise.resolve({ src: "" }))
+            : imageMode === "placeholder"
+              ? mammoth.images.imgElement((img) => {
+                  imageCount++;
+                  const alt =
+                    (img as unknown as { altText?: string }).altText ?? `image-${imageCount}`;
+                  return Promise.resolve({ src: `#image-${imageCount}`, alt });
+                })
+              : mammoth.images.imgElement(async (img) => {
+                  imageCount++;
+                  const data = await img.read("base64");
+                  return { src: `data:${img.contentType};base64,${data}` };
+                });
 
-      // Post-process: strip empty <img src=""> when skipping
-      let html = result.value as string;
-      if (imageMode === "skip") {
-        html = html.replace(/<img[^>]*src=""[^>]*>/g, "");
+        const result = await mammoth.convertToHtml(
+          { arrayBuffer: buffer },
+          {
+            convertImage,
+            styleMap: preserveStyles
+              ? [
+                  "p[style-name='Title'] => h1:fresh",
+                  "p[style-name='Subtitle'] => h2:fresh",
+                  "p[style-name='Quote'] => blockquote:fresh",
+                  "p[style-name='Intense Quote'] => blockquote:fresh",
+                  "p[style-name='Code'] => pre:fresh",
+                  "r[style-name='Code Char'] => code",
+                ]
+              : undefined,
+          },
+        );
+
+        html = result.value as string;
+        if (imageMode === "skip") {
+          html = html.replace(/<img[^>]*src=""[^>]*>/g, "");
+        }
+        const svc = makeTurndown({ bullet, heading, gfm });
+        markdown = svc.turndown(html).trim() + "\n";
+        warnings = (result.messages ?? []).map((m: { message: string }) => m.message);
+      } else if (ext === ".html" || ext === ".htm") {
+        html = await job.file.text();
+        const svc = makeTurndown({ bullet, heading, gfm });
+        markdown = svc.turndown(html).trim() + "\n";
+      } else if (ext === ".rtf") {
+        const raw = await job.file.text();
+        const plain = stripRtf(raw);
+        markdown = plainTextToMarkdown(plain);
+      } else if (ext === ".md") {
+        markdown = await job.file.text();
+      } else {
+        // .txt or fallback
+        const text = await job.file.text();
+        markdown = plainTextToMarkdown(text);
       }
 
-      const svc = makeTurndown({ bullet, heading, gfm });
-      const markdown = svc.turndown(html).trim() + "\n";
       const wordCount = markdown.trim().split(/\s+/).filter(Boolean).length;
 
       return {
@@ -235,7 +331,7 @@ export function DocxToMarkdown() {
         progress: 100,
         html,
         markdown,
-        warnings: (result.messages ?? []).map((m: { message: string }) => m.message),
+        warnings,
         images: imageCount,
         wordCount,
         durationMs: performance.now() - start,
@@ -260,7 +356,6 @@ export function DocxToMarkdown() {
       setJobs((prev) =>
         prev.map((p) => (p.id === j.id ? { ...p, status: "running", progress: 20 } : p)),
       );
-      // Yield to browser so UI updates
       await new Promise((r) => setTimeout(r, 30));
       const done = await convertOne(j);
       setJobs((prev) => prev.map((p) => (p.id === j.id ? done : p)));
@@ -299,7 +394,7 @@ export function DocxToMarkdown() {
       zip.file(name, j.markdown!);
     }
     const blob = await zip.generateAsync({ type: "blob" });
-    downloadFile("markdown-batch.zip", blob, "application/zip");
+    downloadFile("docs-markdown-batch.zip", blob, "application/zip");
     toast.success(`Zipped ${done.length} file${done.length > 1 ? "s" : ""}`);
   }
 
@@ -401,7 +496,7 @@ export function DocxToMarkdown() {
         <input
           ref={inputRef}
           type="file"
-          accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          accept=".docx,.txt,.html,.htm,.md,.rtf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain,text/html,text/markdown,application/rtf"
           multiple
           className="hidden"
           onChange={(e) => {
@@ -410,7 +505,7 @@ export function DocxToMarkdown() {
           }}
         />
         <Upload className="size-8 mx-auto text-muted-foreground mb-2" />
-        <div className="text-sm font-medium">Drop .docx files or click to browse</div>
+        <div className="text-sm font-medium">Drop document files (.docx, .txt, .html, .md, .rtf) or click to browse</div>
         <div className="text-xs text-muted-foreground mt-1">
           Up to 50 MB per file, 150 MB total. 100% client-side — files never leave your browser.
         </div>
