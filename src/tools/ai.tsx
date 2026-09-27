@@ -3,6 +3,7 @@ import { DefaultChatTransport, type UIMessage } from "ai";
 import { KeyRound, Loader2, Send, Sparkles, StopCircle } from "lucide-react";
 import { useMemo, useState } from "react";
 import { marked } from "marked";
+import DOMPurify from "dompurify";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -63,7 +64,8 @@ function AiWorkbench({
   const html = useMemo(() => {
     if (isCommit || !output) return "";
     try {
-      return marked.parse(output, { async: false, gfm: true, breaks: true }) as string;
+      const rawHtml = marked.parse(output, { async: false, gfm: true, breaks: true }) as string;
+      return DOMPurify.sanitize(rawHtml);
     } catch {
       return "";
     }
