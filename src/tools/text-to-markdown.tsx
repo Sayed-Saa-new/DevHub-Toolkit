@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import TurndownService from "turndown";
 import { marked } from "marked";
+import DOMPurify from "dompurify";
 import { ClipboardPaste, Wand2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -208,7 +209,10 @@ export function TextToMarkdown() {
   }, [input, detected, bullet, heading, fence, link, gfm, smartText]);
 
   useEffect(() => {
-    (async () => setPreviewHtml(String(await marked.parse(markdown))))();
+    (async () => {
+      const rawHtml = String(await marked.parse(markdown));
+      setPreviewHtml(DOMPurify.sanitize(rawHtml));
+    })();
   }, [markdown]);
 
   const stats = useMemo(() => {
