@@ -2,6 +2,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import mammoth from "mammoth/mammoth.browser";
 import TurndownService from "turndown";
 import { marked } from "marked";
+import DOMPurify from "dompurify";
 import JSZip from "jszip";
 import {
   FileText,
@@ -132,7 +133,10 @@ export function DocxToMarkdown() {
       setPreviewHtml("");
       return;
     }
-    (async () => setPreviewHtml(String(await marked.parse(active.markdown!))))();
+    (async () => {
+      const rawHtml = String(await marked.parse(active.markdown!));
+      setPreviewHtml(DOMPurify.sanitize(rawHtml));
+    })();
   }, [active?.markdown]);
 
   const addFiles = useCallback(

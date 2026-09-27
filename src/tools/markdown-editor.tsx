@@ -1,4 +1,5 @@
 import { marked } from "marked";
+import DOMPurify from "dompurify";
 import {
   Bold,
   Code,
@@ -203,7 +204,8 @@ export function MarkdownEditor() {
 
   // Render
   useEffect(() => {
-    setHtml(String(marked.parse(src, { async: false, gfm: true, breaks: false })));
+    const rawHtml = String(marked.parse(src, { async: false, gfm: true, breaks: false }));
+    setHtml(DOMPurify.sanitize(rawHtml));
   }, [src]);
 
   const pushHistory = useCallback((value: string) => {
