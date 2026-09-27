@@ -218,7 +218,9 @@ export function DocxToMarkdown() {
       for (const f of list) {
         const ext = f.name.slice(f.name.lastIndexOf(".")).toLowerCase();
         if (!SUPPORTED_EXTENSIONS.includes(ext)) {
-          toast.error(`${f.name}: Unsupported file type (supported: .docx, .txt, .html, .md, .rtf)`);
+          toast.error(
+            `${f.name}: Unsupported file type (supported: .docx, .txt, .html, .md, .rtf)`,
+          );
           continue;
         }
         if (f.size > MAX_FILE_BYTES) {
@@ -352,17 +354,15 @@ export function DocxToMarkdown() {
     const queue = jobs.filter((j) => j.status === "queued" || j.status === "error");
     if (!queue.length) return;
     setRunning(true);
-    const queueIds = new Set(queue.map((j) => j.id));
-    setJobs((prev) =>
-      prev.map((p) => (queueIds.has(p.id) ? { ...p, status: "running", progress: 20 } : p)),
-    );
-    await Promise.all(
-      queue.map(async (j) => {
-        const done = await convertOne(j);
-        setJobs((prev) => prev.map((p) => (p.id === j.id ? done : p)));
-        setActiveId((prev) => (!prev || prev === j.id ? done.id : prev));
-      }),
-    );
+    for (const j of queue) {
+      setJobs((prev) =>
+        prev.map((p) => (p.id === j.id ? { ...p, status: "running", progress: 20 } : p)),
+      );
+      await new Promise((r) => setTimeout(r, 30));
+      const done = await convertOne(j);
+      setJobs((prev) => prev.map((p) => (p.id === j.id ? done : p)));
+      if (!activeId || activeId === j.id) setActiveId(done.id);
+    }
     setRunning(false);
     toast.success("All files converted");
   }
@@ -507,7 +507,9 @@ export function DocxToMarkdown() {
           }}
         />
         <Upload className="size-8 mx-auto text-muted-foreground mb-2" />
-        <div className="text-sm font-medium">Drop document files (.docx, .txt, .html, .md, .rtf) or click to browse</div>
+        <div className="text-sm font-medium">
+          Drop document files (.docx, .txt, .html, .md, .rtf) or click to browse
+        </div>
         <div className="text-xs text-muted-foreground mt-1">
           Up to 50 MB per file, 150 MB total. 100% client-side — files never leave your browser.
         </div>

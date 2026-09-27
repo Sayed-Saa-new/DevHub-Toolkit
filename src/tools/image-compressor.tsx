@@ -62,60 +62,57 @@ export function ImageCompressor() {
   const compressRows = useCallback(
     async (ids: string[], sourceRows: Row[]) => {
       setBusy(true);
-      const idSet = new Set(ids);
-      setRows((r) =>
-        r.map((x) =>
-          idSet.has(x.id)
-            ? {
-                ...x,
-                status: "processing",
-                error: undefined,
-                outUrl: undefined,
-                outBlob: undefined,
-                outSize: undefined,
-              }
-            : x,
-        ),
-      );
-      await Promise.all(
-        ids.map(async (id) => {
-          const row = sourceRows.find((r) => r.id === id);
-          if (!row) return;
-          try {
-            const outType = resolveOutType(format, row.file.type);
-            const compressed = await imageCompression(row.file, {
-              maxSizeMB,
-              maxWidthOrHeight: maxWidth,
-              initialQuality: quality,
-              useWebWorker: true,
-              fileType: outType,
-            });
-            const url = URL.createObjectURL(compressed);
-            setRows((r) =>
-              r.map((x) => {
-                if (x.id !== id) return x;
-                if (x.outUrl) URL.revokeObjectURL(x.outUrl);
-                return {
+      for (const id of ids) {
+        const row = sourceRows.find((r) => r.id === id);
+        if (!row) continue;
+        setRows((r) =>
+          r.map((x) =>
+            x.id === id
+              ? {
                   ...x,
-                  status: "done",
-                  outBlob: compressed,
-                  outSize: compressed.size,
-                  outUrl: url,
-                  outType,
-                };
-              }),
-            );
-          } catch (err) {
-            setRows((r) =>
-              r.map((x) =>
-                x.id === id
-                  ? { ...x, status: "error", error: err instanceof Error ? err.message : "Failed" }
-                  : x,
-              ),
-            );
-          }
-        }),
-      );
+                  status: "processing",
+                  error: undefined,
+                  outUrl: undefined,
+                  outBlob: undefined,
+                  outSize: undefined,
+                }
+              : x,
+          ),
+        );
+        try {
+          const outType = resolveOutType(format, row.file.type);
+          const compressed = await imageCompression(row.file, {
+            maxSizeMB,
+            maxWidthOrHeight: maxWidth,
+            initialQuality: quality,
+            useWebWorker: true,
+            fileType: outType,
+          });
+          const url = URL.createObjectURL(compressed);
+          setRows((r) =>
+            r.map((x) => {
+              if (x.id !== id) return x;
+              if (x.outUrl) URL.revokeObjectURL(x.outUrl);
+              return {
+                ...x,
+                status: "done",
+                outBlob: compressed,
+                outSize: compressed.size,
+                outUrl: url,
+                outType,
+              };
+            }),
+          );
+        } catch (err) {
+          setRows((r) =>
+            r.map((x) =>
+              x.id === id
+                ? { ...x, status: "error", error: err instanceof Error ? err.message : "Failed" }
+                : x,
+            ),
+          );
+        }
+      }
       setBusy(false);
     },
     [format, maxSizeMB, maxWidth, quality],
