@@ -729,20 +729,20 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
     ],
   }, // text to markdown — 8,100/mo, KDI 35 (winnable long-tail)
   "docx-to-markdown": {
-    title: "DOCX to Markdown Converter — Word to MD, Batch, In-Browser",
+    title: "Docs & DOCX to Markdown Converter — Word, HTML, RTF to MD Online",
     description:
-      "Convert Word .docx files to clean Markdown online. Batch upload, preserve headings, tables, lists and images, download individually or as a ZIP — 100% client-side, no signup.",
+      "Convert Word .docx, .txt, .html, .rtf and .md document files to clean Markdown online. Drag and drop batch upload, preserve headings, tables, lists and images — 100% client-side, no signup.",
     keywords: [
+      "docs to markdown",
       "docx to markdown",
       "word to markdown",
-      "docx to md",
-      "convert docx to markdown",
+      "document to markdown",
+      "rtf to markdown",
+      "html to markdown",
+      "txt to markdown",
+      "convert docs to markdown",
+      "batch document converter",
       "word document to markdown",
-      "docx converter online",
-      "batch docx to markdown",
-      "mammoth converter",
-      "word to md",
-      "docx markdown converter",
     ],
   }, // docx to markdown — 1,000+/mo combined, KDI 21 (very winnable)
   "diff-checker": {
