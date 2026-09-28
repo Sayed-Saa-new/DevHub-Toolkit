@@ -18,7 +18,8 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
     description:
       "Free online JSON formatter, validator, and minifier. Pretty print JSON, repair syntax errors, format tree views, and copy results instantly — 100% client-side, no signup.",
     h1: "JSON Formatter & Validator",
-    tagline: "Format, validate, beautify, and minify JSON with live error detection and tree navigation.",
+    tagline:
+      "Format, validate, beautify, and minify JSON with live error detection and tree navigation.",
     keywords: [
       "json formatter",
       "json validator",
@@ -428,7 +429,8 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
     description:
       "Convert CSV to JSON and JSON to CSV online. Automatic header detection, custom delimiters, array formatting, and instant file export — free, 100% in-browser.",
     h1: "CSV ↔ JSON Converter",
-    tagline: "Bidirectional conversion between tabular CSV data and JSON structures with custom delimiter support.",
+    tagline:
+      "Bidirectional conversion between tabular CSV data and JSON structures with custom delimiter support.",
     keywords: [
       "csv to json",
       "json to csv",
@@ -635,7 +637,8 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
     description:
       "Convert cURL command lines into native fetch, Axios, Python requests, Go, PHP, Rust, Java, C#, or PowerShell code snippets instantly — 100% free, browser-based.",
     h1: "cURL to Code Converter",
-    tagline: "Translate cURL HTTP requests into code snippets for JavaScript, Python, Go, Rust, PHP, and 10+ languages.",
+    tagline:
+      "Translate cURL HTTP requests into code snippets for JavaScript, Python, Go, Rust, PHP, and 10+ languages.",
     keywords: [
       "curl to code",
       "curl to fetch",
@@ -678,7 +681,8 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
     description:
       "Compare two JSON files or strings side-by-side. Inspect added, removed, and modified keys with full JSON paths, key sorting, and patch exports — 100% free, client-side.",
     h1: "JSON Diff Checker",
-    tagline: "Structural JSON comparison with path navigation, array matching, and diff patch generation.",
+    tagline:
+      "Structural JSON comparison with path navigation, array matching, and diff patch generation.",
     keywords: [
       "json diff",
       "compare json",
@@ -712,7 +716,8 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
     description:
       "Compress images in your browser without quality loss. Batch resize, convert JPEG/PNG to WebP/AVIF, adjust compression ratio, and download instantly — 100% local, zero uploads.",
     h1: "Browser Image Compressor & Converter",
-    tagline: "Bulk image compression, format conversion, and resizing with 100% client-side privacy.",
+    tagline:
+      "Bulk image compression, format conversion, and resizing with 100% client-side privacy.",
     keywords: [
       "image compressor",
       "compress image online",
@@ -783,7 +788,8 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
     description:
       "Compare text, code, or files side-by-side or in unified view. Line-by-line and character-level diff highlighting, whitespace options, and unified patch downloads — 100% private.",
     h1: "Diff Checker",
-    tagline: "Side-by-side and unified diff viewer for comparing text, source code, and configuration files.",
+    tagline:
+      "Side-by-side and unified diff viewer for comparing text, source code, and configuration files.",
     keywords: [
       "diff checker",
       "text diff",

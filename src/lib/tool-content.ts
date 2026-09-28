@@ -448,7 +448,8 @@ Diff:
     ],
   },
   "diff-checker": {
-    intro: "DevHub's Diff Checker lets you compare text, code snippets, or configuration files side-by-side or in unified diff format. Features include line-by-line, word-level, and character-level diff highlighting, case/whitespace toggles, and instant unified patch file exports. Ideal for comparing source code, Markdown drafts, or SQL logs without uploading files.",
+    intro:
+      "DevHub's Diff Checker lets you compare text, code snippets, or configuration files side-by-side or in unified diff format. Features include line-by-line, word-level, and character-level diff highlighting, case/whitespace toggles, and instant unified patch file exports. Ideal for comparing source code, Markdown drafts, or SQL logs without uploading files.",
     features: [
       {
         title: "Side-by-side & unified views",
