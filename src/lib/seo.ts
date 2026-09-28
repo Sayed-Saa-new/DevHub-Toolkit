@@ -14,9 +14,11 @@ export type ToolSeo = {
 export const TOOL_SEO: Record<string, ToolSeo> = {
   // High-volume, high-KDI — target with "online free no signup" modifiers.
   "json-formatter": {
-    title: "JSON Formatter & Validator — Online, Free",
+    title: "JSON Formatter & Validator — Free Online Beautifier",
     description:
-      "Free online JSON formatter, validator and minifier. Pretty-print JSON, fix syntax errors, and copy the result — no signup, works offline.",
+      "Free online JSON formatter, validator, and minifier. Pretty print JSON, repair syntax errors, format tree views, and copy results instantly — 100% client-side, no signup.",
+    h1: "JSON Formatter & Validator",
+    tagline: "Format, validate, beautify, and minify JSON with live error detection and tree navigation.",
     keywords: [
       "json formatter",
       "json validator",
@@ -26,6 +28,10 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "minify json",
       "format json online",
       "json viewer",
+      "json repair",
+      "json parser online",
+      "free json formatter",
+      "json formatter no signup",
     ],
   }, // json formatter — 90,500/mo, KDI 62
   base64: {
@@ -418,10 +424,21 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
     ],
   }, // yaml to json — 1,900/mo, KDI 26 (easy win)
   "csv-json": {
-    title: "CSV to JSON Converter — Bidirectional",
+    title: "CSV to JSON Converter — Online, Bidirectional & Free",
     description:
-      "Convert CSV to JSON and JSON to CSV with header detection and custom delimiters. Free online CSV ↔ JSON converter.",
-    keywords: ["csv to json", "json to csv", "csv converter", "convert csv online", "csv parser"],
+      "Convert CSV to JSON and JSON to CSV online. Automatic header detection, custom delimiters, array formatting, and instant file export — free, 100% in-browser.",
+    h1: "CSV ↔ JSON Converter",
+    tagline: "Bidirectional conversion between tabular CSV data and JSON structures with custom delimiter support.",
+    keywords: [
+      "csv to json",
+      "json to csv",
+      "csv converter",
+      "convert csv to json online",
+      "csv to json array",
+      "csv parser online",
+      "json to csv file converter",
+      "free csv to json converter",
+    ],
   }, // csv to json — 2,900/mo, KDI 59
   "number-base": {
     title: "Number Base Converter — Binary, Hex, Decimal, Octal",
@@ -614,9 +631,11 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
     ],
   },
   "curl-converter": {
-    title: "cURL to Code — fetch, axios, Python, Go, Rust & more",
+    title: "cURL to Code Converter — Python, JavaScript, Go, Rust & More",
     description:
-      "Convert any curl command to fetch, axios, Node, Python requests, Go, PHP, Ruby, Rust, Java, C# or PowerShell. Paste, pick a language, copy — free.",
+      "Convert cURL command lines into native fetch, Axios, Python requests, Go, PHP, Rust, Java, C#, or PowerShell code snippets instantly — 100% free, browser-based.",
+    h1: "cURL to Code Converter",
+    tagline: "Translate cURL HTTP requests into code snippets for JavaScript, Python, Go, Rust, PHP, and 10+ languages.",
     keywords: [
       "curl to code",
       "curl to fetch",
@@ -628,12 +647,16 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "curl to c#",
       "curl converter online",
       "curl builder",
+      "convert curl to python online",
+      "curl command parser",
     ],
   },
   "sql-formatter": {
-    title: "SQL Formatter & Beautifier — 17 Dialects, Free Online",
+    title: "SQL Formatter & Beautifier — Free Online for 17 Dialects",
     description:
-      "Format, beautify and minify SQL for Postgres, MySQL, T-SQL, BigQuery, Snowflake, Oracle and more. Configurable indent, keyword case, expression width — free.",
+      "Format, beautify, and minify SQL queries online. Supports PostgreSQL, MySQL, SQLite, T-SQL, BigQuery, Snowflake, and 12+ dialects with custom indentation and uppercase keywords.",
+    h1: "SQL Formatter & Beautifier",
+    tagline: "Format, lint, beautify, and minify SQL queries across 17 database dialects.",
     keywords: [
       "sql formatter",
       "sql beautifier",
@@ -647,12 +670,15 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "tsql formatter",
       "pl/sql formatter",
       "sql prettier",
+      "sql query formatter free",
     ],
   }, // sql formatter — 22,200/mo, KDI 51
   "json-diff": {
-    title: "JSON Diff — Compare Two JSON Files Online, Free",
+    title: "JSON Diff Checker — Compare Two JSON Files Online Free",
     description:
-      "Compare two JSON documents and see added, removed and changed keys with full paths. Sort keys, ignore array order, copy the patch — free, no signup.",
+      "Compare two JSON files or strings side-by-side. Inspect added, removed, and modified keys with full JSON paths, key sorting, and patch exports — 100% free, client-side.",
+    h1: "JSON Diff Checker",
+    tagline: "Structural JSON comparison with path navigation, array matching, and diff patch generation.",
     keywords: [
       "json diff",
       "compare json",
@@ -662,6 +688,9 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "json patch",
       "structural json diff",
       "json compare tool",
+      "compare two json files",
+      "json diff checker online",
+      "free json diff",
     ],
   }, // json diff — 8,100/mo, KDI 38 (winnable)
   "clamp-calculator": {
@@ -679,9 +708,11 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
     ],
   }, // css clamp — 6,600/mo, KDI 34 (winnable)
   "image-compressor": {
-    title: "Image Compressor — Compress JPEG, PNG & WebP Online",
+    title: "Image Compressor — Compress JPEG, PNG, WebP & AVIF Free",
     description:
-      "Compress images in your browser — JPEG, PNG, WebP and AVIF. Batch resize, convert to WebP, adjust quality, download in one click. 100% local, no upload.",
+      "Compress images in your browser without quality loss. Batch resize, convert JPEG/PNG to WebP/AVIF, adjust compression ratio, and download instantly — 100% local, zero uploads.",
+    h1: "Browser Image Compressor & Converter",
+    tagline: "Bulk image compression, format conversion, and resizing with 100% client-side privacy.",
     keywords: [
       "image compressor",
       "compress image online",
@@ -693,6 +724,8 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "convert to webp",
       "reduce image size",
       "bulk image compressor",
+      "free image compressor no loss",
+      "in browser image compressor",
     ],
   }, // image compressor — 165,000/mo, KDI 78 (long-tail play: "compress image online free")
   "jwt-generator": {
@@ -746,9 +779,11 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
     ],
   }, // docx to markdown — 1,000+/mo combined, KDI 21 (very winnable)
   "diff-checker": {
-    title: "Diff Checker — Compare Text, Code & Files Online",
+    title: "Diff Checker — Online Text, Code & File Comparison Tool",
     description:
-      "Compare two text, code or files side-by-side or unified. Line, word or character diff, ignore whitespace/case, export unified patch — 100% free, client-side.",
+      "Compare text, code, or files side-by-side or in unified view. Line-by-line and character-level diff highlighting, whitespace options, and unified patch downloads — 100% private.",
+    h1: "Diff Checker",
+    tagline: "Side-by-side and unified diff viewer for comparing text, source code, and configuration files.",
     keywords: [
       "diff checker",
       "text diff",
@@ -762,6 +797,8 @@ export const TOOL_SEO: Record<string, ToolSeo> = {
       "text compare online",
       "diff viewer",
       "diffchecker",
+      "file difference checker",
+      "online code comparison",
     ],
   }, // diff checker — 74,000/mo, KDI 55 (long-tail winnable)
   "mesh-gradient": {
