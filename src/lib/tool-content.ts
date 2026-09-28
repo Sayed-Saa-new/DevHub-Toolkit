@@ -15,6 +15,894 @@ export type ToolContent = {
 };
 
 export const TOOL_CONTENT: Record<string, ToolContent> = {
+  "json-formatter": {
+    intro:
+      "DevHub's JSON Formatter & Validator is a fast, 100% in-browser tool to pretty print, validate, lint, repair, and minify JSON data. Paste raw JSON payloads from APIs, database queries, or logs, and get structured output with collapsible tree views, precise syntax error highlighting, and one-click copy. No data is ever sent to a server.",
+    headings: {
+      features: "Features of the online JSON formatter & validator",
+      examples: "JSON formatting & minification examples",
+      useCases: "Common use cases for formatting & validating JSON",
+      faq: "JSON Formatter & Validator — FAQ",
+      related: "Related JSON & developer tools",
+    },
+    features: [
+      {
+        title: "Pretty print & custom indentation",
+        body: "Format unreadable JSON with 2-space, 4-space, or tab indentation for clean readability.",
+      },
+      {
+        title: "Syntax error detection & repair",
+        body: "Locate syntax errors with line and column highlighting. Automatically fix common JSON issues like trailing commas or unquoted keys.",
+      },
+      {
+        title: "Interactive tree view",
+        body: "Expand and collapse deeply nested JSON objects and arrays to quickly inspect complex API structures.",
+      },
+      {
+        title: "Fast minification",
+        body: "Strip whitespaces and newlines to compress JSON for efficient payload transmission or storage.",
+      },
+      {
+        title: "100% Client-side privacy",
+        body: "All validation and formatting happen locally in your browser so sensitive tokens, keys, and PII stay secure.",
+      },
+    ],
+    howTo: {
+      name: "How to format and validate JSON online",
+      steps: [
+        {
+          name: "Paste your raw JSON",
+          text: "Copy unformatted JSON text from a terminal, network response, or file into the input pane.",
+        },
+        {
+          name: "Validate & format",
+          text: "Click Format / Beautify to pretty-print your JSON or view inline error markers if syntax is invalid.",
+        },
+        {
+          name: "Explore or minify",
+          text: "Toggle tree view to inspect nested keys or click Minify to compact your JSON string.",
+        },
+        {
+          name: "Copy or export",
+          text: "Copy the formatted JSON to your clipboard with one click.",
+        },
+      ],
+    },
+    useCases: [
+      {
+        title: "Debugging REST & GraphQL APIs",
+        body: "Unpack minified API responses, verify status payloads, and inspect nested structures during development.",
+      },
+      {
+        title: "Cleaning up config files",
+        body: "Format package.json, tsconfig.json, or app settings with consistent spacing.",
+      },
+      {
+        title: "Validating webhook payloads",
+        body: "Ensure incoming webhook events adhere to strict JSON formatting before writing test handlers.",
+      },
+    ],
+    examples: [
+      {
+        dialect: "Unformatted JSON",
+        prompt: "Minified API response string",
+        sql: `{"status":200,"data":{"user":{"id":101,"name":"Alice","roles":["admin","editor"]}}}`,
+      },
+      {
+        dialect: "Formatted JSON (2 spaces)",
+        prompt: "Pretty-printed JSON result",
+        sql: `{
+  "status": 200,
+  "data": {
+    "user": {
+      "id": 101,
+      "name": "Alice",
+      "roles": [
+        "admin",
+        "editor"
+      ]
+    }
+  }
+}`,
+      },
+    ],
+    faq: [
+      {
+        q: "Is this JSON Formatter free to use?",
+        a: "Yes, 100% free with no limits, rate restrictions, or account signups.",
+      },
+      {
+        q: "Is my JSON payload sent to any server?",
+        a: "No. All formatting, validation, and tree rendering happen locally in your browser.",
+      },
+      {
+        q: "How does the JSON validator fix syntax errors?",
+        a: "The built-in parser identifies common mistakes like trailing commas, missing quotes around keys, or single quote usage and offers automatic correction options.",
+      },
+      {
+        q: "Can I format very large JSON files?",
+        a: "Yes. Files up to several megabytes process in milliseconds directly inside browser memory.",
+      },
+    ],
+    related: [
+      { slug: "json-diff", label: "JSON Diff" },
+      { slug: "json-to-ts", label: "JSON → TypeScript" },
+      { slug: "yaml-json", label: "YAML ↔ JSON" },
+      { slug: "csv-json", label: "CSV ↔ JSON" },
+    ],
+  },
+  base64: {
+    intro:
+      "DevHub's Base64 Encoder & Decoder lets you encode plain text to Base64 format or decode Base64 strings back to human-readable text instantly. It fully supports UTF-8 multi-byte characters (including Bangla, Arabic, Chinese, and emojis) and URL-safe Base64 variants. 100% client-side execution ensures your strings and tokens are never uploaded anywhere.",
+    headings: {
+      features: "Features of the online Base64 tool",
+      examples: "Base64 encoding and decoding examples",
+      useCases: "Common use cases for Base64 encoding",
+      faq: "Base64 Encoder & Decoder — FAQ",
+      related: "Related conversion & security tools",
+    },
+    features: [
+      {
+        title: "Bidirectional conversion",
+        body: "Encode text to Base64 or decode Base64 strings in one click without page reloads.",
+      },
+      {
+        title: "Full UTF-8 & Emoji support",
+        body: "Correctly handles multi-byte UTF-8 character sets, special symbols, and emojis without encoding corruption.",
+      },
+      {
+        title: "URL-safe variant toggle",
+        body: "Optionally replace '+' with '-' and '/' with '_' for safe inclusion in query parameters and URLs.",
+      },
+      {
+        title: "Live real-time output",
+        body: "Output updates as you type with instant character count and size comparisons.",
+      },
+    ],
+    howTo: {
+      name: "How to encode or decode Base64 online",
+      steps: [
+        {
+          name: "Select mode",
+          text: "Choose whether to Encode text to Base64 or Decode Base64 to text.",
+        },
+        {
+          name: "Enter your input",
+          text: "Paste your raw text or Base64 string into the input text area.",
+        },
+        {
+          name: "Copy converted output",
+          text: "Click the Copy button to copy the converted result to your clipboard.",
+        },
+      ],
+    },
+    useCases: [
+      {
+        title: "Basic authentication headers",
+        body: "Encode username:password credentials for HTTP Basic Auth headers.",
+      },
+      {
+        title: "Embedding binary data in text",
+        body: "Safe transport of raw strings, API signatures, or payload parameters inside JSON and URLs.",
+      },
+      {
+        title: "Inspecting encoded API tokens",
+        body: "Quickly decode opaque Base64 strings in URL parameters or webhooks.",
+      },
+    ],
+    examples: [
+      {
+        dialect: "Text → Base64",
+        prompt: "Encoding string with unicode",
+        sql: "Input: Hello World! 👋\nBase64: SGVsbG8gV29ybGQhIPCfkYI=",
+      },
+      {
+        dialect: "Base64 → Text",
+        prompt: "Decoding Basic Auth credential",
+        sql: "Base64: YWRtaW46c2VjcmV0MTIz\nDecoded: admin:secret123",
+      },
+    ],
+    faq: [
+      {
+        q: "Is Base64 encryption?",
+        a: "No. Base64 is an encoding scheme, not encryption. Anyone can decode a Base64 string back to plaintext without a key.",
+      },
+      {
+        q: "Does this tool support Bangla and Unicode characters?",
+        a: "Yes. It uses proper UTF-8 byte encoding so Bangla, emojis, and non-ASCII text convert seamlessly.",
+      },
+      {
+        q: "Is it safe to decode tokens here?",
+        a: "Yes. All processing happens locally in your browser with zero network requests.",
+      },
+    ],
+    related: [
+      { slug: "url-codec", label: "URL Encoder" },
+      { slug: "jwt-decoder", label: "JWT Decoder" },
+      { slug: "image-base64", label: "Image → Base64" },
+      { slug: "string-escape", label: "String Escape" },
+    ],
+  },
+  uuid: {
+    title: "",
+    intro:
+      "DevHub's UUID Generator creates cryptographically strong Version 4 (v4) and Version 7 (v7) Universally Unique Identifiers (UUIDs) individually or in bulk. Features include customizable uppercase/lowercase toggle, hyphen removal, bracket wrapping, and instant copy/download as text or JSON. Powered by window.crypto for guaranteed randomness.",
+    features: [
+      {
+        title: "Bulk generation",
+        body: "Generate up to 1,000 UUIDs at once with zero latency.",
+      },
+      {
+        title: "UUID v4 & v7 support",
+        body: "Generate standard random UUID v4 or time-ordered UUID v7 for database-friendly indexing.",
+      },
+      {
+        title: "Formatting options",
+        body: "Toggle hyphens, uppercase lettering, and bracket enclosing to match your database or API schema.",
+      },
+      {
+        title: "Crypto-grade randomness",
+        body: "Uses native Web Crypto API for collision-resistant unique ID generation.",
+      },
+    ],
+    howTo: {
+      name: "How to generate UUIDs in bulk",
+      steps: [
+        {
+          name: "Select quantity & version",
+          text: "Choose how many UUIDs you need and select UUID v4 or v7.",
+        },
+        {
+          name: "Customize formatting",
+          text: "Toggle uppercase, hyphens, or quotes as required.",
+        },
+        {
+          name: "Copy or download",
+          text: "Click Copy All or Download to save the generated list.",
+        },
+      ],
+    },
+    useCases: [
+      {
+        title: "Database primary keys",
+        body: "Generate unique IDs for database seed scripts, Postgres UUID columns, and MongoDB documents.",
+      },
+      {
+        title: "API test mocks",
+        body: "Populate mock API requests and fixture files with realistic, unique identifiers.",
+      },
+    ],
+    examples: [
+      {
+        dialect: "UUID v4",
+        prompt: "Standard random UUID",
+        sql: "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      },
+      {
+        dialect: "UUID v7",
+        prompt: "Time-ordered sortable UUID",
+        sql: "018f3a5b-8912-71a2-93bc-49e0b82f1234",
+      },
+    ],
+    faq: [
+      {
+        q: "What is the difference between UUID v4 and UUID v7?",
+        a: "UUID v4 is completely random. UUID v7 embeds a Unix timestamp prefix, making it chronological and ideal for database primary key indexing.",
+      },
+      {
+        q: "Can UUID v4 collide?",
+        a: "The probability of a UUID v4 collision is practically zero — requiring billions of UUIDs generated per second for centuries.",
+      },
+    ],
+    related: [
+      { slug: "hash", label: "Hash Generator" },
+      { slug: "password", label: "Password Generator" },
+      { slug: "mock-data", label: "Mock Data Generator" },
+    ],
+  },
+  regex: {
+    intro:
+      "DevHub's Regex Tester & Debugger provides real-time pattern matching with live visual match highlighting, capture group extraction, and regex flags toggling (g, i, m, s, u, y). Built for JavaScript regex testing, it helps developers build and test regular expressions instantly in their browser.",
+    features: [
+      {
+        title: "Live match highlighting",
+        body: "Highlights regex matches and capturing groups in real time as you type.",
+      },
+      {
+        title: "Capture group breakdown",
+        body: "Displays full match indices, named capture groups, and substring matches in an easy table.",
+      },
+      {
+        title: "Flag toggles",
+        body: "Easily enable global (g), case-insensitive (i), multiline (m), dotAll (s), unicode (u), and sticky (y) flags.",
+      },
+      {
+        title: "Common cheatsheet presets",
+        body: "Quick preset insertion for email validation, URLs, IP addresses, dates, and phone numbers.",
+      },
+    ],
+    howTo: {
+      name: "How to test regular expressions online",
+      steps: [
+        {
+          name: "Enter pattern & flags",
+          text: "Type your regular expression in the search bar and select active flags.",
+        },
+        {
+          name: "Paste test text",
+          text: "Insert sample text into the editor pane to see live match highlights.",
+        },
+        {
+          name: "Inspect match results",
+          text: "Check match counts, capture groups, and index offsets below the editor.",
+        },
+      ],
+    },
+    useCases: [
+      {
+        title: "Form input validation",
+        body: "Test expressions for emails, passwords, usernames, and phone numbers before adding to client code.",
+      },
+      {
+        title: "Text parsing & extractions",
+        body: "Extract log timestamps, URLs, or specific ID patterns from raw server logs.",
+      },
+    ],
+    examples: [
+      {
+        dialect: "Email Regex",
+        prompt: "Standard email pattern",
+        sql: `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$`,
+      },
+    ],
+    faq: [
+      {
+        q: "Is this Regex tester JavaScript compatible?",
+        a: "Yes. It utilizes the native JavaScript RegExp engine running directly inside your browser.",
+      },
+      {
+        q: "Does it support named capture groups?",
+        a: "Yes. Named capture groups like (?<year>\\d{4}) are fully supported and displayed in the breakdown.",
+      },
+    ],
+    related: [
+      { slug: "ai-regex", label: "AI Regex Generator" },
+      { slug: "slugify", label: "Slugify" },
+      { slug: "case-converter", label: "Case Converter" },
+    ],
+  },
+  "json-diff": {
+    intro:
+      "DevHub's JSON Diff Checker compares two JSON documents or objects structurally. It highlights added, removed, and modified keys along with exact JSON paths (e.g., $.users[0].email), allowing developers to debug API payload changes, environment configuration drifts, and schema migrations easily. Includes key sorting and JSON patch exports.",
+    features: [
+      {
+        title: "Structural comparison",
+        body: "Compares JSON by semantic structure rather than raw text line diffing.",
+      },
+      {
+        title: "Full JSON path tracking",
+        body: "Displays full JSON pointer paths for every detected change.",
+      },
+      {
+        title: "Key sorting & formatting",
+        body: "Optionally sort object keys before comparison to avoid false diffs caused by key ordering.",
+      },
+      {
+        title: "Side-by-side & unified view",
+        body: "Switch between dual pane visual diffs or compact summary lists.",
+      },
+    ],
+    howTo: {
+      name: "How to compare two JSON files online",
+      steps: [
+        {
+          name: "Paste Left & Right JSON",
+          text: "Paste the original JSON document in the left pane and modified JSON in the right pane.",
+        },
+        {
+          name: "Compare differences",
+          text: "View color-coded additions (green), removals (red), and changes (yellow).",
+        },
+        {
+          name: "Copy JSON Patch",
+          text: "Export or copy the JSON Patch (RFC 6902) delta string.",
+        },
+      ],
+    },
+    useCases: [
+      {
+        title: "API response diffing",
+        body: "Compare staging vs production API responses to detect unexpected field regressions.",
+      },
+      {
+        title: "Config file auditing",
+        body: "Compare Kubernetes manifests, tsconfig files, or appsettings.json across environments.",
+      },
+    ],
+    examples: [
+      {
+        dialect: "JSON Delta",
+        prompt: "Property change detection",
+        sql: `Left:  {"version": 1, "status": "active"}
+Right: {"version": 2, "status": "active", "newKey": true}
+
+Diff:
++ $.newKey: true
+~ $.version: 1 -> 2`,
+      },
+    ],
+    faq: [
+      {
+        q: "How is JSON Diff different from a regular text diff?",
+        a: "Text diffs fail if keys are reordered or whitespace changes. Structural JSON diff compares semantic key-value pairs regardless of key order.",
+      },
+      {
+        q: "Is my JSON comparison private?",
+        a: "Yes. Both JSON documents are parsed and diffed entirely inside your local browser memory.",
+      },
+    ],
+    related: [
+      { slug: "json-formatter", label: "JSON Formatter" },
+      { slug: "diff-checker", label: "Diff Checker" },
+      { slug: "json-to-ts", label: "JSON → TypeScript" },
+    ],
+  },
+  "diff-checker": {
+    intro:
+      "DevHub's Diff Checker lets you compare text, code snippets, or configuration files side-by-side or in unified diff format. Features include line-by-line, word-level, and character-level diff highlighting, case/whitespace toggles, and instant unified patch file exports. Ideal for comparing source code, Markdown drafts, or SQL logs without uploading files.",
+    features: [
+      {
+        title: "Side-by-side & unified views",
+        body: "Toggle between dual-pane split view or unified inline diff view.",
+      },
+      {
+        title: "Granular diff levels",
+        body: "Highlight differences at line, word, or character granularity.",
+      },
+      {
+        title: "Whitespace & case options",
+        body: "Ignore trailing whitespaces, blank lines, or character case to focus on meaningful changes.",
+      },
+      {
+        title: "Unified patch export",
+        body: "Download standard .patch files ready for git apply.",
+      },
+    ],
+    howTo: {
+      name: "How to compare two text files online",
+      steps: [
+        {
+          name: "Paste text or upload files",
+          text: "Insert original text in the left box and revised text in the right box.",
+        },
+        {
+          name: "Select diff settings",
+          text: "Choose Side-by-Side or Unified view, and pick Word or Line diff mode.",
+        },
+        {
+          name: "Inspect & export",
+          text: "Review highlighted differences or export the patch.",
+        },
+      ],
+    },
+    useCases: [
+      {
+        title: "Code review sanity checks",
+        body: "Compare modified code files before committing when working without Git UI tools.",
+      },
+      {
+        title: "Copywriting & document auditing",
+        body: "Inspect edits made between versions of blog posts, documentation, or legal contracts.",
+      },
+    ],
+    examples: [
+      {
+        dialect: "Unified Diff",
+        prompt: "Line change sample",
+        sql: `--- Original
++++ Revised
+@@ -1,3 +1,3 @@
+ const port = 3000;
+-console.log("Starting server...");
++console.log("Server listening on port " + port);`,
+      },
+    ],
+    faq: [
+      {
+        q: "Are my compared files uploaded to any server?",
+        a: "No. Diff comparison runs entirely in your browser using local JavaScript diffing algorithms.",
+      },
+      {
+        q: "Can I compare large files?",
+        a: "Yes. Files with thousands of lines process smoothly in-browser.",
+      },
+    ],
+    related: [
+      { slug: "json-diff", label: "JSON Diff" },
+      { slug: "text-diff", label: "Text Diff" },
+      { slug: "text-stats", label: "Text Statistics" },
+    ],
+  },
+  "sql-formatter": {
+    intro:
+      "DevHub's SQL Formatter & Beautifier formats, cleans, and minifies SQL queries across 17 database dialects including PostgreSQL, MySQL, MariaDB, SQLite, SQL Server (T-SQL), Oracle (PL/SQL), BigQuery, Snowflake, and Redshift. Customize indent size, keyword casing (UPPERCASE/lowercase), comma placement, and query width for consistent SQL code style.",
+    features: [
+      {
+        title: "17 SQL Dialects",
+        body: "Native support for Postgres, MySQL, BigQuery, Snowflake, T-SQL, PL/SQL, SQLite, Hive, Spark, and more.",
+      },
+      {
+        title: "Customizable formatting rules",
+        body: "Set keyword case (UPPERCASE, lowercase, preserve), indentation (2 or 4 spaces, tabs), and expression line wrapping.",
+      },
+      {
+        title: "SQL Minification",
+        body: "Compress queries into single-line strings for inline code embedding or ORM strings.",
+      },
+      {
+        title: "Syntax error detection",
+        body: "Highlights invalid SQL syntax before formatting.",
+      },
+    ],
+    howTo: {
+      name: "How to format SQL online",
+      steps: [
+        {
+          name: "Paste SQL query",
+          text: "Copy messy or minified SQL queries into the editor.",
+        },
+        {
+          name: "Select dialect & options",
+          text: "Choose PostgreSQL, MySQL, BigQuery, etc., and configure keyword casing.",
+        },
+        {
+          name: "Format & copy",
+          text: "Click Format SQL and copy the beautified query.",
+        },
+      ],
+    },
+    useCases: [
+      {
+        title: "Cleaning up ORM & log queries",
+        body: "Unpack messy SQL generated by Prisma, TypeORM, Hibernate, or database query logs.",
+      },
+      {
+        title: "Database documentation",
+        body: "Format complex queries with JOINs and CTEs for clear pull requests and internal wikis.",
+      },
+    ],
+    examples: [
+      {
+        dialect: "PostgreSQL",
+        prompt: "Beautifying complex SELECT",
+        sql: `SELECT u.id, u.email, COUNT(o.id) AS total_orders
+FROM users u
+LEFT JOIN orders o ON o.user_id = u.id
+WHERE u.status = 'active'
+GROUP BY u.id, u.email
+HAVING COUNT(o.id) > 5
+ORDER BY total_orders DESC;`,
+      },
+    ],
+    faq: [
+      {
+        q: "Is this SQL Formatter free?",
+        a: "Yes. Completely free with no limits or signups required.",
+      },
+      {
+        q: "Is my SQL query stored or sent to a database?",
+        a: "No. Query formatting runs entirely client-side inside your browser session.",
+      },
+    ],
+    related: [
+      { slug: "ai-sql", label: "AI SQL Generator" },
+      { slug: "mock-data", label: "Mock Data Generator" },
+      { slug: "json-formatter", label: "JSON Formatter" },
+    ],
+  },
+  "image-compressor": {
+    intro:
+      "DevHub's Image Compressor & Converter lets you compress JPEG, PNG, WebP, and AVIF images right inside your browser with zero quality loss. Features include batch image processing, custom quality sliders, dimension resizing, convert to WebP/AVIF options, and instant bulk ZIP downloads. 100% private — your images are never uploaded to any server.",
+    features: [
+      {
+        title: "100% Local in-browser compression",
+        body: "Uses Canvas and WebAssembly to compress images on your computer. Ultra fast, zero data usage, and complete privacy.",
+      },
+      {
+        title: "Batch compression & resizing",
+        body: "Compress multiple images at once and resize by maximum width or height.",
+      },
+      {
+        title: "Format conversion (WebP / AVIF)",
+        body: "Convert legacy PNG or JPEG files into lightweight modern WebP or AVIF formats for faster web page loads.",
+      },
+      {
+        title: "Live size comparison",
+        body: "Preview original vs compressed file size and reduction percentage in real time.",
+      },
+    ],
+    howTo: {
+      name: "How to compress images online without losing quality",
+      steps: [
+        {
+          name: "Upload images",
+          text: "Drag and drop PNG, JPEG, WebP, or AVIF files into the browser box.",
+        },
+        {
+          name: "Adjust quality & format",
+          text: "Set the compression quality slider (e.g., 80%) and choose an optional target format like WebP.",
+        },
+        {
+          name: "Download compressed files",
+          text: "Download compressed images individually or as a single ZIP archive.",
+        },
+      ],
+    },
+    useCases: [
+      {
+        title: "Optimizing web performance",
+        body: "Shrink image sizes for blogs, e-commerce stores, and landing pages to boost Google Lighthouse scores.",
+      },
+      {
+        title: "Email & attachment size limits",
+        body: "Compress large photos and screenshots before attaching them to emails or support tickets.",
+      },
+    ],
+    examples: [
+      {
+        dialect: "JPEG → WebP",
+        prompt: "Compression sample",
+        sql: "Original: 2.4 MB (3840x2160 JPEG)\nCompressed: 340 KB (WebP @ 80% quality)\nSaved: 85.8%",
+      },
+    ],
+    faq: [
+      {
+        q: "Are my images uploaded to any server?",
+        a: "No! Compression runs 100% locally on your computer using browser APIs. Your images never leave your browser.",
+      },
+      {
+        q: "What format gives the best compression?",
+        a: "WebP and AVIF offer 30% to 70% smaller file sizes compared to JPEG and PNG at equivalent visual quality.",
+      },
+    ],
+    related: [
+      { slug: "image-base64", label: "Image → Base64" },
+      { slug: "svg-optimizer", label: "SVG Optimizer" },
+      { slug: "favicon-generator", label: "Favicon Generator" },
+    ],
+  },
+  "curl-converter": {
+    intro:
+      "DevHub's cURL to Code Converter translates cURL command line requests into production-ready code snippets across 12+ programming languages and frameworks. Convert cURL commands into JavaScript (fetch, Axios), Node.js, Python (requests, http.client), Go, PHP, Rust, Java, C# (.NET), Ruby, PowerShell, and Wget in seconds.",
+    features: [
+      {
+        title: "12+ Language outputs",
+        body: "Generate fetch, Axios, Python requests, Go http, PHP curl, Rust reqwest, Java HttpClient, and C# RestSharp.",
+      },
+      {
+        title: "Full cURL flag parsing",
+        body: "Parses headers (-H), request method (-X POST/PUT/DELETE), JSON payload (-d/--data), basic auth (-u), and cookies.",
+      },
+      {
+        title: "Copy-paste ready code",
+        body: "Generates clean, indented code blocks with proper error handling and header objects.",
+      },
+    ],
+    howTo: {
+      name: "How to convert cURL to Python or JavaScript online",
+      steps: [
+        {
+          name: "Paste cURL command",
+          text: "Copy a cURL command from Chrome Network DevTools, Postman, or API documentation.",
+        },
+        {
+          name: "Select target language",
+          text: "Choose Python, JavaScript Fetch, Axios, Go, PHP, etc.",
+        },
+        {
+          name: "Copy code snippet",
+          text: "Copy the generated code snippet directly into your codebase.",
+        },
+      ],
+    },
+    useCases: [
+      {
+        title: "Browser DevTools to Code",
+        body: "Copy network requests as cURL from Chrome DevTools and convert them into frontend fetch calls or backend scripts.",
+      },
+      {
+        title: "API Integration",
+        body: "Convert cURL code snippets from Stripe, OpenAI, or Twilio docs into your project's programming language.",
+      },
+    ],
+    examples: [
+      {
+        dialect: "cURL → Python",
+        prompt: "POST request with JSON payload",
+        sql: `# Input: curl -X POST https://api.example.com/data -H "Authorization: Bearer token" -d '{"key":"val"}'
+
+import requests
+
+headers = {"Authorization": "Bearer token", "Content-Type": "application/json"}
+data = {"key": "val"}
+response = requests.post("https://api.example.com/data", headers=headers, json=data)`,
+      },
+    ],
+    faq: [
+      {
+        q: "Is this cURL converter free?",
+        a: "Yes, 100% free and client-side. Your authorization keys and headers are never sent to a server.",
+      },
+      {
+        q: "How do I copy a cURL command from Chrome?",
+        a: "Open Chrome DevTools -> Network tab -> Right-click any request -> Copy -> Copy as cURL, then paste it here.",
+      },
+    ],
+    related: [
+      { slug: "json-to-ts", label: "JSON → TypeScript" },
+      { slug: "ai-convert", label: "AI Code Converter" },
+      { slug: "json-formatter", label: "JSON Formatter" },
+    ],
+  },
+  markdown: {
+    intro:
+      "DevHub's Markdown Editor is a fast online GitHub-Flavored Markdown (GFM) writer featuring a live side-by-side preview, formatting toolbar, live word and character counters, local storage autosave, and export options to .md or .html files. Ideal for drafting READMEs, documentation, and blog posts.",
+    features: [
+      {
+        title: "Live split-view preview",
+        body: "Render Markdown syntax side-by-side in real time as you write.",
+      },
+      {
+        title: "GitHub-Flavored Markdown (GFM)",
+        body: "Full support for tables, task lists, fenced code blocks with syntax highlighting, blockquotes, and footnotes.",
+      },
+      {
+        title: "Local autosave & history",
+        body: "Drafts are stored locally in browser storage so your work is never lost when closing the tab.",
+      },
+      {
+        title: "Export to MD & HTML",
+        body: "Export your formatted Markdown as a clean .md file or compiled HTML string.",
+      },
+    ],
+    howTo: {
+      name: "How to edit and preview Markdown online",
+      steps: [
+        {
+          name: "Type Markdown text",
+          text: "Write Markdown directly or use toolbar buttons for bold, italics, headers, lists, and tables.",
+        },
+        {
+          name: "Review live preview",
+          text: "Check the rendered HTML output in the right preview pane.",
+        },
+        {
+          name: "Copy or export",
+          text: "Download your file as .md or .html, or copy compiled HTML.",
+        },
+      ],
+    },
+    useCases: [
+      {
+        title: "Writing GitHub README.md files",
+        body: "Draft repository READMEs with tables, badges, and code blocks before pushing to Git.",
+      },
+      {
+        title: "Blogging & static site content",
+        body: "Write articles for Astro, Next.js, Hugo, or Gatsby blog engines.",
+      },
+    ],
+    examples: [
+      {
+        dialect: "GFM Markdown",
+        prompt: "Table and code block sample",
+        sql: `# Project Title
+
+| Feature | Status |
+| ------- | ------ |
+| Auth    | ✅ Done |
+
+\`\`\`typescript
+const greeting = "Hello DevHub!";
+\`\`\``,
+      },
+    ],
+    faq: [
+      {
+        q: "Is my draft stored on any server?",
+        a: "No. Autosave uses your browser's local storage exclusively.",
+      },
+      {
+        q: "Does it support code syntax highlighting?",
+        a: "Yes. Fenced code blocks render formatted syntax preview.",
+      },
+    ],
+    related: [
+      { slug: "text-to-markdown", label: "Text → Markdown" },
+      { slug: "docx-to-markdown", label: "DOCX → Markdown" },
+      { slug: "slugify", label: "Slugify" },
+    ],
+  },
+  "csv-json": {
+    intro:
+      "DevHub's CSV ↔ JSON Converter provides fast bidirectional conversion between CSV spreadsheet data and JSON objects or arrays. Features automatic header detection, configurable delimiters (comma, tab, semicolon, pipe), quote handling, nested JSON flattening, and instant download as .json or .csv files.",
+    features: [
+      {
+        title: "Bidirectional conversion",
+        body: "Convert CSV to JSON or JSON to CSV seamlessly with one click.",
+      },
+      {
+        title: "Custom delimiter support",
+        body: "Supports commas (,), tabs (\\t), semicolons (;), and pipes (|) for TSV and custom CSV exports.",
+      },
+      {
+        title: "Automatic type inference",
+        body: "Optionally converts numeric and boolean strings into native JSON numbers and booleans.",
+      },
+      {
+        title: "Download converted files",
+        body: "Export converted data directly as .json or .csv files.",
+      },
+    ],
+    howTo: {
+      name: "How to convert CSV to JSON online",
+      steps: [
+        {
+          name: "Paste CSV or JSON",
+          text: "Paste tabular CSV data or a JSON array of objects into the editor.",
+        },
+        {
+          name: "Configure conversion",
+          text: "Set delimiter (comma, tab, pipe) and header row options.",
+        },
+        {
+          name: "Copy or download",
+          text: "Copy the formatted output or download the converted file.",
+        },
+      ],
+    },
+    useCases: [
+      {
+        title: "Importing Excel/CSV into database seed files",
+        body: "Convert client spreadsheets into JSON arrays for MongoDB, Firebase, or Postgres seeders.",
+      },
+      {
+        title: "Exporting API JSON to CSV for Excel",
+        body: "Turn JSON API responses into downloadable CSV files for business reporting in Excel.",
+      },
+    ],
+    examples: [
+      {
+        dialect: "CSV → JSON",
+        prompt: "Conversion example",
+        sql: `CSV Input:
+id,name,role
+1,Alice,Admin
+2,Bob,User
+
+JSON Output:
+[
+  {"id": 1, "name": "Alice", "role": "Admin"},
+  {"id": 2, "name": "Bob", "role": "User"}
+]`,
+      },
+    ],
+    faq: [
+      {
+        q: "Does it support Tab-Separated Values (TSV)?",
+        a: "Yes. Select Tab as the delimiter to convert TSV data from Excel or Google Sheets.",
+      },
+      {
+        q: "Is my spreadsheet data kept private?",
+        a: "Yes. All processing occurs locally in your browser memory.",
+      },
+    ],
+    related: [
+      { slug: "yaml-json", label: "YAML ↔ JSON" },
+      { slug: "json-formatter", label: "JSON Formatter" },
+      { slug: "mock-data", label: "Mock Data Generator" },
+    ],
+  },
   "ai-sql": {
     intro:
       "DevHub's AI SQL Generator turns plain English into production-ready SQL. Describe the result you want — a report, a join, an aggregation, a window function — and get a clean, dialect-aware query you can paste straight into psql, MySQL Workbench, DBeaver, TablePlus or your ORM. It's free, needs no signup, and works for PostgreSQL, MySQL, SQLite, SQL Server and BigQuery.",
